@@ -1,6 +1,8 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import SearchCardBar from './component/SearchCardBar';
+import EmpCard from './component/EmpCard';
+import EmpInfo from './component/EmpInfo';
 
 const test = () => {
 	return (
@@ -19,8 +21,8 @@ const test = () => {
 				gap={5}
 			>
 				<GridItem colSpan={6} rowSpan={1} ><SearchCardBar/></GridItem>
-				<GridItem colSpan={2} rowSpan={5} ></GridItem>
-				<GridItem colSpan={4} rowSpan={5} bg='white' />
+				<GridItem colSpan={2} rowSpan={5} ><EmpCard/></GridItem>
+				<GridItem colSpan={4} rowSpan={5} ><EmpInfo/></GridItem>
 			</Grid>
 		</Box>
 	);
