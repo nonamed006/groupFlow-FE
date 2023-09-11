@@ -17,6 +17,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { PORT } from "set";
 import { minTimeDate } from "common";
+import { UseMouseOver } from "hook/UseMouseOver";
 
 const EmpCard = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -28,6 +29,7 @@ const EmpCard = () => {
   //state
   const [emp, setEmp] = useState([]);
   const [empNum, setEmpNum] = useState();
+  const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   const getEmpList = (searchCorp, searchWorkType, searchNm) => {
     fetch(`${PORT}/emp/getEmp/${searchCorp}/${searchWorkType}/${searchNm}`, {
@@ -42,15 +44,15 @@ const EmpCard = () => {
       });
   };
 
-  const getEmpNum = (empNum) =>{
+  const getEmpNum = (empNum) => {
     fetch(`${PORT}/emp/getEmpDetail/${empNum}`, {
-        method: "GET",
-        // res에 결과가 들어옴
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-        });
+      method: "GET",
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const EmpCard = () => {
             fontWeight="700"
             lineHeight="100%"
           >
-            사용자 
+            사용자
           </Text>
           <Text
             color={textNumColor}
@@ -124,9 +126,15 @@ const EmpCard = () => {
           </Thead>
           <Tbody >
             {emp.map((column, index) => (
-              <Tr onClick={()=>{
-                getEmpNum(column.empCd)
-              }} >
+              <Tr
+                backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+                onMouseOut={onMouseOut}
+                onMouseOver={() => {
+                  onMouseOver(index)
+                }}
+                onClick={() => {
+                  getEmpNum(column.empCd)
+                }} >
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
@@ -146,7 +154,7 @@ const EmpCard = () => {
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
-                    {column.empId}
+                      {column.empId}
                     </Text>
                   </Flex>
                 </Td>
@@ -157,7 +165,7 @@ const EmpCard = () => {
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
-                    {minTimeDate(column.joinDt)}
+                      {minTimeDate(column.joinDt)}
                     </Text>
                   </Flex>
                 </Td>
