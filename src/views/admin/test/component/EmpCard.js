@@ -11,10 +11,34 @@ import {
   Tr,
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { PORT } from "set";
 
 const EmpCard = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+
+  //테이블 헤더
+  const headerGroups = ["이름", "ID", "최초입사일"];
+
+  //state
+  const [emp, setEmp] = useState([]);
+
+  const getEmpList = (searchCorp, searchWorkType, searchNm) => {
+    fetch(`${PORT}/emp/getEmp/${searchCorp}/${searchWorkType}/${searchNm}`, {
+      method: "GET",
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setEmp(res);
+      });
+  };
+
+  useEffect(() => {
+    getEmpList("noSearch","noSearch","noSearch");
+  }, []);
 
   // const tableInstance = useTable(
   //     {
@@ -51,7 +75,18 @@ const EmpCard = () => {
         <Table variant="simple" color="gray.500">
           <Thead>
             <Tr>
-              <Th>이름</Th>
+              {headerGroups.map((column, index) => (
+                <Th pe="10px" key={index} borderColor="transparent">
+                  <Flex
+                    justify="space-between"
+                    align="center"
+                    fontSize={{ sm: "10px", lg: "12px" }}
+                    color="gray.400"
+                  >
+                    {column}
+                  </Flex>
+                </Th>
+              ))}
             </Tr>
           </Thead>
           <Tbody>
