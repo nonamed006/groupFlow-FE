@@ -1,16 +1,19 @@
-import { Box , Button, Text, Flex, useColorModeValue, Table} from '@chakra-ui/react/dist/chakra-ui-react.cjs';
+import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from 'react';
 import InputTable from './InputTable';
+import InfoBoxBar from "./InfoBoxBar";
+import InputGrid from "./InputGrid";
 
 const InfoBox = ({title}) => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
+
     return (
-        <div>
-            <InfoBox title={title} />
+        <Box borderRadius="lg" bg="white"  p="6"  backgroundColor="white">
+            <InfoBoxBar title={title} />
             <Box>
-               <InputTable />
+                <InputTable />
+                {/* <InputGrid /> */}
             </Box>
-        </div>
+        </Box>
     );
 };
 

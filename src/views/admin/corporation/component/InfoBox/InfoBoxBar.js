@@ -1,12 +1,11 @@
 import { Box , Button, Text, Flex, useColorModeValue} from '@chakra-ui/react/dist/chakra-ui-react.cjs';
 import React from 'react';
-import ListCardBar from './ListCardBar';
 
 const InfoBoxBar = ({title}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     return (
        
-        <Box borderRadius="lg" bg="white" h="600px" p="6">
+       
             <Flex
             align={{ sm: "flex-start", lg: "center" }}
             justify="space-between"
@@ -14,7 +13,7 @@ const InfoBoxBar = ({title}) => {
             px="22px"
             pb="20px"
             mb="10px"
-            boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
+  
           >
             <Text
               color={textColor}
@@ -31,7 +30,7 @@ const InfoBoxBar = ({title}) => {
                 <Button variant="action">변경이력</Button>
             </Flex>
           </Flex>
-        </Box>
+    
  
     );
 };

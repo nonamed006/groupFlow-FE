@@ -1,16 +1,4 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    Flex,
-    Table,
-    Tbody,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    useColorModeValue,
-  } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React, { useState } from "react";
   import { useEffect } from "react";
   import { PORT } from "set";
@@ -19,7 +7,7 @@ import ListCardBar from "./ListCardBar";
   
   const ListCard = ({title,headerGroups, listData }) => {  
     return (
-        <Box borderRadius="lg" bg="white" h="600px" p="6">
+        <Box borderRadius="lg" bg="white" h="200%" p="6">
             {/* 목록 상단 */}
           <ListCardBar title={title} count={listData.length}/>
             {/* 목록 테이블 */}

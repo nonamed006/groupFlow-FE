@@ -15,7 +15,7 @@ const SearchCardBar = () => {
 				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>사용여부</div></GridItem>
 				<GridItem colSpan={3}>
 					<Select colSpan={3} borderRadius="14px" >
-						<option value='option1' selected>전체</option>
+						<option value='option1' >전체</option>
 						<option value='option1'>사용</option>
 						<option value='option2'>미사용</option>
 					</Select>
