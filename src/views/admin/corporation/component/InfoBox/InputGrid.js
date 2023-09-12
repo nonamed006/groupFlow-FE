@@ -1,15 +1,12 @@
-import { Box, Button, Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio, SelectField} from '@chakra-ui/react';
+import { Box, Button, Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio, useDisclosure} from '@chakra-ui/react';
 import Calendar from "components/calendar/MiniCalendar"
 import React, { useState } from "react";
 import { useEffect } from "react";
-import PostCode from './PostCode';
+import AddrBox from './AddrBox';
+import CalendarModal from './CalendarModal';
 
   const InputGrid = ({corp, sortValue}) => {
-    // const [corp, setCorp] = useState(null);
-    // useEffect(()=> {
-    //     setCorp(corpData);
-    // }, [corpData]);
-
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
     <>
          <Grid
@@ -121,7 +118,7 @@ import PostCode from './PostCode';
                 </GridItem>
                 <GridItem colStart={5} colEnd={7}>
                    
-                    <Button id="postNumBtn" >선택</Button>
+                    <Button id="postNumBtn" onClick={onOpen} >선택</Button>
                 </GridItem>
 
                 <GridItem colStart={8} colEnd={10}>
@@ -153,23 +150,7 @@ import PostCode from './PostCode';
                     <Input id="fax" name="fax"  size="md" borderRadius="14px"  defaultValue={corp&&corp.fax} placeholder="대표팩스를 입력하세요."/>
                 </GridItem>
                
-                <GridItem colSpan={2} rowSpan={3}>
-                  <Text fontSize="sm" fontWeight="600">
-                    회사주소
-                  </Text>
-                </GridItem>
-                <GridItem colStart={3} colEnd={7}>
-                    <Input id="postNum" name="postNum"  size="md" borderRadius="14px" defaultValue={corp&&corp.postNum} placeholder="우편번호" readOnly/>
-               </GridItem>
-                <GridItem colStart={7} colEnd={14}>
-                    <Button id="postNumBtn">우편번호</Button>
-                </GridItem>
-                <GridItem colStart={3} colEnd={14}>
-                    <Input id="addr" name="addr"  size="md" borderRadius="14px" defaultValue={corp&&corp.addr} placeholder="주소를 선택하세요" readOnly/>
-                </GridItem>
-                <GridItem colStart={3} colEnd={14}>
-                    <Input id="addrDetail" name="addrDetail"  size="md" borderRadius="14px" defaultValue={corp&&corp.addrDetail} placeholder="상세주소를 입력하세요."/>
-                </GridItem>
+                <AddrBox title={'회사주소'} corp={corp}/>
 
                 <GridItem colSpan={2}>
                   <Text fontSize="sm" fontWeight="600">
@@ -197,7 +178,7 @@ import PostCode from './PostCode';
                 </GridItem>
                
               </Grid>
-          {/* {isOpen? <Calendar />:''} */}
+            {isOpen ? <CalendarModal  isOpen={isOpen} onClose={onClose} />:''}
          </>
     );
   };
