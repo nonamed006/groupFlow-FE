@@ -1,9 +1,10 @@
 import { Box, Button, Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio} from '@chakra-ui/react';
-import MiniCalendar from "components/calendar/MiniCalendar"
-  const InputGrid = () => {
+import Calendar from "components/calendar/MiniCalendar"
+import React, { useState } from "react";
 
+  const InputGrid = () => {
     return (
-    
+    <>
          <Grid
                 templateColumns="repeat(13, 1fr)"
                 templateRows="repeat(12, 1fr)"
@@ -108,8 +109,12 @@ import MiniCalendar from "components/calendar/MiniCalendar"
                     설립일
                   </Text>
                 </GridItem>
-                <GridItem colStart={3} colEnd={7}>
-                    <Input id="estDt" name="estDt"  size="md" borderRadius="14px" placeholder="회사약칭을 입력하세요."/>
+                <GridItem colStart={3} colEnd={5}>
+                    <Input id="estDt" name="estDt"  size="md" borderRadius="14px" placeholder="설립일을 선택하세요" readOnly/>
+                </GridItem>
+                <GridItem colStart={5} colEnd={7}>
+                   
+                    <Button id="postNumBtn" >선택</Button>
                 </GridItem>
 
                 <GridItem colStart={8} colEnd={10}>
@@ -183,10 +188,10 @@ import MiniCalendar from "components/calendar/MiniCalendar"
                 <GridItem colStart={3} colEnd={7}>
                     <Input id="sort" name="sort"  size="md" borderRadius="14px" placeholder="정렬값을 입력하세요."/>
                 </GridItem>
-                
+               
               </Grid>
-        
-
+          {/* {isOpen? <Calendar />:''} */}
+         </>
     );
   };
   

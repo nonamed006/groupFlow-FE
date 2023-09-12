@@ -8,7 +8,8 @@ import ListCardTableTr from "./ListCardTableTr";
     const textColor = useColorModeValue("secondaryGray.900", "white");
     return (          
         <Tbody>
-            {listData.map((data, index) =>{
+          {listData&&
+            listData.map((data, index) =>{
           return  <ListCardTableTr index={index} data={data} />
         })}
       </Tbody>

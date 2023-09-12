@@ -1,18 +1,57 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from "react";
+import { useEffect } from "react";
 import SearchCardBar from './component/SearchCardBar';
 import ListCard from './component/ListCard/ListCard';
 import InfoBox from './component/InfoBox/InfoBox';
-import RealGrid from 'realgrid';
 
-const corporation = () => {
+const Corporation = () => {
         //테이블 헤더
         const headerGroups = ["회사명", "회사코드", "대표자", "구분"];
-        const listData =[
-            {'coCd' : 'coCd', 'coNm' : 'coNm', 'ceoNm': 'ceoNm', 'ccNm' : 'ccNm'},
-            {'coCd' : 'coCd', 'coNm' : 'coNm', 'ceoNm': 'ceoNm', 'ccNm' : 'ccNm'},
-            {'coCd' : 'coCd', 'coNm' : 'coNm', 'ceoNm': 'ceoNm', 'ccNm' : 'ccNm'}
-        ];
+        
+		const [corpList, setCorpList] = useState([]);	// 회사 데이터 목록
+		const [keyword, setKeyword] = useState('');	// 검색어
+		const [useYn, setUseYn] = useState('');	// 사용여부
+
+		useEffect(()=> {
+			fetchCorpList();       
+		}, []);
+
+		const fetchCorpList = () => {
+			let url = 'http://localhost:8080/corp';
+
+			 // URL 파라미터 생성
+  			const params = new URLSearchParams();
+			if (keyword !== '') 
+				params.append('keyword', keyword);
+			if (useYn !== '') 
+				params.append('useYn', useYn);
+
+    		// URL에 파라미터 추가
+    		const paramString = params.toString();
+    		if (paramString) {
+				url += '?' + paramString;
+    		}
+
+			fetch(url, {
+				method : "GET"   
+			}).then(res=>res.json()).then(res=>{
+				setCorpList(res.data);
+			});     
+		};
+		
+		// 검색 버튼 클릭 시
+		const searchClick = ()=> {
+			fetchCorpList();
+		}
+		const onChangeSearchKeyword = (e) => {
+			setKeyword(e.target.value);
+		}
+		const onChangeSearchUseYn = (e) => {
+			setUseYn(e.target.value);
+		}
+		  
+	
 	return (
 		//헤더 공간 제외한 div 공간 지정
 		/**
@@ -29,12 +68,12 @@ const corporation = () => {
 				gap={5}
 			>
 				<GridItem colSpan={6} rowSpan={1} >
-                    <SearchCardBar/>
+                    <SearchCardBar onChangeSearchKeyword={onChangeSearchKeyword} onChangeSearchUseYn={onChangeSearchUseYn} onClick={searchClick}/>
                 </GridItem>
-				<GridItem colSpan={1} rowSpan={5} >
-                    <ListCard title={"회사"} headerGroups={headerGroups} listData={listData}/>
+				<GridItem colSpan={2} rowSpan={5} >
+                    <ListCard title={"회사"} headerGroups={headerGroups} listData={corpList}/>
                 </GridItem>
-				<GridItem colSpan={5} rowSpan={5} >
+				<GridItem colSpan={4} rowSpan={5} >
                     <InfoBox title={"기본정보"} />
                 </GridItem>
 			</Grid>
@@ -42,4 +81,4 @@ const corporation = () => {
 	);
 };
 
-export default corporation;
+export default Corporation;

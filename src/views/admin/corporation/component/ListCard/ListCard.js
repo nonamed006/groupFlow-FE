@@ -11,7 +11,7 @@ import ListCardBar from "./ListCardBar";
     return (
         <Box borderRadius="lg" bg="white" h="200%" p="6">
             {/* 목록 상단 */}
-          <ListCardBar title={title} count={listData.length}/>
+          <ListCardBar title={title} count={listData&&listData.length}/>
             {/* 목록 테이블 */}
           <ListCardTable headerGroups={headerGroups} listData={listData}/>
         </Box>
