@@ -2,14 +2,17 @@ import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from 'react';
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
+import { useEffect } from "react";
+const InfoBox = ({title, corp, sortValue}) => {
+    
+    useEffect(()=> {
 
-const InfoBox = ({title}) => {
-
+    }, [corp]);
     return (
-        <Box borderRadius="lg" bg="white"  p="6"  backgroundColor="white">
+        <Box borderRadius="lg" bg="white" h="700px" p="6"  backgroundColor="white">
             <InfoBoxBar title={title} />
             <Box>
-                <InputGrid />
+                <InputGrid corp={corp} sortValue={sortValue}/>
             </Box>
         </Box>
     );

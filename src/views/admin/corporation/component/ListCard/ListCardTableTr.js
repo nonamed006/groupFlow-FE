@@ -8,7 +8,7 @@ import {
   import React from "react";
   import { UseMouseOver } from "hook/UseMouseOver";
 
-  const ListCardTableTr = ({data, index}) => {
+  const ListCardTableTr = ({data, index, onClickCorp}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
@@ -19,6 +19,7 @@ import {
                 onMouseOver={() => {
                     onMouseOver(index)
                 }}
+                onClick={()=>onClickCorp(data.coCd)}
               >
                 <Flex align="center">
                     <Td>
