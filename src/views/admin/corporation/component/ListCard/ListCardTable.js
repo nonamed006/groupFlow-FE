@@ -11,10 +11,9 @@ import {
   import React, { useState } from "react";
 import ListCardTableTr from "./ListCardTableTbody";
 import ListCardTableTbody from "./ListCardTableTbody";
-  
+
   const ListCardTable = ({headerGroups, listData }) => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
-    
+
     return (
           <Table variant="simple" color="gray.500">
             {/* Thead */}

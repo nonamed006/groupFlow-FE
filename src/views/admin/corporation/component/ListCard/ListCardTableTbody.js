@@ -9,7 +9,7 @@ import ListCardTableTr from "./ListCardTableTr";
     return (          
         <Tbody>
             {listData.map((data, index) =>{
-          return  <ListCardTableTr key={index} data={data} />
+          return  <ListCardTableTr index={index} data={data} />
         })}
       </Tbody>
     );

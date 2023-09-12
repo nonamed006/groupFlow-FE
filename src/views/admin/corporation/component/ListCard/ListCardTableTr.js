@@ -6,11 +6,20 @@ import {
     useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";
-  
-  const ListCardTableTr = ({data}) => {
+  import { UseMouseOver } from "hook/UseMouseOver";
+
+  const ListCardTableTr = ({data, index}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
+    const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
+
     return (          
-              <Tr>
+              <Tr 
+                backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+                onMouseOut={onMouseOut}
+                onMouseOver={() => {
+                    onMouseOver(index)
+                }}
+              >
                 <Flex align="center">
                     <Td>
                         <Text color={textColor} fontSize="sm" fontWeight="600">

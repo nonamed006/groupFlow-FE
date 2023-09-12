@@ -4,8 +4,10 @@ import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import { PORT } from "set";
 import ListCardTable from "./ListCardTable";
 import ListCardBar from "./ListCardBar";
-  
+
+
   const ListCard = ({title,headerGroups, listData }) => {  
+
     return (
         <Box borderRadius="lg" bg="white" h="200%" p="6">
             {/* 목록 상단 */}
