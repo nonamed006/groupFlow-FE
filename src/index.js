@@ -8,10 +8,15 @@ import RtlLayout from 'layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from 'theme/theme';
 import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import { createStore } from 'redux';
+import rootReducer from 'redux/rootReducer';
+import { Provider } from 'react-redux';
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
-		<React.StrictMode>
+		<Provider store={store}>
 			<ThemeEditorProvider>
 				<HashRouter>
 					<Switch>
@@ -22,7 +27,7 @@ ReactDOM.render(
 					</Switch>
 				</HashRouter>
 			</ThemeEditorProvider>
-		</React.StrictMode>
+	</Provider>
 	</ChakraProvider>,
 	document.getElementById('root')
 );

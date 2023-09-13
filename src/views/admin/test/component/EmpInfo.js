@@ -16,10 +16,31 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { PORT } from "set";
 
 const EmpInfo = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+
+  
+  const getEmpNum = (empNum) => {
+    fetch(`${PORT}/emp/getEmpDetail/${empNum}`, {
+      method: "GET",
+      // res에 결과가 들어옴
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("zzz",res.data);
+    });
+  }
+  const empNum = useSelector(state => state.solution.dataPk);
+
+  useEffect(() => {
+    if(empNum != 0){
+      getEmpNum(empNum);
+    }
+  }, [empNum]);
 
   return (
     <div>
