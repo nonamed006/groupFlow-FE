@@ -8,9 +8,7 @@ export const minTimeDate = (date) =>{
 
 // 데이터 input에 세팅
 export const setInput = (inputForm, data) => {
-    console.log(data);
     let form = document.forms[inputForm];
-    console.log("formformform",form);
     for(let i=0; i<form.length; i++){
         let frNm = form[0].name;
         form.elements[frNm].value = data[frNm];
