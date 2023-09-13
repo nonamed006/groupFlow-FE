@@ -16,6 +16,7 @@ import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Test from "views/admin/test";
+import Department from "views/admin/department";
 import Corporation from "views/admin/corporation";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -96,6 +97,12 @@ const routes = [
     component: Test,
   },
   {
+    name: "부서관리",
+    layout: "/admin",
+    path: "/department",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Department,
+  },
     name: "Corporation",
     layout: "/admin",
     path: "/corporation",
