@@ -1,5 +1,5 @@
-/* ----------------- 액션 타입 ------------------ */
-const SET_DATA_PK = 'comn/SET_DATA_PK';
+/* ----------------- 액션 타입 (대문자) ------------------ */
+const SET_DATA_PK = 'solution/SET_DATA_PK';
 
 
 
@@ -14,6 +14,7 @@ export const setDataPk = dataPk =>({ type: SET_DATA_PK, dataPk});
 /* ----------------- 모듈의 초기 상태 ------------------ */
 const initialState = {
     dataPk: 0,
+    
   };
 
 
