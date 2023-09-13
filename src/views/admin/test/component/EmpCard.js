@@ -18,13 +18,19 @@ import { useEffect } from "react";
 import { PORT } from "set";
 import { minTimeDate } from "common";
 import { UseMouseOver } from "hook/UseMouseOver";
+import { useDispatch } from "react-redux";
+import { setDataPk } from "redux/solution";
 
 const EmpCard = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
 
+  //리덕스
+  const dispatch = useDispatch();
+
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
+  
 
   //state
   const [emp, setEmp] = useState([]);
@@ -43,17 +49,6 @@ const EmpCard = () => {
         setEmpNum(res.strData);
       });
   };
-
-  const getEmpNum = (empNum) => {
-    fetch(`${PORT}/emp/getEmpDetail/${empNum}`, {
-      method: "GET",
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      });
-  }
 
   useEffect(() => {
     getEmpList("noSearch", "noSearch", "noSearch");
@@ -125,7 +120,7 @@ const EmpCard = () => {
             </Tr>
           </Thead>
           <Tbody >
-            {emp.map((column, index) => (
+            {emp?.map((column, index) => (
               <Tr
                 backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
                 onMouseOut={onMouseOut}
@@ -133,7 +128,7 @@ const EmpCard = () => {
                   onMouseOver(index)
                 }}
                 onClick={() => {
-                  getEmpNum(column.empCd)
+                  dispatch(setDataPk(column.empCd));
                 }} >
                 <Td
                   fontSize={{ sm: "14px" }}
