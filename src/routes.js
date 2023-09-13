@@ -25,6 +25,7 @@ import SignInCentered from "views/auth/signIn";
 // 참고문서
 // https://horizon-ui.com/components
 // https://horizon-ui.com/documentation/docs/introduction
+// https://chakra-ui.com/getting-started
 
 /*
   route.js에 대한 설명
