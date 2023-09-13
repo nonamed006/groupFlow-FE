@@ -17,7 +17,7 @@ import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Test from "views/admin/test";
 import Department from "views/admin/department";
-
+import Corporation from "views/admin/corporation";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 
@@ -102,6 +102,12 @@ const routes = [
     path: "/department",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Department,
+  },
+    name: "Corporation",
+    layout: "/admin",
+    path: "/corporation",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Corporation,
   },
 ];
 
