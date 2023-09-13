@@ -1,33 +1,13 @@
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-
-  } from "@chakra-ui/react"
-import Calendar from "components/calendar/MiniCalendar"
+import Calendar from "./CalendarCustom"
 import React, { useState } from "react";
-import { useEffect } from "react";
-import AddrBox from './AddrBox';
+import ModalLayout from "./ModalLayout";
 
-  const CalendarModal = ({title, isOpen, onClose}) => {
-    const finalRef = React.useRef(null);
+  const CalendarModal = ({isOpen, onClose, setDate }) => {
     return (
-        <>
-        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{title}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-                 <Calendar />
-            </ModalBody>
-            
-          </ModalContent>
-        </Modal>
-      </>
+        <ModalLayout title={''}  isOpen={isOpen} onClose={onClose}>
+           <Calendar onClose={onClose} setDate={setDate}/>
+        </ModalLayout>
+       
     );
   };
   
