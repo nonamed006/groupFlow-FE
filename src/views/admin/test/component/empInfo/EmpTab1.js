@@ -17,11 +17,12 @@ import { MdAttachFile, MdFilePresent, MdPhone } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 const EmpTab1 = () => {
-  const empInfo = useSelector((state) => state.solution.dataList);
+  const empList = useSelector((state) => state.solution.dataList);
   const isReadStatus = useSelector((state) => state.solution.isRead);
 
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null); //파일
+  const [empInfo, setEmpInfo] = useState([]);
 
   // 등록을 위한 사원 정보 리스트
   let empAddList = [];
@@ -53,6 +54,11 @@ const EmpTab1 = () => {
     }
   };
 
+  // input value값 받기 이벤트 
+	const handleChange = (e) => {
+		setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
+	};
+
   // 저장 버튼
   const insertEmp = () => {
     const fd = new FormData();
@@ -77,7 +83,6 @@ const EmpTab1 = () => {
         <GridItem colStart={3} colEnd={7} rowSpan={4}>
           <Box>
             <Stack direction="row">
-            
               <Image
                 w="150px"
                 h="200px"
@@ -114,11 +119,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+            id="empMail"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.empMail || ""}
+            value={empList?.empMail}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -129,11 +136,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+            id="payMail"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.payMail || ""}
+            value={empList?.payMail}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -144,12 +153,14 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+            id="joinDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.joinDt) || ""}
+            value={minTimeDate(empList?.joinDt)}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -160,12 +171,14 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+            id="reDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.reDt) || ""}
+            value={minTimeDate(empList?.reDt)}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -176,11 +189,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+            id="empNm"
             placeholder="이름"
             size="md"
             borderRadius="14px"
-            value={empInfo?.empNm || ""}
+            value={empList?.empNm}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -191,11 +206,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14} rowSpan={8}>
           <Input
+          id="addr"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.addr || ""}
+            value={empList?.addr}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -224,11 +241,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+          id="mail_id"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.empEmail || ""}
+            value={empList?.mailId}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -239,11 +258,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+            id="loginId"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.loginMail || ""}
+            value={empList?.loginId}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -254,12 +275,14 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+          id="loginPw"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
             name="loginPw"
-            value={empInfo?.loginPw || ""}
+            value={empList?.loginPw}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -270,11 +293,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+          id="signPw"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.signPw || ""}
+            value={empList?.signPw}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 
@@ -285,12 +310,14 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+          id="empTel"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
             name="empTel"
-            value={empInfo?.empTel || ""}
+            value={empList?.empTel}
             isReadOnly={isReadStatus}
+            onChange={handleChange}
           />
         </GridItem>
 

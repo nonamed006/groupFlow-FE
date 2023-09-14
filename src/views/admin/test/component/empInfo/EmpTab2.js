@@ -59,10 +59,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
+          id="dpGrpNum"
             placeholder="사번"
             size="md"
             borderRadius="14px"
-            value={empInfo?.empNm || ""}
+            value={empInfo?.dpGrpNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -74,10 +75,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+          id="telNum"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.payMail || ""}
+            value={empInfo?.telNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -193,7 +195,7 @@ const EmpTab2 = () => {
             placeholder="상세업무를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.payMail || ""}
+            value={empInfo?.payMail}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -205,22 +207,24 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={5}>
           <Input
+          id="joinDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.joinDt) || ""}
+            value={minTimeDate(empInfo?.joinDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
 
         <GridItem colStart={5} colEnd={7}>
           <Input
+          id="reDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.reDt) || ""}
+            value={minTimeDate(empInfo?.reDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -232,10 +236,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+          id=""
             placeholder="팩스번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.payMail || ""}
+            value={empInfo?.faxNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -250,7 +255,7 @@ const EmpTab2 = () => {
             placeholder="전화번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.empNm || ""}
+            value={empInfo?.empNm}
             isReadOnly={isReadStatus}
           />
         </GridItem>
