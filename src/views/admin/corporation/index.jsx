@@ -25,7 +25,7 @@ const Corporation = () => {
 			params.append('keyword', keyword);
 		if (useYn !== '')
 			params.append('useYn', useYn);
-
+			
 		// URL에 파라미터 추가
 		const paramString = params.toString();
 		if (paramString) {
@@ -39,16 +39,9 @@ const Corporation = () => {
 		});
 	};
 
-
 	// 검색 버튼 클릭 시
 	const handleSearchBtn = () => {
 		fetchCorpList();
-	}
-	const onChangeSearchKeyword = (e) => {
-		setKeyword(e.target.value);
-	}
-	const onChangeSearchUseYn = (e) => {
-		setUseYn(e.target.value);
 	}
 
 	return (
@@ -67,7 +60,7 @@ const Corporation = () => {
 				gap={5}
 			>
 				<GridItem colSpan={6} rowSpan={1} >
-					<SearchCardBar onChangeSearchKeyword={onChangeSearchKeyword} onChangeSearchUseYn={onChangeSearchUseYn} handleSearchBtn={handleSearchBtn} />
+					<SearchCardBar setKeyword={setKeyword} setUseYn={setUseYn} handleSearchBtn={handleSearchBtn} />
 				</GridItem>
 				<GridItem colSpan={2} rowSpan={5} >
 					<ListCard title={"회사"} listData={corpList} />
