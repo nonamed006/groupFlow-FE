@@ -97,6 +97,13 @@ const routes = [
     component: Test,
   },
   {
+    name: "부서관리",
+    layout: "/admin",
+    path: "/department",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Department,
+  },
+  {
     name: "Corporation",
     layout: "/admin",
     path: "/corporation",
