@@ -12,7 +12,7 @@ import {
 import ListCardTableTr from "./ListCardTableTbody";
 import ListCardTableTbody from "./ListCardTableTbody";
 
-  const ListCardTable = ({headerGroups, listData, onClickCorp }) => {
+  const ListCardTable = ({headerGroups, listData }) => {
 
     return (
           <Table variant="simple" color="gray.500">
@@ -35,7 +35,7 @@ import ListCardTableTbody from "./ListCardTableTbody";
             </Thead>
 
             {/* Tbody */}
-            <ListCardTableTbody listData={listData} onClickCorp={onClickCorp}/>
+            <ListCardTableTbody listData={listData} />
 
           </Table>
 

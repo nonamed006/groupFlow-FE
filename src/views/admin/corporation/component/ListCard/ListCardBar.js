@@ -12,9 +12,9 @@ import {
     useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";
-  const ListCardBar = ({title, count }) => {
+  const ListCardBar = ({title, count , onReset}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
-  
+
     return (
           <Flex
             align={{ sm: "flex-start", lg: "center" }}
@@ -36,7 +36,7 @@ import {
             </Text>
             {/* 검색 항목 수  */}
             <Text
-              color="#00AAFF"
+              color="transparent"
               fontSize="22px"
               fontWeight="700"
               lineHeight="100%"
@@ -52,7 +52,7 @@ import {
               건
             </Text> 
             </Flex>
-            <Button variant="action">추가</Button>
+            <Button variant="action" onClick={onReset}>추가</Button>
           </Flex>
 
     );

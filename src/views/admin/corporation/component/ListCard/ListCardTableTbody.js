@@ -4,13 +4,13 @@ import {
   import React from "react";
 import ListCardTableTr from "./ListCardTableTr";
   
-  const ListCardTableTbody = ({listData, onClickCorp}) => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
+  const ListCardTableTbody = ({listData}) => {
+    
     return (          
         <Tbody>
           {listData&&
             listData.map((data, index) =>{
-          return  <ListCardTableTr index={index} data={data} onClickCorp={onClickCorp} />
+          return  <ListCardTableTr index={index} data={data}  />
         })}
       </Tbody>
     );

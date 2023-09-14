@@ -103,6 +103,7 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Department,
   },
+  { 
     name: "Corporation",
     layout: "/admin",
     path: "/corporation",

@@ -7,11 +7,13 @@ import {
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";
   import { UseMouseOver } from "hook/UseMouseOver";
+  import { useDispatch } from "react-redux";
+  import { setDataPk } from "redux/solution";
 
-  const ListCardTableTr = ({data, index, onClickCorp}) => {
+  const ListCardTableTr = ({data, index}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-
+    const dispatch = useDispatch();
     return (          
               <Tr 
                 backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
@@ -19,7 +21,9 @@ import {
                 onMouseOver={() => {
                     onMouseOver(index)
                 }}
-                onClick={()=>onClickCorp(data.coCd)}
+                onClick={() => {
+                    dispatch(setDataPk(data.coCd));
+                  }}
               >
                 <Flex align="center">
                     <Td>
