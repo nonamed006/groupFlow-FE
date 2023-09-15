@@ -2,20 +2,17 @@ import {
     Flex,
     Text,
     Table,
-    Tbody,
     Th,
     Thead,
     Tr,
-    useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-  import React, { useState } from "react";
-import ListCardTableTr from "./ListCardTableTbody";
+  import React from "react";
 import ListCardTableTbody from "./ListCardTableTbody";
 
   const ListCardTable = ({headerGroups, listData }) => {
 
     return (
-          <Table variant="simple" color="gray.500">
+          <Table variant="simple" color="gray.500" >
             {/* Thead */}
             <Thead>
                 <Flex

@@ -14,7 +14,7 @@ const SearchCardBar = ({setUseYn,setKeyword, handleSearchBtn}) => {
 
 				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>사용여부</div></GridItem>
 				<GridItem colSpan={3}>
-					<Select colSpan={3} name='useYn' defaultValue='' borderRadius="14px" onChange={(e)=>{setUseYn(e.target.value)}} >
+					<Select colSpan={3} name='useYn' value='' borderRadius="14px" onChange={(e)=>{setUseYn(e.target.value)}} >
 						<option  value=''>전체</option>
 						<option value={1}>사용</option>
 						<option value={0}>미사용</option>

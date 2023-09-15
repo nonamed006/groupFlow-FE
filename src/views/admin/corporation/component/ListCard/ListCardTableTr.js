@@ -10,16 +10,16 @@ import {
   import { useDispatch } from "react-redux";
   import { setDataPk } from "redux/solution";
 
-  const ListCardTableTr = ({data, index}) => {
+  const ListCardTableTr = ({data, key}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     const dispatch = useDispatch();
     return (          
               <Tr 
-                backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+                backgroundColor={mouseOverIndex === key ? 'navy.50' : 'white'}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
-                    onMouseOver(index)
+                    onMouseOver(key)
                 }}
                 onClick={() => {
                     dispatch(setDataPk(data.coCd));

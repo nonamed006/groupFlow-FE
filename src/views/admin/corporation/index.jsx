@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import SearchCardBar from './component/SearchCardBar';
 import ListCard from './component/ListCard/ListCard';
 import InfoBox from './component/InfoBox/InfoBox';
+import { PORT } from "set";
 
 const Corporation = () => {
 
@@ -17,7 +18,7 @@ const Corporation = () => {
 
 	// 회사 목록 조회 및 검색
 	const fetchCorpList = () => {
-		let url = 'http://localhost:8080/corp';
+		let url = `${PORT}/corp`;
 
 		// URL 파라미터 생성
 		const params = new URLSearchParams();

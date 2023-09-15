@@ -1,18 +1,21 @@
-import { Box, Button, Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio, useDisclosure, Icon } from '@chakra-ui/react';
+import { Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio} from '@chakra-ui/react';
 import React, { useState } from "react";
 import { useEffect } from "react";
 import AddrBox from './AddrBox';
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
+import { formatDate } from "common";
+import { PORT } from "set";
 
-const InputGrid = ({ corp, setCorp }) => {
+const InputGrid = ({ corp, setCorp, isEditing }) => {
 
   const [sortValue, setSortValue] = useState();
-  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum, fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd } = corp; // 비구조화 할당을 통해 값 추출
+  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum,fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd } = corp; // 비구조화 할당을 통해 값 추출
+  const useYn =  new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
 
   useEffect(() => {
-    corp !== undefined ? setSortValue(corp.sort) : fetchMaxSort();
-  }, []);
+    isEditing? setSortValue(corp.sort) : fetchMaxSort();
+  }, [corp.coCd]);
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -25,7 +28,7 @@ const InputGrid = ({ corp, setCorp }) => {
 
   // 정렬 기본값 가져오기
   const fetchMaxSort = () => {
-    let url = `http://localhost:8080/corp/sort`;
+    let url = `${PORT}/corp/sort`;
     fetch(url, {
       method: "GET"
     }).then(res => res.json()).then(res => {
@@ -47,7 +50,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7} >
-          <Input id="coCd" name="coCd" size="md" boarder="1" borderRadius="14px" value={coCd} onChange={onChange} readOnly />
+          <Input id="coCd" name="coCd" size="md" boarder="1" borderRadius="14px" value={coCd} key={coCd} onChange={onChange} readOnly />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -56,10 +59,10 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colSpan={4}>
-          <RadioGroup defaultValue={corp.useYn}>
+          <RadioGroup  name="useYn"  defaultValue={useYn.toString()} key={coCd} >
             <HStack spacing="24px">
-              <Radio name="useYn" value="1" >사용</Radio>
-              <Radio name="useYn" value="0">미사용</Radio>
+              <Radio name="useYn" value="true" onChange={onChange} >사용</Radio>
+              <Radio name="useYn" value="false" onChange={onChange} >미사용</Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -70,7 +73,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} onChange={onChange} placeholder="회사명을 입력하세요." />
+          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} key={coCd} onChange={onChange} />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -79,17 +82,16 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} onChange={onChange} placeholder="회사약칭을 입력하세요." />
-
+          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange}  />
         </GridItem>
 
-        <GridItem colSpan={2}>
+        <GridItem colSpan={3}>
           <Text fontSize="sm" fontWeight="600">
-            <label htmlFor="stnd">행정표준코드</label>
+            행정표준코드
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={14}>
-          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} onChange={onChange} placeholder="행정표준코드를 입력하세요." />
+          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} key={coCd} onChange={onChange} />
         </GridItem>
 
         <GridItem colSpan={2} >
@@ -98,7 +100,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} onChange={onChange} placeholder="업태을 입력하세요." />
+          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} key={coCd}  onChange={onChange}  />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -107,7 +109,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} onChange={onChange} placeholder="업종을 입력하세요." />
+          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange}  />
         </GridItem>
 
         <GridItem colSpan={2}>
@@ -116,8 +118,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} onChange={onChange} placeholder="사업자번호를 입력하세요." />
-
+          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} key={coCd} onChange={onChange} />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -126,15 +127,23 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={12}>
-          <Select borderRadius="14px" id="bsCd" >
-            <option name="bsCd" value='option1' >개인</option>
-            <option name="bsCd" value='option1'>법인</option>
+          <Select borderRadius="14px" name="bsCd" onChange={onChange} placeholder='회사구분' style={{ color: "gray" }} >
+            <option 
+              name="bsCd" 
+              value='COA0001' 
+              selected={isEditing==true&&bsCd==='COA0001'?true:false} 
+            >개인</option>
+            <option 
+              name="bsCd" 
+              value='COA0002' 
+              selected={isEditing==true&&bsCd==='COA0002'?true:false} 
+            >법인</option>
           </Select>
         </GridItem>
         <GridItem colStart={12} colEnd={14}>
-          <Input id="coNum" name="coNum" size="md" borderRadius="14px" defaultValue={coNum} onChange={onChange} placeholder="법인번호를 입력하세요." />
+          <Input id="coNum" name="coNum" size="md" borderRadius="14px" defaultValue={coNum} key={coCd} onChange={onChange} placeholder="법인번호" />
         </GridItem>
-
+       
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
             설립일
@@ -146,43 +155,53 @@ const InputGrid = ({ corp, setCorp }) => {
             size="md"
             type="date"
             name='estDt'
-            defaultValue={estDt}
+            defaultValue={estDt!==null&&formatDate(estDt)}
             style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
           />
         </GridItem>
-        <GridItem colStart={8} colEnd={10}>
+        <GridItem colSpan={2} colStart={0} colEnd={2}>
           <Text fontSize="sm" fontWeight="600">
-            개/폐업일
+            개업일
           </Text>
         </GridItem>
-        <GridItem colStart={10} colEnd={12}>
+        <GridItem colStart={3} colEnd={7}>
           <Input
             placeholder="Select Date and Time"
             size="md"
             type="date"
             name='opDt'
-            defaultValue={opDt}
+            defaultValue={opDt!==null&&formatDate(opDt)}
             style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
           />
         </GridItem>
-        <GridItem colStart={12} colEnd={14}>
+        <GridItem colStart={8} colEnd={10}>
+          <Text fontSize="sm" fontWeight="600">
+            폐업일
+          </Text>
+        </GridItem>
+        <GridItem colStart={10} colEnd={14}>
           <Input
             placeholder="Select Date and Time"
             size="md"
             type="date"
             name='clsDt'
-            defaultValue={clsDt}
+            defaultValue={clsDt!==null&&formatDate(clsDt)}
             style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
           />
         </GridItem>
-
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
             대표자명
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="ceoNm" name="ceoNm" size="md" borderRadius="14px" defaultValue={ceoNm} onChange={onChange} placeholder="대표자명을 입력하세요." />
+          <Input id="ceoNm" name="ceoNm" size="md" borderRadius="14px" defaultValue={ceoNm} key={coCd} onChange={onChange}/>
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
           <Text fontSize="sm" fontWeight="600">
@@ -190,10 +209,9 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} onChange={onChange} placeholder="대표팩스를 입력하세요." />
+          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange}  />
         </GridItem>
-
-        <AddrBox title={'회사주소'} data={corp} setData={setCorp}/>
+        <AddrBox title={'회사주소'} data={corp} setData={setCorp} key={coCd}/>
 
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
@@ -201,7 +219,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="pageUrl" name="pageUrl" size="md" borderRadius="14px" defaultValue={pageUrl} onChange={onChange} placeholder="홈페이지 주소를 입력하세요." />
+          <Input id="pageUrl" name="pageUrl" size="md" borderRadius="14px" defaultValue={pageUrl} key={coCd} onChange={onChange} />
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
           <Text fontSize="sm" fontWeight="600">
@@ -209,7 +227,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} onChange={onChange} placeholder="기본도메인을 입력하세요." />
+          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} key={coCd} onChange={onChange}  />
         </GridItem>
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
@@ -217,7 +235,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sortValue} onChange={onChange} placeholder="정렬값을 입력하세요." />
+          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sortValue} key={coCd} onChange={onChange}  />
         </GridItem>
 
       </Grid>
