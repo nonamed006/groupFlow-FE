@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { minTimeDate } from "common";
 import React, { useState } from "react";
-import { MdAttachFile, MdFilePresent, MdPhone } from "react-icons/md";
+import { MdAttachFile} from "react-icons/md";
 import { useSelector } from "react-redux";
 
 const EmpTab1 = () => {

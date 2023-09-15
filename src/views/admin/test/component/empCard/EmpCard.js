@@ -121,6 +121,7 @@ const EmpCard = () => {
                   onMouseOver(index)
                 }}
                 onClick={() => {
+                  dispatch(setData({}));
                   dispatch(setData(emp[0]));
                   dispatch(setIsRead(true));
                 }} >
