@@ -1,43 +1,37 @@
 import {
-    Flex,
-    Text,
-    Table,
-    Th,
-    Thead,
-    Tr,
-  } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-  import React from "react";
+  Text,
+  Table,
+  Th,
+  Thead,
+  Tr,
+  Tbody,
+} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import React from "react";
+
 import ListCardTableTbody from "./ListCardTableTbody";
 
-  const ListCardTable = ({headerGroups, listData }) => {
+const ListCardTable = ({ headerGroups, listData }) => {
 
-    return (
-          <Table variant="simple" color="gray.500" >
-            {/* Thead */}
-            <Thead>
-                <Flex
-                  justify="space-between"
-                  align="center"
-                  fontSize={{ sm: "10px", lg: "12px" }}
-                  color="gray.400"
-                > 
-                    <Tr>
-                        {headerGroups.map((column, index) => (
-                            <Th key={index} borderColor="transparent">
-                                <Text>{column}</Text>
-                            </Th>
-                        ))}
-                    </Tr> 
-              </Flex>
-            </Thead>
+  return (
+    <Table variant="simple" color="gray.500"  w={'100%'} display={'inline-block'}>
+      {/* Thead */}
+      <Thead >
+        <Tr >
+          {headerGroups.map((column, index) => (
+            <Th key={index} borderColor="transparent" align="center" >
+              <Text>{column}</Text>
+            </Th>
+          ))}
+        </Tr>
+      </Thead>
 
-            {/* Tbody */}
-            <ListCardTableTbody listData={listData} />
+      {/* Tbody */}
+      <Tbody >
+        <ListCardTableTbody listData={listData} />
+      </Tbody>
+    </Table>
 
-          </Table>
+  );
+};
 
-    );
-  };
-  
-  export default ListCardTable;
-  
+export default ListCardTable;

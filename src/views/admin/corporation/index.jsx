@@ -5,16 +5,19 @@ import SearchCardBar from './component/SearchCardBar';
 import ListCard from './component/ListCard/ListCard';
 import InfoBox from './component/InfoBox/InfoBox';
 import { PORT } from "set";
+import { useDispatch, useSelector } from "react-redux";
+import { setChangeYn } from "redux/corporation";
 
 const Corporation = () => {
-
+	const dispatch = useDispatch();
+	const changeYn = useSelector((state) => state.corporation.changeYn);	// 삭제 변경 여부
 	const [corpList, setCorpList] = useState([]);	// 회사 데이터 목록
 	const [keyword, setKeyword] = useState('');	// 검색어
 	const [useYn, setUseYn] = useState('');	// 사용여부
 
 	useEffect(() => {
-		fetchCorpList();
-	}, []);
+		changeYn?dispatch(setChangeYn(false)):fetchCorpList();
+	}, [changeYn]);
 
 	// 회사 목록 조회 및 검색
 	const fetchCorpList = () => {
@@ -32,7 +35,6 @@ const Corporation = () => {
 		if (paramString) {
 			url += '?' + paramString;
 		}
-
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
@@ -55,7 +57,7 @@ const Corporation = () => {
 		 */
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
 			<Grid
-				h='1000px'
+				h='auto'
 				templateRows='repeat(11, 1fr)'
 				templateColumns='repeat(6, 1fr)'
 				gap={5}

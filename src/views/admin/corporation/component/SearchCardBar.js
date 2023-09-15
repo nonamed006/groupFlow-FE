@@ -22,7 +22,7 @@ const SearchCardBar = ({setUseYn,setKeyword, handleSearchBtn}) => {
 				</GridItem>
 				
 				<GridItem colStart={14} colEnd={14}>
-					<Button variant="brand" onClick={handleSearchBtn}>검색</Button>
+					<Button variant="brand" onClick={()=>{handleSearchBtn()}}>검색</Button>
 				</GridItem>
 			</Grid>
 		</Box>

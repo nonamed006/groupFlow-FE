@@ -1,21 +1,15 @@
 import { Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio} from '@chakra-ui/react';
-import React, { useState } from "react";
-import { useEffect } from "react";
-import AddrBox from './AddrBox';
+import React from "react";
+
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
 import { formatDate } from "common";
-import { PORT } from "set";
+import AddrBox from 'common/addressAPI/AddrBox';
 
-const InputGrid = ({ corp, setCorp, isEditing }) => {
+const InputGrid = ({ corp, setCorp }) => {
 
-  const [sortValue, setSortValue] = useState();
-  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum,fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd } = corp; // 비구조화 할당을 통해 값 추출
+  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum,fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd, sort } = corp; // 비구조화 할당을 통해 값 추출
   const useYn =  new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
-
-  useEffect(() => {
-    isEditing? setSortValue(corp.sort) : fetchMaxSort();
-  }, [corp.coCd]);
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -25,17 +19,6 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
     });
     console.log(corp);
   };
-
-  // 정렬 기본값 가져오기
-  const fetchMaxSort = () => {
-    let url = `${PORT}/corp/sort`;
-    fetch(url, {
-      method: "GET"
-    }).then(res => res.json()).then(res => {
-      setSortValue(res.strData);
-    });
-  };
-
 
   return (
     <>
@@ -127,16 +110,22 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={12}>
-          <Select borderRadius="14px" name="bsCd" onChange={onChange} placeholder='회사구분' style={{ color: "gray" }} >
+          <Select 
+            borderRadius="14px" 
+            name="bsCd" 
+            onChange={onChange} 
+            placeholder='회사구분'
+            style={{ color: "gray" }} 
+            defaultValue={bsCd}
+            key={coCd}
+           >
             <option 
               name="bsCd" 
               value='COA0001' 
-              selected={isEditing==true&&bsCd==='COA0001'?true:false} 
             >개인</option>
             <option 
               name="bsCd" 
               value='COA0002' 
-              selected={isEditing==true&&bsCd==='COA0002'?true:false} 
             >법인</option>
           </Select>
         </GridItem>
@@ -211,11 +200,12 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
         <GridItem colStart={10} colEnd={14}>
           <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange}  />
         </GridItem>
-        <AddrBox title={'회사주소'} data={corp} setData={setCorp} key={coCd}/>
+
+        <AddrBox title={'회사주소'} data={corp} setData={setCorp} dataPk={coCd}/>
 
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
-            홈페이지 주소
+            홈페이지
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
@@ -235,7 +225,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sortValue} key={coCd} onChange={onChange}  />
+          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sort} key={coCd} onChange={onChange}  />
         </GridItem>
 
       </Grid>

@@ -11,7 +11,10 @@ import ListCardBar from "./ListCardBar";
             {/* 목록 상단 */}
           <ListCardBar title={title} count={listData!==undefined?listData.length:0} />
             {/* 목록 테이블 */}
-          <ListCardTable headerGroups={headerGroups} listData={listData} />
+            <Box  w={'100%'} display={'inline-block'} >
+ <ListCardTable headerGroups={headerGroups} listData={listData} />
+            </Box>
+         
         </Box>
     );
   };

@@ -1,5 +1,4 @@
 import {
-    Flex,
     Td,
     Text,
     Tr,
@@ -10,43 +9,43 @@ import {
   import { useDispatch } from "react-redux";
   import { setDataPk } from "redux/solution";
 
-  const ListCardTableTr = ({data, key}) => {
+  const ListCardTableTr = ({data, index}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     const dispatch = useDispatch();
-    return (          
-              <Tr 
-                backgroundColor={mouseOverIndex === key ? 'navy.50' : 'white'}
+    return (        
+  
+              <Tr
+                backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
-                    onMouseOver(key)
+                    onMouseOver(index)
                 }}
                 onClick={() => {
                     dispatch(setDataPk(data.coCd));
                   }}
               >
-                <Flex align="center">
-                    <Td>
+             
+                    <Td align="center" >
                         <Text color={textColor} fontSize="sm" fontWeight="600">
                             {data.coCd}
                         </Text>
                     </Td>
-                    <Td>
+                    <Td align="center" >
                         <Text color={textColor} fontSize="sm" fontWeight="600">
                             {data.coNm}
                         </Text>
                     </Td>
-                    <Td>
+                    <Td align="center" >
                         <Text color={textColor} fontSize="sm" fontWeight="600">
                             {data.ceoNm}
                         </Text>
                     </Td>
-                    <Td>
+                    <Td align="center" >
                         <Text color={textColor} fontSize="sm" fontWeight="600">
                             {data.ccNm}
                         </Text>
                     </Td>
-                </Flex>
               </Tr>
 
 

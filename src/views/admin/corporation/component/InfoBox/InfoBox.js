@@ -5,25 +5,29 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { PORT } from "set";
+import { useDispatch } from "react-redux";
+import { setDataPk } from "redux/solution";
+import { setChangeYn } from "redux/corporation";
 
 const InfoBox = () => {
+    const dispatch = useDispatch();
     const coCd = useSelector((state) => state.solution.dataPk);
+
     const [isEditing, setIsEditing] = useState(false);  // 저장 및 수정 상태 (기본값 false - 저장) 
-
-    useEffect(() => {   
-        console.log(coCd);
-        
-        if(coCd !== 0){ // 선택된 coCd 값이 있다면(초기값 0이 아니라면) -> 저장 상태 - 회사 조회, isEditing - true
-           fetchCorp(coCd);
-            setIsEditing(true);
-        }else{
-             onReset();
-            setIsEditing(false);
-        }
-    }, [coCd]);
-
     // 초기 회사 데이터 값
     const [corp, setCorp] = useState({}); // 회사 데이터 (하나)
+    const [sortValue, setSortValue] = useState();   // 초기 정렬 기본값
+
+    useEffect(() => {
+        if (coCd !== 0) { // 선택된 coCd 값이 있다면(초기값 0이 아니라면) 
+            fetchCorp(coCd);    // coCd로 회사 조회
+            setIsEditing(true);
+        } else {
+            fetchMaxSort();
+            onReset();
+            setIsEditing(false);
+        }
+    }, [coCd, isEditing]);
 
     const onReset = () => {
         setCorp({
@@ -41,16 +45,26 @@ const InfoBox = () => {
             clsDt: '',
             coDomain: '',
             pageUrl: '',
-            sort: '',
             fax: '',
             stnd: '',
             useYn: true,
             postNum: '',
             addr: '',
             addrDetail: '',
-            delYn: false
+            delYn: false,
+            sort: sortValue
         });
     }
+    // 정렬 기본값 가져오기
+    const fetchMaxSort = () => {
+        let url = `${PORT}/corp/sort`;
+        fetch(url, {
+            method: "GET"
+        }).then(res => res.json()).then(res => {
+            setSortValue(res.strData);
+        });
+    };
+
     // 회사 조회
     const fetchCorp = (coCd) => {
         let url = `${PORT}/corp/${coCd}`;
@@ -58,33 +72,31 @@ const InfoBox = () => {
             method: "GET"
         }).then(res => res.json()).then(res => {
             let data = res.voData;
-           
-            if (data !== null) {
-                onReset();
-             setCorp({
-                coCd: data.coCd,
-                coNm: data.coNm,
-                coAbb: data.coAbb,
-                ceoNm: data.ceoNm,
-                bsType: data.bsType,
-                bsStock: data.bsStock,
-                bsCd: data.bsCd,
-                ccNm: data.ccNm,
-                coNum: data.coNum,
-                estDt: data.estDt,
-                opDt: data.opDt,
-                clsDt: data.clsDt,
-                coDomain: data.coDomain,
-                pageUrl: data.pageUrl,
-                sort: data.sort,
-                fax: data.fax,
-                stnd: data.stnd,
-                useYn: data.useYn,
-                postNum: data.postNum,
-                addr: data.addr,
-                addrDetail: data.addrDetail,
-                delYn: data.delYn,
-            });}
+            data !== null &&
+                setCorp({
+                    coCd: data.coCd,
+                    coNm: data.coNm,
+                    coAbb: data.coAbb,
+                    ceoNm: data.ceoNm,
+                    bsType: data.bsType,
+                    bsStock: data.bsStock,
+                    bsCd: data.bsCd,
+                    ccNm: data.ccNm,
+                    coNum: data.coNum,
+                    estDt: data.estDt,
+                    opDt: data.opDt,
+                    clsDt: data.clsDt,
+                    coDomain: data.coDomain,
+                    pageUrl: data.pageUrl,
+                    sort: data.sort,
+                    fax: data.fax,
+                    stnd: data.stnd,
+                    useYn: data.useYn,
+                    postNum: data.postNum,
+                    addr: data.addr,
+                    addrDetail: data.addrDetail,
+                    delYn: data.delYn,
+                });
         });
     };
 
@@ -101,8 +113,10 @@ const InfoBox = () => {
         }).then(res => res.json()).then(res => {
             console.log(res);
             alert(res.resultMsg);
+            dispatch(setChangeYn(true));    // 변경 여부 변경
         });
     };
+
     // 회사 정보 수정
     const fetchCorpUpdate = () => {
         let url = `${PORT}/corp`;
@@ -115,31 +129,37 @@ const InfoBox = () => {
         }).then(res => res.json()).then(res => {
             console.log(res);
             alert(res.resultMsg);
+            dispatch(setChangeYn(true));    // 변경 여부 변경
         });
     };
+
     // 회사 삭제
-    const fetchCorpDelete = (coCd) => {
+    const fetchCorpDelete = () => {
         let url = `${PORT}/corp/${coCd}`;
         fetch(url, {
             method: "PUT",
         }).then(res => res.json()).then(res => {
             alert(res.resultMsg);
+            dispatch(setDataPk(0)); // coCd 초기화
+            dispatch(setChangeYn(true));    // 변경 여부 변경
         });
     };
+
     // 삭제 버튼 클릭 시
-    const handelDeleteBtn = (coCd) => {
+    const handelDeleteBtn = () => {
         fetchCorpDelete(coCd);
     }
+
     // 저장 버튼 클릭 시
     const handelSaveBtn = () => {
-        isEditing? fetchCorpUpdate() : fetchCorpSave(); 
+        isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
     }
 
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
-            <InfoBoxBar coCd={coCd} handelDeleteBtn={handelDeleteBtn} handelSaveBtn={handelSaveBtn} />
+            <InfoBoxBar title={'기본정보'} handelDeleteBtn={handelDeleteBtn} handelSaveBtn={handelSaveBtn} />
             <Box>
-                <InputGrid corp={corp} setCorp={setCorp} isEditing={isEditing}/>
+                <InputGrid corp={corp} setCorp={setCorp} />
             </Box>
         </Box>
     );
