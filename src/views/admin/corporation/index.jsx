@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Button, useDisclosure } from '@chakra-ui/react';
 import React, { useState } from "react";
 import { useEffect } from "react";
 import SearchCardBar from './component/SearchCardBar';
@@ -7,6 +7,7 @@ import InfoBox from './component/InfoBox/InfoBox';
 import { PORT } from "set";
 import { useDispatch, useSelector } from "react-redux";
 import { setChangeYn } from "redux/corporation";
+import OrgChartModal from 'common/orgChart/OrgChartModal';
 
 const Corporation = () => {
 	const dispatch = useDispatch();
@@ -15,8 +16,10 @@ const Corporation = () => {
 	const [keyword, setKeyword] = useState('');	// 검색어
 	const [useYn, setUseYn] = useState('');	// 사용여부
 
+	const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
+
 	useEffect(() => {
-		changeYn?dispatch(setChangeYn(false)):fetchCorpList();
+		changeYn ? dispatch(setChangeYn(false)) : fetchCorpList();
 	}, [changeYn]);
 
 	// 회사 목록 조회 및 검색
@@ -29,7 +32,7 @@ const Corporation = () => {
 			params.append('keyword', keyword);
 		if (useYn !== '')
 			params.append('useYn', useYn);
-			
+
 		// URL에 파라미터 추가
 		const paramString = params.toString();
 		if (paramString) {
@@ -65,6 +68,9 @@ const Corporation = () => {
 					<InfoBox />
 				</GridItem>
 			</Grid>
+
+			<Button onClick={onOpen}>조직도</Button>
+			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null}
 		</Box>
 	);
 };

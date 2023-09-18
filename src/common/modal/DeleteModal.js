@@ -4,7 +4,7 @@ import ModalLayout from "./ModalLayout";
 
   const DeleteModal = ({ isOpen,onClose, handleCheck }) => {
     return (
-      <ModalLayout title={'삭제여부'} onClose={onClose} isOpen={isOpen} buttonYn={true} handleCheck={handleCheck}>
+      <ModalLayout title={'삭제여부'} onClose={onClose} isOpen={isOpen} buttonYn={true} size={'md'} handleCheck={handleCheck}>
             <Box>
                 <Text>삭제하시겠습니까?</Text>
             </Box>
