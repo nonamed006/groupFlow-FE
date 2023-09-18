@@ -13,7 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { minTimeDate } from "common";
 import { useSelector } from "react-redux";
-import AddrModal from "views/admin/corporation/component/InfoBox/AddrModal";
+import AddrModal from "common/addressAPI/AddrModal";
+
 
 const EmpTab2 = () => {
   const isReadStatus = useSelector((state) => state.emp.isRead);
