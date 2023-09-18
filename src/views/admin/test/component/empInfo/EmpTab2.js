@@ -16,9 +16,9 @@ import { useSelector } from "react-redux";
 import AddrModal from "views/admin/corporation/component/InfoBox/AddrModal";
 
 const EmpTab2 = () => {
-  const empInfo = useSelector((state) => state.solution.dataList);
-  const isReadStatus = useSelector((state) => state.solution.isRead);
+  const isReadStatus = useSelector((state) => state.emp.isRead);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const empDept = useSelector((state) => state.emp.empDept);
 
   const [postNum, setPostNum] = useState("");
   const [addr, setAddr] = useState("");
@@ -63,7 +63,7 @@ const EmpTab2 = () => {
             placeholder="사번"
             size="md"
             borderRadius="14px"
-            value={empInfo?.dpGrpNum}
+            value={empDept?.dpGrpNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -79,7 +79,7 @@ const EmpTab2 = () => {
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empInfo?.telNum}
+            value={empDept?.telNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -195,7 +195,7 @@ const EmpTab2 = () => {
             placeholder="상세업무를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.payMail}
+            value={empDept?.payMail}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -212,7 +212,7 @@ const EmpTab2 = () => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.joinDt)}
+            value={minTimeDate(empDept?.joinDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -224,7 +224,7 @@ const EmpTab2 = () => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empInfo?.reDt)}
+            value={minTimeDate(empDept?.reDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -240,7 +240,7 @@ const EmpTab2 = () => {
             placeholder="팩스번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.faxNum}
+            value={empDept?.faxNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -255,7 +255,7 @@ const EmpTab2 = () => {
             placeholder="전화번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empInfo?.empNm}
+            value={empDept?.empNm}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -271,7 +271,7 @@ const EmpTab2 = () => {
             name="postNum"
             size="md"
             borderRadius="14px"
-            value={empInfo?.postNum}
+            value={empDept?.postNum}
             placeholder="우편번호"
             readOnly
           />
@@ -287,7 +287,7 @@ const EmpTab2 = () => {
             name="addr"
             size="md"
             borderRadius="14px"
-            value={empInfo?.addr}
+            value={empDept?.addr}
             placeholder="주소를 선택하세요"
             readOnly
           />
@@ -298,7 +298,7 @@ const EmpTab2 = () => {
             name="addrDetail"
             size="md"
             borderRadius="14px"
-            defaultValue={empInfo?.addrDetail}
+            defaultValue={empDept?.addrDetail}
             placeholder="상세주소를 입력하세요."
           />
         </GridItem>
