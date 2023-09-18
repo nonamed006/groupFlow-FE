@@ -23,9 +23,9 @@ const InfoBox = () => {
     useEffect(() => {
         if (coCd !== 0) { // 선택된 coCd 값이 있다면(초기값 0이 아니라면) 
             fetchCorp(coCd);    // coCd로 회사 조회
-            setIsEditing(true);
+            setIsEditing(true); // 수정모드
         } else {
-            fetchMaxSort();
+            fetchMaxSort(); // 초기 정렬 기본값 가져오기
             onReset();
             setIsEditing(false);
         }
@@ -113,7 +113,6 @@ const InfoBox = () => {
             },
             body: JSON.stringify(corp)
         }).then(res => res.json()).then(res => {
-            console.log(res);
             alert(res.resultMsg);
             dispatch(setChangeYn(true));    // 변경 여부 변경
         });
@@ -129,7 +128,6 @@ const InfoBox = () => {
             },
             body: JSON.stringify(corp)
         }).then(res => res.json()).then(res => {
-            console.log(res);
             alert(res.resultMsg);
             dispatch(setChangeYn(true));    // 변경 여부 변경
         });
@@ -160,16 +158,17 @@ const InfoBox = () => {
 
     return (
         <>
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
-            <InfoBoxBar title={'기본정보'} onOpen={onOpen} handelSaveBtn={handelSaveBtn} />
-            <Box>
-                <InputGrid corp={corp} setCorp={setCorp} />
+            <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
+                <InfoBoxBar title={'기본정보'} onOpen={onOpen} handelSaveBtn={handelSaveBtn} />
+                <Box>
+                    <InputGrid corp={corp} setCorp={setCorp} />
+                </Box>
             </Box>
-        </Box>
 
-         {/* 삭제 모달 */}
-         {isOpen? <DeleteModal isOpen={isOpen} onClose={onClose} handelDeleteBtn={handelDeleteBtn}/>:''}
-         </>
+            {/* 삭제 확인 모달 */}
+            {isOpen ? <DeleteModal isOpen={isOpen} onClose={onClose} handleCheck={handelDeleteBtn} /> : ''}
+            
+        </>
     );
 
 };

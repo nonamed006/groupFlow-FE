@@ -10,7 +10,7 @@ import { setChangeYn } from "redux/corporation";
 
 const Corporation = () => {
 	const dispatch = useDispatch();
-	const changeYn = useSelector((state) => state.corporation.changeYn);	// 삭제 변경 여부
+	const changeYn = useSelector((state) => state.corporation.changeYn);	// 변경 여부(회사목록 리렌더링 조건)
 	const [corpList, setCorpList] = useState([]);	// 회사 데이터 목록
 	const [keyword, setKeyword] = useState('');	// 검색어
 	const [useYn, setUseYn] = useState('');	// 사용여부
@@ -48,13 +48,6 @@ const Corporation = () => {
 	}
 
 	return (
-		//헤더 공간 제외한 div 공간 지정
-		/**
-		 * h: 그리드 총 높이
-		 * templateRows 세로 칸 수
-		 * templateColumns 세로 칸 수
-		 * gap 마진 비슷 값 클수록 그리드 안의 요소 서로 멀어짐
-		 */
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
 			<Grid
 				h='auto'
