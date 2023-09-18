@@ -21,17 +21,21 @@ import {
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import EmpTab1 from "./EmpTab1";
 import EmpTab2 from "./EmpTab2";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { PORT } from "set";
 import { MdAttachFile } from "react-icons/md";
 import { minTimeDate } from "common";
-import { setIsRead } from "redux/solution";
+import { setIsRead } from "redux/emp";
 import { setEmpList } from "redux/emp";
 
 const EmpInfo = () => {
-  const empList = useSelector((state) => state.solution.dataList);
-  const isReadStatus = useSelector((state) => state.solution.isRead);
+
+  //리덕스
+	const dispatch = useDispatch();
+
+  const empList = useSelector((state) => state.emp.empList);
+  const isReadStatus = useSelector((state) => state.emp.isRead);
 
   const [tabStatus, setTabStatus] = useState(1);
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
@@ -53,8 +57,6 @@ const EmpInfo = () => {
     useYn: "1",
     gender: "M",
   });
-  //const [tabStatus, setTabStatus] = useState(1);
-  //let tabStatus = 1;
 
   // 파일 등록 버튼
   const fileUploadBtn = () => {
@@ -112,11 +114,27 @@ const EmpInfo = () => {
       useYn: "1",
       gender: "M",
     });
-    setEmpList({});
-    setIsRead(true);
-    console.log("asfasfad", empList);
+    //스토어에 값 바꿔주기
+    dispatch(setEmpList({
+      empNm: '',
+      mailId: '',
+      loginId: '',
+      loginPw: '',
+      signPw: '',
+      psnMail: '',
+      payMail: '',
+      empTel: '',
+      postNum: '',
+      addr: '',
+      addrDetail: '',
+      joinDt: '',
+      workTypeCd: '',
+      useYn: "1",
+      gender: "M",
+    }));
   }
 
+  //사원 등록
   const insertEmp = () => {
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
@@ -150,6 +168,8 @@ const EmpInfo = () => {
       });
   };
 
+
+
   return (
     <div>
       <Box borderRadius="lg" bg="white" h="700px" p="6">
@@ -180,13 +200,13 @@ const EmpInfo = () => {
               <Flex>
                 {isReadStatus ? (
                   <Stack direction="row" spacing={4} align="center">
-                  <Button variant="action" onClick={() => insertEmp()}>
+                  <Button variant="action" onClick={{}}>
                     ID 변경
                   </Button>
-                  <Button variant="action" onClick={() => insertEmp()}>
+                  <Button variant="action" onClick={()=>{alert("asd");}}>
                     비밀번호 초기화
                   </Button>
-                  <Button variant="action" onClick={() => insertEmp()}>
+                  <Button variant="action" onClick={{}}>
                     퇴사처리
                   </Button>
                 </Stack>
@@ -195,9 +215,7 @@ const EmpInfo = () => {
                     <Button variant="brand" onClick={() => insertEmp()}>
                       저장
                     </Button>
-                    <Button variant="action" onClick={()=>{
-                      resetInput();
-                      }}>취소</Button>
+                    <Button variant="action" onClick={()=>{dispatch(setIsRead(true)); resetInput();}}>취소</Button>
                   </Stack>
                 )}
               </Flex>
@@ -258,7 +276,7 @@ const EmpInfo = () => {
                     placeholder="example@mail.com"
                     size="md"
                     borderRadius="14px"
-                    value={empList?.psnMail}
+                    value={empList.psnMail}
                     isReadOnly={isReadStatus}
                     onChange={handleChange}
                   />
@@ -328,7 +346,7 @@ const EmpInfo = () => {
                     placeholder="이름"
                     size="md"
                     borderRadius="14px"
-                    value={empList?.empNm}
+                    value={empList.empNm}
                     isReadOnly={isReadStatus}
                     onChange={handleChange}
                   />
@@ -427,6 +445,7 @@ const EmpInfo = () => {
                     size="md"
                     borderRadius="14px"
                     name="loginPw"
+                    type="password"
                     value={empList?.loginPw}
                     isReadOnly={isReadStatus}
                     onChange={handleChange}
@@ -444,6 +463,7 @@ const EmpInfo = () => {
                     placeholder="example@mail.com"
                     size="md"
                     borderRadius="14px"
+                    type="password"
                     value={empList?.signPw}
                     isReadOnly={isReadStatus}
                     onChange={handleChange}
@@ -498,7 +518,7 @@ const EmpInfo = () => {
               </Grid>
             </TabPanel>
             <TabPanel>
-              <EmpTab2 />
+              <EmpTab2/>
             </TabPanel>
           </TabPanels>
         </Tabs>

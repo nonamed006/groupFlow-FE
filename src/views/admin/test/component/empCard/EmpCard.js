@@ -19,8 +19,9 @@ import { PORT } from "set";
 import { minTimeDate } from "common";
 import { UseMouseOver } from "hook/UseMouseOver";
 import { useDispatch } from "react-redux";
-import { setIsRead } from "redux/solution";
-import { setData } from "redux/solution";
+import { setIsRead } from "redux/emp";
+import { setEmpList } from "redux/emp";
+import { setEmpDept } from "redux/emp";
 
 const EmpCard = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -38,8 +39,9 @@ const EmpCard = () => {
   const [empNum, setEmpNum] = useState();
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
+  //사원 목록 조회
   const getEmpList = (searchCorp, searchWorkType, searchNm) => {
-    fetch(`${PORT}/emp/getEmp/${searchCorp}/${searchWorkType}/${searchNm}`, {
+    fetch(`${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`, {
       method: "GET",
       // res에 결과가 들어옴
     })
@@ -50,9 +52,26 @@ const EmpCard = () => {
       });
   };
 
+   // 사원의 조직 정보
+   const getDeptInfo = (empCd) =>{
+		fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
+			method : "GET"
+		}).then(res=>res.json())
+			.then(res=>{
+        dispatch(setEmpDept(res.data));
+			});
+  }
+
+  // 사원 목록 클릭시
+  const onEmpRow = (empList) => {
+    getDeptInfo(empList.empCd);
+    dispatch(setEmpList({}));
+    dispatch(setEmpList(empList));
+    dispatch(setIsRead(true));
+  }
 
   useEffect(() => {
-    getEmpList("noSearch", "noSearch", "noSearch");
+    getEmpList("", "", "");
   }, []);
 
 
@@ -121,9 +140,7 @@ const EmpCard = () => {
                   onMouseOver(index)
                 }}
                 onClick={() => {
-                  dispatch(setData({}));
-                  dispatch(setData(emp[0]));
-                  dispatch(setIsRead(true));
+                  onEmpRow(column);
                 }} >
                 <Td
                   fontSize={{ sm: "14px" }}
