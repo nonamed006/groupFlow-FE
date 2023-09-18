@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // chakra imports
 import {
@@ -14,8 +14,6 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import Content from "components/sidebar/components/Content";
-import ContentGNB from "./components/ContentGNB";
-import ContentLNB from "./components/ContentLNB";
 import {
   renderThumb,
   renderTrack,
@@ -27,31 +25,8 @@ import PropTypes from "prop-types";
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
 
-/*
-작업자 : 이혜윤
-작업명 : Sidebar.js
- - 왼쪽 고정 메뉴
- - 메뉴 아이콘 마우스오버 시 GNB 나오도록 작업
-*/
-
 function Sidebar(props) {
   const { routes } = props;
-	const { collapse } = props;
-  const { setCollapse } = props;
-  const [ GNBcollapse, setGNBCollapse ] = useState(collapse);
-	const [ LNBcollapse, setLNBCollapse ] = useState(false);
-  const [ route, setRoute ] = useState();
-  useEffect(() => {
-    return setGNBCollapse(collapse);
-  }, [collapse])
-
-  useEffect(() => {
-    if(route != null && route.items != null) {
-      return setLNBCollapse(true);
-    } else {
-      return setLNBCollapse(false);
-    }
-  }, [route]);
 
   let variantChange = "0.2s linear";
   let shadow = useColorModeValue(
@@ -65,55 +40,23 @@ function Sidebar(props) {
   // SIDEBAR
   return (
     <Box display={{ sm: "none", xl: "block" }} w="100%" position='fixed' minH='100%'>
-          <Box
-            bg={sidebarBg}
-            // borderRight='1px'
-            // borderRightColor='gray'
-				    w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-            maxW={LNBcollapse ? 300 : 70}
-            h='100vh'
-            m={sidebarMargins}
-            minH='100%'
-            overflowX='hidden'
-            position='absolute'
-            display={LNBcollapse ? 'block' : 'none'}
-          >
-            <Scrollbars
-              autoHide
-              renderTrackVertical={renderTrack}
-              renderThumbVertical={renderThumb}
-              renderView={renderView}>
-              <ContentLNB routes={routes} route={route} collapse={collapse} LNBroute={setRoute} setCollapse={setCollapse}/>
-            </Scrollbars>
-          </Box>
-
-          {/* GNB 영역 추가 */}
-          <Box
-            bg={sidebarBg}
-            // borderRight='1px'
-            // borderRightColor='gray'
-				    w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-            maxW={GNBcollapse ? 300 : 70}
-            h='100vh'
-            m={sidebarMargins}
-            minH='100%'
-            overflowX='hidden'
-            position='absolute'
-          >
-            <Scrollbars
-              autoHide
-              renderTrackVertical={renderTrack}
-              renderThumbVertical={renderThumb}
-              renderView={renderView}
-              onClick={() => {
-                  setGNBCollapse(false);
-                }
-              }
-              onMouseOver={() => setGNBCollapse(true)}>
-              <ContentGNB routes={routes} collapse={GNBcollapse} LNBroute={setRoute}/>
-            </Scrollbars>
-          </Box>
-      {/* ! GNB 영역 추가 */}
+      <Box
+        bg={sidebarBg}
+        transition={variantChange}
+        w='300px'
+        h='100vh'
+        m={sidebarMargins}
+        minH='100%'
+        overflowX='hidden'
+        boxShadow={shadow}>
+        <Scrollbars
+          autoHide
+          renderTrackVertical={renderTrack}
+          renderThumbVertical={renderThumb}
+          renderView={renderView}>
+          <Content routes={routes} />
+        </Scrollbars>
+      </Box>
     </Box>
   );
 }
@@ -127,6 +70,7 @@ export function SidebarResponsive(props) {
   const btnRef = React.useRef();
 
   const { routes } = props;
+  // let isWindows = navigator.platform.startsWith("Win");
   //  BRAND
 
   return (
