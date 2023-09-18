@@ -16,16 +16,18 @@ import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Test from "views/admin/test";
-import Department from "views/admin/department";
 import Corporation from "views/admin/corporation";
+import Department from "views/admin/department";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+
 
 // 원본 horizon-ui
 // https://horizon-ui.com/
 // 참고문서
 // https://horizon-ui.com/components
 // https://horizon-ui.com/documentation/docs/introduction
+// https://chakra-ui.com/getting-started
 
 /*
   route.js에 대한 설명
@@ -103,7 +105,7 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Department,
   },
-  { 
+  {
     name: "Corporation",
     layout: "/admin",
     path: "/corporation",

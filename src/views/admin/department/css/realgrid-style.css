@@ -77,6 +77,7 @@ background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz
 .rg-tree-renderer{
     display: flex;flex-direction: row;
     max-height: 50px;
+    padding-left: 50px !important;
 }
 
 .rg-tree-icon {
@@ -85,9 +86,7 @@ background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz
     margin-right: 6px;
     width: 16px; }
 
-.rg-tree-renderer {
-  padding-left: 0 !important;
-  text-align: left !important; }
+  
 
 .rg-renderer {
   border: none;

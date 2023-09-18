@@ -1,8 +1,8 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import SearchCardBar from './component/SearchCardBar';
-import EmpCard from './component/EmpCard';
-import EmpInfo from './component/EmpInfo';
+import EmpCard from './component/empCard/EmpCard';
+import EmpInfo from './component/empInfo/EmpInfo';
 
 const test = () => {
 	return (
