@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
@@ -8,11 +8,13 @@ import { PORT } from "set";
 import { useDispatch } from "react-redux";
 import { setDataPk } from "redux/solution";
 import { setChangeYn } from "redux/corporation";
+import DeleteModal from "common/modal/DeleteModal";
 
 const InfoBox = () => {
     const dispatch = useDispatch();
     const coCd = useSelector((state) => state.solution.dataPk);
 
+    const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
     const [isEditing, setIsEditing] = useState(false);  // 저장 및 수정 상태 (기본값 false - 저장) 
     // 초기 회사 데이터 값
     const [corp, setCorp] = useState({}); // 회사 데이터 (하나)
@@ -148,6 +150,7 @@ const InfoBox = () => {
     // 삭제 버튼 클릭 시
     const handelDeleteBtn = () => {
         fetchCorpDelete(coCd);
+        onClose();
     }
 
     // 저장 버튼 클릭 시
@@ -156,13 +159,19 @@ const InfoBox = () => {
     }
 
     return (
+        <>
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
-            <InfoBoxBar title={'기본정보'} handelDeleteBtn={handelDeleteBtn} handelSaveBtn={handelSaveBtn} />
+            <InfoBoxBar title={'기본정보'} onOpen={onOpen} handelSaveBtn={handelSaveBtn} />
             <Box>
                 <InputGrid corp={corp} setCorp={setCorp} />
             </Box>
         </Box>
+
+         {/* 삭제 모달 */}
+         {isOpen? <DeleteModal isOpen={isOpen} onClose={onClose} handelDeleteBtn={handelDeleteBtn}/>:''}
+         </>
     );
+
 };
 
 export default InfoBox;

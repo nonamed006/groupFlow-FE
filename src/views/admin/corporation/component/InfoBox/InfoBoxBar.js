@@ -1,7 +1,7 @@
 import { Button, Text, Flex, useColorModeValue} from '@chakra-ui/react/dist/chakra-ui-react.cjs';
 import React from 'react';
 
-const InfoBoxBar = ({title, handelDeleteBtn, handelSaveBtn}) => {
+const InfoBoxBar = ({title, onOpen, handelSaveBtn}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     return (
             <Flex
@@ -23,7 +23,7 @@ const InfoBoxBar = ({title, handelDeleteBtn, handelSaveBtn}) => {
             
             <Flex>
                 <Button variant="brand" onClick={handelSaveBtn}>저장</Button>
-                <Button variant="action" onClick={handelDeleteBtn}>삭제</Button>
+                <Button variant="action" onClick={onOpen}>삭제</Button>
                 <Button variant="action">변경이력</Button>
             </Flex>
           </Flex>

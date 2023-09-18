@@ -36,6 +36,7 @@ import AddrModal from './AddrModal';
                     <Input id="postNum" name="postNum"  size="md" borderRadius="14px" value={data&&data.postNum} placeholder="우편번호" readOnly/>
                </GridItem>
                 <GridItem colStart={7} colEnd={14}>
+                  {/* 우편번호 찾기 버튼만 따로 빼도 됨 */}
                     <Button id="postNumBtn" onClick={onOpen}> 
                       <Text fontSize="sm" fontWeight="600">
                          우편번호 찾기
