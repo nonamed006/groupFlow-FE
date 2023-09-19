@@ -7,6 +7,7 @@ import {
   Input,
   Radio,
   RadioGroup,
+  Select,
   Spacer,
   Tab,
   TabList,
@@ -14,35 +15,13 @@ import {
   TabPanels,
   Tabs,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import { setInput } from "common";
-import React, { useEffect, useState } from "react";
+import { minTimeDate } from "common";
 import { useSelector } from "react-redux";
-import { PORT } from "set";
 
 const EmpInfo = () => {
-
-  const getEmpNum = (empNum) => {
-    fetch(`${PORT}/emp/getEmpDetail/${empNum}`, {
-      method: "GET",
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("zzz", res.data);
-        //setEmpInfo(res.data);
-        setInput("empDetail", res.data[0]);
-      });
-  };
-
-  const empNum = useSelector((state) => state.solution.dataPk);
-
-  useEffect(() => {
-    if(empNum != 0){
-      getEmpNum(empNum);
-    }
-  }, [empNum]);
+  const empInfo = useSelector((state) => state.solution.dataList);
+  const isReadStatus = useSelector((state) => state.solution.isRead);
 
   return (
     <div>
@@ -61,200 +40,341 @@ const EmpInfo = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <form id="empDetail">
-                <Grid
-                  templateColumns="repeat(13, 1fr)"
-                  templateRows="repeat(12, 1fr)"
-                  gap={2}
-                >
-                  <GridItem colSpan={2} rowSpan={3}>
-                    <Text fontSize="sm" fontWeight="600">
-                      사진
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7} rowSpan={3}>
-                    <Input
-                      placeholder="이름"
-                      size="md"
-                      borderRadius="14px"
-                      name="empNm"
-                    />
-                  </GridItem>
+              <Grid
+                templateColumns="repeat(13, 1fr)"
+                templateRows="repeat(12, 1fr)"
+                gap={2}
+              >
+                <GridItem colSpan={2} rowSpan={3}>
+                  <Text fontSize="sm" fontWeight="600">
+                    사진
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7} rowSpan={3}>
+                  <Input placeholder="이름" size="md" borderRadius="14px" isReadOnly={false}/>
+                </GridItem>
 
-                  <GridItem colStart={8} colEnd={10}>
-                    <Text fontSize="sm" fontWeight="600">
-                      개인메일
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={10} colEnd={14}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                      name="empId"
-                    />
-                  </GridItem>
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    개인메일
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empMail || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colStart={8} colEnd={10}>
-                    <Text fontSize="sm" fontWeight="600">
-                      급여메일
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={10} colEnd={14}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    급여메일
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.payMail || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colStart={8} colEnd={10}>
-                    <Text fontSize="sm" fontWeight="600">
-                      최초입사일
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={10} colEnd={14}>
-                    <Input
-                      placeholder="Select Date and Time"
-                      size="md"
-                      type="date"
-                      style={{ color: "gray" }}
-                    />
-                  </GridItem>
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    최초입사일
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <Input
+                    placeholder="Select Date and Time"
+                    size="md"
+                    type="date"
+                    style={{ color: "gray" }}
+                    value={minTimeDate(empInfo?.joinDt) || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem>
-                    <Text fontSize="sm" fontWeight="600">
-                      이름
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input placeholder="이름" size="md" borderRadius="14px" />
-                  </GridItem>
+                <GridItem>
+                  <Text fontSize="sm" fontWeight="600">
+                    이름
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="이름"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empNm || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colStart={8} colEnd={10}>
-                    <Text fontSize="sm" fontWeight="600">
-                      최종퇴사일
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={10} colEnd={14}>
-                    <Input
-                      placeholder="Select Date and Time"
-                      size="md"
-                      type="date"
-                      style={{ color: "gray" }}
-                    />
-                  </GridItem>
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    최종퇴사일
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <Input
+                    placeholder="Select Date and Time"
+                    size="md"
+                    type="date"
+                    style={{ color: "gray" }}
+                    value={minTimeDate(empInfo?.reDt) || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      성별
-                    </Text>
-                  </GridItem>
-                  <GridItem colSpan={4}>
-                    <RadioGroup defaultValue="M">
-                      <HStack spacing="24px">
-                        <Radio value="M">남성</Radio>
-                        <Radio value="F">여성</Radio>
-                      </HStack>
-                    </RadioGroup>
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    성별
+                  </Text>
+                </GridItem>
+                <GridItem colSpan={4}>
+                  <RadioGroup defaultValue="M">
+                    <HStack spacing="24px">
+                      <Radio value="M" name="gender" isReadOnly={isReadStatus}>
+                        남성
+                      </Radio>
+                      <Radio value="F" name="gender" isReadOnly={isReadStatus}>
+                        여성
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
+                </GridItem>
 
-                  <GridItem colStart={8} colEnd={10} rowSpan={8}>
-                    <Text fontSize="sm" fontWeight="600">
-                      계정사용
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={10} colEnd={14} rowSpan={8}>
-                    <RadioGroup defaultValue="M">
-                      <HStack spacing="24px">
-                        <Radio value="M">사용</Radio>
-                        <Radio value="F">미사용</Radio>
-                      </HStack>
-                    </RadioGroup>
-                  </GridItem>
+                <GridItem colStart={8} colEnd={10} rowSpan={8}>
+                  <Text fontSize="sm" fontWeight="600">
+                    계정사용
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14} rowSpan={8}>
+                  <RadioGroup defaultValue="1">
+                    <HStack spacing="24px" >
+                      <Radio value="1" name="useYn" isReadOnly={isReadStatus}>
+                        사용
+                      </Radio>
+                      <Radio value="0" name="useYn" isReadOnly={isReadStatus}>
+                        미사용
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      메일ID
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    메일ID
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empEmail || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      로그인ID
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    로그인ID
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empId || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      로그인 비밀번호
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    로그인 비밀번호
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    name="loginPw"
+                    value={empInfo?.loginPw || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      결재 비밀번호
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    결재 비밀번호
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.signPw || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      휴대전화
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    휴대전화
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    name="empTel"
+                    value={empInfo?.empTel || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
 
-                  <GridItem colSpan={2}>
-                    <Text fontSize="sm" fontWeight="600">
-                      주소
-                    </Text>
-                  </GridItem>
-                  <GridItem colStart={3} colEnd={7}>
-                    <Input
-                      placeholder="example@mail.com"
-                      size="md"
-                      borderRadius="14px"
-                    />
-                  </GridItem>
-                </Grid>
-              </form>
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    주소
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empTel || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
+              </Grid>
             </TabPanel>
             <TabPanel>
-              <p>two!</p>
+            <Grid
+                templateColumns="repeat(13, 1fr)"
+                templateRows="repeat(12, 1fr)"
+                gap={2}
+              >
+                  <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    회사/부서
+                  </Text>
+                  </GridItem>
+                  <GridItem colStart={3} colEnd={7}>
+                  <Select placeholder="전체">
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </Select>
+                </GridItem>
+                <GridItem colStart={7} colEnd={14}>
+                <Input placeholder="이름" size="md" borderRadius="14px" isReadOnly={false}/>
+                </GridItem>
+
+                <GridItem>
+                  <Text fontSize="sm" fontWeight="600">
+                    사번
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                  <Input
+                    placeholder="사번"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.empNm || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
+
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    전화번호
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <Input
+                    placeholder="example@mail.com"
+                    size="md"
+                    borderRadius="14px"
+                    value={empInfo?.payMail || ''}
+                    isReadOnly={isReadStatus}
+                  />
+                </GridItem>
+
+                <GridItem colSpan={2}>
+                  <Text fontSize="sm" fontWeight="600">
+                    회사구분
+                  </Text>
+                </GridItem>
+                <GridItem colSpan={4}>
+                  <RadioGroup defaultValue="M">
+                    <HStack spacing="24px">
+                      <Radio value="M" name="gender" isReadOnly={isReadStatus}>
+                        주회사
+                      </Radio>
+                      <Radio value="F" name="gender" isReadOnly={isReadStatus}>
+                        부회사
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
+                </GridItem>
+
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    부서구분
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                  <RadioGroup defaultValue="1">
+                    <HStack spacing="24px" >
+                      <Radio value="1" name="useYn" isReadOnly={isReadStatus}>
+                        주부서
+                      </Radio>
+                      <Radio value="0" name="useYn" isReadOnly={isReadStatus}>
+                        부부서
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
+                </GridItem>
+
+                <GridItem>
+                  <Text fontSize="sm" fontWeight="600">
+                    직급
+                  </Text>
+                </GridItem>
+                <GridItem colStart={3} colEnd={7}>
+                <Select placeholder="선택안함">
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </Select>
+                </GridItem>
+
+                <GridItem colStart={8} colEnd={10}>
+                  <Text fontSize="sm" fontWeight="600">
+                    직책
+                  </Text>
+                </GridItem>
+                <GridItem colStart={10} colEnd={14}>
+                <Select placeholder="선택안함">
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </Select>
+                </GridItem>
+
+              </Grid>
             </TabPanel>
           </TabPanels>
         </Tabs>

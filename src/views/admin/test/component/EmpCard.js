@@ -19,7 +19,8 @@ import { PORT } from "set";
 import { minTimeDate } from "common";
 import { UseMouseOver } from "hook/UseMouseOver";
 import { useDispatch } from "react-redux";
-import { setDataPk } from "redux/solution";
+import { setIsRead } from "redux/solution";
+import { setData } from "redux/solution";
 
 const EmpCard = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -44,25 +45,17 @@ const EmpCard = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setEmp(res.data);
         setEmpNum(res.strData);
       });
   };
 
+
   useEffect(() => {
     getEmpList("noSearch", "noSearch", "noSearch");
   }, []);
 
-  // const tableInstance = useTable(
-  //     {
-  //       columns,
-  //       data,
-  //     },
-  //     useGlobalFilter,
-  //     useSortBy,
-  //     usePagination
-  //   );
+
 
   return (
     <div>
@@ -100,7 +93,7 @@ const EmpCard = () => {
             명
           </Text>
           <Spacer />
-          <Button variant="action">추가</Button>
+          <Button variant="action" onClick={()=>{dispatch(setIsRead(false))}}>추가</Button>
         </Flex>
         <Table variant="simple" color="gray.500">
           <Thead>
@@ -129,7 +122,8 @@ const EmpCard = () => {
                   onMouseOver(index)
                 }}
                 onClick={() => {
-                  dispatch(setDataPk(column.empCd));
+                  dispatch(setData(emp[0]));
+                  dispatch(setIsRead(true));
                 }} >
                 <Td
                   fontSize={{ sm: "14px" }}

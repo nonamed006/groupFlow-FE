@@ -10,7 +10,9 @@ export const minTimeDate = (date) =>{
 export const setInput = (inputForm, data) => {
     let form = document.forms[inputForm];
     for(let i=0; i<form.length; i++){
-        let frNm = form[0].name;
-        form.elements[frNm].value = data[frNm];
+        let frNm = form[i].name;
+        if(frNm != ""){
+            form.elements[frNm].value = data[frNm];
+        }
     }
 }
