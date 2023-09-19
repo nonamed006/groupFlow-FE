@@ -134,6 +134,7 @@ const EmpCard = () => {
           <Tbody >
             {emp?.map((column, index) => (
               <Tr
+                
                 backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {

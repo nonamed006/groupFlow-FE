@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Select, Grid, Input, GridItem} from '@chakra-ui/react';
-import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/solution';
+import { setDataPk } from 'redux/dep';
 import {PORT} from "set";
 const SearchCardBar = () => {
 
 	const [corpNm, setCorpNm] = useState([]);
 	const [selectedCoNm, setSelectedCoNm] = useState('');
 	const [searchText, setSearchText] = useState('');
-	const [depCd, setDepCd] = useState();
 
 	//리덕스
 	const dispatch = useDispatch();
@@ -37,8 +35,7 @@ const SearchCardBar = () => {
 		fetch(url, {method : "GET" })	
 			.then(res=>res.json())
 			.then(res=>{
-				dispatch(setDataPk(res));
-				console.log(res)
+				dispatch(setDataPk(res.data));
 				
 			});
 	}

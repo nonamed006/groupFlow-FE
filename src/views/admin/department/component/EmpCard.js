@@ -1,57 +1,47 @@
 import {
-  Avatar,
   Box,
-  Button,
   Flex,
-  Table,
-  Tbody,
   Text,
-  Th,
-  Thead,
-  Tr,
-  IconButton,
-  useColorModeValue
+  useColorModeValue, Button
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import {AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
+// import {AddIcon } from '@chakra-ui/icons'
+import { useDispatch } from 'react-redux';
+import { setDataPk } from 'redux/depDetail';
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { PORT } from "set";
+import { useEffect } from "react";
 import RealGrid from "./RealGrid";
+import { useSelector } from "react-redux";
 
 const EmpCard = () => {
+  const dispatch = useDispatch();
+
+  const org = useSelector((state) => state.dep.dataPk);
+  // console.log(searchData)1121231231
+  // console.log(searchList)
+  const [org2, setOrg2] = useState();
+  console.log(org)
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
-  //테이블 헤더
-  const headerGroups = ["이름", "ID", "최초입사일"];
-
-  //state
-  const [emp, setEmp] = useState([]);
-
-  const getEmpList = (searchCorp, searchWorkType, searchNm) => {
-    fetch(`${PORT}/emp/getEmp/${searchCorp}/${searchWorkType}/${searchNm}`, {
-      method: "GET",
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setEmp(res);
-      });
-  };
-
+  const depInsert = () => {
+    // setOrg2(setDataPk(0));
+  }
   useEffect(() => {
-    // getEmpList("noSearch","noSearch","noSearch");
+    
+    // if(searchData != 0){
+    //   setOrg(searchData)
+     
+    //   }
+    //   else{
+    //     let url = `${PORT}/dep?text=&coNm=`;
+    //     fetch(url, {method : "GET" })	
+    //       .then(res=>res.json())
+    //       .then(res=>{
+    //         console.log(res)
+    //         setOrg(res.data); 
+    //       });
+    //   }
   }, []);
-
-  // const tableInstance = useTable(
-  //     {
-  //       columns,
-  //       data,
-  //     },
-  //     useGlobalFilter,
-  //     useSortBy,
-  //     usePagination
-  //   );
 
   return (
     <div>
@@ -63,7 +53,6 @@ const EmpCard = () => {
           px="22px"
           pb="20px"
           mb="10px"
-          boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
         >
           <Text
             color={textColor}
@@ -73,16 +62,9 @@ const EmpCard = () => {
           >
             조직도
           </Text>
-         
-          <IconButton
-            colorScheme="brand"
-            borderRadius="10px"
-            aria-label="Call Fred"
-            fontSize="20px"
-            icon={<AddIcon />}
-          />
+          <Button variant="action" onClick={depInsert}>추가</Button>
         </Flex>
-        <RealGrid></RealGrid>
+        <RealGrid value={org}></RealGrid>
       </Box>
     </div>
   );
