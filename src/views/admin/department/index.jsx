@@ -2,7 +2,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 import SearchCardBar from './component/SearchCardBar';
 import EmpCard from './component/EmpCard';
-import EmpInfo from './component/EmpInfo';
+import EmpInfo from './component/DepInfo/DepInfo';
 
 const test = () => {
 	return (
