@@ -1,0 +1,54 @@
+import {
+    Flex,
+    Text,
+    useColorModeValue,
+  } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+  import React from "react";
+  const GnbCardBar = ({title, count }) => {
+    const textColor = useColorModeValue("secondaryGray.900", "white");
+  
+    return (
+          <Flex
+            align={{ sm: "flex-start", lg: "center" }}
+            justify="space-between"
+            w="100%"
+            px="22px"
+            pb="20px"
+            mb="10px"
+            boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
+          >
+            <Flex  w="100%">
+              <Text
+                color={textColor}
+                fontSize="22px"
+                fontWeight="700"
+                lineHeight="100%"
+              >
+                {title}
+              </Text>
+              &nbsp;
+              {/* 검색 항목 수  */}
+              <Text
+                color="#00AAFF"
+                fontSize="22px"
+                fontWeight="700"
+                lineHeight="100%"
+              >
+                {count}
+              </Text>
+              <Text
+                color={textColor}
+                fontSize="22px"
+                fontWeight="700"
+                lineHeight="100%"
+              >
+              건
+              </Text> 
+            </Flex>
+          </Flex>
+
+    );
+  };
+  
+  export default GnbCardBar;
+  

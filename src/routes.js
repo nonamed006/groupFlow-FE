@@ -20,6 +20,7 @@ import Corporation from "views/admin/corporation";
 import Department from "views/admin/department";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+import Menu from "views/system/menu"
 
 
 // 원본 horizon-ui
@@ -98,8 +99,8 @@ const routes = [
             upper: 'MU230004',
             name: "메뉴관리",
             layout: "/system",
-            path: "/mu",
-            component: NFTMarketplace,
+            path: "/menu",
+            component: Menu,
           },
           {
             code:'MU230009',

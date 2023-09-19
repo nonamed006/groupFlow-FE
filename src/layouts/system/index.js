@@ -89,17 +89,6 @@ export default function Dashboard(props) {
 	};
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {
-			// if (prop.layout === '/admin') {
-			// 	return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-			// }
-			// if (prop.collapse) {
-			// 	return getRoutes(prop.items);
-			// }
-			// if (prop.category) {
-			// 	return getRoutes(prop.items);
-			// } else {
-			// 	return null;
-			// }
 			if (prop.items) {
 				return getRoutes(prop.items);
 			}
@@ -161,10 +150,10 @@ export default function Dashboard(props) {
 						/>
 					</Box>
 				</Portal>
-				<Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='50px'>
+				<Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='30px'>
 					<Switch>
 						{getRoutes(routes)}
-						<Redirect from='/' to='/admin/default' />
+						<Redirect from='/' to='/system/corporation' />
 					</Switch>
 				</Box>
 				<Box>
