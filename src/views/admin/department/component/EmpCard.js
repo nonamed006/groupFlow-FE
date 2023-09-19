@@ -17,7 +17,7 @@ const EmpCard = () => {
   const dispatch = useDispatch();
 
   const org = useSelector((state) => state.dep.dataPk);
-  // console.log(searchData)
+  // console.log(searchData)11
   // console.log(searchList)
   const [org2, setOrg2] = useState();
   console.log(org)
