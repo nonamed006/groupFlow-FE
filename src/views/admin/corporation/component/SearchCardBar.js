@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Button, Select, Grid, Input, GridItem} from '@chakra-ui/react';
-import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 
-const SearchCardBar = ({onChangeSearchKeyword,onChangeSearchUseYn, onClick}) => {
+const SearchCardBar = ({setUseYn,setKeyword, handleSearchBtn}) => {
 
 	return (
 	<div>
@@ -10,12 +9,12 @@ const SearchCardBar = ({onChangeSearchKeyword,onChangeSearchUseYn, onClick}) => 
 			<Grid templateColumns='repeat(14, 1fr)' gap={2}>
 				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>회사코드/회사명</div></GridItem>
 				<GridItem colSpan={3}>
-					<Input placeholder="검색어를 입력하세요." name='keyword' size="md" borderRadius="14px"  onChange={onChangeSearchKeyword}/>
+					<Input placeholder="검색어를 입력하세요." name='keyword' size="md" borderRadius="14px"  onChange={(e)=>{setKeyword(e.target.value)}}/>
 				</GridItem>
 
 				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>사용여부</div></GridItem>
 				<GridItem colSpan={3}>
-					<Select colSpan={3} name='useYn' defaultValue='' borderRadius="14px" onChange={onChangeSearchUseYn} >
+					<Select colSpan={3} name='useYn' value='' borderRadius="14px" onChange={(e)=>{setUseYn(e.target.value)}} >
 						<option  value=''>전체</option>
 						<option value={1}>사용</option>
 						<option value={0}>미사용</option>
@@ -23,7 +22,7 @@ const SearchCardBar = ({onChangeSearchKeyword,onChangeSearchUseYn, onClick}) => 
 				</GridItem>
 				
 				<GridItem colStart={14} colEnd={14}>
-					<Button variant="brand" onClick={onClick}>검색</Button>
+					<Button variant="brand" onClick={()=>{handleSearchBtn()}}>검색</Button>
 				</GridItem>
 			</Grid>
 		</Box>

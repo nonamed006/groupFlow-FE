@@ -15,6 +15,7 @@ export const setIsRead = isRead =>({ type: SET_IS_READ, isRead});
 
 
 
+
 /* ----------------- 모듈의 초기 상태 ------------------ */
 const initialState = {
     dataPk: 0,

@@ -1,20 +1,18 @@
 import {
-    Avatar,
-    Box,
     Button,
     Flex,
-    Table,
-    Tbody,
     Text,
-    Th,
-    Thead,
-    Tr,
     useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";
-  const ListCardBar = ({title, count }) => {
+  import { useDispatch } from "react-redux";
+  import { setDataPk } from "redux/solution";
+
+  const ListCardBar = ({title, count}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
-  
+    const textNumColor = useColorModeValue("brand.500", "white");
+
+    const dispatch = useDispatch();
     return (
           <Flex
             align={{ sm: "flex-start", lg: "center" }}
@@ -36,7 +34,7 @@ import {
             </Text>
             {/* 검색 항목 수  */}
             <Text
-              color="#00AAFF"
+              color={textNumColor}
               fontSize="22px"
               fontWeight="700"
               lineHeight="100%"
@@ -52,7 +50,11 @@ import {
               건
             </Text> 
             </Flex>
-            <Button variant="action">추가</Button>
+            <Button variant="action"
+            onClick={() => {
+              dispatch(setDataPk(0));
+            }}
+            >추가</Button>
           </Flex>
 
     );
