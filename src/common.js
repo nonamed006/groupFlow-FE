@@ -16,3 +16,13 @@ export const setInput = (inputForm, data) => {
         }
     }
 }
+
+// 타임스탬프 yyyy-mm-ddT00:00:00.000+00:00 -> 날짜 yyyy-mm-dd 형식으로 변환
+export const formatDate = (date) => {  
+    let originalDate = new Date(date);
+    let year = originalDate.getFullYear();
+    let month = String(originalDate.getMonth() + 1).padStart(2, '0'); 
+    let day = String(originalDate.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+}
+    

@@ -17,8 +17,10 @@ import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Test from "views/admin/test";
 import Corporation from "views/admin/corporation";
+import Department from "views/admin/department";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+
 
 // 원본 horizon-ui
 // https://horizon-ui.com/
