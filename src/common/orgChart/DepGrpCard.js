@@ -23,6 +23,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
       rounded='md'
       bg='white'
       m={2}
+      w='98%'
       display={'inline-block'}
       p='0'>
       <Flex>

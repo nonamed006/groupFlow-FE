@@ -9,9 +9,12 @@ import { PORT } from "set";
 
 const OrgChartBox = () => {
     const [depGrp,setDepGrp] = useState();  // 선택된 조직_그룹 데이터 하나
-    const [search, setSearch] = useState(); // 검색 기준
-    const [keyword, setKeyword] = useState();   // 검색어
+    const [search, setSearch] = useState(''); // 검색 기준
+    const [keyword, setKeyword] = useState('');   // 검색어
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
+	useEffect(() => {
+		fetchCorpDepList();
+	}, []);
 
 
     // 검색 버튼 클릭 시
@@ -21,7 +24,7 @@ const OrgChartBox = () => {
 
     // 회사 및 부서 목록 조회/검색
 	const fetchCorpDepList = () => {
-		let url = `${PORT}/depGrp`;
+		let url = `${PORT}/dep/orgList`;
 
 		// URL 파라미터 생성
 		const params = new URLSearchParams();
@@ -35,10 +38,11 @@ const OrgChartBox = () => {
 		if (paramString) {
 			url += '?' + paramString;
 		}
-
+        console.log('url ===> '+url);
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
+            console.log(res.data);
 			setCorpDepList(res.data);
 		});
 	};
@@ -57,7 +61,7 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList />
+                    <OrgList corpDepList={corpDepList}/>
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >

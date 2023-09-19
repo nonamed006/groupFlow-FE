@@ -19,7 +19,9 @@ import { Box, Grid, GridItem, Button, Select,  Input, Text} from '@chakra-ui/rea
                 </Select>
             </GridItem>
             
-            <GridItem colStart={6} colEnd={6}><div style={{textAlign: 'center'}}>검색어</div></GridItem>
+            <GridItem colStart={6} colEnd={6}>
+                <Text style={{textAlign: 'center'}}>검색어</Text>
+            </GridItem>
             <GridItem colSpan={5}>
                 <Input 
                 onChange={(e)=>{setKeyword(e.target.value)}} 
