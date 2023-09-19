@@ -5,7 +5,7 @@ import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React, { useState } from "react";
 
-const DepGrpCard = ({ depGrp, index }) => {
+const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
@@ -18,7 +18,13 @@ const DepGrpCard = ({ depGrp, index }) => {
       onMouseOver={() => {
         onMouseOver(index)
       }}
-      boxShadow='lg' rounded='md' bg='white' m={2} display={'inline-block'} p='0'>
+      onClick={()=>setDepGrp(depGrp)}
+      boxShadow='lg'
+      rounded='md'
+      bg='white'
+      m={2}
+      display={'inline-block'}
+      p='0'>
       <Flex>
         {/* 프로필 */}
         <Box >
@@ -53,29 +59,29 @@ const DepGrpCard = ({ depGrp, index }) => {
             > {depGrp.mailId}</Text>
             <Spacer />
             <Box>
-               <Text
+              <Text
                 color={textColor}
                 fontSize="15px"
                 fontWeight="300"
                 lineHeight="100%"
               >{depGrp.telNum}</Text>
             </Box>
-           
+
           </Flex>
 
           <Text
-             px="10px"
-              color={textColor}
-              fontSize="14px"
-              fontWeight="300"
-              lineHeight="100%">
-              {depGrp.dpPathNm &&
-                depGrp.dpPathNm.map((pathNm, index) => {
-                  return <>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
-                  </>
-                })} 
-            </Text>
-          </Box>
+            px="10px"
+            color={textColor}
+            fontSize="14px"
+            fontWeight="300"
+            lineHeight="100%">
+            {depGrp.dpPathNm &&
+              depGrp.dpPathNm.map((pathNm, index) => {
+                return <>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
+                </>
+              })}
+          </Text>
+        </Box>
       </Flex>
     </Card>
 
