@@ -5,10 +5,43 @@ import SearchBar from "./SearchBar";
 import OrgList from './OrgList';
 import DepGrpCardList from './DepGrpCardList';
 import DepGrpInfo from './DepGrpInfo';
+import { PORT } from "set";
 
 const OrgChartBox = () => {
     const [depGrp,setDepGrp] = useState();  // 선택된 조직_그룹 데이터 하나
+    const [search, setSearch] = useState(); // 검색 기준
+    const [keyword, setKeyword] = useState();   // 검색어
+    const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
 
+
+    // 검색 버튼 클릭 시
+	const handleSearchBtn = () => {
+        fetchCorpDepList();
+	}
+
+    // 회사 및 부서 목록 조회/검색
+	const fetchCorpDepList = () => {
+		let url = `${PORT}/depGrp`;
+
+		// URL 파라미터 생성
+		const params = new URLSearchParams();
+        if (search !== '')
+        params.append('search', search);
+		if (keyword !== '')
+			params.append('keyword', keyword);
+
+		// URL에 파라미터 추가
+		const paramString = params.toString();
+		if (paramString) {
+			url += '?' + paramString;
+		}
+
+		fetch(url, {
+			method: "GET"
+		}).then(res => res.json()).then(res => {
+			setCorpDepList(res.data);
+		});
+	};
     return (
 
         <Box bg='white' w='auto'>
@@ -20,7 +53,7 @@ const OrgChartBox = () => {
             >
                 {/* 검색바 */}
                 <GridItem colSpan={4}   >
-                    <SearchBar />
+                    <SearchBar setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
