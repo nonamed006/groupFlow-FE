@@ -1,31 +1,27 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
-import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/depDetail';
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+import { useSelector } from "react-redux";
 
 
-const RealGrid = (props) => {
+function DepUpperCd(props) {
   const realgridElement = useRef(null);
-  const dispatch = useDispatch();
-
+  const org = useSelector((state) => state.dep.dataPk);
+  
   var fields = [
     {fieldName:"dpPath", dataType:"text"},
     {fieldName:"dpNm", dataType:"text"},
-    {fieldName:"dpCd", dataType:"text"},
     {fieldName:"depth", dataType:"text"}
   ]
   
   var columns = [
     {fieldName:"dpNm", name:"dpNm", width: 150, header:{text:"명칭"}},
     {fieldName:"dpPath", name:"dpPath", header:{text:"dpPath"}},
-    {fieldName:"dpCd", name:"dpCd", width: 150, header:{text:"dpCd"}},
-    {fieldName:"depth", name:"depth", header:{text:"depth"}}
+    {fieldName:"depth", name:"depth", header:{text:"depth"}},
   ];
   
   var treeProvider, treeView;
   useEffect(() => {
-    
     
     const container = realgridElement.current;
     if (!container) {
@@ -41,7 +37,7 @@ const RealGrid = (props) => {
     treeView.displayOptions.rowHeight = 36;
     treeView.header.height = 40;
     treeView.footer.height = 40;
-    treeView.stateBar.width = 20;
+    treeView.stateBar.width = 16;
     
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
     treeView.setStateBar({visible: false}); //상태바 표시X
@@ -52,9 +48,8 @@ const RealGrid = (props) => {
     treeView.columnByName("dpPath").visible =  false;
     treeView.columnByName("depth").visible =  false;
     treeView.columnByName("dpNm").editable = false;
-   
-   
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
+
+      treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
         "cor2.png", "cor2.png", "dep2.png", "dep.png", "cor.png", "icon2.png", "is.png",
         "kr.png", "mx.png", "pt.png", "us.png", "ve.png"
@@ -62,22 +57,22 @@ const RealGrid = (props) => {
     
     
   treeView.onCellClicked = function (grid, clickData) {
-    let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2]
-    let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3]
-    if(depth !== "1"){
-      dispatch(setDataPk(dpCdData));
+    let dpNmData = grid._dataProvider._rowMap[clickData.dataRow]._values[1]
+    let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[2]
+    if(depth != "1"){
+      props.getValue(dpNmData)
     }
   }
-  treeProvider.setRows(props.value, "dpPath", true, null, "depth");
+  treeProvider.setRows(org, "dpPath", true, null, "depth");
   
    return () => {
 
        treeProvider.clearRows();
        treeView.destroy();
      };
-  }, [props]);
+  }, []);
 
   return <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>;
 }
 
-export default RealGrid;
+export default DepUpperCd;

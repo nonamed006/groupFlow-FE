@@ -1,7 +1,7 @@
 import {Stack, Button, Text, Flex , useColorModeValue, Grid, GridItem} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from 'react';
 import { useEffect } from "react";
-const InfoBox = ({title}) => {
+const InfoBox = ({title,updateBtn}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
     useEffect(()=> {
 
@@ -18,7 +18,7 @@ const InfoBox = ({title}) => {
             </GridItem>
 
             <GridItem colStart={12} colEnd={16}>
-                <Button variant="action">저장</Button>
+                <Button variant="action" onClick={updateBtn}>저장</Button>
                 <Button variant="action">삭제</Button>
                 <Button variant="action">변경이력</Button>
             </GridItem>
