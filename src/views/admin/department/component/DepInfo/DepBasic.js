@@ -7,15 +7,16 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import DepUpperCd from "./DepUpperCd";
 import {DragHandleIcon} from '@chakra-ui/icons'
+import dep from "redux/dep";
 const DepBasic = (props) => {
+  
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure()
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const recYN = new Boolean(depDto.recYN);
   const useYN = new Boolean(depDto.useYN);
-  const organYN = new Boolean(depDto.organYN);
-  
-  // console.log(props)asdas
+  const organYN = new Boolean(depDto.organYN);  
+  console.log(props)
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -29,13 +30,14 @@ const DepBasic = (props) => {
   let updatedDepDto;
   const getValue = (text) => {
     updatedDepDto= { ...depDto };
-    updatedDepDto.upperCd = text;
+    updatedDepDto.upperCd = text._values[2];
   };
   const click = () => {
     // 상태 업데이트
-    if(updatedDepDto != undefined){
-      setDepDto(updatedDepDto);
-    }
+    // if(updatedDepDto != undefined){
+    //   setDepDto(updatedDepDto);
+    // }
+    onChange({ target: { name: "upperCd", value:  updatedDepDto.upperCd}})
     onClose();
   }
   useEffect(() => {
@@ -56,7 +58,7 @@ const DepBasic = (props) => {
         </GridItem>
         <GridItem colStart={4} colEnd={7}>
           <Input placeholder="-" size="md" borderRadius="14px"
-            name="upperCd" defaultValue={depDto.upperCd} key={depDto.dpCd}  onChange={onChange} />
+            name="upperCd" defaultValue={depDto.upperCd} key={depDto.dpCd}/>
         </GridItem>
         <GridItem colStart={7} colEnd={8}>
           <Button onClick={onOpen}><DragHandleIcon/></Button>

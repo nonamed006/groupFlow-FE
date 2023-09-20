@@ -8,7 +8,7 @@ import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 const RealGrid = (props) => {
   const realgridElement = useRef(null);
   const dispatch = useDispatch();
-
+  console.log(props)
   var fields = [
     {fieldName:"dpPath", dataType:"text"},
     {fieldName:"dpNm", dataType:"text"},
@@ -24,13 +24,11 @@ const RealGrid = (props) => {
   ];
   
   var treeProvider, treeView;
+  
+
   useEffect(() => {
     
-    
     const container = realgridElement.current;
-    if (!container) {
-      return; // 컨테이너가 아직 없으면 아무 작업도 수행하지 않음
-    }
     treeProvider = new LocalTreeDataProvider();
     treeView = new TreeView(container);
     treeView.setDataSource(treeProvider);
@@ -44,6 +42,7 @@ const RealGrid = (props) => {
     treeView.stateBar.width = 20;
     
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+  
     treeView.setStateBar({visible: false}); //상태바 표시X
     treeView.setCheckBar({visible: false}); //체크박스 표시X
     treeView.setRowIndicator({visible: false}); //인디케이터 표시X
@@ -52,6 +51,7 @@ const RealGrid = (props) => {
     treeView.columnByName("dpPath").visible =  false;
     treeView.columnByName("depth").visible =  false;
     treeView.columnByName("dpNm").editable = false;
+    treeView.columnByName("dpCd").editable = false;
    
    
     treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
