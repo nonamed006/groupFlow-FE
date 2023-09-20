@@ -11,7 +11,7 @@ import { Box, Grid, GridItem, Button, Select,  Input, Text} from '@chakra-ui/rea
                     onChange={(e)=>{setSearch(e.target.value)}} 
                     style={{ color: "gray" }} 
                     defaultValue={''}
-                    placeholder='전체'
+                    placeholder='검색기준'
                     borderRadius="14px"
                 >
                     <option value='corp'>회사</option> 

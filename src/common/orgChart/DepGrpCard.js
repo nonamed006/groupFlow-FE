@@ -50,14 +50,14 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
               fontSize="18px"
               fontWeight="700"
               lineHeight="100%"
-            >{depGrp.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
+            >{depGrp.empDto.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
             <Box w='1rem' />
             <Text
               color={textColor}
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            > {depGrp.mailId}</Text>
+            > {depGrp.empDto.mailId}</Text>
             <Spacer />
             <Box>
               <Text
@@ -65,7 +65,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
                 fontSize="15px"
                 fontWeight="300"
                 lineHeight="100%"
-              >{depGrp.telNum}</Text>
+              >{depGrp.empDto.telNum}</Text>
             </Box>
 
           </Flex>
