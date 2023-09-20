@@ -6,17 +6,20 @@ import { useSelector } from "react-redux";
 
 function DepUpperCd(props) {
   const realgridElement = useRef(null);
-  const org = useSelector((state) => state.dep.dataPk);
+  const org = useSelector((state) => state.depOrg.depOrg);
+  
   
   var fields = [
     {fieldName:"dpPath", dataType:"text"},
     {fieldName:"dpNm", dataType:"text"},
+    {fieldName:"dpCd", dataType:"text"},
     {fieldName:"depth", dataType:"text"}
   ]
   
   var columns = [
     {fieldName:"dpNm", name:"dpNm", width: 150, header:{text:"명칭"}},
     {fieldName:"dpPath", name:"dpPath", header:{text:"dpPath"}},
+    {fieldName:"dpCd", name:"dpCd", header:{text:"dpCd"}},
     {fieldName:"depth", name:"depth", header:{text:"depth"}},
   ];
   
@@ -47,7 +50,12 @@ function DepUpperCd(props) {
     //해당 컬럼 표시X
     treeView.columnByName("dpPath").visible =  false;
     treeView.columnByName("depth").visible =  false;
+    treeView.columnByName("dpCd").visible =  false;
+
+    treeView.columnByName("dpPath").editable =  false;
+    treeView.columnByName("depth").editable =  false;
     treeView.columnByName("dpNm").editable = false;
+
 
       treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
@@ -57,11 +65,10 @@ function DepUpperCd(props) {
     
     
   treeView.onCellClicked = function (grid, clickData) {
-    let dpNmData = grid._dataProvider._rowMap[clickData.dataRow]._values[1]
-    let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[2]
-    if(depth != "1"){
-      props.getValue(dpNmData)
-    }
+    console.log( grid._dataProvider._rowMap[clickData.dataRow])
+    let dpData= grid._dataProvider._rowMap[clickData.dataRow]
+    props.getValue(dpData)
+      
   }
   treeProvider.setRows(org, "dpPath", true, null, "depth");
   

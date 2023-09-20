@@ -9,15 +9,13 @@ import { useSelector } from "react-redux";
 import {PORT} from "set";
 import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup";
-import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/dep';
 
 const EmpInfo = () => {
-  const dispatch = useDispatch();
     const dpCd = useSelector((state) => state.depDetail.dataPk);
+    const [isEditing, setIsEditing] = useState(false);  // 저장 및 수정 상태 (기본값 false - 저장) 
+    
     const [depDto, setDepDto] = useState({});
     const [dg, setDg] = useState([]);
-
     //부서 상세조회
     const getDepDto = () => {
       let url = `${PORT}/dep/detail?dpCd=${dpCd}`;
@@ -38,12 +36,27 @@ const EmpInfo = () => {
            res.json()
         )
         .then(res=>{
-          // console.log(res);
           setDg(res.data);
 			});
     }
-   
 
+    const fetchSaveDep = () => {
+      let url = `${PORT}/dep`;
+      fetch(url, {
+        method : "POST" ,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(depDto)
+      })
+        .then(res=>
+           res.json()
+        )
+        .then(res=>{
+          console.log(res)
+			});
+    }
+  
     const fetchUpdateDep = () => {
       let url = `${PORT}/dep`;
       fetch(url, {
@@ -64,13 +77,20 @@ const EmpInfo = () => {
       setDepDto(depDto);
     }
     const updateBtn = () => {
-      fetchUpdateDep();
+      isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+      
     }
     useEffect(() => {
+      console.log("qwe")
       if(dpCd != 0){
         getDepDto();
         getDepGroup();
+        setIsEditing(true);
 
+      }
+      else{
+        setDepDto([]);
+        setIsEditing(false)
       }
     }, [dpCd]);
     return (

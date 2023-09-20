@@ -3,7 +3,9 @@ import { Box, Button, Select, Grid, Input, GridItem} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { setDataPk } from 'redux/dep';
 import {PORT} from "set";
+
 const SearchCardBar = () => {
+	
 
 	const [corpNm, setCorpNm] = useState([]);
 	const [selectedCoNm, setSelectedCoNm] = useState('');
@@ -41,6 +43,7 @@ const SearchCardBar = () => {
 	}
 	useEffect(() => {
     getCorpNmList();
+		onClickSearchText();
   }, []);
 
 	return (<div>
