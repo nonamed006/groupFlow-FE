@@ -7,8 +7,9 @@ import corporation from './corporation';
 const rootReducer = combineReducers({
     solution,
     corporation,
-    emp,
+    emp, 
+    dep,
+    depDetail
 
-  });
-  
+})
   export default rootReducer;

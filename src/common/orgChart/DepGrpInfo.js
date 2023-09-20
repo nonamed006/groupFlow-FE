@@ -5,7 +5,6 @@ import React from "react";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const textNumColor = useColorModeValue("brand.500", "white");
   return (
 
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
@@ -44,9 +43,11 @@ const DepGrpInfo = ({ depGrp }) => {
               lineHeight="100%">
               {depGrp.dpPathNm &&
                 depGrp.dpPathNm.map((pathNm, index) => {
-                  return <>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
+                  return (
+                  <>
+                    {pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
                   </>
-
+                  );
                 })} </Text>
           </GridItem>
 
