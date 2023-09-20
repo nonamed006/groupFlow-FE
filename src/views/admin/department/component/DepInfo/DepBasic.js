@@ -15,7 +15,7 @@ const DepBasic = (props) => {
   const useYN = new Boolean(depDto.useYN);
   const organYN = new Boolean(depDto.organYN);
   
-  // console.log(props)
+  // console.log(props)asdas
 
   const onChange = (e) => {
     const { value, name } = e.target;
