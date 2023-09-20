@@ -18,6 +18,7 @@ import RTL from "views/admin/rtl";
 import Test from "views/admin/test";
 import Corporation from "views/admin/corporation";
 import Department from "views/admin/department";
+import Employee from "views/admin/employee";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 
@@ -92,13 +93,6 @@ const routes = [
     component: RTL,
   },
   {
-    name: "TEST",
-    layout: "/admin",
-    path: "/test",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Test,
-  },
-  {
     name: "부서관리",
     layout: "/admin",
     path: "/department",
@@ -111,6 +105,13 @@ const routes = [
     path: "/corporation",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Corporation,
+  },
+  {
+    name: "사원관리",
+    layout: "/admin",
+    path: "/emp",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Employee,
   },
 ];
 

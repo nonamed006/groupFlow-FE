@@ -13,28 +13,23 @@ import {
 } from "@chakra-ui/react";
 import { minTimeDate } from "common/common";
 import React, { useState } from "react";
-import { MdAttachFile} from "react-icons/md";
-import { useSelector } from "react-redux";
+import { MdAttachFile } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
-const EmpTab1 = () => {
-  const empList = useSelector((state) => state.solution.dataList);
-  const isReadStatus = useSelector((state) => state.solution.isRead);
+const EmpTab1 = (props) => {
+  //리덕스
+  const dispatch = useDispatch();
+  const isReadStatus = useSelector((state) => state.emp.isRead);
 
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
-  const [imgFile, setImgFile] = useState(null); //파일
-  const [empInfo, setEmpInfo] = useState([]);
 
-  // 등록을 위한 사원 정보 리스트
-  let empAddList = [];
-
-  // 파일 등록 버튼
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
   };
 
   // file 값 받기
   const handleChangeFile = (e) => {
-    setImgFile(e.target.files);
+    props.setImgFile(e.target.files);
     setImgBase64([]);
     for (var i = 0; i < e.target.files.length; i++) {
       if (e.target.files[i]) {
@@ -53,20 +48,6 @@ const EmpTab1 = () => {
       }
     }
   };
-
-  // input value값 받기 이벤트 
-	const handleChange = (e) => {
-		setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
-	};
-
-  // 저장 버튼
-  const insertEmp = () => {
-    const fd = new FormData();
-    Object.values(imgFile).forEach((file) => fd.append("file", file));
-    
-    fd.append("empNm", );
-
-  }
 
   return (
     <div>
@@ -89,9 +70,9 @@ const EmpTab1 = () => {
                 fallbackSrc="https://via.placeholder.com/150"
                 src={imgBase64}
                 alt="사원사진"
-                border='1px solid lightgray'
+                border="1px solid lightgray"
               />
-                
+
               <IconButton
                 variant="outline"
                 colorScheme="brand"
@@ -119,13 +100,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
-            id="empMail"
+            id="psnMail"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.empMail}
+            value={props.empDetail?.psnMail}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -140,9 +121,9 @@ const EmpTab1 = () => {
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.payMail}
+            value={props.empDetail?.payMail}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -158,9 +139,9 @@ const EmpTab1 = () => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empList?.joinDt)}
+            value={minTimeDate(props.empDetail?.joinDt)}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -176,9 +157,9 @@ const EmpTab1 = () => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empList?.reDt)}
+            value={minTimeDate(props.empDetail?.reDt)}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -193,26 +174,26 @@ const EmpTab1 = () => {
             placeholder="이름"
             size="md"
             borderRadius="14px"
-            value={empList?.empNm}
+            value={props.empDetail?.empNm}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10} rowSpan={8}>
-        <Text fontSize="sm" fontWeight="600">
+          <Text fontSize="sm" fontWeight="600">
             주소
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14} rowSpan={8}>
           <Input
-          id="addr"
+            id="addr"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.addr}
+            value={props.empDetail?.addr}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -222,12 +203,24 @@ const EmpTab1 = () => {
           </Text>
         </GridItem>
         <GridItem colSpan={4}>
-          <RadioGroup defaultValue="M">
+          <RadioGroup value="M">
             <HStack spacing="24px">
-              <Radio value="M" name="gender" isReadOnly={isReadStatus}>
+              <Radio
+                value="M"
+                id="M"
+                name="gender"
+                onChange={props.handleRadioChange}
+                isReadOnly={isReadStatus}
+              >
                 남성
               </Radio>
-              <Radio value="F" name="gender" isReadOnly={isReadStatus}>
+              <Radio
+                value="F"
+                id="F"
+                name="gender"
+                onChange={props.handleRadioChange}
+                isReadOnly={isReadStatus}
+              >
                 여성
               </Radio>
             </HStack>
@@ -241,13 +234,13 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
-          id="mail_id"
+            id="mailId"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.mailId}
+            value={props.empDetail?.mailId}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -262,9 +255,9 @@ const EmpTab1 = () => {
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.loginId}
+            value={props.empDetail?.loginId}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -275,14 +268,15 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
-          id="loginPw"
+            id="loginPw"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
             name="loginPw"
-            value={empList?.loginPw}
+            type="password"
+            value={props.empDetail?.loginPw}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -293,13 +287,14 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
-          id="signPw"
+            id="signPw"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empList?.signPw}
+            type="password"
+            value={props.empDetail?.signPw}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
@@ -310,29 +305,39 @@ const EmpTab1 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
-          id="empTel"
+            id="empTel"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
             name="empTel"
-            value={empList?.empTel}
+            value={props.empDetail?.empTel}
             isReadOnly={isReadStatus}
-            onChange={handleChange}
+            onChange={props.handleChange}
           />
         </GridItem>
 
         <GridItem colSpan={2}>
-        <Text fontSize="sm" fontWeight="600">
+          <Text fontSize="sm" fontWeight="600">
             계정사용
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <RadioGroup defaultValue="1">
             <HStack spacing="24px">
-              <Radio value="1" name="useYn" isReadOnly={isReadStatus}>
+              <Radio
+                value="1"
+                name="useYn"
+                onChange={props.handleRadioChange}
+                isReadOnly={isReadStatus}
+              >
                 사용
               </Radio>
-              <Radio value="0" name="useYn" isReadOnly={isReadStatus}>
+              <Radio
+                value="0"
+                name="useYn"
+                onChange={props.handleRadioChange}
+                isReadOnly={isReadStatus}
+              >
                 미사용
               </Radio>
             </HStack>
