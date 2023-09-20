@@ -11,69 +11,25 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
-} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { PORT } from "set";
+	useColorModeValue,
+} from "@chakra-ui/react";
 import { minTimeDate } from "common/common";
 import { UseMouseOver } from "hook/UseMouseOver";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setIsRead } from "redux/emp";
-import { setEmpList } from "redux/emp";
-import { setEmpDept } from "redux/emp";
 
-const EmpCard = () => {
-  const textColor = useColorModeValue("secondaryGray.900", "white");
+const EmpCard = (props) => {
+
+	const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
 
-  //리덕스
+	//리덕스
   const dispatch = useDispatch();
 
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
-  
-
-  //state
-  const [emp, setEmp] = useState([]);
-  const [empNum, setEmpNum] = useState();
-  const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-
-  //사원 목록 조회
-  const getEmpList = (searchCorp, searchWorkType, searchNm) => {
-    fetch(`${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`, {
-      method: "GET",
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setEmp(res.data);
-        setEmpNum(res.strData);
-      });
-  };
-
-   // 사원의 조직 정보
-   const getDeptInfo = (empCd) =>{
-		fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
-			method : "GET"
-		}).then(res=>res.json())
-			.then(res=>{
-        dispatch(setEmpDept(res.data));
-			});
-  }
-
-  // 사원 목록 클릭시
-  const onEmpRow = (empList) => {
-    getDeptInfo(empList.empCd);
-    dispatch(setEmpList({}));
-    dispatch(setEmpList(empList));
-    dispatch(setIsRead(true));
-  }
-
-  useEffect(() => {
-    getEmpList("", "", "");
-  }, []);
-
+	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
 
   return (
@@ -101,7 +57,7 @@ const EmpCard = () => {
             fontWeight="700"
             lineHeight="100%"
           >
-            {empNum}
+            {props.empNum}
           </Text>
           <Text
             color={textColor}
@@ -112,7 +68,15 @@ const EmpCard = () => {
             명
           </Text>
           <Spacer />
-          <Button variant="action" onClick={()=>{dispatch(setIsRead(false))}}>추가</Button>
+          <Button
+            variant="action"
+            onClick={() => {
+              dispatch(setIsRead(false));
+							props.resetInput();
+            }}
+          >
+            추가
+          </Button>
         </Flex>
         <Table variant="simple" color="gray.500">
           <Thead>
@@ -131,18 +95,18 @@ const EmpCard = () => {
               ))}
             </Tr>
           </Thead>
-          <Tbody >
-            {emp?.map((column, index) => (
+          <Tbody>
+            {props.empList?.map((column, index) => (
               <Tr
-                
-                backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+                backgroundColor={mouseOverIndex === index ? "navy.50" : "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
-                  onMouseOver(index)
+                  onMouseOver(index);
                 }}
                 onClick={() => {
-                  onEmpRow(column);
-                }} >
+                  props.onClickRow(column);
+                }}
+              >
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
