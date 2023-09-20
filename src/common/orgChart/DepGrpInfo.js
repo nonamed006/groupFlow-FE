@@ -23,8 +23,8 @@ const DepGrpInfo = ({ depGrp }) => {
           color={textColor}
           fontSize="18px"
           fontWeight="700"
-          lineHeight="100%">{depGrp.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
-        <Text>{depGrp.mailId}</Text>
+          lineHeight="100%">{depGrp.empDto.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
+        <Text>{depGrp.empDto.mailId}</Text>
       </Box>
       <br />
       <Box>
@@ -78,7 +78,7 @@ const DepGrpInfo = ({ depGrp }) => {
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            >{depGrp.mailId}@{depGrp.coDomain}</Text>
+            >{depGrp.empDto.mailId}@{depGrp.coDomain}</Text>
           </GridItem>
 
           <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
@@ -94,7 +94,7 @@ const DepGrpInfo = ({ depGrp }) => {
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            >{depGrp.psnMail}</Text>
+            >{depGrp.empDto.psnMail}</Text>
           </GridItem>
 
         </Grid>

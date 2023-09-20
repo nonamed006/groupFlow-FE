@@ -17,10 +17,14 @@ const DepGrpCardList = ({setDepGrp}) => {
 
 	// 조직_그룹 목록 조회
 	const fetchDepGrpList = () => {
-		let url = `${PORT}/depGrp/${dataPk}`;
+		console.log(dataPk);
+
+		let url = `${PORT}/depGrp`;
+		if(dataPk!==0)	url += `?code=${dataPk}`
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
+			console.log(res.data);
 			setDepGrpList(res.data);
 		});
 	};
@@ -29,8 +33,9 @@ const DepGrpCardList = ({setDepGrp}) => {
     <Box overflowY={'scroll'} overflowX={'hidden'}
       boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
 
-      {depGrpList.map((depGrp, index) => {
-        return <DepGrpCard depGrp={depGrp} key={index} setDepGrp={setDepGrp}/>
+      {depGrpList&&
+	  	depGrpList.map((depGrp, index) => {
+        	return <DepGrpCard depGrp={depGrp} key={index} setDepGrp={setDepGrp}/>
       })}
     </Box>
   );

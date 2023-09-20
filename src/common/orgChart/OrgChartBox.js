@@ -14,12 +14,18 @@ const OrgChartBox = () => {
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
 	useEffect(() => {
 		fetchCorpDepList();
+        console.log(depGrp);
 	}, []);
 
 
     // 검색 버튼 클릭 시
 	const handleSearchBtn = () => {
-        fetchCorpDepList();
+        if(keyword.length > 0 && search == ''){
+            alert("검색기준을 선택하세요");
+        }else{
+            fetchCorpDepList();
+        }
+        
 	}
 
     // 회사 및 부서 목록 조회/검색
@@ -38,11 +44,10 @@ const OrgChartBox = () => {
 		if (paramString) {
 			url += '?' + paramString;
 		}
-        console.log('url ===> '+url);
+
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
-            console.log(res.data);
 			setCorpDepList(res.data);
 		});
 	};
@@ -69,7 +74,8 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <DepGrpInfo depGrp={depGrp!==undefined&&depGrp} />
+                    {depGrp!==undefined&&<DepGrpInfo depGrp={depGrp} />
+                    }
                 </GridItem>
             </Grid>
         </Box>

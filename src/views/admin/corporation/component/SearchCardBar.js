@@ -7,7 +7,7 @@ const SearchCardBar = ({setUseYn,setKeyword, handleSearchBtn}) => {
 	<div>
 		<Box borderRadius='lg' bg='white' p='6'>
 			<Grid templateColumns='repeat(14, 1fr)' gap={2}>
-				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>회사코드/회사명</div></GridItem>
+				<GridItem colSpan={2}><div style={{textAlign: 'center'}}>회사명</div></GridItem>
 				<GridItem colSpan={3}>
 					<Input placeholder="검색어를 입력하세요." name='keyword' size="md" borderRadius="14px"  onChange={(e)=>{setKeyword(e.target.value)}}/>
 				</GridItem>
