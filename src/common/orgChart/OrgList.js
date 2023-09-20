@@ -3,12 +3,14 @@ import {
   } from "@chakra-ui/react"
   
   import React from "react";
+import RealGrid from "./RealGrid";
 
-  const OrgList = () => {
+
+  const OrgList = ({corpDepList}) => {
     return (
 
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
-         
+      <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
+         <RealGrid value={corpDepList}></RealGrid>
         </Box>
     );
   };

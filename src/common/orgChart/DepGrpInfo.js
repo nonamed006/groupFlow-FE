@@ -5,7 +5,6 @@ import React from "react";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const textNumColor = useColorModeValue("brand.500", "white");
   return (
 
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
@@ -24,8 +23,8 @@ const DepGrpInfo = ({ depGrp }) => {
           color={textColor}
           fontSize="18px"
           fontWeight="700"
-          lineHeight="100%">{depGrp.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
-        <Text>{depGrp.mailId}</Text>
+          lineHeight="100%">{depGrp.empDto.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
+        <Text>{depGrp.empDto.mailId}</Text>
       </Box>
       <br />
       <Box>
@@ -44,9 +43,11 @@ const DepGrpInfo = ({ depGrp }) => {
               lineHeight="100%">
               {depGrp.dpPathNm &&
                 depGrp.dpPathNm.map((pathNm, index) => {
-                  return <>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
+                  return (
+                  <>
+                    {pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
                   </>
-
+                  );
                 })} </Text>
           </GridItem>
 
@@ -77,7 +78,7 @@ const DepGrpInfo = ({ depGrp }) => {
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            >{depGrp.mailId}@{depGrp.coDomain}</Text>
+            >{depGrp.empDto.mailId}@{depGrp.coDomain}</Text>
           </GridItem>
 
           <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
@@ -93,7 +94,7 @@ const DepGrpInfo = ({ depGrp }) => {
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            >{depGrp.psnMail}</Text>
+            >{depGrp.empDto.psnMail}</Text>
           </GridItem>
 
         </Grid>

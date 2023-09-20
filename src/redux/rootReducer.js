@@ -11,6 +11,5 @@ const rootReducer = combineReducers({
     dep,depDetail,depOrg,
     emp,
 
-  });
-  
+})
   export default rootReducer;
