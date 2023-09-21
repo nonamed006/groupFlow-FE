@@ -15,6 +15,9 @@ const OrgChartBox = () => {
     // 선택된 조직(회사 및 부서) 코드
     const [corpDepCd, setCorpDepCd] =  useState(); 
 
+    const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
+
+
 	useEffect(() => {
 		fetchCorpDepList();
 	}, []);
@@ -25,34 +28,53 @@ const OrgChartBox = () => {
         if(keyword.length > 0 && search == ''){
             alert("검색기준을 선택하세요");
         }else{
-            fetchCorpDepList();
+            fetchDepGrpList('search');
         }
         
 	}
 
+  	// 조직_그룹 목록 조회
+      const fetchDepGrpList = (type) => {
+        let url = `${PORT}/depGrp`;
+        
+        const params = new URLSearchParams();
+        if (type === 'code' && corpDepCd !== ''){
+            params.append('search', 'code');
+            params.append('keyword', corpDepCd);
+        } 
+        else if (type === 'search'){
+            if (search !== '') params.append('search', search);
+		    if (keyword !== '') params.append('keyword', keyword);
+        }
+
+        // URL에 파라미터 추가
+        const paramString = params.toString();
+        if (paramString) {
+            url += '?' + paramString;
+        }
+        console.log(url);
+        fetch(url, {
+            method: "GET"
+        }).then(res => res.json()).then(res => {
+            console.log(res.data);
+            setDepGrpList(res.data);
+        });
+    };
+
     // 회사 및 부서 목록 조회/검색
 	const fetchCorpDepList = () => {
 		let url = `${PORT}/dep/orgList`;
-
-		// URL 파라미터 생성
-		const params = new URLSearchParams();
-        if (search !== '')
-        params.append('search', search);
-		if (keyword !== '')
-			params.append('keyword', keyword);
-
-		// URL에 파라미터 추가
-		const paramString = params.toString();
-		if (paramString) {
-			url += '?' + paramString;
-		}
-
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
 			setCorpDepList(res.data);
 		});
 	};
+
+       
+	useEffect(() => {
+		fetchDepGrpList('code');
+	}, [corpDepCd]);
 
     return (
 
@@ -69,17 +91,15 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList setCorpDepCd={setCorpDepCd} keyword={keyword} corpDepList={corpDepList}/>
+                    <OrgList setCorpDepCd={setCorpDepCd} corpDepList={corpDepList}/>
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
-                    <DepGrpCardList setDepGrp={setDepGrp} corpDepCd={corpDepCd}/>
+                    <DepGrpCardList depGrpList={depGrpList} setDepGrp={setDepGrp} />
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                  
                     <DepGrpInfo depGrp={depGrp} />
-                   
                 </GridItem>
             </Grid>
         </Box>

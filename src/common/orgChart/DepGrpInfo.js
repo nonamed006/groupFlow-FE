@@ -11,7 +11,7 @@ const DepGrpInfo = ({ depGrp }) => {
   return (
 
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
-      {depGrp !== undefined?
+      {depGrp !== undefined&&
      <>
       <Box align={"center"}>
         <Box m={3}>
@@ -104,7 +104,7 @@ const DepGrpInfo = ({ depGrp }) => {
 
         </Grid>
       </Box></>
-     :''}
+     }
     </Box>
   );
 };

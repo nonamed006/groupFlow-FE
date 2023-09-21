@@ -1,13 +1,9 @@
 import { useEffect, useRef } from "react";
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
-import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/solution';
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
-
 
 const RealGrid = (props) => {
   const realgridElement = useRef(null);
-  const dispatch = useDispatch();
 
   var fields = [
     {fieldName:"path", dataType:"text"},
@@ -62,11 +58,9 @@ const RealGrid = (props) => {
     
     
   treeView.onCellClicked = function (grid, clickData) {
-    console.log(grid);
-    console.log(clickData)
     if(clickData.cellType !== "gridEmpty"){
       let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-      dispatch(setDataPk(dpCdData));
+      props.setCorpDepCd(dpCdData);
     }
       
   }

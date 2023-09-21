@@ -39,7 +39,8 @@ const DepBasic = (props) => {
     onClose();
   }
   useEffect(() => {
-   setDepDto(props.value);
+    
+      setDepDto(props.value);
   }, [props]);
 
   return (

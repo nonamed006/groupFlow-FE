@@ -5,7 +5,7 @@ import ListCard from './component/ListCard/ListCard';
 import InfoBox from './component/InfoBox/InfoBox';
 import { PORT } from "set";
 import OrgChartModal from 'common/orgChart/OrgChartModal';
-
+import { useEffect } from "react";
 const Corporation = () => {
 	const [corpList, setCorpList] = useState([]);	// 회사 데이터 목록
 	const [keyword, setKeyword] = useState('');	// 검색어
@@ -41,6 +41,9 @@ const Corporation = () => {
 	const handleSearchBtn = () => {
 		fetchCorpList();
 	}
+	useEffect(() => {
+		console.log("22222222");
+	  }, []);
 
 	return (
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
