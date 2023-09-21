@@ -84,7 +84,7 @@ const routes = [
             name: "사원관리",
             layout: "/system",
             path: "/employee",
-            component: MainDashboard,
+            component: Employee,
           },
         ]
       },
@@ -177,7 +177,7 @@ const routes = [
     layout: "/admin",
     path: "/test",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Test,
+    component: Employee,
   },
   {
     code:'MU230005',
@@ -208,7 +208,7 @@ const routes = [
   },
   {
     name: "사원관리",
-    layout: "/admin",
+    layout: "/system",
     path: "/emp",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Employee,
