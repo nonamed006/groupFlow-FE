@@ -1,5 +1,5 @@
 import {
-    Button,
+  Button,
   Grid,
   GridItem,
   HStack,
@@ -21,8 +21,12 @@ const EmpTab2 = (props) => {
         templateColumns="repeat(13, 1fr)"
         templateRows="repeat(12, 1fr)"
         gap={2}
+        overflowY={'scroll'} overflowX={'hidden'}
+        h={'600px'}
+        p={3}
       >
-        <GridItem colSpan={2}>
+        {props.empDept?.map((column, index) => (<>
+        <GridItem colStart={0} colEnd={2}>
           <Text fontSize="sm" fontWeight="600">
             회사/부서
           </Text>
@@ -54,7 +58,7 @@ const EmpTab2 = (props) => {
             placeholder="사번"
             size="md"
             borderRadius="14px"
-            value={props.empDept?.dpGrpNum}
+            value={column?.dpGrpNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -70,7 +74,7 @@ const EmpTab2 = (props) => {
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={props.empDept?.telNum}
+            value={column?.telNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -186,7 +190,7 @@ const EmpTab2 = (props) => {
             placeholder="상세업무를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={props.empDept?.payMail}
+            value={column?.payMail}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -203,7 +207,7 @@ const EmpTab2 = (props) => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(props.empDept?.joinDt)}
+            value={minTimeDate(column?.joinDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -215,7 +219,7 @@ const EmpTab2 = (props) => {
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(props.empDept?.reDt)}
+            value={minTimeDate(column?.reDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -231,7 +235,7 @@ const EmpTab2 = (props) => {
             placeholder="팩스번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={props.empDept?.faxNum}
+            value={column?.faxNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -246,7 +250,7 @@ const EmpTab2 = (props) => {
             placeholder="전화번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={props.empDept?.empNm}
+            value={column?.empNm}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -262,7 +266,7 @@ const EmpTab2 = (props) => {
             name="postNum"
             size="md"
             borderRadius="14px"
-            value={props.empDept?.postNum}
+            value={column?.postNum}
             placeholder="우편번호"
             readOnly
           />
@@ -278,7 +282,7 @@ const EmpTab2 = (props) => {
             name="addr"
             size="md"
             borderRadius="14px"
-            value={props.empDept?.addr}
+            value={column?.addr}
             placeholder="주소를 선택하세요"
             readOnly
           />
@@ -289,10 +293,13 @@ const EmpTab2 = (props) => {
             name="addrDetail"
             size="md"
             borderRadius="14px"
-            defaultValue={props.empDept?.addrDetail}
+            defaultValue={column?.addrDetail}
             placeholder="상세주소를 입력하세요."
           />
         </GridItem>
+        <GridItem colSpan={12} rowSpan={5}></GridItem>
+        </>
+        ))}
       </Grid>
     </div>
   );

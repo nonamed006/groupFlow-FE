@@ -15,8 +15,39 @@ const Employee = () => {
   const [empList, setEmpList] = useState([]);
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
-  const [empDept, setEmpDept] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
+  const [empDept, setEmpDept] = useState([{
+      addr: "",
+      addrDetail: "",
+      coCd: "",
+      coNm: "",
+      coType: "",
+      coTypeNm: "",
+      delYn: "",
+      dpCd: "",
+      dpGrpNum: "",
+      dpGrpcd: "",
+      dpNm: "",
+      dpType: "",
+      dpTypeNm: "",
+      empCd: "",
+      empTypeCd: "",
+      empTypeNm: "",
+      fax: "",
+      jobCd: "",
+      jobDetail: "",
+      jobNm: "",
+      joinDt: "",
+      postNum: "",
+      pstnCd: "",
+      pstnNm: "",
+      rankCd: "",
+      rankNm: "",
+      reDt: "",
+      telNum: "",
+      workTypeCd: "",
+      workTypeNm: "",
+    }]);
 
   //사원 목록 조회
   const getEmpList = (searchCorp, searchWorkType, searchNm) => {
@@ -47,6 +78,7 @@ const Employee = () => {
 
   // 사원 목록 클릭시
   const onClickRow = (empList) => {
+    resetInput();
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
     dispatch(setIsRead(true));
@@ -72,10 +104,42 @@ const Employee = () => {
       useYn: "1",
       gender: "M",
     });
+    setEmpDept([{
+      addr: "",
+      addrDetail: "",
+      coCd: "",
+      coNm: "",
+      coType: "",
+      coTypeNm: "",
+      delYn: "",
+      dpCd: "",
+      dpGrpNum: "",
+      dpGrpcd: "",
+      dpNm: "",
+      dpType: "",
+      dpTypeNm: "",
+      empCd: "",
+      empTypeCd: "",
+      empTypeNm: "",
+      fax: "",
+      jobCd: "",
+      jobDetail: "",
+      jobNm: "",
+      joinDt: "",
+      postNum: "",
+      pstnCd: "",
+      pstnNm: "",
+      rankCd: "",
+      rankNm: "",
+      reDt: "",
+      telNum: "",
+      workTypeCd: "",
+      workTypeNm: "",
+    }]);
   };
 
   //사원 기본정보 저장
-  const onSaveEmpDetail= () => {
+  const onSaveEmpDetail = () => {
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
 
@@ -103,10 +167,10 @@ const Employee = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.result == "success") {
-        }else{
+        } else {
         }
       });
-  }
+  };
 
   useEffect(() => {
     getEmpList("", "", "");
