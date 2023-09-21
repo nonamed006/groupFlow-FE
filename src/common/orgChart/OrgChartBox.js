@@ -17,7 +17,6 @@ const OrgChartBox = () => {
 
     const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
 
-
 	useEffect(() => {
 		fetchCorpDepList();
 	}, []);
@@ -74,6 +73,7 @@ const OrgChartBox = () => {
        
 	useEffect(() => {
 		fetchDepGrpList('code');
+        // setDepGrp('');
 	}, [corpDepCd]);
 
     return (

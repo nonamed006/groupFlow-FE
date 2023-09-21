@@ -59,14 +59,14 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
               fontWeight="300"
               lineHeight="100%"
             > {depGrp.empDto.mailId}</Text>
-
+            <Spacer />
             <Box>
               <Text
                 color={textColor}
                 fontSize="15px"
                 fontWeight="300"
                 lineHeight="100%"
-              >{depGrp.empDto.telNum}</Text>
+              >{depGrp.telNum}</Text>
             </Box>
 
           </Flex>

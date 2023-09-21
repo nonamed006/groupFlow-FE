@@ -17,7 +17,7 @@ import { Box, Grid, GridItem, Button, Select,  Input, Text} from '@chakra-ui/rea
                     <option value='corp'>회사명</option> 
                     <option  value='dep'>부서명</option> 
                     <option value='empNm'>사원명</option> 
-                    <option  value='empId'>사원ID</option>    
+                    <option  value='empId'>메일ID</option>    
                     <option  value='rank'>직급</option>     
                 </Select>
             </GridItem>
