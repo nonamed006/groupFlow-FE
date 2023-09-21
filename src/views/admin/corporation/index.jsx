@@ -1,26 +1,18 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from '@chakra-ui/react';
 import React, { useState } from "react";
-import { useEffect } from "react";
 import SearchCardBar from './component/SearchCardBar';
 import ListCard from './component/ListCard/ListCard';
 import InfoBox from './component/InfoBox/InfoBox';
 import { PORT } from "set";
-import { useDispatch, useSelector } from "react-redux";
-import { setChangeYn } from "redux/corporation";
 import OrgChartModal from 'common/orgChart/OrgChartModal';
 
 const Corporation = () => {
-	const dispatch = useDispatch();
-	const changeYn = useSelector((state) => state.corporation.changeYn);	// 변경 여부(회사목록 리렌더링 조건)
 	const [corpList, setCorpList] = useState([]);	// 회사 데이터 목록
 	const [keyword, setKeyword] = useState('');	// 검색어
 	const [useYn, setUseYn] = useState('');	// 사용여부
-
+	const [coCd , setCoCd] =useState('');	// 선택된 회사코드
+	const [changeYn, setChangeYn] = useState(false);// 변경 여부(회사목록 리렌더링 조건)
 	const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
-
-	useEffect(() => {
-		changeYn ? dispatch(setChangeYn(false)) : fetchCorpList();
-	}, [changeYn]);
 
 	// 회사 목록 조회 및 검색
 	const fetchCorpList = () => {
@@ -53,7 +45,7 @@ const Corporation = () => {
 	return (
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
 			<Grid
-				h='auto'
+				h='1000px'
 				templateRows='repeat(11, 1fr)'
 				templateColumns='repeat(6, 1fr)'
 				gap={5}
@@ -62,10 +54,10 @@ const Corporation = () => {
 					<SearchCardBar setKeyword={setKeyword} setUseYn={setUseYn} handleSearchBtn={handleSearchBtn} />
 				</GridItem>
 				<GridItem colSpan={2} rowSpan={5} >
-					<ListCard title={"회사"} listData={corpList} />
+					<ListCard title={"회사"} listData={corpList} setCoCd={setCoCd} changeYn={changeYn} setChangeYn={setChangeYn} fetchCorpList={fetchCorpList}/>
 				</GridItem>
 				<GridItem colSpan={4} rowSpan={5} >
-					<InfoBox />
+					<InfoBox coCd={coCd} setCoCd={setCoCd} setChangeYn={setChangeYn}/>
 				</GridItem>
 			</Grid>
 

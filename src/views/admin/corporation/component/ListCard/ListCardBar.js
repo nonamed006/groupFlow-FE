@@ -4,15 +4,12 @@ import {
     Text,
     useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-  import React from "react";
-  import { useDispatch } from "react-redux";
-  import { setDataPk } from "redux/solution";
+  import React from "react";;
 
-  const ListCardBar = ({title, count}) => {
+  const ListCardBar = ({title, count, setCoCd}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
 
-    const dispatch = useDispatch();
     return (
           <Flex
             align={{ sm: "flex-start", lg: "center" }}
@@ -52,7 +49,7 @@ import {
             </Flex>
             <Button variant="action"
             onClick={() => {
-              dispatch(setDataPk(0));
+              setCoCd('');  // setCoCd 초기화
             }}
             >추가</Button>
           </Flex>

@@ -9,7 +9,7 @@ import {
   import { useDispatch } from "react-redux";
   import { setDataPk } from "redux/solution";
 
-  const ListCardTableTr = ({data, index}) => {
+  const ListCardTableTr = ({data, index, setCoCd}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ import {
                     onMouseOver(index)
                 }}
                 onClick={() => {
-                    dispatch(setDataPk(data.coCd));
+                    setCoCd((data.coCd));
                   }}
               >
              

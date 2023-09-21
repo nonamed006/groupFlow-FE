@@ -58,7 +58,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
               fontWeight="300"
               lineHeight="100%"
             > {depGrp.empDto.mailId}</Text>
-            <Spacer />
+
             <Box>
               <Text
                 color={textColor}
