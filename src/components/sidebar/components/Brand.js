@@ -6,6 +6,7 @@ import { Flex, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import { HorizonLogo } from "components/icons/Icons";
 import { HSeparator } from "components/separator/Separator";
+import { GroupwareLogo } from "components/icons/Icons";
 
 export function SidebarBrand() {
   //   Chakra color mode
@@ -13,8 +14,9 @@ export function SidebarBrand() {
 
   return (
     <Flex align='center' direction='column'>
-      <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} />
-      <HSeparator mb='20px' />
+      {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> 이혜윤 - 수정(HorizonLogo -> GroupwareLogo) */}
+      <GroupwareLogo h='26px' w='175px' my='32px' color={logoColor} />
+      {/* <HSeparator mb='20px' /> */}
     </Flex>
   );
 }
