@@ -4,23 +4,18 @@ import {
 import { PORT } from "set";
 import React, { useState, useEffect } from "react";
 import DepGrpCard from "./DepGrpCard";
-import { useSelector } from "react-redux";
 
-const DepGrpCardList = ({setDepGrp}) => {
-	const dataPk = useSelector((state) => state.solution.dataPk);	
-
+const DepGrpCardList = ({corpDepCd, setDepGrp}) => {
   const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
 
 	useEffect(() => {
 		fetchDepGrpList();
-	}, [dataPk]);
+	}, [corpDepCd]);
 
-	// 조직_그룹 목록 조회
+    	// 조직_그룹 목록 조회
 	const fetchDepGrpList = () => {
-		console.log(dataPk);
-
 		let url = `${PORT}/depGrp`;
-		if(dataPk!==0)	url += `?code=${dataPk}`
+		if(corpDepCd !== '') url += `?code=${corpDepCd}`
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {

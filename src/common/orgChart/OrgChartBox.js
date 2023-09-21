@@ -8,13 +8,16 @@ import DepGrpInfo from './DepGrpInfo';
 import { PORT } from "set";
 
 const OrgChartBox = () => {
-    const [depGrp,setDepGrp] = useState();  // 선택된 조직_그룹 데이터 하나
+    const [depGrp,setDepGrp] = useState();  // 선택된 부서원 데이터 하나
     const [search, setSearch] = useState(''); // 검색 기준
     const [keyword, setKeyword] = useState('');   // 검색어
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
+    const [isClick, setIsClick] = useState(false);
+    // 선택된 조직(회사 및 부서) 코드
+    const [corpDepCd, setCorpDepCd] =  useState(); 
+
 	useEffect(() => {
 		fetchCorpDepList();
-        console.log(depGrp);
 	}, []);
 
 
@@ -23,7 +26,8 @@ const OrgChartBox = () => {
         if(keyword.length > 0 && search == ''){
             alert("검색기준을 선택하세요");
         }else{
-            fetchCorpDepList();
+            setIsClick(!isClick);
+          //  fetchCorpDepList();
         }
         
 	}
@@ -51,6 +55,7 @@ const OrgChartBox = () => {
 			setCorpDepList(res.data);
 		});
 	};
+
     return (
 
         <Box bg='white' w='auto'>
@@ -66,16 +71,17 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList corpDepList={corpDepList}/>
+                    <OrgList setCorpDepCd={setCorpDepCd} keyword={keyword} corpDepList={corpDepList}/>
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
-                    <DepGrpCardList setDepGrp={setDepGrp}/>
+                    <DepGrpCardList setDepGrp={setDepGrp} corpDepCd={corpDepCd}/>
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    {depGrp!==undefined&&<DepGrpInfo depGrp={depGrp} />
-                    }
+                  
+                    <DepGrpInfo depGrp={depGrp} />
+                   
                 </GridItem>
             </Grid>
         </Box>
