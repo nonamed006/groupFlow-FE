@@ -3,16 +3,10 @@ import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { PORT } from "set";
-import { useDispatch } from "react-redux";
-import { setDataPk } from "redux/solution";
-import { setChangeYn } from "redux/corporation";
 import DeleteModal from "common/modal/DeleteModal";
 
-const InfoBox = () => {
-    const dispatch = useDispatch();
-    const coCd = useSelector((state) => state.solution.dataPk);
+const InfoBox = ({coCd, setCoCd, setChangeYn}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
     const [isEditing, setIsEditing] = useState(false);  // 저장 및 수정 상태 (기본값 false - 저장) 
@@ -21,7 +15,7 @@ const InfoBox = () => {
     const [sortValue, setSortValue] = useState();   // 초기 정렬 기본값
 
     useEffect(() => {
-        if (coCd !== 0) { // 선택된 coCd 값이 있다면(초기값 0이 아니라면) 
+        if (coCd !== '') { // 선택된 coCd 값이 있다면
             fetchCorp(coCd);    // coCd로 회사 조회
             setIsEditing(true); // 수정모드
         } else {
@@ -64,6 +58,7 @@ const InfoBox = () => {
             method: "GET"
         }).then(res => res.json()).then(res => {
             setSortValue(res.strData);
+          
         });
     };
 
@@ -114,7 +109,7 @@ const InfoBox = () => {
             body: JSON.stringify(corp)
         }).then(res => res.json()).then(res => {
             alert(res.resultMsg);
-            dispatch(setChangeYn(true));    // 변경 여부 변경
+            setChangeYn(true);    // 변경 여부 변경
         });
     };
 
@@ -129,7 +124,7 @@ const InfoBox = () => {
             body: JSON.stringify(corp)
         }).then(res => res.json()).then(res => {
             alert(res.resultMsg);
-            dispatch(setChangeYn(true));    // 변경 여부 변경
+            setChangeYn(true);     // 변경 여부 변경
         });
     };
 
@@ -140,14 +135,17 @@ const InfoBox = () => {
             method: "PUT",
         }).then(res => res.json()).then(res => {
             alert(res.resultMsg);
-            dispatch(setDataPk(0)); // coCd 초기화
-            dispatch(setChangeYn(true));    // 변경 여부 변경
+            setCoCd(''); // coCd 초기화
+            setChangeYn(true);    // 변경 여부 변경
         });
     };
 
     // 삭제 버튼 클릭 시
     const handelDeleteBtn = () => {
-        fetchCorpDelete(coCd);
+        coCd===''?
+            alert("삭제할 회사가 존재하지 않습니다")
+        :
+            fetchCorpDelete(coCd);
         onClose();
     }
 

@@ -10,7 +10,7 @@ import React from "react";
 
 import ListCardTableTbody from "./ListCardTableTbody";
 
-const ListCardTable = ({ headerGroups, listData }) => {
+const ListCardTable = ({ headerGroups, listData, setCoCd }) => {
 
   return (
     <Table variant="simple" color="gray.500"  w={'100%'} display={'inline-block'}>
@@ -27,7 +27,7 @@ const ListCardTable = ({ headerGroups, listData }) => {
 
       {/* Tbody */}
       <Tbody >
-        <ListCardTableTbody listData={listData} />
+        <ListCardTableTbody listData={listData} setCoCd={setCoCd}/>
       </Tbody>
     </Table>
 
