@@ -15,7 +15,6 @@ import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
-import Test from "views/admin/test";
 import Corporation from "views/admin/corporation";
 import Department from "views/admin/department";
 import Employee from "views/admin/employee";
