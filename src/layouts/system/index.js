@@ -106,7 +106,7 @@ export default function Dashboard(props) {
 	}, [collapse]);
 
 	return (
-		<HStack w="full" h="100vh" bg="gray.100">
+		<HStack w="full" h="100vh">
 			<Flex
 				w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
 				h="full"
