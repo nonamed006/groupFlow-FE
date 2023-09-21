@@ -1,30 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
+import { useDispatch } from 'react-redux';
+import { setDataPk } from 'redux/solution';
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
-import { useSelector } from "react-redux";
 
 
-function DepUpperCd(props) {
+const RealGrid = (props) => {
   const realgridElement = useRef(null);
-  const org = useSelector((state) => state.depOrg.depOrg);
-  
-  
+  const dispatch = useDispatch();
+
   var fields = [
-    {fieldName:"dpPath", dataType:"text"},
-    {fieldName:"dpNm", dataType:"text"},
-    {fieldName:"dpCd", dataType:"text"},
+    {fieldName:"path", dataType:"text"},
+    {fieldName:"name", dataType:"text"},
+    {fieldName:"code", dataType:"text"},
     {fieldName:"depth", dataType:"text"}
   ]
   
   var columns = [
-    {fieldName:"dpNm", name:"dpNm", width: 150, header:{text:"명칭"}},
-    {fieldName:"dpPath", name:"dpPath", header:{text:"dpPath"}},
-    {fieldName:"dpCd", name:"dpCd", header:{text:"dpCd"}},
-    {fieldName:"depth", name:"depth", header:{text:"depth"}},
+    {fieldName:"name", name:"name", width: 150, header:{text:"명칭"}},
+    {fieldName:"path", name:"path", header:{text:"path"}},
+    {fieldName:"code", name:"code", width: 150, header:{text:"code"}},
+    {fieldName:"depth", name:"depth", header:{text:"depth"}}
   ];
   
   var treeProvider, treeView;
   useEffect(() => {
+    
     
     const container = realgridElement.current;
     if (!container) {
@@ -32,32 +33,28 @@ function DepUpperCd(props) {
     }
     treeProvider = new LocalTreeDataProvider();
     treeView = new TreeView(container);
+   
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
     treeView.header.height = 40;
     treeView.footer.height = 40;
-    treeView.stateBar.width = 16;
-    
+    treeView.stateBar.width = 20;
+     
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
     treeView.setStateBar({visible: false}); //상태바 표시X
     treeView.setCheckBar({visible: false}); //체크박스 표시X
     treeView.setRowIndicator({visible: false}); //인디케이터 표시X
 
     //해당 컬럼 표시X
-    treeView.columnByName("dpPath").visible =  false;
+    treeView.columnByName("path").visible =  false;
     treeView.columnByName("depth").visible =  false;
-    treeView.columnByName("dpCd").visible =  false;
-
-    treeView.columnByName("dpPath").editable =  false;
-    treeView.columnByName("depth").editable =  false;
-    treeView.columnByName("dpNm").editable = false;
-
-
-      treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
+    treeView.columnByName("code").visible =  false;
+    treeView.columnByName("name").editable = false;
+   
+    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
         "cor2.png", "cor2.png", "dep2.png", "dep.png", "cor.png", "icon2.png", "is.png",
         "kr.png", "mx.png", "pt.png", "us.png", "ve.png"
@@ -65,21 +62,29 @@ function DepUpperCd(props) {
     
     
   treeView.onCellClicked = function (grid, clickData) {
-    console.log( grid._dataProvider._rowMap[clickData.dataRow])
-    let dpData= grid._dataProvider._rowMap[clickData.dataRow]
-    props.getValue(dpData)
+    console.log(grid);
+    console.log(clickData)
+    if(clickData.cellType !== "gridEmpty"){
+      let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+      dispatch(setDataPk(dpCdData));
+    }
       
   }
-  treeProvider.setRows(org, "dpPath", true, null, "depth");
   
-   return () => {
+  treeProvider.setRows(props.value, "path", true, null, "depth");
+  
+  // 모두 열기
+  treeView.expandAll();
 
+   return () => {
        treeProvider.clearRows();
        treeView.destroy();
      };
-  }, []);
+  }, [props]);
 
   return <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>;
 }
 
-export default DepUpperCd;
+
+
+export default RealGrid;

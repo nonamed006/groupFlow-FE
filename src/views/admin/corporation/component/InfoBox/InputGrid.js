@@ -3,7 +3,7 @@ import React from "react";
 
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
-import { formatDate } from "common";
+import { formatDate } from "common/common";
 import AddrBox from 'common/addressAPI/AddrBox';
 
 const InputGrid = ({ corp, setCorp }) => {

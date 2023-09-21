@@ -15,9 +15,9 @@ import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
-import Test from "views/admin/test";
 import Corporation from "views/admin/corporation";
 import Department from "views/admin/department";
+import Employee from "views/admin/employee";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 import Menu from "views/system/menu"
@@ -184,6 +184,15 @@ const routes = [
     upper: 'MU230002',
     name: "회사관리",
     layout: "/system",
+    name: "부서관리",
+    layout: "/admin",
+    path: "/department",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Department,
+  },
+  {
+    name: "Corporation",
+    layout: "/admin",
     path: "/corporation",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Corporation,
@@ -197,7 +206,13 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Department,
   },
-  
+  {
+    name: "사원관리",
+    layout: "/admin",
+    path: "/emp",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Employee,
+  },
 ];
 
 export default routes;

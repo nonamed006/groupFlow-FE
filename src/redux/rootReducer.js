@@ -6,9 +6,11 @@ import depDetail from './depDetail'
 import corporation from './corporation';
 import menu from './menu'
 
+import depOrg from './depOrg';
 const rootReducer = combineReducers({
     solution,
     corporation,
+    dep,depDetail,depOrg,
     emp,
     menu
   });

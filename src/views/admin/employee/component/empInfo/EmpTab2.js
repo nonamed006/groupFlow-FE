@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Button,
   Grid,
@@ -9,30 +8,25 @@ import {
   RadioGroup,
   Select,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { minTimeDate } from "common/common";
+import React from "react";
 import { useSelector } from "react-redux";
-import AddrModal from "common/addressAPI/AddrModal";
 
-
-const EmpTab2 = () => {
+const EmpTab2 = (props) => {
   const isReadStatus = useSelector((state) => state.emp.isRead);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const empDept = useSelector((state) => state.emp.empDept);
-
-  const [postNum, setPostNum] = useState("");
-  const [addr, setAddr] = useState("");
-  const [addrDetail, setAddrDetail] = useState("");
-
   return (
     <div>
       <Grid
         templateColumns="repeat(13, 1fr)"
         templateRows="repeat(12, 1fr)"
         gap={2}
+        overflowY={'scroll'} overflowX={'hidden'}
+        h={'600px'}
+        p={3}
       >
-        <GridItem colSpan={2}>
+        {props.empDept?.map((column, index) => (<>
+        <GridItem colStart={0} colEnd={2}>
           <Text fontSize="sm" fontWeight="600">
             회사/부서
           </Text>
@@ -60,11 +54,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
           <Input
-          id="dpGrpNum"
+            id="dpGrpNum"
             placeholder="사번"
             size="md"
             borderRadius="14px"
-            value={empDept?.dpGrpNum}
+            value={column?.dpGrpNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -76,11 +70,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
-          id="telNum"
+            id="telNum"
             placeholder="example@mail.com"
             size="md"
             borderRadius="14px"
-            value={empDept?.telNum}
+            value={column?.telNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -196,7 +190,7 @@ const EmpTab2 = () => {
             placeholder="상세업무를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empDept?.payMail}
+            value={column?.payMail}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -208,24 +202,24 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={3} colEnd={5}>
           <Input
-          id="joinDt"
+            id="joinDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empDept?.joinDt)}
+            value={minTimeDate(column?.joinDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
 
         <GridItem colStart={5} colEnd={7}>
           <Input
-          id="reDt"
+            id="reDt"
             placeholder="Select Date and Time"
             size="md"
             type="date"
             style={{ color: "gray" }}
-            value={minTimeDate(empDept?.reDt)}
+            value={minTimeDate(column?.reDt)}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -237,11 +231,11 @@ const EmpTab2 = () => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
-          id=""
+            id=""
             placeholder="팩스번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empDept?.faxNum}
+            value={column?.faxNum}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -256,7 +250,7 @@ const EmpTab2 = () => {
             placeholder="전화번호를 입력하세요."
             size="md"
             borderRadius="14px"
-            value={empDept?.empNm}
+            value={column?.empNm}
             isReadOnly={isReadStatus}
           />
         </GridItem>
@@ -272,13 +266,13 @@ const EmpTab2 = () => {
             name="postNum"
             size="md"
             borderRadius="14px"
-            value={empDept?.postNum}
+            value={column?.postNum}
             placeholder="우편번호"
             readOnly
           />
         </GridItem>
         <GridItem colStart={5} colEnd={8}>
-          <Button variant="brand" id="postNumBtn" onClick={onOpen}>
+          <Button variant="brand" id="postNumBtn" >
             우편번호 찾기
           </Button>
         </GridItem>
@@ -288,7 +282,7 @@ const EmpTab2 = () => {
             name="addr"
             size="md"
             borderRadius="14px"
-            value={empDept?.addr}
+            value={column?.addr}
             placeholder="주소를 선택하세요"
             readOnly
           />
@@ -299,22 +293,14 @@ const EmpTab2 = () => {
             name="addrDetail"
             size="md"
             borderRadius="14px"
-            defaultValue={empDept?.addrDetail}
+            defaultValue={column?.addrDetail}
             placeholder="상세주소를 입력하세요."
           />
         </GridItem>
+        <GridItem colSpan={12} rowSpan={5}></GridItem>
+        </>
+        ))}
       </Grid>
-
-      {isOpen ? (
-        <AddrModal
-          isOpen={isOpen}
-          onClose={onClose}
-          setPostNum={setPostNum}
-          setAddr={setAddr}
-        />
-      ) : (
-        ""
-      )}
     </div>
   );
 };

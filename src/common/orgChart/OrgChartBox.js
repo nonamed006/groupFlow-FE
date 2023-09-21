@@ -1,36 +1,56 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from '@chakra-ui/react';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import OrgList from './OrgList';
 import DepGrpCardList from './DepGrpCardList';
 import DepGrpInfo from './DepGrpInfo';
+import { PORT } from "set";
 
-const OrgChartBox = ({ onClose, isOpen }) => {
-    const [depList, setDepList] = useState(); // 회사 및 부서 데이터
-    const [depGrp, setDepGrp] = useState({
-        dpGrpcd: "DG230001", // 조직_그룹 코드
-        coCd: "CO230002", // 회사코드
-        dpCd: "DP230001", // 부서코드
-        empCd: "EM230001", // 사원코드
-        coDomain: "", // 회사 도메인  - 하나 조회시
-        telNum: '051-111-1111',// 조직_부서 전화번호
-        rankNm: "사원", // 직급명 
-        pstnNm: "팀원", // 직책명
-        empNm: "장은주",  // 사원명
-        mailId: "jej",  // 메일 아이디 
-        psnMail: null,  // 개인메일 - 하나 조회시
-        fileNm: null, // 프로필 파일명
-        filePath: null, // 프로필 파일경로
-        dpPath: "CO230002/DP230001/DP230002", // 상위부서-현재부서 
-        dpPathNm: [ // 상위부서-현재부서 이름
-            "test3333",
-            "부서명",
-            "-부서2"
-        ]
-    },
-    ); // 사원 데이터 하나
+const OrgChartBox = () => {
+    const [depGrp,setDepGrp] = useState();  // 선택된 조직_그룹 데이터 하나
+    const [search, setSearch] = useState(''); // 검색 기준
+    const [keyword, setKeyword] = useState('');   // 검색어
+    const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
+	useEffect(() => {
+		fetchCorpDepList();
+        console.log(depGrp);
+	}, []);
 
+
+    // 검색 버튼 클릭 시
+	const handleSearchBtn = () => {
+        if(keyword.length > 0 && search == ''){
+            alert("검색기준을 선택하세요");
+        }else{
+            fetchCorpDepList();
+        }
+        
+	}
+
+    // 회사 및 부서 목록 조회/검색
+	const fetchCorpDepList = () => {
+		let url = `${PORT}/dep/orgList`;
+
+		// URL 파라미터 생성
+		const params = new URLSearchParams();
+        if (search !== '')
+        params.append('search', search);
+		if (keyword !== '')
+			params.append('keyword', keyword);
+
+		// URL에 파라미터 추가
+		const paramString = params.toString();
+		if (paramString) {
+			url += '?' + paramString;
+		}
+
+		fetch(url, {
+			method: "GET"
+		}).then(res => res.json()).then(res => {
+			setCorpDepList(res.data);
+		});
+	};
     return (
 
         <Box bg='white' w='auto'>
@@ -42,19 +62,20 @@ const OrgChartBox = ({ onClose, isOpen }) => {
             >
                 {/* 검색바 */}
                 <GridItem colSpan={4}   >
-                    <SearchBar />
+                    <SearchBar setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList />
+                    <OrgList corpDepList={corpDepList}/>
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
-                    <DepGrpCardList />
+                    <DepGrpCardList setDepGrp={setDepGrp}/>
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <DepGrpInfo depGrp={depGrp} />
+                    {depGrp!==undefined&&<DepGrpInfo depGrp={depGrp} />
+                    }
                 </GridItem>
             </Grid>
         </Box>
