@@ -12,7 +12,6 @@ const OrgChartBox = () => {
     const [search, setSearch] = useState(''); // 검색 기준
     const [keyword, setKeyword] = useState('');   // 검색어
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
-    const [isClick, setIsClick] = useState(false);
     // 선택된 조직(회사 및 부서) 코드
     const [corpDepCd, setCorpDepCd] =  useState(); 
 
@@ -26,8 +25,7 @@ const OrgChartBox = () => {
         if(keyword.length > 0 && search == ''){
             alert("검색기준을 선택하세요");
         }else{
-            setIsClick(!isClick);
-          //  fetchCorpDepList();
+            fetchCorpDepList();
         }
         
 	}
