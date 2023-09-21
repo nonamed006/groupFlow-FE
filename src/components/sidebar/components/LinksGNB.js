@@ -103,6 +103,7 @@ export function SidebarLinks(props) {
                   LNBroute(route);
                 }}
                 cursor={'pointer'}
+                key={index}
               >
                 <HStack
                   spacing={

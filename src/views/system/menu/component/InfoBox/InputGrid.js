@@ -1,12 +1,16 @@
-import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon } from '@chakra-ui/react';
-import React, { useState } from "react";
+import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon, Flex, Button, useColorModeValue, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react';
+import { React, useState, useEffect } from "react";
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
 import { MdHome } from 'react-icons/md';
 import { AttachmentIcon } from '@chakra-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
 
-const InputGrid = ({menu, sortValue}) => {
-  const [menuData, setmenuData] = useState({
+const InputGrid = ({title}) => {
+  const textColor = useColorModeValue("secondaryGray.900", "white");
+  const dispatch = useDispatch();
+  const { menu } = useSelector(state => state.menu);
+  const [menuInputData, setmenuInputData] = useState({
     menuCd: '',
     upperCd: '',
     fileCd: '',
@@ -20,20 +24,45 @@ const InputGrid = ({menu, sortValue}) => {
     cdt: '',
     mdt : '',
   });
+  const useYn = new Boolean(menu.useYn);
+  console.log(useYn.toString());
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    menuData({
-      ...menuData,
+    setmenuInputData({
+      ...menuInputData,
       [name]: value // name 키를 가진 값을 value 로
     });
+    console.log(menuInputData);
   };
   
   // useEffect(()=> {
-  //   setmenuData(menuData);
-  // }, [corp]);
+  //   //setmenuInputData(menuInputData);
+  // }, [menu]);
   return (
     <>
+      <Flex
+        align={{ sm: "flex-start", lg: "center" }}
+        justify="space-between"
+        w="100%"
+        px="22px"
+        pb="20px"
+        mb="10px"
+
+      >
+        <Text
+          color={textColor}
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
+          {title}
+        </Text>
+
+        <Flex>
+            <Button variant="action">저장</Button>
+        </Flex>
+      </Flex>
       <Grid
         templateColumns="repeat(4, 1fr)"
         templateRows="repeat(8, 1fr)"
@@ -45,7 +74,7 @@ const InputGrid = ({menu, sortValue}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-            <Input id="menuNm" name="menuNm"  size="md" boarder="1" borderRadius="14px" value={menu&&menu.menuNm} onChange={onChange} readOnly/>
+            <Input id="menuNm" name="menuNm"  size="md" boarder="1" borderRadius="14px" defaultValue={menu&&menu.menuNm} onChange={onChange}/>
         </GridItem>
 
         <GridItem colSpan={1}>
@@ -54,10 +83,10 @@ const InputGrid = ({menu, sortValue}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-          <RadioGroup  defaultValue={menuData.useYn}>
+          <RadioGroup name='useYn' defaultValue={Object.keys(menu).length > 0 ? new Boolean(menu.useYn).toString() : 'true'}>
             <HStack spacing="24px">
-              <Radio name="useYn"  value="1" >사용</Radio>
-              <Radio name="useYn" value="0">미사용</Radio>
+              <Radio name='useYn'  value='true' onChange={onChange}>사용</Radio>
+              <Radio name='useYn' value='false' onChange={onChange}>미사용</Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -68,7 +97,14 @@ const InputGrid = ({menu, sortValue}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-            <Input id="sort" name="sort"  size="md" boarder="1" borderRadius="14px" value={menu&&menu.sort} onChange={onChange} type='number'/>
+        <NumberInput defaultValue={Object.keys(menu).length > 0 && menu.sort}  min={0} name='sort'>
+          <NumberInputField/>
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+          {/* <Input id="sort" name="sort"  size="md" boarder="1" borderRadius="14px" defaultValue={menu&&menu.sort} onChange={onChange} type='number' min={0}/> */}
         </GridItem>
 
         <GridItem colSpan={1} rowSpan={2}>
@@ -81,7 +117,7 @@ const InputGrid = ({menu, sortValue}) => {
           <InputLeftAddon children={<AttachmentIcon/>} />
           <Input id="fileInput" name="fileInput" size="md" boarder="1" borderRadius="14px" value='' onChange={onChange} readOnly='readOnly' placeholder='마우스로 파일을 끌어오세요'/>
         </InputGroup>
-            <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" value='' onChange={onChange} type='file' display={'none'}/>
+            <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" onChange={onChange} type='file' display={'none'}/>
         </GridItem>
 
         <GridItem colSpan={3} borderWidth={1} rowSpan={4} h={'200px'} overflowY={'scroll'}>

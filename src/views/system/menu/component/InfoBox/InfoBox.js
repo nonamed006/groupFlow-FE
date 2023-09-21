@@ -1,16 +1,15 @@
 import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from 'react';
-import LnbGridBar from "./InfoBoxBar";
+import InfoBoxBar from "./InfoBoxBar";
 import { useEffect } from "react";
-const InfoBox = ({title, corp, sortValue}) => {
-    
-    useEffect(()=> {
+import InputGrid from "./InputGrid";
 
-    }, [corp]);
+const InfoBox = ({title}) => {
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6"  backgroundColor="white">
-            <LnbGridBar title={title} />
+            {/* <InfoBoxBar title={title} /> */}
             <Box>
+                <InputGrid title={title}/>
             </Box>
         </Box>
     );

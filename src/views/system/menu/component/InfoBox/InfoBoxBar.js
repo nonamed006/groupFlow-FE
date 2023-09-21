@@ -6,7 +6,7 @@ const InfoBoxBar = ({title}) => {
     return (
        
        
-            <Flex
+          <Flex
             align={{ sm: "flex-start", lg: "center" }}
             justify="space-between"
             w="100%"

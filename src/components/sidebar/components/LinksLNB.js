@@ -70,6 +70,7 @@ export function SidebarLinks(props) {
                 LNBroute(route); //LNB 정보 변경
               }}
               cursor={'pointer'}
+              key={index}
             >
               <HStack
                 spacing={
