@@ -77,6 +77,8 @@ function Sidebar(props) {
             overflowX='hidden'
             position='absolute'
             display={LNBcollapse ? 'block' : 'none'}
+            onMouseOver={() => setLNBCollapse(true)}
+            onMouseLeave={() => setLNBCollapse(false)}
           >
             <Scrollbars
               autoHide

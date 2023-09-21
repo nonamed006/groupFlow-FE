@@ -2,7 +2,8 @@
 import { Portal, Box, useDisclosure, HStack } from '@chakra-ui/react';
 import Footer from 'components/footer/FooterAdmin.js';
 // Layout components
-import Navbar from 'components/navbar/NavbarAdmin.js';
+import Navbar from 'components/navbar/NavbarAdmin';
+//import Navbar from 'components/navbar/NavbarSystem.js';
 import Sidebar from 'components/sidebar/Sidebar.js';
 import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -146,6 +147,7 @@ export default function Dashboard(props) {
 							secondary={getActiveNavbar(routes)}
 							message={getActiveNavbarText(routes)}
 							fixed={fixed}
+							routes={routes}
 							{...rest}
 						/>
 					</Box>
