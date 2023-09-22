@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PORT } from "set";
 import { MdAttachFile } from "react-icons/md";
-import { minTimeDate } from "common";
+import { minTimeDate } from "common/common";
 import { setIsRead } from "redux/emp";
 import { setEmpList } from "redux/emp";
 

@@ -11,6 +11,7 @@ import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
 import { createStore } from 'redux';
 import rootReducer from 'redux/rootReducer';
 import { Provider } from 'react-redux';
+import SystemLayout from 'layouts/system'; //이혜윤 - 추가
 
 const store = createStore(rootReducer);
 
@@ -20,6 +21,7 @@ ReactDOM.render(
 			<ThemeEditorProvider>
 				<HashRouter>
 					<Switch>
+						<Route path={`/system`} component={SystemLayout} /> {/* 이혜윤 - 추가 */}
 						<Route path={`/auth`} component={AuthLayout} />
 						<Route path={`/admin`} component={AdminLayout} />
 						<Route path={`/rtl`} component={RtlLayout} />

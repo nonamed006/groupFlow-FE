@@ -2,10 +2,12 @@
 const SET_DATA_PK = 'emp/SET_DATA_PK';
 const SET_DATA = 'emp/SET_DATA';
 const SET_IS_READ = 'emp/SET_IS_READ';
-//사원 정보
+//사원 정보 목록
 const SET_EMP_LIST = 'emp/SET_EMP_LIST';
 //사원 조직 정보
 const SET_EMP_DEPT = 'emp/SET_EMP_DEPT'
+// 사원 상세 정보
+const SET_EMP_DETAIL = 'emp/SET_EMP_DETAIL';
 
 
 
@@ -17,6 +19,8 @@ export const setData = dataList =>({ type: SET_DATA, dataList});
 export const setIsRead = isRead =>({ type: SET_IS_READ, isRead});
 export const setEmpList = empList =>({ type: SET_EMP_LIST, empList});
 export const setEmpDept = empDept =>({ type: SET_EMP_DEPT, empDept});
+export const setEmpDetail = empDetail =>({ type: SET_EMP_DETAIL, empDetail});
+
 
 
 
@@ -30,6 +34,7 @@ const initialState = {
     dataList: {},
     empList: {},
     empDept: [],
+    empDetail: {},
   };
 
 
@@ -61,6 +66,11 @@ export default function solution(state = initialState, action) {
           return {
             ...state,
             empDept: action.empDept,
+          };
+          case SET_EMP_DETAIL :
+          return {
+            ...state,
+            empDetail: action.empDetail,
           };
         default:
           return state;

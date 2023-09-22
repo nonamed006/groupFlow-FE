@@ -2,23 +2,28 @@ import {
   Box,
   Flex,
   Text,
-  useColorModeValue, Button
+  useColorModeValue,
+  Button,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/depDetail';
+import { useDispatch } from "react-redux";
+import { setDataPk } from "redux/depDetail";
 import React from "react";
 import { useEffect } from "react";
 import RealGrid from "./RealGrid";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
-const DepCard = () => {
+const DepCard = (props) => {
   const dispatch = useDispatch();
+  const [org, setOrg] = useState([]);
+  //const org = useSelector((state) => state.dep.dataPk);
 
-  const org = useSelector((state) => state.dep.dataPk);
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   useEffect(() => {
-  }, []);
+    setOrg(props.value);
+  }, [props]);
+
   return (
     <div>
       <Box borderRadius="lg" bg="white" h="600px" p="6">
@@ -38,9 +43,14 @@ const DepCard = () => {
           >
             조직도
           </Text>
-          <Button variant="action"  onClick={() => {
+          <Button
+            variant="action"
+            onClick={() => {
               dispatch(setDataPk(0));
-            }}>추가</Button>
+            }}
+          >
+            추가
+          </Button>
         </Flex>
         <RealGrid value={org}></RealGrid>
       </Box>
