@@ -1,7 +1,7 @@
 import {
   Box, Flex, Text, useColorModeValue, Image, Grid, GridItem
 } from "@chakra-ui/react"
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");

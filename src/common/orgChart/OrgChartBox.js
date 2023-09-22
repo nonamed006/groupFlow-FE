@@ -11,14 +11,13 @@ const OrgChartBox = () => {
     const [depGrp,setDepGrp] = useState();  // 선택된 부서원 데이터 하나
     const [search, setSearch] = useState(''); // 검색 기준
     const [keyword, setKeyword] = useState('');   // 검색어
-    const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
-    // 선택된 조직(회사 및 부서) 코드
-    const [corpDepCd, setCorpDepCd] =  useState(); 
+    const [corpDepCd, setCorpDepCd] =  useState(); // 선택된 조직(회사 및 부서) 코드
 
+    const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
     const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
 
 	useEffect(() => {
-		fetchCorpDepList();
+		fetchCorpDepList(); // 회사 및 부서 목록 조회
 	}, []);
 
 
@@ -28,39 +27,40 @@ const OrgChartBox = () => {
             alert("검색기준을 선택하세요");
         }else{
             fetchDepGrpList('search');
+            setDepGrp('');
         }
-        
 	}
 
   	// 조직_그룹 목록 조회
       const fetchDepGrpList = (type) => {
         let url = `${PORT}/depGrp`;
         
+        // URL 생성
         const params = new URLSearchParams();
-        if (type === 'code' && corpDepCd !== ''){
+        if (type === 'code' && corpDepCd !== ''){   // 회사 및 부서 선택 후 조회일 때
             params.append('search', 'code');
             params.append('keyword', corpDepCd);
         } 
-        else if (type === 'search'){
-            if (search !== '') params.append('search', search);
-		    if (keyword !== '') params.append('keyword', keyword);
+        else if (type === 'search'){    // 검색 조회일때
+            if (search !== '') 
+                params.append('search', search);
+		    if (keyword !== '') 
+                params.append('keyword', keyword);
         }
-
         // URL에 파라미터 추가
         const paramString = params.toString();
         if (paramString) {
             url += '?' + paramString;
         }
-        console.log(url);
+
         fetch(url, {
             method: "GET"
         }).then(res => res.json()).then(res => {
-            console.log(res.data);
             setDepGrpList(res.data);
         });
     };
 
-    // 회사 및 부서 목록 조회/검색
+    // 회사 및 부서 목록 조회
 	const fetchCorpDepList = () => {
 		let url = `${PORT}/dep/orgList`;
 		fetch(url, {
@@ -70,11 +70,11 @@ const OrgChartBox = () => {
 		});
 	};
 
-       
-	useEffect(() => {
-		fetchDepGrpList('code');
-        // setDepGrp('');
-	}, [corpDepCd]);
+    useEffect(() => {
+        fetchDepGrpList('code');
+        setDepGrp('');
+      }, [corpDepCd]);
+
 
     return (
 
@@ -91,7 +91,7 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList setCorpDepCd={setCorpDepCd} corpDepList={corpDepList}/>
+                    <OrgList setCorpDepCd={setCorpDepCd} corpDepList={corpDepList} fetchDepGrpList={fetchDepGrpList} corpDepCd={corpDepCd}/>
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
