@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
+import {
+  Box
+} from "@chakra-ui/react"
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
-import { useDispatch } from 'react-redux';
-import { setDataPk } from 'redux/solution';
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-
-const RealGrid = (props) => {
+const RealGrid = ({handelGrid, value, isInit, setIsInit}) => {
   const realgridElement = useRef(null);
-  const dispatch = useDispatch();
-
+  
   var fields = [
     {fieldName:"path", dataType:"text"},
     {fieldName:"name", dataType:"text"},
@@ -26,6 +25,7 @@ const RealGrid = (props) => {
   var treeProvider, treeView;
   useEffect(() => {
     
+     
     
     const container = realgridElement.current;
     if (!container) {
@@ -42,8 +42,8 @@ const RealGrid = (props) => {
     treeView.header.height = 40;
     treeView.footer.height = 40;
     treeView.stateBar.width = 20;
-     
-    treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+
+    treeView.displayOptions.useFocusClass = true;
     treeView.setStateBar({visible: false}); //상태바 표시X
     treeView.setCheckBar({visible: false}); //체크박스 표시X
     treeView.setRowIndicator({visible: false}); //인디케이터 표시X
@@ -62,16 +62,16 @@ const RealGrid = (props) => {
     
     
   treeView.onCellClicked = function (grid, clickData) {
-    console.log(grid);
-    console.log(clickData)
+   
     if(clickData.cellType !== "gridEmpty"){
       let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-      dispatch(setDataPk(dpCdData));
+      handelGrid(dpCdData);
     }
       
   }
   
-  treeProvider.setRows(props.value, "path", true, null, "depth");
+  
+  treeProvider.setRows(value, "path", true, null, "depth");
   
   // 모두 열기
   treeView.expandAll();
@@ -79,10 +79,11 @@ const RealGrid = (props) => {
    return () => {
        treeProvider.clearRows();
        treeView.destroy();
+       
      };
-  }, [props]);
+  }, []);
 
-  return <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>;
+  return <Box ref={realgridElement} w={'100%'} h={'100%'} />;
 }
 
 
