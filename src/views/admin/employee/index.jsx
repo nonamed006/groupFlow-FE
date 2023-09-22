@@ -74,14 +74,17 @@ const Employee = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setEmpDept(res.data);
+        console.log(res.data.length);
+        //setEmpDept(res.data.length == 0 ?);
       });
   };
 
   // 사원 목록 클릭시
   const onClickRow = (empList) => {
     resetInput();
+    console.log("empList",empList);
     getDeptInfo(empList.empCd);
+    console.log("deptEmp",empDept);
     setEmpDetail(empList);
     dispatch(setIsRead(true));
   };

@@ -26,6 +26,7 @@ const SearchCardBar = (props) => {
           <GridItem colSpan={1}>
             <div
               style={{
+                width: "130px",
                 height: "40px",
                 lineHeight: "40px",
                 textAlign: "center",
