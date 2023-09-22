@@ -9,12 +9,15 @@ const Test = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
   const [searchText, setSearchText] = useState("");
   const [org, setOrg] = useState([]);
+  const [dpCd, setDpCd] = useState(0);
+  const [test, setTest] = useState(false);
+  //const [searchEvent, setSearchEvent] = useState(false);
 
   const handleSearchBtn = () => {
     onClickSearchText();
   };
+
   const onClickSearchText = () => {
-    console.log(selectedCoCd);
     let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())
@@ -24,7 +27,7 @@ const Test = () => {
   };
   useEffect(() => {
     onClickSearchText();
-  }, []);
+  }, [test]);
 
   return (
     //헤더 공간 제외한 div 공간 지정
@@ -49,10 +52,10 @@ const Test = () => {
           />
         </GridItem>
         <GridItem colSpan={2} rowSpan={5}>
-          <DepCard value={org} />
+          <DepCard org={org} setDpCd={setDpCd} />
         </GridItem>
         <GridItem colSpan={4} rowSpan={5}>
-          <DepInfo />
+          <DepInfo setTest={setTest} dpCd={dpCd} setDpCd={setDpCd} />
         </GridItem>
       </Grid>
     </Box>
