@@ -4,7 +4,7 @@ import {
 import React, { useState, useEffect } from "react";
 import DepGrpCard from "./DepGrpCard";
 
-const DepGrpCardList = ({setDepGrp, depGrpList}) => {
+const DepGrpCardList = ({setDepGrp, depGrpList }) => {
     
 	useEffect(() => {
 		

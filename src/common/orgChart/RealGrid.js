@@ -1,4 +1,7 @@
 import { useEffect, useRef } from "react";
+import {
+  Box
+} from "@chakra-ui/react"
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
@@ -60,7 +63,7 @@ const RealGrid = (props) => {
   treeView.onCellClicked = function (grid, clickData) {
     if(clickData.cellType !== "gridEmpty"){
       let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-      props.setCorpDepCd(dpCdData);
+      props.handelGridCd(dpCdData);
     }
       
   }
@@ -73,10 +76,11 @@ const RealGrid = (props) => {
    return () => {
        treeProvider.clearRows();
        treeView.destroy();
+       
      };
-  }, [props]);
+  }, []);
 
-  return <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>;
+  return <Box ref={realgridElement} w={'100%'} h={'100%'} />;
 }
 
 
