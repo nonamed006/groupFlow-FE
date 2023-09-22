@@ -1,44 +1,91 @@
-import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon, Flex, Button, useColorModeValue, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react';
+import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon, Flex, Button, useColorModeValue, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useNumberInput } from '@chakra-ui/react';
 import { React, useState, useEffect } from "react";
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
 import { MdHome } from 'react-icons/md';
 import { AttachmentIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { PORT } from 'set';
 
-const InputGrid = ({title}) => {
+const InputGrid = ({title, menuInfo, setMenuInfo}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const dispatch = useDispatch();
-  const { menu } = useSelector(state => state.menu);
-  const [menuInputData, setmenuInputData] = useState({
+  //const dispatch = useDispatch();
+  //const { menu } = useSelector(state => state.menu);
+  const [menuInputData, setMenuInputData] = useState({
     menuCd: '',
     upperCd: '',
     fileCd: '',
     menuNm: '',
-    useYn:'',
+    useYn: 'true',
     sort : '',
     depth : '',
     typeCd: '',
     menuPath : '',
-    delYn : '',
-    cdt: '',
-    mdt : '',
+    delYn : 0,
   });
-  const useYn = new Boolean(menu.useYn);
-  console.log(useYn.toString());
+  const useYn = new Boolean(menuInputData.useYn);
+  console.log(menuInputData.useYn);
+  const reset = () => {
+    setMenuInfo({
+      menuCd: '',
+      upperCd: '',
+      fileCd: '',
+      menuNm: '',
+      useYn: 1,
+      sort : '',
+      depth : '',
+      typeCd: '',
+      menuPath : '',
+      delYn : 0,
+    });
+  }
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    setmenuInputData({
+    setMenuInputData({
       ...menuInputData,
       [name]: value // name 키를 가진 값을 value 로
     });
-    console.log(menuInputData);
   };
-  
-  // useEffect(()=> {
-  //   //setmenuInputData(menuInputData);
-  // }, [menu]);
+  const setValue = (key, value) => {
+    setMenuInputData({
+      ...menuInputData,
+      [key]: value // 키를 가진 값을 value 로
+    });
+  }
+
+  const modifyGnb = () => {
+    if(!menuInputData.menuCd) {
+      alert("수정할 메뉴를 선택해주세요.");
+      
+      return false;
+    }
+
+    menuInputData.useYn = menuInputData.useYn === 'true' ? 1 : 0;
+
+    fetch(`${PORT}/menu/gnb-${menuInputData.menuCd}`, { 
+      method: 'PUT', 
+      body: JSON.stringify(menuInputData),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if(responseJson.result === 'SUCCESS') {
+          alert('성공적으로 저장했습니다.');
+          reset();
+        } else if(responseJson.result === 'FAIL') {
+          alert('저장에 실패했습니다.');
+        }
+      });
+  }
+
+  useEffect(()=> {
+    console.log('menuInfo');
+    if(Object.keys(menuInfo).length > 0)
+    setMenuInputData(menuInfo);
+  }, [menuInfo]);
   return (
     <>
       <Flex
@@ -60,7 +107,7 @@ const InputGrid = ({title}) => {
         </Text>
 
         <Flex>
-            <Button variant="action">저장</Button>
+            <Button variant="action" onClick={modifyGnb}>저장</Button>
         </Flex>
       </Flex>
       <Grid
@@ -74,7 +121,7 @@ const InputGrid = ({title}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-            <Input id="menuNm" name="menuNm"  size="md" boarder="1" borderRadius="14px" defaultValue={menu&&menu.menuNm} onChange={onChange}/>
+            <Input id="menuNm" name="menuNm"  size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.menuNm} onChange={onChange}/>
         </GridItem>
 
         <GridItem colSpan={1}>
@@ -83,10 +130,13 @@ const InputGrid = ({title}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-          <RadioGroup name='useYn' defaultValue={Object.keys(menu).length > 0 ? new Boolean(menu.useYn).toString() : 'true'}>
+          <RadioGroup name='useYn' defaultValue={useYn.toString()} onChange={(value) => {
+            setValue('useYn', value);
+          }}
+          key={menuInputData.menuCd}>
             <HStack spacing="24px">
-              <Radio name='useYn'  value='true' onChange={onChange}>사용</Radio>
-              <Radio name='useYn' value='false' onChange={onChange}>미사용</Radio>
+              <Radio name='useYn'  value='true'>사용</Radio>
+              <Radio name='useYn' value='false'>미사용</Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -97,14 +147,9 @@ const InputGrid = ({title}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-        <NumberInput defaultValue={Object.keys(menu).length > 0 && menu.sort}  min={0} name='sort'>
-          <NumberInputField/>
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-          {/* <Input id="sort" name="sort"  size="md" boarder="1" borderRadius="14px" defaultValue={menu&&menu.sort} onChange={onChange} type='number' min={0}/> */}
+          <HStack>
+            <Input  id="sort" name="sort"  size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.sort} onChange={onChange} min={0} type='number'/>
+          </HStack>
         </GridItem>
 
         <GridItem colSpan={1} rowSpan={2}>
