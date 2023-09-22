@@ -5,9 +5,9 @@ import {
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = (props) => {
+const RealGrid = ({handelGrid, value, isInit, setIsInit}) => {
   const realgridElement = useRef(null);
-
+  
   var fields = [
     {fieldName:"path", dataType:"text"},
     {fieldName:"name", dataType:"text"},
@@ -25,6 +25,7 @@ const RealGrid = (props) => {
   var treeProvider, treeView;
   useEffect(() => {
     
+     
     
     const container = realgridElement.current;
     if (!container) {
@@ -41,8 +42,8 @@ const RealGrid = (props) => {
     treeView.header.height = 40;
     treeView.footer.height = 40;
     treeView.stateBar.width = 20;
-     
-    treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+
+    treeView.displayOptions.useFocusClass = true;
     treeView.setStateBar({visible: false}); //상태바 표시X
     treeView.setCheckBar({visible: false}); //체크박스 표시X
     treeView.setRowIndicator({visible: false}); //인디케이터 표시X
@@ -61,14 +62,16 @@ const RealGrid = (props) => {
     
     
   treeView.onCellClicked = function (grid, clickData) {
+   
     if(clickData.cellType !== "gridEmpty"){
       let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-      props.handelGridCd(dpCdData);
+      handelGrid(dpCdData);
     }
       
   }
   
-  treeProvider.setRows(props.value, "path", true, null, "depth");
+  
+  treeProvider.setRows(value, "path", true, null, "depth");
   
   // 모두 열기
   treeView.expandAll();
