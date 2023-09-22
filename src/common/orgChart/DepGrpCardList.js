@@ -11,7 +11,7 @@ const DepGrpCardList = ({setDepGrp, depGrpList}) => {
 	}, [depGrpList]);
 
   return (
-    <Box overflowY={'scroll'} overflowX={'hidden'}
+    <Box overflowY={"auto"} overflowX={'hidden'}
       boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
 
       {depGrpList&&

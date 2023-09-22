@@ -21,7 +21,7 @@ const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList}) => {
       {/* 목록 상단 */}
       <ListCardBar setCoCd={setCoCd} title={title} count={listData !== undefined ? listData.length : 0} />
       {/* 목록 테이블 */}
-      <Box w={'100%'} display={'inline-block'} >
+      <Box w={'100%'} display={'inline-block'} overflowX={"auto"}  >
         <ListCardTable headerGroups={headerGroups} listData={listData} setCoCd={setCoCd} />
       </Box>
 

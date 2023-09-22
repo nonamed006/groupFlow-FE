@@ -143,7 +143,7 @@ const InfoBox = ({coCd, setCoCd, setChangeYn, sortValue}) => {
 
     return (
         <>
-            <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
+            <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" overflowY={"auto"}>
                 <InfoBoxBar title={'기본정보'} onOpen={onOpen} handelSaveBtn={handelSaveBtn} />
                 <Box>
                     <InputGrid corp={corp} setCorp={setCorp} />
