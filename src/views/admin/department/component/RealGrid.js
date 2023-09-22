@@ -79,13 +79,16 @@ const RealGrid = (props) => {
     };
     treeProvider.setRows(props.value, "path", true, null, "depth");
     treeView.expandAll();
-
     return () => {
       treeProvider.clearRows();
       treeView.destroy();
     };
   }, [props]);
+  //useEffect(() => {
 
+  //  treeProvider.setRows(props.value, "path", true, null, "depth");
+  //  treeView.expandAll();
+  //}, [props.value]);
   return (
     <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
   );

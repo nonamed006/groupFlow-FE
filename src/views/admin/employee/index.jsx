@@ -16,7 +16,8 @@ const Employee = () => {
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
-  const [empDept, setEmpDept] = useState([{
+  const [empDept, setEmpDept] = useState([
+    {
       addr: "",
       addrDetail: "",
       coCd: "",
@@ -47,7 +48,8 @@ const Employee = () => {
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
-    }]);
+    },
+  ]);
 
   //사원 목록 조회
   const getEmpList = (searchCorp, searchWorkType, searchNm) => {
@@ -104,38 +106,40 @@ const Employee = () => {
       useYn: "1",
       gender: "M",
     });
-    setEmpDept([{
-      addr: "",
-      addrDetail: "",
-      coCd: "",
-      coNm: "",
-      coType: "",
-      coTypeNm: "",
-      delYn: "",
-      dpCd: "",
-      dpGrpNum: "",
-      dpGrpcd: "",
-      dpNm: "",
-      dpType: "",
-      dpTypeNm: "",
-      empCd: "",
-      empTypeCd: "",
-      empTypeNm: "",
-      fax: "",
-      jobCd: "",
-      jobDetail: "",
-      jobNm: "",
-      joinDt: "",
-      postNum: "",
-      pstnCd: "",
-      pstnNm: "",
-      rankCd: "",
-      rankNm: "",
-      reDt: "",
-      telNum: "",
-      workTypeCd: "",
-      workTypeNm: "",
-    }]);
+    setEmpDept([
+      {
+        addr: "",
+        addrDetail: "",
+        coCd: "",
+        coNm: "",
+        coType: "",
+        coTypeNm: "",
+        delYn: "",
+        dpCd: "",
+        dpGrpNum: "",
+        dpGrpcd: "",
+        dpNm: "",
+        dpType: "",
+        dpTypeNm: "",
+        empCd: "",
+        empTypeCd: "",
+        empTypeNm: "",
+        fax: "",
+        jobCd: "",
+        jobDetail: "",
+        jobNm: "",
+        joinDt: "",
+        postNum: "",
+        pstnCd: "",
+        pstnNm: "",
+        rankCd: "",
+        rankNm: "",
+        reDt: "",
+        telNum: "",
+        workTypeCd: "",
+        workTypeNm: "",
+      },
+    ]);
   };
 
   //사원 기본정보 저장

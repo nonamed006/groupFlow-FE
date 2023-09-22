@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 import { setDataPk } from "redux/dep";
 import { PORT } from "set";
 
-const SearchCardBar = () => {
+const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
   const [corpNm, setCorpNm] = useState([]);
-  const [selectedCoCd, setSelectedCoCd] = useState("");
-  const [searchText, setSearchText] = useState("");
+  //const [selectedCoCd, setSelectedCoCd] = useState("");
+  //const [searchText, setSearchText] = useState("");
 
   //리덕스
   const dispatch = useDispatch();
@@ -22,26 +22,26 @@ const SearchCardBar = () => {
         setCorpNm(res.data);
       });
   };
-  const coNmChange = (e) => {
-    const selectedValue = e.target.value;
-    setSelectedCoCd(selectedValue);
-  };
-  const onChangeSearchText = (e) => {
-    setSearchText(e.target.value);
-  };
-  const onClickSearchText = () => {
-    console.log(selectedCoCd);
-    let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch(setDataPk(res.data));
-      });
-  };
+  //const coNmChange = (e) => {
+  //  const selectedValue = e.target.value;
+  //  setSelectedCoCd(selectedValue);
+  //};
+  //const onChangeSearchText = (e) => {
+  //  setSearchText(e.target.value);
+  //};
+  //const onClickSearchText = () => {
+  //  console.log(selectedCoCd);
+  //  let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
+  //  fetch(url, { method: "GET" })
+  //    .then((res) => res.json())
+  //    .then((res) => {
+  //      dispatch(setDataPk(res.data));
+  //    });
+  //};
 
   useEffect(() => {
     getCorpNmList();
-    onClickSearchText();
+    //onClickSearchText();
   }, []);
 
   return (
@@ -54,8 +54,9 @@ const SearchCardBar = () => {
           <GridItem colSpan={2}>
             <Select
               placeholder="전체"
-              value={selectedCoCd}
-              onChange={coNmChange}
+              onChange={(e) => {
+                setSelectedCoCd(e.target.value);
+              }}
             >
               {corpNm.map((item, index) => (
                 <option key={index} value={item.co_cd}>
@@ -74,11 +75,18 @@ const SearchCardBar = () => {
               name="searchText"
               size="md"
               borderRadius="14px"
-              onChange={onChangeSearchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
             />
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
-            <Button variant="brand" onClick={onClickSearchText}>
+            <Button
+              variant="brand"
+              onClick={() => {
+                handleSearchBtn();
+              }}
+            >
               검색
             </Button>
           </GridItem>
