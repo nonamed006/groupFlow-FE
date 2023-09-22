@@ -11,7 +11,6 @@ const OrgChartBox = () => {
     const [depGrp,setDepGrp] = useState();  // 선택된 부서원 데이터 하나
     const [search, setSearch] = useState(''); // 검색 기준
     const [keyword, setKeyword] = useState('');   // 검색어
-    const [corpDepCd, setCorpDepCd] =  useState(); // 선택된 조직(회사 및 부서) 코드
 
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
     const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
@@ -26,22 +25,22 @@ const OrgChartBox = () => {
         if(keyword.length > 0 && search == ''){
             alert("검색기준을 선택하세요");
         }else{
-            fetchDepGrpList('search');
-            setDepGrp('');
+            fetchDepGrpList();
+            setDepGrp();
         }
 	}
 
   	// 조직_그룹 목록 조회
-      const fetchDepGrpList = (type) => {
+      const fetchDepGrpList = (corpDepCd) => {
         let url = `${PORT}/depGrp`;
         
         // URL 생성
         const params = new URLSearchParams();
-        if (type === 'code' && corpDepCd !== ''){   // 회사 및 부서 선택 후 조회일 때
+        if (corpDepCd !== '' && (corpDepCd !== undefined &&corpDepCd !== 'undefined')){   // 회사 및 부서 선택 후 조회일 때
             params.append('search', 'code');
             params.append('keyword', corpDepCd);
         } 
-        else if (type === 'search'){    // 검색 조회일때
+        else {    // 검색 조회일때
             if (search !== '') 
                 params.append('search', search);
 		    if (keyword !== '') 
@@ -59,7 +58,7 @@ const OrgChartBox = () => {
             setDepGrpList(res.data);
         });
     };
-
+    
     // 회사 및 부서 목록 조회
 	const fetchCorpDepList = () => {
 		let url = `${PORT}/dep/orgList`;
@@ -70,11 +69,11 @@ const OrgChartBox = () => {
 		});
 	};
 
-    useEffect(() => {
-        fetchDepGrpList('code');
-        setDepGrp('');
-      }, [corpDepCd]);
-
+    // 조직도 그리드 클릭 시
+    const handelGridCd = (corpDepCd) => {
+        fetchDepGrpList(corpDepCd);
+        setDepGrp();
+    };
 
     return (
 
@@ -83,7 +82,6 @@ const OrgChartBox = () => {
                 h='auto'
                 templateColumns='repeat(4, 1fr)'
                 gap={4}
-                p={3}
             >
                 {/* 검색바 */}
                 <GridItem colSpan={4}   >
@@ -91,11 +89,11 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList setCorpDepCd={setCorpDepCd} corpDepList={corpDepList} fetchDepGrpList={fetchDepGrpList} corpDepCd={corpDepCd}/>
+                    <OrgList handelGridCd={handelGridCd} corpDepList={corpDepList} />
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
-                    <DepGrpCardList depGrpList={depGrpList} setDepGrp={setDepGrp} />
+                    <DepGrpCardList fetchDepGrpList={fetchDepGrpList} depGrpList={depGrpList} setDepGrp={setDepGrp} />
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
