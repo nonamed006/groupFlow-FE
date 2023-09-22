@@ -17,7 +17,6 @@ const InputGrid = ({ corp, setCorp }) => {
       ...corp,
       [name]: value // name 키를 가진 값을 value 로
     });
-    console.log(corp);
   };
 
   return (
@@ -68,15 +67,6 @@ const InputGrid = ({ corp, setCorp }) => {
           <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange}  />
         </GridItem>
 
-        <GridItem colSpan={3}>
-          <Text fontSize="sm" fontWeight="600">
-            행정표준코드
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={14}>
-          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} key={coCd} onChange={onChange} />
-        </GridItem>
-
         <GridItem colSpan={2} >
           <Text fontSize="sm" fontWeight="600">
             업태
@@ -93,6 +83,68 @@ const InputGrid = ({ corp, setCorp }) => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange}  />
+        </GridItem>
+
+
+        <GridItem colSpan={3}>
+          <Text fontSize="sm" fontWeight="600">
+            행정표준코드
+          </Text>
+        </GridItem>
+        <GridItem colStart={3} colEnd={7}>
+          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} key={coCd} onChange={onChange} />
+        </GridItem>
+        <GridItem colStart={8} colEnd={10}>
+          <Text fontSize="sm" fontWeight="600">
+            설립일
+          </Text>
+        </GridItem>
+        <GridItem colStart={10} colEnd={14}>
+          <Input
+            placeholder="Select Date and Time"
+            size="md"
+            type="date"
+            name='estDt'
+            defaultValue={estDt!==null&&formatDate(estDt)}
+            style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
+          />
+        </GridItem>
+
+        <GridItem colSpan={2} colStart={0} colEnd={2}>
+          <Text fontSize="sm" fontWeight="600">
+            개업일
+          </Text>
+        </GridItem>
+        <GridItem colStart={3} colEnd={7}>
+          <Input
+            placeholder="Select Date and Time"
+            size="md"
+            type="date"
+            name='opDt'
+            defaultValue={opDt!==null&&formatDate(opDt)}
+            style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
+          />
+        </GridItem>
+        <GridItem colStart={8} colEnd={10}>
+          <Text fontSize="sm" fontWeight="600">
+            폐업일
+          </Text>
+        </GridItem>
+        <GridItem colStart={10} colEnd={14}>
+          <Input
+            placeholder="Select Date and Time"
+            size="md"
+            type="date"
+            name='clsDt'
+            defaultValue={clsDt!==null&&formatDate(clsDt)}
+            style={{ color: "gray" }}
+            onChange={onChange}
+            key={coCd}
+          />
         </GridItem>
 
         <GridItem colSpan={2}>
@@ -131,58 +183,6 @@ const InputGrid = ({ corp, setCorp }) => {
         </GridItem>
         <GridItem colStart={12} colEnd={14}>
           <Input id="coNum" name="coNum" size="md" borderRadius="14px" defaultValue={coNum} key={coCd} onChange={onChange} placeholder="법인번호" />
-        </GridItem>
-       
-        <GridItem colSpan={2}>
-          <Text fontSize="sm" fontWeight="600">
-            설립일
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-            placeholder="Select Date and Time"
-            size="md"
-            type="date"
-            name='estDt'
-            defaultValue={estDt!==null&&formatDate(estDt)}
-            style={{ color: "gray" }}
-            onChange={onChange}
-            key={coCd}
-          />
-        </GridItem>
-        <GridItem colSpan={2} colStart={0} colEnd={2}>
-          <Text fontSize="sm" fontWeight="600">
-            개업일
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-            placeholder="Select Date and Time"
-            size="md"
-            type="date"
-            name='opDt'
-            defaultValue={opDt!==null&&formatDate(opDt)}
-            style={{ color: "gray" }}
-            onChange={onChange}
-            key={coCd}
-          />
-        </GridItem>
-        <GridItem colStart={8} colEnd={10}>
-          <Text fontSize="sm" fontWeight="600">
-            폐업일
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
-            placeholder="Select Date and Time"
-            size="md"
-            type="date"
-            name='clsDt'
-            defaultValue={clsDt!==null&&formatDate(clsDt)}
-            style={{ color: "gray" }}
-            onChange={onChange}
-            key={coCd}
-          />
         </GridItem>
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">

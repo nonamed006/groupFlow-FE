@@ -27,7 +27,7 @@ const OrgChartBox = () => {
             alert("검색기준을 선택하세요");
         }else{
             fetchDepGrpList('search');
-            setDepGrp('');
+            setDepGrp();
         }
 	}
 
@@ -37,7 +37,7 @@ const OrgChartBox = () => {
         
         // URL 생성
         const params = new URLSearchParams();
-        if (type === 'code' && corpDepCd !== ''){   // 회사 및 부서 선택 후 조회일 때
+        if (type === 'code' && (corpDepCd !== undefined &&corpDepCd !== 'undefined')){   // 회사 및 부서 선택 후 조회일 때
             params.append('search', 'code');
             params.append('keyword', corpDepCd);
         } 
@@ -72,7 +72,7 @@ const OrgChartBox = () => {
 
     useEffect(() => {
         fetchDepGrpList('code');
-        setDepGrp('');
+        setDepGrp();
       }, [corpDepCd]);
 
 

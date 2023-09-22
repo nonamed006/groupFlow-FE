@@ -6,24 +6,21 @@ import { useEffect } from "react";
 import { PORT } from "set";
 import DeleteModal from "common/modal/DeleteModal";
 
-const InfoBox = ({coCd, setCoCd, setChangeYn}) => {
+const InfoBox = ({coCd, setCoCd, setChangeYn, sortValue}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
     const [isEditing, setIsEditing] = useState(false);  // 저장 및 수정 상태 (기본값 false - 저장) 
-    // 초기 회사 데이터 값
     const [corp, setCorp] = useState({}); // 회사 데이터 (하나)
-    const [sortValue, setSortValue] = useState();   // 초기 정렬 기본값
-
-    useEffect(() => {
-        if (coCd !== '') { // 선택된 coCd 값이 있다면
+    
+    useEffect(() => { 
+        if (coCd !== 'undefined' && coCd !== undefined) { // 선택된 coCd 값이 있다면
             fetchCorp(coCd);    // coCd로 회사 조회
             setIsEditing(true); // 수정모드
         } else {
-            fetchMaxSort(); // 초기 정렬 기본값 가져오기
             onReset();
             setIsEditing(false);
         }
-    }, [coCd, isEditing]);
+    }, [coCd, sortValue]);
 
     const onReset = () => {
         setCorp({
@@ -49,16 +46,6 @@ const InfoBox = ({coCd, setCoCd, setChangeYn}) => {
             addrDetail: '',
             delYn: false,
             sort: sortValue
-        });
-    }
-    // 정렬 기본값 가져오기
-    const fetchMaxSort = () => {
-        let url = `${PORT}/corp/sort`;
-        fetch(url, {
-            method: "GET"
-        }).then(res => res.json()).then(res => {
-            setSortValue(res.strData);
-          
         });
     };
 
@@ -135,17 +122,17 @@ const InfoBox = ({coCd, setCoCd, setChangeYn}) => {
             method: "PUT",
         }).then(res => res.json()).then(res => {
             alert(res.resultMsg);
-            setCoCd(''); // coCd 초기화
+            setCoCd(); // coCd 초기화
             setChangeYn(true);    // 변경 여부 변경
         });
     };
 
     // 삭제 버튼 클릭 시
     const handelDeleteBtn = () => {
-        coCd===''?
-            alert("삭제할 회사가 존재하지 않습니다")
+        (coCd !== 'undefined' && coCd !== undefined)?
+            fetchCorpDelete(coCd)
         :
-            fetchCorpDelete(coCd);
+            alert("삭제할 회사가 존재하지 않습니다");
         onClose();
     }
 

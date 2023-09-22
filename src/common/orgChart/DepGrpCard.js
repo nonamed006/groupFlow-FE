@@ -13,7 +13,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
   return (
 
     <Card 
-      key={depGrp.dpGrpcd}
+      key={index}
       backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
