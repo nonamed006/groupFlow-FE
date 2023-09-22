@@ -13,16 +13,10 @@ import RealGrid from "./RealGrid";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-const DepCard = (props) => {
-  const dispatch = useDispatch();
-  const [org, setOrg] = useState([]);
-  //const org = useSelector((state) => state.dep.dataPk);
-
+const DepCard = ({ org, setDpCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
-  useEffect(() => {
-    setOrg(props.value);
-  }, [props]);
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -46,13 +40,13 @@ const DepCard = (props) => {
           <Button
             variant="action"
             onClick={() => {
-              dispatch(setDataPk(0));
+              setDpCd(0);
             }}
           >
             추가
           </Button>
         </Flex>
-        <RealGrid value={org}></RealGrid>
+        <RealGrid org={org} setDpCd={setDpCd}></RealGrid>
       </Box>
     </div>
   );

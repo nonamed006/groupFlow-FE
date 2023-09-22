@@ -74,7 +74,7 @@ function DepUpperCd(props) {
       props.getValue(dpData);
     };
     treeProvider.setRows(props.value, "path", true, null, "depth");
-
+    treeView.expandAll();
     return () => {
       treeProvider.clearRows();
       treeView.destroy();

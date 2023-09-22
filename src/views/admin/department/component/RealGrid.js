@@ -1,12 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import { useDispatch } from "react-redux";
-import { setDataPk } from "redux/depDetail";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = (props) => {
+const RealGrid = ({ org, setDpCd }) => {
   const realgridElement = useRef(null);
-  const dispatch = useDispatch();
   var fields = [
     { fieldName: "path", dataType: "text" },
     { fieldName: "name", dataType: "text" },
@@ -25,11 +22,13 @@ const RealGrid = (props) => {
 
   useEffect(() => {
     const container = realgridElement.current;
-    treeProvider = new LocalTreeDataProvider();
+
+    treeProvider = new LocalTreeDataProvider(true);
     treeView = new TreeView(container);
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
+    treeProvider.setRows(org, "path", true, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -71,24 +70,20 @@ const RealGrid = (props) => {
         if (depth !== "0") {
           let dpCdData =
             grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-          dispatch(setDataPk(dpCdData));
+          setDpCd(dpCdData);
         } else if (depth === "0") {
-          dispatch(setDataPk(0));
+          setDpCd(0);
         }
       }
     };
-    treeProvider.setRows(props.value, "path", true, null, "depth");
+
     treeView.expandAll();
     return () => {
       treeProvider.clearRows();
       treeView.destroy();
     };
-  }, [props]);
-  //useEffect(() => {
+  }, [org]);
 
-  //  treeProvider.setRows(props.value, "path", true, null, "depth");
-  //  treeView.expandAll();
-  //}, [props.value]);
   return (
     <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
   );
