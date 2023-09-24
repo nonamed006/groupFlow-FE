@@ -65,16 +65,16 @@ const EmpInfo = (props) => {
                 조직정보
               </Tab>
               <Spacer />
-              <Flex>
+              <Flex >
                 {isReadStatus ? (
                   <Stack direction="row" spacing={4} align="center">
+                    <div>
                     <Button variant="action" onClick={()=>{
-                      console.log("1",isOpen)
                       onOpen();
-                      console.log("2",isOpen)
                     }}>
                       ID 변경
                     </Button>
+                    </div>
                     <Button
                       variant="action"
                       onClick={() => {alert("asd")}}

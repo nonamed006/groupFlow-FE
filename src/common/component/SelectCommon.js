@@ -5,7 +5,10 @@ import { PORT } from "set";
 const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
   const [options, setOptions] = useState([]);
 
+  console.log("ccNum",options);
   console.log("values", values);
+
+
   const getCopn = (ccNum, ccType) => {
     let url = `${PORT}/common/selectCopn`;
     let obj = new Object();
@@ -21,7 +24,7 @@ const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
       .then((res) => res.json())
       .then((res) => {
         setOptions(res.data);
-      });
+      }); 
   };
 
   useEffect(() => {
@@ -33,7 +36,7 @@ const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
       placeholder={defaultMsg}
       onChange={handleChange}
       name={ccNum + ccType}
-      value={values?.ccCd}
+      value={values}
     >
       {options.map((column, index) => {
         return (

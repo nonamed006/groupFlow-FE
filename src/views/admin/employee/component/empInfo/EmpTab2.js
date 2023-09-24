@@ -23,7 +23,7 @@ const EmpTab2 = (props) => {
         p={3}
       >
         {props.empDept?.map((column, index) => (
-          <EmpDeptInput column={column} handleChange={props.handleChange} empDept={props.empDept}/>
+          <EmpDeptInput column={column} handleChange={props.handleChange}/>
         ))}
       </Grid>
     </div>

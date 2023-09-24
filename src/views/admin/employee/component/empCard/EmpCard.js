@@ -16,6 +16,7 @@ import {
 import { minTimeDate } from "common/common";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setIsRead } from "redux/emp";
 
@@ -30,7 +31,7 @@ const EmpCard = (props) => {
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
 	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-
+const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   return (
     <div>
@@ -98,13 +99,14 @@ const EmpCard = (props) => {
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
-                backgroundColor={mouseOverIndex === index ? "navy.50" : "white"}
+                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'navy.50': "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);
                 }}
                 onClick={() => {
                   props.onClickRow(column);
+                  setSelectedIndex(index)
                 }}
               >
                 <Td

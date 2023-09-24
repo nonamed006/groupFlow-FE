@@ -14,9 +14,10 @@ import SelectCommon from "common/component/SelectCommon";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const EmpDeptInput = ({column, handleChange, empDept}) => {
+const EmpDeptInput = ({column, handleChange}) => {
   const isReadStatus = useSelector((state) => state.emp.isRead);
 
+  console.log("dept11111111", column);
   return (
     <Grid
       templateColumns="repeat(13, 1fr)"
@@ -118,7 +119,7 @@ const EmpDeptInput = ({column, handleChange, empDept}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-            <SelectCommon handleChange={handleChange} values={empDept} ccNum="EM" ccType="A" defaultMsg="선택없음"/>
+            <SelectCommon handleChange={handleChange} values={column.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음"/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -127,7 +128,7 @@ const EmpDeptInput = ({column, handleChange, empDept}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon ccNum="EM" ccType="B" defaultMsg="선택없음"/>
+      <SelectCommon ccNum="EM" ccType="B" defaultMsg="선택없음" values={column.pstnCd}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -136,7 +137,7 @@ const EmpDeptInput = ({column, handleChange, empDept}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-      <SelectCommon ccNum="EM" ccType="C" defaultMsg="선택없음"/>
+      <SelectCommon ccNum="EM" ccType="C" defaultMsg="선택없음1" values={column.workTypeCd}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -145,7 +146,7 @@ const EmpDeptInput = ({column, handleChange, empDept}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon ccNum="EM" ccType="D" defaultMsg="선택없음"/>
+      <SelectCommon ccNum="EM" ccType="D" defaultMsg="선택없음" values={column.empTypeCd}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -154,7 +155,7 @@ const EmpDeptInput = ({column, handleChange, empDept}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon ccNum="EM" ccType="E" defaultMsg="선택없음"/>
+        <SelectCommon ccNum="EM" ccType="E" defaultMsg="선택없음" values={column}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
