@@ -21,7 +21,6 @@ import EmpIdChg from "../empIdChg/EmpIdChg";
 import { PORT } from "set";
 import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
-
 const EmpInfo = (props) => {
   //리덕스
   const dispatch = useDispatch();
@@ -60,9 +59,10 @@ const EmpInfo = (props) => {
     )
       .then((res) => res.json())
       .then((res) => {
-        if (res.result == "success") {
+        if (res.result === "success") {
           alert("ID가 변경되었습니다.");
           onClose();
+          props.setEmpDetail({...props.empDetail, [modalTabStatus == "type1" ? 'loginId' : 'mailId'] : empId});
         } else {
           alert("변경실패했습니다.");
         }
@@ -77,10 +77,9 @@ const EmpInfo = (props) => {
         method: "GET",
         // res에 결과가 들어옴
       }
-    )
-      .then((res) => res.json())
+    ).then((res) => res.json())
       .then((res) => {
-        if (res.result == "success") {
+        if (res.result === "success") {
           alert("퇴사처리되었습니다.");
           onClose();
         } else {
@@ -151,13 +150,32 @@ const EmpInfo = (props) => {
                     >
                       퇴사처리
                     </Button>
+                    <Button
+                      variant="action"
+                      onClick={() => {
+                        console.log(props.empDetail);
+                        dispatch(setIsRead(false));
+                        props.setEditState("update");
+                      }}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      variant="action"
+                      onClick={() => {
+                        alert("asd");
+                      }}
+                    >
+                      삭제
+                    </Button>
                   </Stack>
                 ) : (
                   <Stack direction="row" spacing={4} align="center">
                     <Button
                       variant="brand"
                       onClick={() => {
-                        alert("clickasd");
+                        //props.onSaveEmpDetail();
+                        props.updateEmpInfo();
                       }}
                     >
                       저장
@@ -183,6 +201,7 @@ const EmpInfo = (props) => {
                 setImgFile={props.setImgFile}
                 handleChange={handleChange}
                 handleRadioChange={handleRadioChange}
+                editState={props.editState}
               />
             </TabPanel>
             <TabPanel>
