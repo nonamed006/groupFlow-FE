@@ -75,7 +75,9 @@ const Employee = () => {
       .then((res) => res.json())
       .then((res) => {
         //console.log(res.data.length);
+        if(res.data.length > 0){
         setEmpDept(res.data);
+        }
       });
   };
 

@@ -203,7 +203,7 @@ const EmpTab1 = (props) => {
           </Text>
         </GridItem>
         <GridItem colSpan={4}>
-          <RadioGroup value="M">
+          <RadioGroup value={props.empDetail.gender}>
             <HStack spacing="24px">
               <Radio
                 value="M"
@@ -322,7 +322,7 @@ const EmpTab1 = (props) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <RadioGroup defaultValue="1">
+          <RadioGroup value={props.empDetail.useYn.toString()}>
             <HStack spacing="24px">
               <Radio
                 value="1"

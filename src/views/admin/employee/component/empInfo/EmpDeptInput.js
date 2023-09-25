@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 const EmpDeptInput = ({column, handleChange}) => {
   const isReadStatus = useSelector((state) => state.emp.isRead);
 
-  console.log("dept11111111", column);
   return (
     <Grid
       templateColumns="repeat(13, 1fr)"
@@ -155,7 +154,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon ccNum="EM" ccType="E" defaultMsg="선택없음" values={column}/>
+        <SelectCommon ccNum="EM" ccType="E" defaultMsg="선택없음" values={column.jobCd}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>

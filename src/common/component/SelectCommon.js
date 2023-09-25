@@ -5,10 +5,6 @@ import { PORT } from "set";
 const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
   const [options, setOptions] = useState([]);
 
-  console.log("ccNum",options);
-  console.log("values", values);
-
-
   const getCopn = (ccNum, ccType) => {
     let url = `${PORT}/common/selectCopn`;
     let obj = new Object();
