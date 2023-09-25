@@ -1,4 +1,4 @@
-import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue, Input, Flex, Checkbox } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
@@ -16,7 +16,6 @@ const GroupCard = ({ group, index }) => {
             onMouseOver={() => {
                 onMouseOver(index)
             }}
-
             boxShadow='lg'
             rounded='md'
             bg='white'
@@ -24,19 +23,24 @@ const GroupCard = ({ group, index }) => {
             w='98%'
             display={'inline-block'}
             p='3'>
-            <Text
-                color={textColor}
-                fontSize="15px"
-                fontWeight="300"
-                lineHeight="100%">
-                {group.coNm}</Text>
-            <Box my={3} />
-            <Text
-                color={textColor}
-                fontSize="15px"
-                fontWeight="700"
-                lineHeight="100%">
-                {group.grpNm}</Text>
+            <Flex>
+                <Checkbox mx='3' />
+                <Box>
+                    <Text
+                        color={textColor}
+                        fontSize="15px"
+                        fontWeight="300"
+                        lineHeight="100%">
+                        {group.coNm}</Text>
+                    <Box my={3} />
+                    <Text
+                        color={textColor}
+                        fontSize="15px"
+                        fontWeight="700"
+                        lineHeight="100%">
+                        {group.grpNm}</Text>
+                </Box>
+            </Flex>
         </Card>
     );
 };
