@@ -1,7 +1,7 @@
 import {
   Box, Flex, Text, useColorModeValue, Image, Grid, GridItem
 } from "@chakra-ui/react"
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -11,7 +11,7 @@ const DepGrpInfo = ({ depGrp }) => {
   return (
 
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
-      {depGrp !== undefined?
+      {depGrp&&
      <>
       <Box align={"center"}>
         <Box m={3}>
@@ -34,7 +34,7 @@ const DepGrpInfo = ({ depGrp }) => {
       <br />
       <Box>
         <Grid gap={2} p={2}>
-          <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
+          <GridItem m={1} colSpan={2} colStart={0} colEnd={2} >
             <Text color={textColor}
               fontSize="15px"
               fontWeight="600"
@@ -104,7 +104,7 @@ const DepGrpInfo = ({ depGrp }) => {
 
         </Grid>
       </Box></>
-     :''}
+     }
     </Box>
   );
 };

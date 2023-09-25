@@ -49,7 +49,7 @@ import {
             </Flex>
             <Button variant="action"
             onClick={() => {
-              setCoCd('');  // setCoCd 초기화
+              setCoCd();  // setCoCd 초기화
             }}
             >추가</Button>
           </Flex>

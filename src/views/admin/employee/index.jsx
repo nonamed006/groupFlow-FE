@@ -74,8 +74,8 @@ const Employee = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data.length);
-        //setEmpDept(res.data.length == 0 ?);
+        //console.log(res.data.length);
+        setEmpDept(res.data);
       });
   };
 

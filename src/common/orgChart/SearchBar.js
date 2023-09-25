@@ -5,17 +5,20 @@ import { Box, Grid, GridItem, Button, Select,  Input, Text} from '@chakra-ui/rea
     return (
         <Box borderRadius='lg'  boxShadow='lg' bg='white' p={2}>
         <Grid templateColumns='repeat(14, 1fr)' gap={2}>
-            <GridItem colSpan={1}><div style={{textAlign: 'center'}}>회사/부서</div></GridItem>
+            <GridItem colSpan={1}><div style={{textAlign: 'center'}}>검색기준</div></GridItem>
             <GridItem colSpan={3}>
                 <Select   
                     onChange={(e)=>{setSearch(e.target.value)}} 
                     style={{ color: "gray" }} 
                     defaultValue={''}
-                    placeholder='검색기준'
+                    placeholder='전체'
                     borderRadius="14px"
                 >
-                    <option value='corp'>회사</option> 
-                    <option  value='dep'>부서</option>     
+                    <option value='corp'>회사명</option> 
+                    <option  value='dep'>부서명</option> 
+                    <option value='empNm'>사원명</option> 
+                    <option  value='empId'>메일ID</option>    
+                    <option  value='rank'>직급</option>     
                 </Select>
             </GridItem>
             
