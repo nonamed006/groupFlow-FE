@@ -9,7 +9,7 @@ const CustomTable = ({ groupHeader, dataList }) => {
     return (
 
         <Table >
-            <TableHeader groupHeader={groupHeader} />
+            <TableHeader headerGroups={groupHeader} />
             <TableBody  dataList={dataList}/>
         </Table>
 

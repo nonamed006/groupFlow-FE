@@ -48,16 +48,12 @@ const MenuTab = () => {
                         </Text>
                     </Box>
                 </Flex>
-                
+
                 <Button variant="action"
                     onClick={() => {  // setCoCd 초기화
                     }}
                 >수정</Button>
-                <Spacer />
-                <Button variant="action"
-                    onClick={() => {  // setCoCd 초기화
-                    }}
-                >변경이력</Button>
+              
             </Flex>
           </Box>
     );

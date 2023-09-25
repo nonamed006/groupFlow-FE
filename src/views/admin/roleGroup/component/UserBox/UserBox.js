@@ -1,9 +1,9 @@
 import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import ListCardBar from "views/admin/corporation/component/ListCard/ListCardBar";
 import SearchBar from "./SearchBar";
 import CustomTable from "../tableList/CustomTable";
+import CardMenuBar from "common/cardMenuBar/CardMenuBar";
 
 
 const UserBox = () => {
@@ -119,7 +119,7 @@ const UserBox = () => {
         
             <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" display={'inline-block'}>
                 {/* 상단 */}
-                <ListCardBar title={'사용자 목록'} count={14}/>
+                <CardMenuBar title={'사용자 목록'} count={14} buttonType={false}/>
                 {/* 검색바 */}
                 <SearchBar />
                 {/* 목록 */}
