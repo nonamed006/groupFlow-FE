@@ -12,7 +12,8 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
 
   return (
 
-    <Card
+    <Card 
+      key={index}
       backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
@@ -65,7 +66,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
                 fontSize="15px"
                 fontWeight="300"
                 lineHeight="100%"
-              >{depGrp.empDto.telNum}</Text>
+              >{depGrp.telNum}</Text>
             </Box>
 
           </Flex>

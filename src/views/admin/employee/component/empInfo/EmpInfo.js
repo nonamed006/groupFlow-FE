@@ -12,9 +12,11 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsRead } from "redux/emp";
+import ModalLayout from "common/modal/ModalLayout";
 
 const EmpInfo = (props) => {
     //리덕스
@@ -23,6 +25,7 @@ const EmpInfo = (props) => {
     const isReadStatus = useSelector((state) => state.emp.isRead);
 
     const [tabStatus, setTabStatus] = useState(1);
+    const { isOpen, onOpen, onClose } = useDisclosure();  // 모달 관련
 
   // input value값 받기 이벤트
   const handleChange = (e) => {
@@ -65,7 +68,11 @@ const EmpInfo = (props) => {
               <Flex>
                 {isReadStatus ? (
                   <Stack direction="row" spacing={4} align="center">
-                    <Button variant="action" onClick={()=>{}}>
+                    <Button variant="action" onClick={()=>{
+                      console.log("1",isOpen)
+                      onOpen();
+                      console.log("2",isOpen)
+                    }}>
                       ID 변경
                     </Button>
                     <Button
@@ -114,6 +121,8 @@ const EmpInfo = (props) => {
           </TabPanels>
         </Tabs>
       </Box>
+      {/* ID 변경 모달 */}
+      <ModalLayout title="ID변경" children="test" buttonYn="false" isOpen={isOpen} onClose={onClose}/>
     </div>
   );
 };

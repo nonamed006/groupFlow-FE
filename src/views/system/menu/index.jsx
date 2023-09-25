@@ -8,8 +8,10 @@ import InfoBox from './component/InfoBox/InfoBox';
 import { useSelector } from 'react-redux';
 
 const Menu = () => {
-	const [ menuList, setMenuList ] = useState([]);
-	const [ menuInfo, setMenuInfo ] = useState({});
+	const [ gnbMenuList, setGnbMenuList ] = useState([]);
+	const [ gnbMenuInfo, setGnbMenuInfo ] = useState({});
+	const [ lnbMenuList, setLnbMenuList ] = useState([]);
+	const [ lnbMenuInfo, setLnbMenuInfo ] = useState({});
 	const [ searchGnbMenuCd, setSearchGnbMenuCd ] = useState('');
 	const [ searchLnbMenuCd, setSearchLnbMenuCd ] = useState('');
 	const [ searchMenuNm, setSearchMenuNm ] = useState('');
@@ -25,7 +27,7 @@ const Menu = () => {
 			>
 				<GridItem colSpan={8} rowSpan={1} >
                     <SearchCardBar
-						menuList={menuList}
+						gnbMenuList={gnbMenuList}
 						searchGnbMenuCd={searchGnbMenuCd}
 						searchLnbMenuCd={searchLnbMenuCd}
 						searchMenuNm={searchMenuNm}
@@ -39,24 +41,32 @@ const Menu = () => {
 				<GridItem colSpan={2} rowSpan={5} >
                     <GnbCard
 						title={'대메뉴'}
-						menuInfo={menuInfo}
-						setMenuInfo={setMenuInfo}
-						setMenuList={setMenuList}
+						gnbMenuInfo={gnbMenuInfo}
+						setGnbMenuInfo={setGnbMenuInfo}
+						setGnbMenuList={setGnbMenuList}
 						searchGnbMenuCd={searchGnbMenuCd}
 						searchMenuNm={searchMenuNm}
 						onSearchClick={onSearchClick}
 					/>
                 </GridItem>
-				<GridItem colSpan={2} rowSpan={5} >
+				<GridItem colSpan={3} rowSpan={5}>
                     <LnbGrid
 						title={'메뉴목록'}
+						gnbMenuInfo={gnbMenuInfo}
+						lnbMenuInfo={lnbMenuInfo}
+						setLnbMenuInfo={setLnbMenuInfo}
+						setLnbMenuList={setLnbMenuList}
+						searchGnbMenuCd={searchGnbMenuCd}
+						searchLnbMenuCd={searchLnbMenuCd}
+						searchMenuNm={searchMenuNm}
+						onSearchClick={onSearchClick}
 					/>
                 </GridItem>
-				<GridItem colSpan={4} rowSpan={5} >
+				<GridItem colSpan={3} rowSpan={5} >
                     <InfoBox
-						title={menuInfo ? '대메뉴 정보' : '메뉴 정보'}
-						menuInfo={menuInfo}
-						setMenuInfo={setMenuInfo}
+						title={gnbMenuInfo ? '대메뉴 정보' : '메뉴 정보'}
+						menuInfo={gnbMenuInfo}
+						setMenuInfo={setGnbMenuInfo}
 					/>
                 </GridItem>
 			</Grid>

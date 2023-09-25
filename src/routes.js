@@ -173,13 +173,6 @@ const routes = [
     component: RTL,
   },
   {
-    name: "TEST",
-    layout: "/admin",
-    path: "/test",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Employee,
-  },
-  {
     code:'MU230005',
     upper: 'MU230002',
     name: "회사관리",
@@ -207,12 +200,20 @@ const routes = [
     component: Department,
   },
   {
+    name: "Corporation",
+    layout: "/admin",
+    path: "/corporation",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Corporation,
+  },
+  {
     name: "사원관리",
     layout: "/system",
     path: "/emp",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Employee,
   },
+  
 ];
 
 export default routes;

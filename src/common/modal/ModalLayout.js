@@ -22,7 +22,7 @@ import React from "react";
     
     return (
         <>
-        <Modal finalFocusRef={finalRef} size={size} isOpen={isOpen} onClose={onClose}>
+        <Modal scrollBehavior={'inside'} finalFocusRef={finalRef} size={size} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             {/* 모달 제목 */}

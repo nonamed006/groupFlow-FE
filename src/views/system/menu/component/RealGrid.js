@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
-import { useSelector } from "react-redux";
 
-function DepUpperCd(props) {
+const RealGrid = ({ org, setDpCd }) => {
   const realgridElement = useRef(null);
-
   var fields = [
-    { fieldName: "path", dataType: "text" },
-    { fieldName: "name", dataType: "text" },
-    { fieldName: "code", dataType: "text" },
+    { fieldName: "menuPath", dataType: "text" },
+    { fieldName: "menuNm", dataType: "text" },
+    { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 150, header: { text: "명칭" } },
-    { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
+    { fieldName: "menuNm", name: "menuNm", width: 300, header: { text: "menuNm" } },
+    { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
+    { fieldName: "menuCd", name: "menuCd", width: 70, header: { text: "menuCd" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
   ];
 
@@ -24,33 +22,32 @@ function DepUpperCd(props) {
 
   useEffect(() => {
     const container = realgridElement.current;
-    if (!container) {
-      return; // 컨테이너가 아직 없으면 아무 작업도 수행하지 않음
-    }
-    treeProvider = new LocalTreeDataProvider();
+
+    treeProvider = new LocalTreeDataProvider(true);
     treeView = new TreeView(container);
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
+    treeProvider.setRows(org, "menuPath", true, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
     treeView.header.height = 40;
     treeView.footer.height = 40;
-    treeView.stateBar.width = 16;
+    treeView.stateBar.width = 30;
 
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+
     treeView.setStateBar({ visible: false }); //상태바 표시X
     treeView.setCheckBar({ visible: false }); //체크박스 표시X
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
 
-    //해당컬럼 표시X
-    treeView.columnByName("path").visible = false;
+    //해당 컬럼 표시X
+    treeView.columnByName("menuPath").visible = false;
     treeView.columnByName("depth").visible = false;
-
-    //해당컬럼 tn
-    treeView.columnByName("name").editable = false;
-    treeView.columnByName("code").editable = false;
+    treeView.columnByName("menuCd").visible = false;
+    treeView.columnByName("menuNm").editable = false;
+    //treeView.columnByName("menuCd").editable = false;
 
     treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
@@ -69,21 +66,28 @@ function DepUpperCd(props) {
     ];
 
     treeView.onCellClicked = function (grid, clickData) {
-      let dpData = grid._dataProvider._rowMap[clickData.dataRow];
-      console.log(dpData);
-      props.getValue(dpData);
+      if (clickData.cellType !== "gridEmpty") {
+        let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
+        if (depth !== "0") {
+          let dpCdData =
+            grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+          setDpCd(dpCdData);
+        } else if (depth === "0") {
+          setDpCd(0);
+        }
+      }
     };
-    treeProvider.setRows(props.value, "path", true, null, "depth");
+
     treeView.expandAll();
     return () => {
       treeProvider.clearRows();
       treeView.destroy();
     };
-  }, [props]);
+  }, [org]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
+    <div ref={realgridElement} style={{ height: "500px", width: "100%" }}></div>
   );
-}
+};
 
-export default DepUpperCd;
+export default RealGrid;

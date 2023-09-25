@@ -24,7 +24,6 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
     delYn : 0,
   });
   const useYn = new Boolean(menuInputData.useYn);
-  console.log(menuInputData.useYn);
   const reset = () => {
     setMenuInfo({
       menuCd: '',
@@ -82,7 +81,6 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
   }
 
   useEffect(()=> {
-    console.log('menuInfo');
     if(Object.keys(menuInfo).length > 0)
     setMenuInputData(menuInfo);
   }, [menuInfo]);

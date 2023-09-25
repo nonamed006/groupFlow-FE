@@ -3,19 +3,48 @@ import { Box, Button, Select, Grid, Input, GridItem} from '@chakra-ui/react';
 import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 import { PORT } from 'set';
 
-const SearchCardBar = ({menuList, searchGnbMenuCd, searchLnbMenuCd, searchMenuNm, setSearchGnbMenuCd,setSearchLnbMenuCd, setSearchMenuNm, onSearchClick, setOnSearchClick}) => {
-	const [ categoryList, setCategoryList ] = useState([]);
-	const getCategoryList = () => {
+const SearchCardBar = ({gnbMenuList, searchGnbMenuCd, searchLnbMenuCd, searchMenuNm, setSearchGnbMenuCd,setSearchLnbMenuCd, setSearchMenuNm, onSearchClick, setOnSearchClick}) => {
+	const [ gnbCategoryList, setGnbCategoryList ] = useState([]);
+	const [ lnbCategoryList, setLnbCategoryList ] = useState([]);
+
+	// 대메뉴 카테고리 목록 조회
+	const getGnbCategoryList = () => {
 		fetch(`${PORT}/menu/category`, {method: 'GET'})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				setCategoryList(responseJson.data);
+				setGnbCategoryList(responseJson.data);
 			});
 	}
 
+	// 하위메뉴 카테고리 목록 조회
+	const getLnbCategoryList = () => {
+		fetch(`${PORT}/menu/category-${searchGnbMenuCd}`, {method: 'GET'})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				console.log(responseJson);
+				setLnbCategoryList(responseJson.data);
+			});
+	}
+
+	// 대메뉴 카테고리 option 태그 생성
 	const gnbList = () => {
 		return (
-			categoryList.map((menu) => {
+			gnbCategoryList.map((menu) => {
+				return (
+					<option value={menu.menuCd}>{menu.menuNm}</option>
+				)
+			})
+		)
+	}
+
+	// 하위메뉴 카테고리 option 태그 생성
+	const lnbList = () => {
+		if(!lnbCategoryList) {
+			return false;
+		}
+		
+		return (
+			lnbCategoryList.map((menu) => {
 				return (
 					<option value={menu.menuCd}>{menu.menuNm}</option>
 				)
@@ -24,8 +53,12 @@ const SearchCardBar = ({menuList, searchGnbMenuCd, searchLnbMenuCd, searchMenuNm
 	}
 
 	useEffect(() => {
-		getCategoryList();
-	}, [menuList])
+		getGnbCategoryList();
+
+		if(searchGnbMenuCd) {
+			getLnbCategoryList();
+		}
+	}, [gnbMenuList, searchGnbMenuCd])
 
 	return (
 	<div>
@@ -47,6 +80,7 @@ const SearchCardBar = ({menuList, searchGnbMenuCd, searchLnbMenuCd, searchMenuNm
 						setSearchLnbMenuCd(e.target.value);
 					}} >
 						<option  value=''>전체</option>
+						{lnbList()}
 					</Select>
 				</GridItem>
 

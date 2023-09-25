@@ -1,31 +1,41 @@
-import {Stack, Button, Text, Flex , useColorModeValue, Grid, GridItem} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React from 'react';
+import {
+  Stack,
+  Button,
+  Text,
+  Flex,
+  useColorModeValue,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import React from "react";
 import { useEffect } from "react";
-const InfoBox = ({title,updateBtn}) => {
+const InfoBox = ({ title, updateBtn, deleteBtn }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-    useEffect(()=> {
+  useEffect(() => {});
+  return (
+    <Grid templateColumns="repeat(15, 1fr)" gap={2}>
+      <GridItem colStart={1} colEnd={3}>
+        <Text
+          color={textColor}
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
+          {title}
+        </Text>
+      </GridItem>
 
-    }, );
-    return (
-        
-          <Grid 
-            templateColumns="repeat(15, 1fr)"
-            gap={2} >
-            <GridItem colStart={1} colEnd={3}>
-            <Text color={textColor} fontSize="22px" fontWeight="700" lineHeight="100%">
-              {title}
-            </Text>
-            </GridItem>
-
-            <GridItem colStart={12} colEnd={16}>
-                <Button variant="action" onClick={updateBtn}>저장</Button>
-                <Button variant="action">삭제</Button>
-                <Button variant="action">변경이력</Button>
-            </GridItem>
-          
-            
-          </Grid>
-    );
+      <GridItem colStart={12} colEnd={16}>
+        <Button variant="action" onClick={updateBtn}>
+          저장
+        </Button>
+        <Button variant="action" onClick={deleteBtn}>
+          삭제
+        </Button>
+        <Button variant="action">변경이력</Button>
+      </GridItem>
+    </Grid>
+  );
 };
 
 export default InfoBox;
