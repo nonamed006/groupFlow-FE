@@ -6,20 +6,14 @@ import {
   Td,
   Tbody,
   Grid,
-  GridItem,
-  Text,
-  Box,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 
 const DepGroup = (props) => {
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-  //const [dg, setDg] = useState([]);
-  useEffect(() => {
-    //setDg(props.value);
-  }, [props]);
+  useEffect(() => {}, [props]);
   return (
     <div>
       <Grid
@@ -41,7 +35,6 @@ const DepGroup = (props) => {
               <Tr
                 key={index}
                 backgroundColor={onclick === index ? "navy.50" : "white"}
-                // onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);
                 }}

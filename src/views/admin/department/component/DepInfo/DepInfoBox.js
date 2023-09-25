@@ -1,8 +1,6 @@
 import {
-  Stack,
   Button,
   Text,
-  Flex,
   useColorModeValue,
   Grid,
   GridItem,

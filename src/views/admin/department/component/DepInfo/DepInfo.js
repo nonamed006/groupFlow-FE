@@ -69,12 +69,12 @@ const EmpInfo = ({ setTest, dpCd }) => {
       });
   };
   const change = (depDto) => {
-    console.log(depDto);
     setDepDto(depDto);
   };
-  const updateBtn = () => {
+  const updateBtn = async () => {
+    isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+    setDepDto([]);
     setTest(true);
-    isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
   };
   const deleteBtn = () => {
     setTest(true);
@@ -83,9 +83,7 @@ const EmpInfo = ({ setTest, dpCd }) => {
       method: "DELETE",
     })
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
   };
   useEffect(() => {
     if (dpCd != 0) {
@@ -113,7 +111,7 @@ const EmpInfo = ({ setTest, dpCd }) => {
                 기본정보
               </Tab>
               <Tab fontSize="22px" fontWeight="700" lineHeight="100%">
-                조직정보
+                부서원 정보
               </Tab>
             </Flex>
           </TabList>

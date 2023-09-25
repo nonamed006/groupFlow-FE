@@ -31,7 +31,6 @@ const DepBasic = (props) => {
   const recYN = new Boolean(depDto.recYN);
   const useYN = new Boolean(depDto.useYN);
   const organYN = new Boolean(depDto.organYN);
-
   const onChange = (e) => {
     const { value, name } = e.target;
     const updateData = {
@@ -43,8 +42,6 @@ const DepBasic = (props) => {
 
   const onChange2 = (e) => {
     const { value, name } = e.target;
-    console.log(value);
-    console.log(name);
     const updateData = {
       ...depDto,
       upperCd: value[0],
@@ -139,7 +136,7 @@ const DepBasic = (props) => {
         </GridItem>
         <GridItem colStart={11} colEnd={15}>
           <RadioGroup
-            defaultValue={recYN.toString()}
+            value={recYN.toString()}
             key={depDto.dpCd}
             onChange={(value) =>
               onChange({ target: { name: "recYN", value: value === "true" } })
@@ -163,7 +160,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="stnd"
-            defaultValue={depDto.stnd}
+            value={depDto.stnd || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -180,7 +177,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="reqNm"
-            defaultValue={depDto.reqNm}
+            value={depDto.reqNm || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -207,12 +204,12 @@ const DepBasic = (props) => {
             placeholder=""
             borderRadius="14px"
             name="typeCd"
-            defaultValue={depDto.typeCd}
+            value={depDto.typeCd || ""}
             key={depDto.dpCd}
             onChange={onChange}
           >
-            <option value="임시">임시</option>
             <option value="부서">부서</option>
+            <option value="임시">임시</option>
             <option value="팀">팀</option>
           </Select>
         </GridItem>
@@ -228,7 +225,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="dpNm"
-            defaultValue={depDto.dpNm}
+            value={depDto.dpNm || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -245,7 +242,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="dpAbb"
-            defaultValue={depDto.dpAbb}
+            value={depDto.dpAbb || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -262,7 +259,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="postNum"
-            defaultValue={depDto.postNum}
+            value={depDto.postNum || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -280,7 +277,7 @@ const DepBasic = (props) => {
         </GridItem>
         <GridItem colStart={11} colEnd={15}>
           <RadioGroup
-            defaultValue={useYN.toString()}
+            value={useYN.toString()}
             key={depDto.dpCd}
             onChange={(value) =>
               onChange({ target: { name: "useYN", value: value === "true" } })
@@ -299,7 +296,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="addr"
-            defaultValue={depDto.addr}
+            value={depDto.addr || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -312,7 +309,7 @@ const DepBasic = (props) => {
         </GridItem>
         <GridItem colStart={11} colEnd={15}>
           <RadioGroup
-            defaultValue={organYN.toString()}
+            value={organYN.toString()}
             key={depDto.dpCd}
             onChange={(value) =>
               onChange({ target: { name: "organYN", value: value === "true" } })
@@ -331,7 +328,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="addrDetail"
-            defaultValue={depDto.addrDetail}
+            value={depDto.addrDetail || ""}
             key={depDto.dpCd}
             onChange={onChange}
           />
@@ -348,7 +345,7 @@ const DepBasic = (props) => {
             size="md"
             borderRadius="14px"
             name="sort"
-            defaultValue={depDto.sort}
+            value={depDto.sort || ""}
             onChange={onChange}
           />
         </GridItem>

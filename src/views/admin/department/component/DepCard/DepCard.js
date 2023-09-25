@@ -5,13 +5,9 @@ import {
   useColorModeValue,
   Button,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import { useDispatch } from "react-redux";
-import { setDataPk } from "redux/depDetail";
 import React from "react";
 import { useEffect } from "react";
 import RealGrid from "./RealGrid";
-import { useSelector } from "react-redux";
-import { useState } from "react";
 
 const DepCard = ({ org, setDpCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");

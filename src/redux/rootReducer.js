@@ -1,17 +1,14 @@
 import { combineReducers } from "redux";
-import emp from './emp';
-import solution from './solution';
-import dep from './dep';
-import depDetail from './depDetail'
-import menu from './menu'
-import depOrg from './depOrg';
-
+import emp from "./emp";
+import solution from "./solution";
+import corporation from "./corporation";
+import menu from "./menu";
 const rootReducer = combineReducers({
-    solution,
-    emp, 
-    dep,
-    depDetail,
-    depOrg, menu
-})
+  solution,
+  corporation,
+  emp,
+  menu,
+});
 
-  export default rootReducer;
+export default rootReducer;
+
