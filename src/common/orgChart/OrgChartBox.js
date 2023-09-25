@@ -15,7 +15,6 @@ const OrgChartBox = () => {
     const [corpDepList, setCorpDepList] =  useState();  // 회사 및 부서 목록
     const [depGrpList, setDepGrpList] = useState([]); // 사원 목록
 
-    const [isInit, setIsInit] = useState();
 	useEffect(() => {
 		fetchCorpDepList(); // 회사 및 부서 목록 조회
 	}, []);
@@ -28,7 +27,6 @@ const OrgChartBox = () => {
         }else{
             fetchDepGrpList();
             setDepGrp();
-            setIsInit(true);
         }
 	}
 
@@ -53,10 +51,11 @@ const OrgChartBox = () => {
         if (paramString) {
             url += '?' + paramString;
         }
-
+        console.log(url);
         fetch(url, {
             method: "GET"
         }).then(res => res.json()).then(res => {
+            console.log(res.data);
             setDepGrpList(res.data);
         });
     };
@@ -91,7 +90,7 @@ const OrgChartBox = () => {
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList handelGridCd={handelGridCd} corpDepList={corpDepList} isInit={isInit} setIsInit={setIsInit}  />
+                    <OrgList handelGridCd={handelGridCd} corpDepList={corpDepList} />
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >

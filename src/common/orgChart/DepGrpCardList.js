@@ -6,9 +6,9 @@ import DepGrpCard from "./DepGrpCard";
 
 const DepGrpCardList = ({setDepGrp, depGrpList }) => {
     
-	useEffect(() => {
+	// useEffect(() => {
 		
-	}, [depGrpList]);
+	// }, [depGrpList]);
 
   return (
     <Box overflowY={"auto"} overflowX={'hidden'}

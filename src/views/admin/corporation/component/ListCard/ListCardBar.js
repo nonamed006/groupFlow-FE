@@ -6,7 +6,7 @@ import {
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";;
 
-  const ListCardBar = ({title, count, setCoCd}) => {
+  const ListCardBar = ({title, count, handelOnClik}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
 
@@ -18,7 +18,7 @@ import {
             px="22px"
             pb="20px"
             mb="10px"
-            boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
+            // boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
           >
             <Flex  w="100%">
             <Text
@@ -49,7 +49,7 @@ import {
             </Flex>
             <Button variant="action"
             onClick={() => {
-              setCoCd();  // setCoCd 초기화
+              handelOnClik(); 
             }}
             >추가</Button>
           </Flex>

@@ -26,9 +26,9 @@ const ListCardTable = ({ headerGroups, listData, setCoCd }) => {
       </Thead>
 
       {/* Tbody */}
-      <Tbody >
+     
         <ListCardTableTbody listData={listData} setCoCd={setCoCd}/>
-      </Tbody>
+ 
     </Table>
 
   );
