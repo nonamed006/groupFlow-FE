@@ -5,7 +5,7 @@ import {
 import {LocalTreeDataProvider,TreeView  } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = ({handelGrid, value, isInit, setIsInit}) => {
+const RealGrid = (props) => {
   const realgridElement = useRef(null);
   
   var fields = [
@@ -65,13 +65,13 @@ const RealGrid = ({handelGrid, value, isInit, setIsInit}) => {
    
     if(clickData.cellType !== "gridEmpty"){
       let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-      handelGrid(dpCdData);
+      props.handelGrid(dpCdData);
     }
       
   }
   
   
-  treeProvider.setRows(value, "path", true, null, "depth");
+  treeProvider.setRows(props.value, "path", true, null, "depth");
   
   // 모두 열기
   treeView.expandAll();

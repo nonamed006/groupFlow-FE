@@ -19,7 +19,7 @@ const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList}) => {
   return (
     <Box borderRadius="lg" bg="white" h="700px" p="6">
       {/* 목록 상단 */}
-      <ListCardBar setCoCd={setCoCd} title={title} count={listData !== undefined ? listData.length : 0} />
+      <ListCardBar handelOnClik={setCoCd} title={title} count={listData !== undefined ? listData.length : 0} />
       {/* 목록 테이블 */}
       <Box w={'100%'} display={'inline-block'} overflowX={"auto"}  >
         <ListCardTable headerGroups={headerGroups} listData={listData} setCoCd={setCoCd} />
