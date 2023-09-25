@@ -2,9 +2,9 @@ import { Box, Grid, GridItem, Button, useDisclosure, Text, Select, Input } from 
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import GroupCardList from "./GroupCardList";
-import ListCardBar from "views/admin/corporation/component/ListCard/ListCardBar";
 import ModalLayout from "common/modal/ModalLayout";
 import GroupAddBox from "./GroupAddBox";
+import CardMenuBar from "common/cardMenuBar/CardMenuBar";
 
 
 const GroupBox = () => {
@@ -12,11 +12,13 @@ const GroupBox = () => {
 	return (
             <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
                 {/* 메뉴상단 */}
-                <ListCardBar title={'권한그룹'} count={4} handelOnClik={onOpen}/>
+                <CardMenuBar title={'권한그룹'} count={4} handelOnClik={onOpen} buttonType={true}/>
                 {/* 검색바 */}
                 <SearchBar />
                 {/* 목록 */}
                 <GroupCardList />
+
+                {/* 권한그룹 추가 모달 */}
                 {isOpen&& 
                 <ModalLayout title={'권한그룹추가'} onClose={onClose} buttonYn={true} size={'lg'}>
                     <GroupAddBox />

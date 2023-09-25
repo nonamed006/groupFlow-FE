@@ -2,13 +2,12 @@ import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Sel
 import React, { useState } from "react";
 
 
-const ListCardTableHeader = ({ headerGroups }) => {
+const TableHeader = ({ headerGroups }) => {
     const headerColor = useColorModeValue("#8F9BBA",'white');
 
     return (
 
-        <Thead >
-            <Tr borderColor={headerColor}  boxShadow='lg' > 
+            <Tr > 
                 {headerGroups.map((header, index) => {
                     return (
                         <Td key={index} >
@@ -23,9 +22,8 @@ const ListCardTableHeader = ({ headerGroups }) => {
                         </Td>);
                 })}
             </Tr>
-        </Thead>
 
     );
 };
 
-export default ListCardTableHeader;
+export default TableHeader;

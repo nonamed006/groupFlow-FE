@@ -71,6 +71,7 @@ const Corporation = () => {
 				gap={5}
 			>
 				<GridItem colSpan={6} rowSpan={1}>
+					{/* 검색창 */}
 					<SearchCardBar
 						setKeyword={setKeyword}
 						setUseYn={setUseYn}
@@ -78,6 +79,7 @@ const Corporation = () => {
 					/>
 				</GridItem>
 				<GridItem colSpan={2} rowSpan={5}>
+					{/* 회사목록 */}
 					<ListCard
 						title={"회사"}
 						listData={corpList}
@@ -87,6 +89,7 @@ const Corporation = () => {
 					/>
 				</GridItem>
 				<GridItem colSpan={4} rowSpan={5}>
+					{/* 회사정보 */}
 					<InfoBox sortValue={sortValue} coCd={coCd} setCoCd={setCoCd} setChangeYn={setChangeYn} />
 				</GridItem>
 			</Grid>
