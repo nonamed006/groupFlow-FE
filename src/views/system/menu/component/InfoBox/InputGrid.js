@@ -81,7 +81,6 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
   }
 
   useEffect(()=> {
-    if(Object.keys(menuInfo).length > 0)
     setMenuInputData(menuInfo);
   }, [menuInfo]);
   return (

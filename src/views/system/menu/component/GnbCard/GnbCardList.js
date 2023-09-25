@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMenu } from 'redux/menu';
 import { PORT } from 'set';
 
-const GnbCardList = ({list, gnbMenuInfo, setGnbMenuDetail}) => {
+const GnbCardList = ({list, menuInfo, setGnbMenuDetail, selectGnbMenuCd}) => {
 
   return (
     <VStack
@@ -23,8 +23,8 @@ const GnbCardList = ({list, gnbMenuInfo, setGnbMenuDetail}) => {
                 borderWidth='1px'
                 borderRadius={'xl'}
                 onClick={() => setGnbMenuDetail(gnb.menuCd)}
-                borderColor={gnbMenuInfo.menuCd === gnb.menuCd && 'brand.500'}
-                shadow={gnbMenuInfo.menuCd === gnb.menuCd ? 'outline' : 'md'}
+                borderColor={selectGnbMenuCd === gnb.menuCd && 'brand.500'}
+                shadow={selectGnbMenuCd === gnb.menuCd ? 'outline' : 'md'}
                 backgroundColor={gnb.useYn === 1 ? 'white' : 'gray.200'}
                 cursor={'pointer'}>
                 <Flex>

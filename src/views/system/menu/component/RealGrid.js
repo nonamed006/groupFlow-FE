@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = ({ org, setDpCd }) => {
+const RealGrid = ({ org, setMenuDetail }) => {
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
@@ -67,14 +67,16 @@ const RealGrid = ({ org, setDpCd }) => {
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
-        let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
-        if (depth !== "0") {
-          let dpCdData =
-            grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-          setDpCd(dpCdData);
-        } else if (depth === "0") {
-          setDpCd(0);
-        }
+        let menuCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+        setMenuDetail(menuCd)
+        // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
+        // if (depth !== "0") {
+        //   let dpCdData =
+        //     grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+        //   setMenuDetail(dpCdData);
+        // } else if (depth === "0") {
+        //   setMenuDetail(0);
+        // }
       }
     };
 

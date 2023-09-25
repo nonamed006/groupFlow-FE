@@ -6,9 +6,13 @@ import GnbCardBar from "./GnbCardBar";
 
 const GnbCard = ({
   title,
-  gnbMenuInfo,
-  setGnbMenuInfo,
+  //gnbMenuInfo,
+  menuInfo,
+  //setGnbMenuInfo,
+  selectGnbMenuCd,
+  setMenuInfo,
   setGnbMenuList,
+  setSelectGnbMenuCd,
   searchGnbMenuCd,
   searchMenuNm,
   onSearchClick
@@ -25,7 +29,8 @@ const GnbCard = ({
     await fetch(`${PORT}/menu/?${queryString}`, { method: 'GET', })
       .then((response) => response.json())
       .then((responseJson) => {
-        if(responseJson.result === 'SUCCESS') {
+        console.log(responseJson);
+        if(responseJson.result.toUpperCase() === 'SUCCESS') {
           setList(responseJson.data);
           setGnbMenuList(responseJson.data);
         } else {
@@ -38,16 +43,19 @@ const GnbCard = ({
 
   /* 선택한 메뉴 정보 조회 */
   const setGnbMenuDetail = async (menuCd) => {
-    if(menuCd === gnbMenuInfo.menuCd) {
-      setGnbMenuInfo({});
+    if(menuCd === menuInfo.menuCd) {  // 같은 GNB 선택했을 때
+      setMenuInfo({});                //선택한 메뉴 정보 초기화
+      setSelectGnbMenuCd('')          //선택한 GNB menuCd 초기화
 
       return false;
     }
+
+    setSelectGnbMenuCd(menuCd);       // LNB에서 사용할 GNB menuCd 설정
     await fetch(`${PORT}/menu/find-${menuCd}`, {method: 'GET'})
       .then((response) => response.json())
       .then((responseJson) => {
-          if(responseJson.result === 'SUCCESS') {
-            setGnbMenuInfo(responseJson.voData);
+          if(responseJson.result.toUpperCase() === 'SUCCESS') {
+            setMenuInfo(responseJson.voData);
           } else {
             alert(responseJson.resultMsg);
           }
@@ -57,14 +65,14 @@ const GnbCard = ({
 
   useEffect(() => {
     gnbMenuList();
-  }, [gnbMenuInfo, onSearchClick]);
+  }, [menuInfo, onSearchClick]);
 
   return (
       <Box borderRadius="lg" bg="white" h="fit-content"  p="6">
           {/* 목록 상단 */}
         <GnbCardBar title={title} count={list&&list.length}/>
           {/* 목록 테이블(카드형식) */}
-        <GnbCardList list={list} gnbMenuInfo={gnbMenuInfo} setGnbMenuDetail={setGnbMenuDetail}/>
+        <GnbCardList list={list} menuInfo={menuInfo} setGnbMenuDetail={setGnbMenuDetail} selectGnbMenuCd={selectGnbMenuCd}/>
       </Box>
   );
 };

@@ -54,11 +54,8 @@ const SearchCardBar = ({gnbMenuList, searchGnbMenuCd, searchLnbMenuCd, searchMen
 
 	useEffect(() => {
 		getGnbCategoryList();
-
-		if(searchGnbMenuCd) {
-			getLnbCategoryList();
-		}
-	}, [gnbMenuList, searchGnbMenuCd])
+		getLnbCategoryList();
+	}, [searchGnbMenuCd])
 
 	return (
 	<div>
