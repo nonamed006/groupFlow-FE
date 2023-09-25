@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Select, Grid, Input, GridItem } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { setDataPk } from "redux/dep";
 import { PORT } from "set";
 
 const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
   const [corpNm, setCorpNm] = useState([]);
-  //const [selectedCoCd, setSelectedCoCd] = useState("");
-  //const [searchText, setSearchText] = useState("");
-
-  //리덕스
-  const dispatch = useDispatch();
 
   const getCorpNmList = () => {
     let url = `${PORT}/corp/list`;
@@ -22,26 +15,9 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
         setCorpNm(res.data);
       });
   };
-  //const coNmChange = (e) => {
-  //  const selectedValue = e.target.value;
-  //  setSelectedCoCd(selectedValue);
-  //};
-  //const onChangeSearchText = (e) => {
-  //  setSearchText(e.target.value);
-  //};
-  //const onClickSearchText = () => {
-  //  console.log(selectedCoCd);
-  //  let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
-  //  fetch(url, { method: "GET" })
-  //    .then((res) => res.json())
-  //    .then((res) => {
-  //      dispatch(setDataPk(res.data));
-  //    });
-  //};
 
   useEffect(() => {
     getCorpNmList();
-    //onClickSearchText();
   }, []);
 
   return (

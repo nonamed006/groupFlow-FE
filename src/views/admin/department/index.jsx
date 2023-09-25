@@ -1,7 +1,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
-import DepCard from "./component/DepCard";
+import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
 import { PORT } from "set";
 
@@ -11,8 +11,6 @@ const Test = () => {
   const [org, setOrg] = useState([]);
   const [dpCd, setDpCd] = useState(0);
   const [test, setTest] = useState(false);
-  //const [searchEvent, setSearchEvent] = useState(false);
-
   const handleSearchBtn = () => {
     onClickSearchText();
   };
@@ -26,17 +24,14 @@ const Test = () => {
       });
   };
   useEffect(() => {
-    onClickSearchText();
+    if (test === true) {
+      setTest(false);
+    } else {
+      onClickSearchText();
+    }
   }, [test]);
 
   return (
-    //헤더 공간 제외한 div 공간 지정
-    /**
-     * h: 그리드 총 높이
-     * templateRows 세로 칸 수
-     * templateColumns 세로 칸 수
-     * gap 마진 비슷 값 클수록 그리드 안의 요소 서로 멀어짐
-     */
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <Grid
         h="1000px"

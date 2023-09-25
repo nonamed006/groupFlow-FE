@@ -45,8 +45,9 @@ const RealGrid = ({ org, setDpCd }) => {
     //해당 컬럼 표시X
     treeView.columnByName("path").visible = false;
     treeView.columnByName("depth").visible = false;
+    treeView.columnByName("depth").visible = false;
+    treeView.columnByName("code").visible = false;
     treeView.columnByName("name").editable = false;
-    treeView.columnByName("code").editable = false;
 
     treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
