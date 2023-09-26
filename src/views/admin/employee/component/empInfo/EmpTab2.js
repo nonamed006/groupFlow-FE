@@ -9,9 +9,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { minTimeDate } from "common/common";
 import React from "react";
-import { useSelector } from "react-redux";
 import EmpDeptInput from "./EmpDeptInput";
 
 const EmpTab2 = (props) => {

@@ -16,6 +16,7 @@ const Employee = () => {
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
+  const [editState, setEditState] = useState("read");
   const [empDept, setEmpDept] = useState([
     {
       addr: "",
@@ -59,8 +60,7 @@ const Employee = () => {
         method: "GET",
         // res에 결과가 들어옴
       }
-    )
-      .then((res) => res.json())
+    ).then((res) => res.json())
       .then((res) => {
         setEmpList(res.data);
         setEmpNum(res.strData);
@@ -71,20 +71,19 @@ const Employee = () => {
   const getDeptInfo = (empCd) => {
     fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
       method: "GET",
-    })
-      .then((res) => res.json())
+    }).then((res) => res.json())
       .then((res) => {
         //console.log(res.data.length);
+        if(res.data.length > 0){
         setEmpDept(res.data);
+        }
       });
   };
 
   // 사원 목록 클릭시
   const onClickRow = (empList) => {
     resetInput();
-    console.log("empList",empList);
     getDeptInfo(empList.empCd);
-    console.log("deptEmp",empDept);
     setEmpDetail(empList);
     dispatch(setIsRead(true));
   };
@@ -174,10 +173,29 @@ const Employee = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.result == "success") {
+          dispatch(setIsRead(true));
         } else {
         }
       });
   };
+
+   //사원 정보 수정
+   const updateEmpInfo = () =>{
+    fetch(
+      `${PORT}/emp/updateEmpInfo`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(empDetail)
+        // res에 결과가 들어옴
+      }
+    ).then((res) => res.json())
+      .then((res) => {
+        dispatch(setIsRead(true));
+      });
+  }
 
   useEffect(() => {
     getEmpList("", "", "");
@@ -201,6 +219,8 @@ const Employee = () => {
               empNum={empNum}
               onClickRow={onClickRow}
               resetInput={resetInput}
+              setEditState={setEditState}
+              editState={editState}
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>
@@ -208,9 +228,13 @@ const Employee = () => {
               empDetail={empDetail}
               setEmpDetail={setEmpDetail}
               empDept={empDept}
+              setEmpDept={setEmpDept}
               setImgFile={setImgFile}
               resetInput={resetInput}
               onSaveEmpDetail={onSaveEmpDetail}
+              setEditState={setEditState}
+              editState={editState}
+              updateEmpInfo={updateEmpInfo}
             />
           </GridItem>
         </Grid>

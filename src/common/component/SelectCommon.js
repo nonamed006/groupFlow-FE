@@ -2,12 +2,8 @@ import { Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 
-const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
+const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values, isReadOnly }) => {
   const [options, setOptions] = useState([]);
-
-  console.log("ccNum",options);
-  console.log("values", values);
-
 
   const getCopn = (ccNum, ccType) => {
     let url = `${PORT}/common/selectCopn`;
@@ -37,6 +33,7 @@ const SelectCommon = ({ ccNum, ccType, defaultMsg, handleChange, values }) => {
       onChange={handleChange}
       name={ccNum + ccType}
       value={values}
+      isDisabled={isReadOnly}
     >
       {options.map((column, index) => {
         return (

@@ -105,8 +105,9 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
                   onMouseOver(index);
                 }}
                 onClick={() => {
+                  props.resetInput();
                   props.onClickRow(column);
-                  setSelectedIndex(index)
+                  setSelectedIndex(index);
                 }}
               >
                 <Td

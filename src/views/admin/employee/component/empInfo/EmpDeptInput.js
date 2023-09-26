@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 const EmpDeptInput = ({column, handleChange}) => {
   const isReadStatus = useSelector((state) => state.emp.isRead);
 
-  console.log("dept11111111", column);
   return (
     <Grid
       templateColumns="repeat(13, 1fr)"
@@ -119,7 +118,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-            <SelectCommon handleChange={handleChange} values={column.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음"/>
+            <SelectCommon handleChange={handleChange} values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -128,7 +127,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon ccNum="EM" ccType="B" defaultMsg="선택없음" values={column.pstnCd}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -137,7 +136,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-      <SelectCommon ccNum="EM" ccType="C" defaultMsg="선택없음1" values={column.workTypeCd}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -146,7 +145,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon ccNum="EM" ccType="D" defaultMsg="선택없음" values={column.empTypeCd}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -155,7 +154,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon ccNum="EM" ccType="E" defaultMsg="선택없음" values={column}/>
+        <SelectCommon handleChange={handleChange} ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
