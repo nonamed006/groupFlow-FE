@@ -118,7 +118,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-            <SelectCommon handleChange={handleChange} values={column.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={isReadStatus}/>
+            <SelectCommon handleChange={handleChange} values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -127,7 +127,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="B" defaultMsg="선택없음" values={column.pstnCd} isReadOnly={isReadStatus}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -136,7 +136,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="C" defaultMsg="선택없음" values={column.workTypeCd} isReadOnly={isReadStatus}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -145,7 +145,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="D" defaultMsg="선택없음" values={column.empTypeCd} isReadOnly={isReadStatus}/>
+      <SelectCommon handleChange={handleChange} ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -154,7 +154,7 @@ const EmpDeptInput = ({column, handleChange}) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={handleChange} ccNum="EM" ccType="E" defaultMsg="선택없음" values={column.jobCd} isReadOnly={isReadStatus}/>
+        <SelectCommon handleChange={handleChange} ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={isReadStatus}/>
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>

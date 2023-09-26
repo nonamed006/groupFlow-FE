@@ -228,6 +228,7 @@ const Employee = () => {
               empDetail={empDetail}
               setEmpDetail={setEmpDetail}
               empDept={empDept}
+              setEmpDept={setEmpDept}
               setImgFile={setImgFile}
               resetInput={resetInput}
               onSaveEmpDetail={onSaveEmpDetail}

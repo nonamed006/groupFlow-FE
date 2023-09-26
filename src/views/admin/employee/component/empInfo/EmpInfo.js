@@ -21,6 +21,7 @@ import EmpIdChg from "../empIdChg/EmpIdChg";
 import { PORT } from "set";
 import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
+import { setEmpDept } from "redux/emp";
 const EmpInfo = (props) => {
   //리덕스
   const dispatch = useDispatch();
@@ -155,7 +156,9 @@ const EmpInfo = (props) => {
                     <Button
                         variant="action"
                         onClick={() => {
-                          alert("asdsad");
+                          props.resetInput();
+                          dispatch(setIsRead(false));
+                          setEmpDept({...props.empDept, ['dpGrpcd']:"tmp"});
                         }}
                       >
                         조직정보 추가
