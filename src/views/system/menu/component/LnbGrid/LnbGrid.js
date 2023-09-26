@@ -8,35 +8,39 @@ const LnbGrid = ({
   title,
   //gnbMenuInfo,
   //lnbMenuInfo,
-  menuInfo,
+  // menuInfo,
   setMenuInfo,
   //setLnbMenuInfo,
   //setLnbMenuList,
   selectGnbMenuCd,
-  searchGnbMenuCd,
-  searchLnbMenuCd,
-  searchMenuNm,
-  onSearchClick
+  search,
+  // searchGnbMenuCd,
+  // searchLnbMenuCd,
+  // searchMenuNm,
+  // onSearchClick
 }) => {
   const [ list, setList ] = useState([]);
 
   /* 메뉴 목록 조회 */
   const lnbMenuList = async () => {
-    const params = {
-      // searchGnbMenuCd: searchGnbMenuCd,
-      searchLnbMenuCd: searchLnbMenuCd,
-      searchMenuNm: searchMenuNm
-    }
-    const queryString = new URLSearchParams(params).toString();
-    const menuCd = searchGnbMenuCd ? searchGnbMenuCd : (selectGnbMenuCd ? selectGnbMenuCd : '');
+    // const params = {
+    //   // searchGnbMenuCd: searchGnbMenuCd,
+    //   searchLnbMenuCd: searchLnbMenuCd,
+    //   searchMenuNm: searchMenuNm
+    // }
+    const queryString = new URLSearchParams(search).toString();
+    console.log('search', search);
+    console.log('selectGnbMenuCd', selectGnbMenuCd);
+    const menuCd = search.searchGnbMenuCd ? search.searchGnbMenuCd : (selectGnbMenuCd ? selectGnbMenuCd : '');
     await fetch(`${PORT}/menu/list-${menuCd}?${queryString}`, { method: 'GET', })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson);
         if(responseJson.result.toUpperCase() === 'SUCCESS') {
           setList(responseJson.data);
           //setLnbMenuList(responseJson.data);
         } else {
-          alert(responseJson.resultMsg);
+          //alert(responseJson.resultMsg);
           setList([]);
           //setLnbMenuList([]);
         }
@@ -60,7 +64,7 @@ const LnbGrid = ({
 
   useEffect(() => {
     lnbMenuList();
-  }, [selectGnbMenuCd, onSearchClick]);
+  }, [selectGnbMenuCd, search.onSearchClick]);
 
   return(
       <Box borderRadius="lg" bg="white" h="fit-content"  p="6">
