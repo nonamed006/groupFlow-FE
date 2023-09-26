@@ -13,19 +13,20 @@ const GnbCard = ({
   setMenuInfo,
   setGnbMenuList,
   setSelectGnbMenuCd,
-  searchGnbMenuCd,
-  searchMenuNm,
-  onSearchClick
+  search,
+  // searchGnbMenuCd,
+  // searchMenuNm,
+  // onSearchClick
 }) => {
   const [ list, setList ] = useState([]); //조회한 메뉴 목록
 
   /* 메뉴 목록 조회 */
   const gnbMenuList = async () => {
-    const params = {
-      searchGnbMenuCd: searchGnbMenuCd,
-      searchMenuNm: searchMenuNm
-    }
-    const queryString = new URLSearchParams(params).toString();
+    // const params = {
+    //   searchGnbMenuCd: searchGnbMenuCd,
+    //   searchMenuNm: searchMenuNm
+    // }
+    const queryString = new URLSearchParams(search).toString();
     await fetch(`${PORT}/menu/?${queryString}`, { method: 'GET', })
       .then((response) => response.json())
       .then((responseJson) => {
@@ -34,7 +35,7 @@ const GnbCard = ({
           setList(responseJson.data);
           setGnbMenuList(responseJson.data);
         } else {
-          alert(responseJson.resultMsg);
+          // alert(responseJson.resultMsg);
           setList([]);
           setGnbMenuList([]);
         }
@@ -65,7 +66,7 @@ const GnbCard = ({
 
   useEffect(() => {
     gnbMenuList();
-  }, [menuInfo, onSearchClick]);
+  }, [menuInfo, search.onSearchClick]);//onSearchClick
 
   return (
       <Box borderRadius="lg" bg="white" h="fit-content"  p="6">

@@ -12,15 +12,26 @@ const Menu = () => {
 	const [ gnbMenuList, setGnbMenuList ] = useState([]);			// GNB 메뉴 목록
 	const [ menuInfo, setMenuInfo ] = useState({});					// 선택한 메뉴 정보
 	// const [ lnbMenuList, setLnbMenuList ] = useState([]);		// LNB 메뉴 목록
-	const [ searchGnbMenuCd, setSearchGnbMenuCd ] = useState('');	// GNB 검색
-	const [ searchLnbMenuCd, setSearchLnbMenuCd ] = useState('');	// LNB 검색
-	const [ searchMenuNm, setSearchMenuNm ] = useState('');			// 메뉴명 검색
-	const [ onSearchClick, setOnSearchClick ] = useState('');		// 검색 버튼 클릭
+	const [ search, setSearch ] = useState({
+		searchGnbMenuCd: '',
+		searchLnbMenuCd: '',
+		searchMenuNm: '',
+		onSearchClick: false
+	});
+	// const [ searchGnbMenuCd, setSearchGnbMenuCd ] = useState('');	// GNB 검색
+	// const [ searchLnbMenuCd, setSearchLnbMenuCd ] = useState('');	// LNB 검색
+	// const [ searchMenuNm, setSearchMenuNm ] = useState('');			// 메뉴명 검색
+	// const [ onSearchClick, setOnSearchClick ] = useState('');		// 검색 버튼 클릭
 	const [ selectGnbMenuCd, setSelectGnbMenuCd ] = useState('');	// GNB 선택
 
 	useEffect(() => {
 		setMenuInfo({});
-	}, [onSearchClick]);
+		setSelectGnbMenuCd('');
+		setSearch({
+			...search,
+			searchLnbMenuCd: ''
+		})
+	}, [search.onSearchClick]);
 
 	return (
 		<Box pt={{ base: '130px', md: '130px', xl: '120px' }}>
@@ -33,14 +44,16 @@ const Menu = () => {
 				<GridItem colSpan={8} rowSpan={1} >
                     <SearchCardBar
 						gnbMenuList={gnbMenuList}
-						searchGnbMenuCd={searchGnbMenuCd}
-						searchLnbMenuCd={searchLnbMenuCd}
-						searchMenuNm={searchMenuNm}
-						setSearchGnbMenuCd={setSearchGnbMenuCd}
-						setSearchLnbMenuCd={setSearchLnbMenuCd}
-						setSearchMenuNm={setSearchMenuNm}
-						onSearchClick={onSearchClick}
-						setOnSearchClick={setOnSearchClick}
+						search={search}
+						setSearch={setSearch}
+						// searchGnbMenuCd={searchGnbMenuCd}
+						// searchLnbMenuCd={searchLnbMenuCd}
+						// searchMenuNm={searchMenuNm}
+						// setSearchGnbMenuCd={setSearchGnbMenuCd}
+						// setSearchLnbMenuCd={setSearchLnbMenuCd}
+						// setSearchMenuNm={setSearchMenuNm}
+						// onSearchClick={onSearchClick}
+						// setOnSearchClick={setOnSearchClick}
 					/>
                 </GridItem>
 				<GridItem colSpan={2} rowSpan={5} >
@@ -53,9 +66,10 @@ const Menu = () => {
 						setMenuInfo={setMenuInfo}
 						setGnbMenuList={setGnbMenuList}
 						setSelectGnbMenuCd={setSelectGnbMenuCd}
-						searchGnbMenuCd={searchGnbMenuCd}
-						searchMenuNm={searchMenuNm}
-						onSearchClick={onSearchClick}
+						search={search}
+						// searchGnbMenuCd={searchGnbMenuCd}
+						// searchMenuNm={searchMenuNm}
+						// onSearchClick={onSearchClick}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5}>
@@ -68,10 +82,11 @@ const Menu = () => {
 						setMenuInfo={setMenuInfo}
 						//setLnbMenuList={setLnbMenuList}
 						selectGnbMenuCd={selectGnbMenuCd}
-						searchGnbMenuCd={searchGnbMenuCd}
-						searchLnbMenuCd={searchLnbMenuCd}
-						searchMenuNm={searchMenuNm}
-						onSearchClick={onSearchClick}
+						search={search}
+						// searchGnbMenuCd={searchGnbMenuCd}
+						// searchLnbMenuCd={searchLnbMenuCd}
+						// searchMenuNm={searchMenuNm}
+						// onSearchClick={onSearchClick}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5} >

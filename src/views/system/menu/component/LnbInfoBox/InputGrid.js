@@ -70,11 +70,11 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if(responseJson.result === 'SUCCESS') {
-          alert('성공적으로 저장했습니다.');
+        if(responseJson.result.toUpperCase() === 'SUCCESS') {
+          alert(responseJson.resultMsg);
           reset();
-        } else if(responseJson.result === 'FAIL') {
-          alert('저장에 실패했습니다.');
+        } else if(responseJson.result.toUpperCase() === 'FAIL') {
+          alert(responseJson.resultMsg);
         }
       });
   }
@@ -93,6 +93,7 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
     setMenuInputData(menuInfo);
     getCategory(menuInfo.upperCd);
   }, [menuInfo]);
+  
   return (
     <>
       <Flex
@@ -128,7 +129,7 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
           </Text>
         </GridItem>
         <GridItem colSpan={3}>
-            <Select size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
+            <Select id='upperCd' name='upperCd' size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
               {
                 category.map((ctgr, key) => {
                   return <option key={key} value={ctgr.menuCd}>{ctgr.menuNm}</option>
