@@ -6,12 +6,12 @@ import {
   import React, { useState, useEffect } from "react";
 import RealGrid from "./RealGrid";
 
-  const OrgList = ({ corpDepList, handelGridCd}) => {
+  const OrgList = ({ corpDepList, handelGridCd, setIsInit, isInit}) => {
         
     return (
       <Box  boxShadow='lg' borderRadius='lg' h={'650px'} p={2} overflowY={'auto'}>
          {(corpDepList!==undefined && corpDepList!=='undefined')&&
-          <RealGrid  handelGrid={handelGridCd} value={corpDepList} />
+          <RealGrid  handelGrid={handelGridCd} value={corpDepList} isInit={isInit} setIsInit={setIsInit}/>
         } 
       </Box>
     );

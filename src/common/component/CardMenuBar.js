@@ -49,9 +49,9 @@ import {
         </Flex>
         {buttonType &&
           <Button variant="action"
-            onClick={() => {
-              handelOnClik();
-            }}
+            onClick={() => 
+              handelOnClik()
+            }
           >추가</Button>
         }
       </Flex>
