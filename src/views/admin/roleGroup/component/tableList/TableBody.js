@@ -9,8 +9,9 @@ const TableBody = ({ dataList }) => {
     return (
 
         <Tbody >
-            {dataList.map((data, index) => {
-                return <TableTr data={data} index={index} />
+            {dataList&&
+                dataList.map((data, index) => {
+                    return <TableTr data={data} index={index} />
             })}
         </Tbody>
     );

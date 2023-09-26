@@ -19,8 +19,7 @@ const GroupCard = ({ group, index }) => {
             boxShadow='lg'
             rounded='md'
             bg='white'
-            m={2}
-            w='98%'
+            my='2'
             display={'inline-block'}
             p='3'>
             <Flex>

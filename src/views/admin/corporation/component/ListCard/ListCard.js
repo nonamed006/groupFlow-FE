@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import ListCardTable from "./ListCardTable";
 import { useEffect } from "react";
-import CardMenuBar from "common/cardMenuBar/CardMenuBar";
+import CardMenuBar from "common/component/CardMenuBar";
 const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList}) => {
   
   useEffect(() => { // 처음 설정
