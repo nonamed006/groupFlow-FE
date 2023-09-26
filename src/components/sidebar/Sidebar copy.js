@@ -94,8 +94,7 @@ function Sidebar(props) {
             bg={sidebarBg}
             // borderRight='1px'
             // borderRightColor='gray'
-				    //w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-            w={GNBcollapse ? 300 : 70}
+				    w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
             maxW={GNBcollapse ? 300 : 70}
             h='100vh'
             m={sidebarMargins}
@@ -112,8 +111,7 @@ function Sidebar(props) {
                   setGNBCollapse(false);
                 }
               }
-              onMouseOver={() => setGNBCollapse(true)}
-              onMouseLeave={() => setGNBCollapse(false)}>
+              onMouseOver={() => setGNBCollapse(true)}>
               <ContentGNB routes={routes} collapse={GNBcollapse} LNBroute={setRoute}/>
             </Scrollbars>
           </Box>
@@ -134,7 +132,7 @@ export function SidebarResponsive(props) {
   //  BRAND
 
   return (
-    <Flex  display={{ sm: "none", xl: "block" }} w="100%" position='fixed' minH='100%' left={0} top={0}>
+    <Flex display={{ sm: "flex", xl: "none" }} alignItems='center'>
       <Flex ref={btnRef} w='max-content' h='max-content' onClick={onOpen}>
         <Icon
           as={IoMenuOutline}
