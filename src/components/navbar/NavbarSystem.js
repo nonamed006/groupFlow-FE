@@ -22,7 +22,7 @@ export default function AdminNavbar(props) {
 		if(route.layout.indexOf(pathname) || route.path.indexOf(pathname)) {
 			returnMenuString += route.name + ' /';
 			if(route.items) {
-				findMenu(item, pathname);
+				findMenu(route, pathname);
 			}
 		}
 		route.map((item) => {

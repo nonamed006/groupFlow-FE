@@ -209,7 +209,7 @@ const routes = [
   },
   {
     name: "사원관리",
-    layout: "/admin",
+    layout: "/system",
     path: "/emp",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Employee,

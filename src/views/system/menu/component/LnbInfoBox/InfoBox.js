@@ -8,6 +8,7 @@ const InfoBox = ({title, menuInfo, setMenuInfo}) => {
 
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6"  backgroundColor="white">
+            {/* <InfoBoxBar title={title} /> */}
             <Box>
                 <InputGrid title={title} menuInfo={menuInfo} setMenuInfo={setMenuInfo}/>
             </Box>
