@@ -9,6 +9,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import SelectCommon from "common/component/SelectCommon";
 
 const SearchCardBar = (props) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -59,11 +60,7 @@ const SearchCardBar = (props) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <Select colSpan={3} placeholder="전체">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
+              <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체"/>
           </GridItem>
           <GridItem colStart={9} colEnd={9}>
             <div

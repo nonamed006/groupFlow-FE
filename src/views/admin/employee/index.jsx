@@ -173,6 +173,7 @@ const Employee = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.result == "success") {
+          dispatch(setIsRead(true));
         } else {
         }
       });
@@ -180,7 +181,6 @@ const Employee = () => {
 
    //사원 정보 수정
    const updateEmpInfo = () =>{
-    console.log("empDetail1241243", empDetail);
     fetch(
       `${PORT}/emp/updateEmpInfo`,
       {
@@ -193,7 +193,7 @@ const Employee = () => {
       }
     ).then((res) => res.json())
       .then((res) => {
-        alert(res.result);
+        dispatch(setIsRead(true));
       });
   }
 

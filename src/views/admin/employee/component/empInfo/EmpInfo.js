@@ -62,7 +62,10 @@ const EmpInfo = (props) => {
         if (res.result === "success") {
           alert("ID가 변경되었습니다.");
           onClose();
-          props.setEmpDetail({...props.empDetail, [modalTabStatus == "type1" ? 'loginId' : 'mailId'] : empId});
+          props.setEmpDetail({
+            ...props.empDetail,
+            [modalTabStatus == "type1" ? "loginId" : "mailId"]: empId,
+          });
         } else {
           alert("변경실패했습니다.");
         }
@@ -71,13 +74,11 @@ const EmpInfo = (props) => {
 
   //사원 퇴사처리
   const updateWorkType = () => {
-    fetch(
-      `${PORT}/emp/updateWorkType/${props.empDetail.empCd}`,
-      {
-        method: "GET",
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+    fetch(`${PORT}/emp/updateWorkType/${props.empDetail.empCd}`, {
+      method: "GET",
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
           alert("퇴사처리되었습니다.");
@@ -86,7 +87,7 @@ const EmpInfo = (props) => {
           alert("퇴사실패했습니다.");
         }
       });
-  }
+  };
 
   return (
     <div>
@@ -118,7 +119,8 @@ const EmpInfo = (props) => {
               <Flex>
                 {isReadStatus ? (
                   <Stack direction="row" spacing={4} align="center">
-                    <div>
+                    {tabStatus == 1 ?(
+                    <Stack direction="row" spacing={4}>
                       <Button
                         variant="action"
                         onClick={() => {
@@ -129,27 +131,37 @@ const EmpInfo = (props) => {
                       >
                         ID 변경
                       </Button>
-                    </div>
+                      <Button
+                        variant="action"
+                        onClick={() => {
+                          setModalType(2);
+                          setModalTabStatus("type1");
+                          onOpen();
+                        }}
+                      >
+                        비밀번호 초기화
+                      </Button>
+                      <Button
+                        variant="action"
+                        onClick={() => {
+                          setModalType(3);
+                          setModalTabStatus("type1");
+                          onOpen();
+                        }}
+                      >
+                        퇴사처리
+                      </Button>
+                    </Stack>) : <Stack direction="row" spacing={4}>
                     <Button
-                      variant="action"
-                      onClick={() => {
-                        setModalType(2);
-                        setModalTabStatus("type1");
-                        onOpen();
-                      }}
-                    >
-                      비밀번호 초기화
-                    </Button>
-                    <Button
-                      variant="action"
-                      onClick={() => {
-                        setModalType(3);
-                        setModalTabStatus("type1");
-                        onOpen();
-                      }}
-                    >
-                      퇴사처리
-                    </Button>
+                        variant="action"
+                        onClick={() => {
+                          alert("asdsad");
+                        }}
+                      >
+                        조직정보 추가
+                      </Button>
+                    </Stack>
+                    }
                     <Button
                       variant="action"
                       onClick={() => {
@@ -212,22 +224,37 @@ const EmpInfo = (props) => {
       </Box>
       {/* ID 변경 모달 */}
       <ModalLayout
-        title={modalType == 1 ? "ID변경" : (modalType == 2 ? "비밀번호 초기화" : "퇴사처리")}
+        title={
+          modalType == 1
+            ? "ID변경"
+            : modalType == 2
+            ? "비밀번호 초기화"
+            : "퇴사처리"
+        }
         children="test"
         buttonYn="false"
         isOpen={isOpen}
         onClose={onClose}
-        handleCheck={modalType == 1 ? updateEmpID : (modalType == 2 ? "" : updateWorkType)}
-        children={ modalType == 1 ?
-          <EmpIdChg
-            empDetail={props.empDetail}
-            setEmpId={setEmpId}
-            empId={empId}
-            setModalTabStatus={setModalTabStatus}
-            modalTabStatus={modalTabStatus}
-          /> : (modalType == 2 ? 
-            <EmpPwdChg setEmpPwd={setEmpPwd} setModalTabStatus={setModalTabStatus}/> : <EmpWorkState />
-            )
+        handleCheck={
+          modalType == 1 ? updateEmpID : modalType == 2 ? "" : updateWorkType
+        }
+        children={
+          modalType == 1 ? (
+            <EmpIdChg
+              empDetail={props.empDetail}
+              setEmpId={setEmpId}
+              empId={empId}
+              setModalTabStatus={setModalTabStatus}
+              modalTabStatus={modalTabStatus}
+            />
+          ) : modalType == 2 ? (
+            <EmpPwdChg
+              setEmpPwd={setEmpPwd}
+              setModalTabStatus={setModalTabStatus}
+            />
+          ) : (
+            <EmpWorkState />
+          )
         }
         size="2xl"
       />
