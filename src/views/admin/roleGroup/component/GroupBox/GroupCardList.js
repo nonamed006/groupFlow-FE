@@ -8,7 +8,7 @@ const GroupCardList = ({roleGrpList}) => {
 	return (
         <Box overflowY={"scroll"} overflowX={'hidden'}
         bg='white' borderRadius='lg' h={'80%'} p={2}>
-                {roleGrpList.length>0 &&
+                {roleGrpList &&
                     roleGrpList.map((group, index)=>{
                     return (
                         <GroupCard key={index} group={group} index={index} />
