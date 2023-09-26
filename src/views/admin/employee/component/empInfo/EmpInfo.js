@@ -226,6 +226,7 @@ const EmpInfo = (props) => {
         </Tabs>
       </Box>
       {/* ID 변경 모달 */}
+      { isOpen ?
       <ModalLayout
         title={
           modalType == 1
@@ -261,6 +262,7 @@ const EmpInfo = (props) => {
         }
         size="2xl"
       />
+    : ""}
     </div>
   );
 };
