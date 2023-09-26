@@ -6,7 +6,7 @@ import {
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
   import React from "react";;
   
-  const CardMenuBar = ({ title, count, handelOnClik, buttonType }) => {
+  const CardMenuBar = ({ title, count, handelOnClik, buttonType, btnText }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
   
@@ -52,7 +52,7 @@ import {
             onClick={() => 
               handelOnClik()
             }
-          >추가</Button>
+          >{btnText}</Button>
         }
       </Flex>
   

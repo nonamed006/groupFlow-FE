@@ -87,7 +87,7 @@ const GroupBox = () => {
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴상단 */}
-            <CardMenuBar title={'권한그룹'} count={4} handelOnClik={changeIsOpen} buttonType={true} />
+            <CardMenuBar title={'권한그룹'} count={4} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'}/>
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handelSearchBtn={handelSearchBtn} />
             {/* 목록 */}
