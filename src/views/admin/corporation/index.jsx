@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import ListCard from "./component/ListCard/ListCard";
 import InfoBox from "./component/InfoBox/InfoBox";
@@ -14,6 +14,10 @@ const Corporation = () => {
 	const [changeYn, setChangeYn] = useState(); // 변경 여부(회사목록 리렌더링 조건)
 	const [sortValue, setSortValue] = useState();   // 초기 정렬 기본값
 	const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
+
+	useEffect(()=>{
+		initCorpList();
+	},[]);
 
 	// 회사 목록 조회 및 검색
 	const fetchCorpList = () => {
@@ -49,7 +53,6 @@ const Corporation = () => {
 		});
 	};
 
-
 	// 검색 버튼 클릭 시
 	const handleSearchBtn = () => {
 		fetchCorpList();
@@ -60,7 +63,8 @@ const Corporation = () => {
 	const initCorpList = () => {
 		fetchCorpList();
 		fetchMaxSort();
-	}
+	};
+
 
 	return (
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -70,16 +74,16 @@ const Corporation = () => {
 				templateColumns="repeat(6, 1fr)"
 				gap={5}
 			>
+				{/* 검색창 */}
 				<GridItem colSpan={6} rowSpan={1}>
-					{/* 검색창 */}
 					<SearchCardBar
 						setKeyword={setKeyword}
 						setUseYn={setUseYn}
 						handleSearchBtn={handleSearchBtn}
 					/>
 				</GridItem>
+				{/* 회사목록 */}
 				<GridItem colSpan={2} rowSpan={5}>
-					{/* 회사목록 */}
 					<ListCard
 						title={"회사"}
 						listData={corpList}
@@ -88,8 +92,8 @@ const Corporation = () => {
 						initCorpList={initCorpList}
 					/>
 				</GridItem>
+				{/* 회사정보 */}
 				<GridItem colSpan={4} rowSpan={5}>
-					{/* 회사정보 */}
 					<InfoBox sortValue={sortValue} coCd={coCd} setCoCd={setCoCd} setChangeYn={setChangeYn} />
 				</GridItem>
 			</Grid>

@@ -23,7 +23,6 @@ import {
                     setCoCd(data.coCd);
                   }}
               >
-             
                     <Td align="center" >
                         <Text color={textColor} fontSize="sm" fontWeight="600">
                             {data.coCd}
