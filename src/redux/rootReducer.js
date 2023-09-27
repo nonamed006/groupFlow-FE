@@ -1,11 +1,9 @@
 import { combineReducers } from "redux";
 import emp from "./emp";
 import solution from "./solution";
-import corporation from "./corporation";
 import menu from "./menu";
 const rootReducer = combineReducers({
   solution,
-  corporation,
   emp,
   menu,
 });
