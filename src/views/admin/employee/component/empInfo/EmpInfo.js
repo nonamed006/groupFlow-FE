@@ -14,19 +14,13 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsRead } from "redux/emp";
 import ModalLayout from "common/modal/ModalLayout";
 import EmpIdChg from "../empIdChg/EmpIdChg";
 import { PORT } from "set";
 import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
-import { setEmpDept } from "redux/emp";
+import EmpInfoDel from "../empDel/EmpInfoDel";
 const EmpInfo = (props) => {
-  //리덕스
-  const dispatch = useDispatch();
-
-  const isReadStatus = useSelector((state) => state.emp.isRead);
 
   const [tabStatus, setTabStatus] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
@@ -35,19 +29,24 @@ const EmpInfo = (props) => {
   const [modalType, setModalType] = useState(1);
   const [empPwd, setEmpPwd] = useState();
 
-  // input value값 받기 이벤트
+  // empDetail input value값 받기 이벤트
   const handleChange = (e) => {
     //setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
     props.setEmpDetail({ ...props.empDetail, [e.target.id]: e.target.value });
   };
 
-  //radio 값 받기 이벤트
+  // empDetail radio 값 받기 이벤트
   const handleRadioChange = (e) => {
     props.setEmpDetail({
       ...props.empDetail,
       [e.target.name]: e.target.checked,
     });
   };
+
+  //empDept input 값 받기
+  const empDeptHandleChange = (e) => {
+    props.setEmpDept({...props.empDept, [e.target.name]: e.target.value});
+  }
 
   //사원 ID 변경
   const updateEmpID = () => {
@@ -118,7 +117,7 @@ const EmpInfo = (props) => {
               </Tab>
               <Spacer />
               <Flex>
-                {isReadStatus ? (
+                {props.editState === "read" ? (
                   <Stack direction="row" spacing={4} align="center">
                     {tabStatus == 1 ?(
                     <Stack direction="row" spacing={4}>
@@ -157,8 +156,8 @@ const EmpInfo = (props) => {
                         variant="action"
                         onClick={() => {
                           props.resetInput();
-                          dispatch(setIsRead(false));
-                          setEmpDept({...props.empDept, ['dpGrpcd']:"tmp"});
+                          props.setInfoEditState("insert");
+                          props.setEmpDept({...props.empDept, ['dpGrpcd']:"insert"});
                         }}
                       >
                         조직정보 추가
@@ -168,9 +167,11 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        console.log(props.empDetail);
-                        dispatch(setIsRead(false));
-                        props.setEditState("update");
+                        if(tabStatus === 1){
+                          props.setEditState("update");
+                        }else if(tabStatus === 2){
+                          props.setInfoEditState("update");
+                        }
                       }}
                     >
                       수정
@@ -178,7 +179,12 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        alert("asd");
+                         if(tabStatus === 1){
+                            setModalType(4);
+                            setModalTabStatus("type4");
+                            onOpen();
+                        }else if(tabStatus === 2){
+                        }
                       }}
                     >
                       삭제
@@ -189,8 +195,11 @@ const EmpInfo = (props) => {
                     <Button
                       variant="brand"
                       onClick={() => {
-                        //props.onSaveEmpDetail();
-                        props.updateEmpInfo();
+                        if(props.editState === "insert"){
+                          props.onSaveEmpDetail();
+                        }else if(props.editState === "update"){
+                          props.updateEmpInfo();
+                        }
                       }}
                     >
                       저장
@@ -198,7 +207,20 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        dispatch(setIsRead(true));
+                        if(tabStatus === 1){
+                          if(props.editState === "insert"){
+                            props.onSaveEmpDetail();
+                          }else if(props.editState === "update"){
+                            props.updateEmpInfo();
+                          }
+                        }else if(tabStatus === 2){
+                          if(props.infoEditState === "insert"){
+
+                          }else if(props.infoEditState === "update"){
+
+                          }
+                        }
+                        props.setEditState("read");
                         props.resetInput();
                       }}
                     >
@@ -220,7 +242,7 @@ const EmpInfo = (props) => {
               />
             </TabPanel>
             <TabPanel>
-              <EmpTab2 empDept={props.empDept} handleChange={handleChange} />
+              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange} infoEditState={props.infoEditState} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -233,14 +255,17 @@ const EmpInfo = (props) => {
             ? "ID변경"
             : modalType == 2
             ? "비밀번호 초기화"
-            : "퇴사처리"
+            : modalType == 3 
+            ? "퇴사처리"
+            : "사원삭제"
         }
         children="test"
         buttonYn="false"
         isOpen={isOpen}
         onClose={onClose}
+        btnText="확인"
         handleCheck={
-          modalType == 1 ? updateEmpID : modalType == 2 ? "" : updateWorkType
+          modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : props.empDelete
         }
         children={
           modalType == 1 ? (
@@ -256,9 +281,9 @@ const EmpInfo = (props) => {
               setEmpPwd={setEmpPwd}
               setModalTabStatus={setModalTabStatus}
             />
-          ) : (
+          ) : modalType == 3 ? (
             <EmpWorkState />
-          )
+          ) : <EmpInfoDel />
         }
         size="2xl"
       />
