@@ -6,7 +6,7 @@ import MenuTab from "./MenuTab";
 import { PORT } from "set";
 
 
-const MenuBox = () => {
+const MenuBox = ({rgCd}) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
@@ -47,11 +47,11 @@ const MenuBox = () => {
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab />
+            <MenuTab rgCd={rgCd}/>
             {/* 검색창 */}
             <SearchBar handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}
-            {/* <MenuList />   */}
+            {/* <MenuList list={list} roleMenu={roleMenu}/> */}
         </Box>
     );
 };

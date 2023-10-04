@@ -38,8 +38,10 @@ const Corporation = () => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				setCorpList(res.data);
-				setChangeYn(false);
+				if(res.result === 'success'){
+					setCorpList(res.data);
+					setChangeYn(false);
+				}
 			});
 	};
 
@@ -49,7 +51,9 @@ const Corporation = () => {
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
-			setSortValue(res.strData);
+			if(res.result === 'success'){
+				setSortValue(res.strData);
+			}
 		});
 	};
 

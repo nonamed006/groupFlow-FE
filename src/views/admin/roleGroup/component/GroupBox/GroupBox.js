@@ -45,7 +45,8 @@ const GroupBox = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                setRoleGrpList(res.data);
+                if(res.result === 'success')
+                    setRoleGrpList(res.data);
             });
     };
 
@@ -57,7 +58,8 @@ const GroupBox = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                setCorps(res.data);
+                if(res.result === 'success')
+                    setCorps(res.data);
             });
     }
 
@@ -73,7 +75,7 @@ const GroupBox = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                if(res.result){
+                if(res.result === 'success'){
                     alert("등록되었습니다.");
                 }else{
                     alert("등록실패");

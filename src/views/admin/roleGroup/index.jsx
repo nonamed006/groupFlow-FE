@@ -6,7 +6,7 @@ import UserBox from "./component/UserBox/UserBox";
 
 
 const RoleGroup = () => {
-
+    const [rgCd, setRgCd] = useState('RG230002');
 
 	return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -23,7 +23,7 @@ const RoleGroup = () => {
             </GridItem>
             {/* 메뉴 목록 */}
             <GridItem colSpan={3} rowSpan={5}>
-                <MenuBox />
+                <MenuBox rgCd={rgCd}/>
             </GridItem>
             {/* 사용자 목록 */}
             <GridItem colSpan={2} rowSpan={5}>
