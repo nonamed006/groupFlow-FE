@@ -12,7 +12,6 @@ import {
 import { minTimeDate } from "common/common";
 import SelectCommon from "common/component/SelectCommon";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const EmpDeptInput = ({ column, handleChange, infoEditState }) => {
 

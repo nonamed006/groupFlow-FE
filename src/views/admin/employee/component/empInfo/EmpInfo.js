@@ -157,7 +157,7 @@ const EmpInfo = (props) => {
                         onClick={() => {
                           props.resetInput();
                           props.setInfoEditState("insert");
-                          props.setEmpDept({...props.empDept, ['dpGrpcd']:"insert"});
+                          props.setEmpDept({...props.empDept});
                         }}
                       >
                         조직정보 추가
