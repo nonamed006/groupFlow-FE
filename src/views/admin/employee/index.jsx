@@ -4,12 +4,8 @@ import SearchCardBar from "./component/SearchCardBar";
 import { PORT } from "set";
 import EmpCard from "./component/empCard/EmpCard";
 import EmpInfo from "./component/empInfo/EmpInfo";
-import { useDispatch } from "react-redux";
-import { setIsRead } from "redux/emp";
 
 const Employee = () => {
-  //리덕스
-  const dispatch = useDispatch();
 
   //state
   const [empList, setEmpList] = useState([]);
@@ -17,6 +13,7 @@ const Employee = () => {
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
   const [editState, setEditState] = useState("read");
+  const [infoEditState, setInfoEditState] = useState("read");
   const [empDept, setEmpDept] = useState([
     {
       addr: "",
@@ -49,7 +46,7 @@ const Employee = () => {
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
-    },
+    }
   ]);
 
   //사원 목록 조회
@@ -73,7 +70,6 @@ const Employee = () => {
       method: "GET",
     }).then((res) => res.json())
       .then((res) => {
-        //console.log(res.data.length);
         if(res.data.length > 0){
         setEmpDept(res.data);
         }
@@ -85,7 +81,6 @@ const Employee = () => {
     resetInput();
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
-    dispatch(setIsRead(true));
   };
 
   // input 값 초기화
@@ -172,8 +167,8 @@ const Employee = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.result == "success") {
-          dispatch(setIsRead(true));
+        if (res.result === "success") {
+          setEditState("read");
         } else {
         }
       });
@@ -193,7 +188,19 @@ const Employee = () => {
       }
     ).then((res) => res.json())
       .then((res) => {
-        dispatch(setIsRead(true));
+        setEditState("read");
+      });
+  }
+
+  //사원 삭제
+  const empDelete = () => {
+    fetch(`${PORT}/emp/deleteEmp/${empDetail.empCd}`, {
+      method: "GET",
+    }).then((res) => res.json())
+      .then((res) => {
+        if(res.result === "success"){
+          alert("삭제되었습니다.");
+        }
       });
   }
 
@@ -234,7 +241,10 @@ const Employee = () => {
               onSaveEmpDetail={onSaveEmpDetail}
               setEditState={setEditState}
               editState={editState}
+              infoEditState={infoEditState}
+              setInfoEditState={setInfoEditState}
               updateEmpInfo={updateEmpInfo}
+              empDelete={empDelete}
             />
           </GridItem>
         </Grid>
