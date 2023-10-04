@@ -17,12 +17,14 @@ const MenuBox = () => {
 
     // 권한메뉴 목록 조회 + 검색
     const fetchRoleMenu = () => {
-        let url = `${PORT}/roleMenu/`
+        let url = `${PORT}/roleMenu`
 
         // URL 파라미터 생성
         const params = new URLSearchParams();
-        if (selectedMenu !== "") params.append("menu", selectedMenu);
-        if (keyword !== "") params.append("keyword", keyword);
+        if (selectedMenu !== "undefined" && selectedMenu !== undefined)
+            params.append("menu", selectedMenu);
+        if (keyword !== "undefined" && keyword !== undefined)
+            params.append("keyword", keyword);
         // URL에 파라미터 추가
         const paramString = params.toString();
         if (paramString) {
