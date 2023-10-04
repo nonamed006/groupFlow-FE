@@ -27,21 +27,21 @@ const GroupBox = () => {
 
         // URL 파라미터 생성
         const params = new URLSearchParams();
-        if (searchCorp !== "") params.append("corp", searchCorp);
-        if (keyword !== "") params.append("keyword", keyword);
+        if (searchCorp !== "") params.append("coCd", searchCorp);
+        if (keyword !== "") params.append("grpNm", keyword);
         // URL에 파라미터 추가
         const paramString = params.toString();
         if (paramString) {
             url += "?" + paramString;
         }
 
-        // fetch(url, {
-        // 	method: "GET",
-        // })
-        // 	.then((res) => res.json())
-        // 	.then((res) => {
-        // 		setRoleGrpList(res.data);
-        // 	});
+        fetch(url, {
+            method: "GET",
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                setRoleGrpList(res.data);
+            });
     };
 
     // 회사명/회사코드 목록 조회
@@ -70,6 +70,7 @@ const GroupBox = () => {
     // 검색 버튼 클릭 시
     const handelSearchBtn = () => {
         // 검색 내용에 따른 목록 조회
+        fetchRoleGroup();
     };
 
     // 권한그룹 추가 등록 버튼 클릭 시
@@ -87,7 +88,7 @@ const GroupBox = () => {
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴상단 */}
-            <CardMenuBar title={'권한그룹'} count={4} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'}/>
+            <CardMenuBar title={'권한그룹'} count={4} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handelSearchBtn={handelSearchBtn} />
             {/* 목록 */}
