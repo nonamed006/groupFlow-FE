@@ -6,7 +6,7 @@ import MenuTab from "./MenuTab";
 import { PORT } from "set";
 
 
-const MenuBox = () => {
+const MenuBox = ({rgCd}) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
@@ -17,12 +17,14 @@ const MenuBox = () => {
 
     // 권한메뉴 목록 조회 + 검색
     const fetchRoleMenu = () => {
-        let url = `${PORT}/roleMenu/`
+        let url = `${PORT}/roleMenu`
 
         // URL 파라미터 생성
         const params = new URLSearchParams();
-        if (selectedMenu !== "") params.append("menu", selectedMenu);
-        if (keyword !== "") params.append("keyword", keyword);
+        if (selectedMenu !== "undefined" && selectedMenu !== undefined)
+            params.append("menu", selectedMenu);
+        if (keyword !== "undefined" && keyword !== undefined)
+            params.append("keyword", keyword);
         // URL에 파라미터 추가
         const paramString = params.toString();
         if (paramString) {
@@ -45,11 +47,11 @@ const MenuBox = () => {
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab />
+            <MenuTab rgCd={rgCd}/>
             {/* 검색창 */}
             <SearchBar handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}
-            {/* <MenuList />   */}
+            {/* <MenuList list={list} roleMenu={roleMenu}/> */}
         </Box>
     );
 };

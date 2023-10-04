@@ -1,9 +1,18 @@
 import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
+import ModalLayout from "common/modal/ModalLayout";
 import React, { useState } from "react";
+import TotalMenuModal from "./TotalMenuModal";
 
-const MenuTab = () => {
+const MenuTab = ({rgCd}) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
+    const [checkedMenuCd, setCheckedMenuCd] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);    // 권한메뉴 수정 모달
+
+    const modifyBtnHandeler = () => {
+        setIsOpen(!isOpen);
+        console.log(checkedMenuCd);
+    }
     return (
         <Box>
             {/* 메뉴 상단 */}
@@ -50,11 +59,17 @@ const MenuTab = () => {
                 </Flex>
 
                 <Button variant="action"
-                    onClick={() => {  // setCoCd 초기화
-                    }}
+                    onClick={() => setIsOpen(true)}
                 >수정</Button>
               
             </Flex>
+            
+            {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
+            {isOpen&&
+                <ModalLayout title={'권한 메뉴 수정'} buttonYn={true} onClose={()=>setIsOpen(false)} size={'2xl'} btnText={'수정'} handleCheck={modifyBtnHandeler}>
+                    {rgCd&& <TotalMenuModal rgCd={rgCd} setCheckedMenuCd={setCheckedMenuCd}/>}
+                </ModalLayout>
+            }
           </Box>
     );
 };

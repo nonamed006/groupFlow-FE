@@ -9,7 +9,7 @@ const SearchBar = ({ handelSearchBtn, setKeyword, setSelectedMenu}) => {
     }, []);
 	 // 대메뉴 이름/코드 목록 조회
 	 const fetchMenuList = () => {
-        let url = `${PORT}/menu/`;
+        let url = `${PORT}/menu/category`;
         fetch(url, {
             method: "GET",
         })
