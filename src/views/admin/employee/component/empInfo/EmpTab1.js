@@ -14,13 +14,8 @@ import {
 import { minTimeDate } from "common/common";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 
 const EmpTab1 = (props) => {
-  //리덕스
-  const dispatch = useDispatch();
-  const isReadStatus = useSelector((state) => state.emp.isRead);
-
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
 
   const fileUploadBtn = () => {
@@ -105,7 +100,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.psnMail}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -122,7 +117,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.payMail}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -140,7 +135,7 @@ const EmpTab1 = (props) => {
             type="date"
             style={{ color: "gray" }}
             value={minTimeDate(props.empDetail?.joinDt)}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -158,7 +153,7 @@ const EmpTab1 = (props) => {
             type="date"
             style={{ color: "gray" }}
             value={minTimeDate(props.empDetail?.reDt)}
-            isReadOnly={isReadStatus}
+            isReadOnly={true}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -175,7 +170,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.empNm}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -192,7 +187,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.addr}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -203,14 +198,14 @@ const EmpTab1 = (props) => {
           </Text>
         </GridItem>
         <GridItem colSpan={4}>
-          <RadioGroup value="M">
+          <RadioGroup value={props.empDetail.gender}>
             <HStack spacing="24px">
               <Radio
                 value="M"
                 id="M"
                 name="gender"
                 onChange={props.handleRadioChange}
-                isReadOnly={isReadStatus}
+                isReadOnly={props.editState === "read"}
               >
                 남성
               </Radio>
@@ -219,7 +214,7 @@ const EmpTab1 = (props) => {
                 id="F"
                 name="gender"
                 onChange={props.handleRadioChange}
-                isReadOnly={isReadStatus}
+                isReadOnly={props.editState === "read"}
               >
                 여성
               </Radio>
@@ -239,7 +234,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.mailId}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -256,7 +251,7 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.loginId}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -275,7 +270,7 @@ const EmpTab1 = (props) => {
             name="loginPw"
             type="password"
             value={props.empDetail?.loginPw}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -293,7 +288,7 @@ const EmpTab1 = (props) => {
             borderRadius="14px"
             type="password"
             value={props.empDetail?.signPw}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -311,7 +306,7 @@ const EmpTab1 = (props) => {
             borderRadius="14px"
             name="empTel"
             value={props.empDetail?.empTel}
-            isReadOnly={isReadStatus}
+            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
           />
         </GridItem>
@@ -322,13 +317,13 @@ const EmpTab1 = (props) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <RadioGroup defaultValue="1">
+          <RadioGroup value={props.empDetail?.useYn?.toString()}>
             <HStack spacing="24px">
               <Radio
                 value="1"
                 name="useYn"
                 onChange={props.handleRadioChange}
-                isReadOnly={isReadStatus}
+                isReadOnly={props.editState === "read"}
               >
                 사용
               </Radio>
@@ -336,7 +331,7 @@ const EmpTab1 = (props) => {
                 value="0"
                 name="useYn"
                 onChange={props.handleRadioChange}
-                isReadOnly={isReadStatus}
+                isReadOnly={props.editState === "read"}
               >
                 미사용
               </Radio>

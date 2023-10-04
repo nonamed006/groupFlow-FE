@@ -17,16 +17,11 @@ import { minTimeDate } from "common/common";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setIsRead } from "redux/emp";
 
 const EmpCard = (props) => {
 
 	const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
-
-	//리덕스
-  const dispatch = useDispatch();
 
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
@@ -72,7 +67,7 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
           <Button
             variant="action"
             onClick={() => {
-              dispatch(setIsRead(false));
+              props.setEditState("insert");
 							props.resetInput();
             }}
           >
@@ -105,8 +100,9 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
                   onMouseOver(index);
                 }}
                 onClick={() => {
+                  props.resetInput();
                   props.onClickRow(column);
-                  setSelectedIndex(index)
+                  setSelectedIndex(index);
                 }}
               >
                 <Td

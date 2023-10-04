@@ -5,7 +5,7 @@ import Footer from 'components/footer/FooterAdmin.js';
 import Navbar from 'components/navbar/NavbarAdmin';
 //import Navbar from 'components/navbar/NavbarSystem.js';
 import Sidebar from 'components/sidebar/Sidebar.js';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import routes from 'routes.js';
 import { Flex } from "@chakra-ui/react"
@@ -99,11 +99,20 @@ export default function Dashboard(props) {
 	document.documentElement.dir = 'ltr';
 	const { onOpen } = useDisclosure();
 	const [collapse, setCollapse] = useState(false);
-	const [click, setClick] = useState(70);
+	const [click, setClick ] = useState(70);
 	
-	useEffect(() => {
-		return setClick(collapse ? 300 : 70);
-	}, [collapse]);
+	// useEffect(() => {
+	// 	return setClick(collapse ? 300 : 70);
+	// }, [collapse]);
+
+	const tt = (coll, cl) => {
+		setClick(coll ? 300 : 70);
+		setCollapse(coll);
+	}
+
+	const test = useMemo(() => {
+		return tt(collapse);
+	}, [collapse, click]);
 
 	return (
 		<HStack w="full" h="100vh">
@@ -116,7 +125,6 @@ export default function Dashboard(props) {
 				flexDirection="column"
 				justifyContent="space-between"
 				transition="ease-in-out .1s"
-				borderRadius="3xl"
 				onMouseOver={() => setCollapse(true)}
 				onMouseLeave={() => setCollapse(false)}
 			>

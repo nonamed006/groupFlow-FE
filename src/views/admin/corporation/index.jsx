@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import ListCard from "./component/ListCard/ListCard";
 import InfoBox from "./component/InfoBox/InfoBox";
@@ -15,9 +15,14 @@ const Corporation = () => {
   const [sortValue, setSortValue] = useState(); // 초기 정렬 기본값
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
 
-  // 회사 목록 조회 및 검색
-  const fetchCorpList = () => {
-    let url = `${PORT}/corp`;
+
+	useEffect(()=>{
+		initCorpList();
+	},[]);
+
+	// 회사 목록 조회 및 검색
+	const fetchCorpList = () => {
+		let url = `${PORT}/corp`;
 
     // URL 파라미터 생성
     const params = new URLSearchParams();
@@ -51,56 +56,56 @@ const Corporation = () => {
       });
   };
 
-  // 검색 버튼 클릭 시
-  const handleSearchBtn = () => {
-    fetchCorpList();
-    setCoCd();
-  };
 
-  // 초기 데이터 목록 및 정렬값 설정
-  const initCorpList = () => {
-    fetchCorpList();
-    fetchMaxSort();
-  };
+	// 검색 버튼 클릭 시
+	const handleSearchBtn = () => {
+		fetchCorpList();
+		setCoCd();
+	};
 
-  return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <Grid
-        h="1000px"
-        templateRows="repeat(11, 1fr)"
-        templateColumns="repeat(6, 1fr)"
-        gap={5}
-      >
-        <GridItem colSpan={6} rowSpan={1}>
-          <SearchCardBar
-            setKeyword={setKeyword}
-            setUseYn={setUseYn}
-            handleSearchBtn={handleSearchBtn}
-          />
-        </GridItem>
-        <GridItem colSpan={2} rowSpan={5}>
-          <ListCard
-            title={"회사"}
-            listData={corpList}
-            setCoCd={setCoCd}
-            changeYn={changeYn}
-            initCorpList={initCorpList}
-          />
-        </GridItem>
-        <GridItem colSpan={4} rowSpan={5}>
-          <InfoBox
-            sortValue={sortValue}
-            coCd={coCd}
-            setCoCd={setCoCd}
-            setChangeYn={setChangeYn}
-          />
-        </GridItem>
-      </Grid>
+	// 초기 데이터 목록 및 정렬값 설정
+	const initCorpList = () => {
+		fetchCorpList();
+		fetchMaxSort();
+	};
 
-      <Button onClick={onOpen}>조직도</Button>
-      {isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null}
-    </Box>
-  );
+
+	return (
+		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+			<Grid
+				h="1000px"
+				templateRows="repeat(11, 1fr)"
+				templateColumns="repeat(6, 1fr)"
+				gap={5}
+			>
+				{/* 검색창 */}
+				<GridItem colSpan={6} rowSpan={1}>
+					<SearchCardBar
+						setKeyword={setKeyword}
+						setUseYn={setUseYn}
+						handleSearchBtn={handleSearchBtn}
+					/>
+				</GridItem>
+				{/* 회사목록 */}
+				<GridItem colSpan={2} rowSpan={5}>
+					<ListCard
+						title={"회사"}
+						listData={corpList}
+						setCoCd={setCoCd}
+						changeYn={changeYn}
+						initCorpList={initCorpList}
+					/>
+				</GridItem>
+				{/* 회사정보 */}
+				<GridItem colSpan={4} rowSpan={5}>
+					<InfoBox sortValue={sortValue} coCd={coCd} setCoCd={setCoCd} setChangeYn={setChangeYn} />
+				</GridItem>
+			</Grid>
+
+			<Button onClick={onOpen}>조직도</Button>
+			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null}
+		</Box>
+	);
 };
 
 export default Corporation;

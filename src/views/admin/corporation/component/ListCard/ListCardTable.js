@@ -1,36 +1,21 @@
 import {
-  Text,
   Table,
-  Th,
-  Thead,
-  Tr,
-  Tbody,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 
 import ListCardTableTbody from "./ListCardTableTbody";
+import ListCardTableHeader from "views/admin/roleGroup/component/tableList/TableHeader";
 
-const ListCardTable = ({ headerGroups, listData, setCoCd }) => {
+const ListCardTable = ({ listData, setCoCd }) => {
+  const headerGroups = ["회사코드", "회사명", "대표자", "구분"];
 
   return (
-    <Table variant="simple" color="gray.500"  w={'100%'} display={'inline-block'}>
+    <Table variant="simple" w={'100%'} >
       {/* Thead */}
-      <Thead >
-        <Tr >
-          {headerGroups.map((column, index) => (
-            <Th key={index} borderColor="transparent" align="center" >
-              <Text>{column}</Text>
-            </Th>
-          ))}
-        </Tr>
-      </Thead>
-
+      <ListCardTableHeader headerGroups={headerGroups}/>
       {/* Tbody */}
-      <Tbody >
-        <ListCardTableTbody listData={listData} setCoCd={setCoCd}/>
-      </Tbody>
+      <ListCardTableTbody listData={listData} setCoCd={setCoCd}/>
     </Table>
-
   );
 };
 
