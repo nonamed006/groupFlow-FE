@@ -22,6 +22,7 @@ import Employee from "views/admin/employee";
 import LogInCentered from "views/auth/login";
 import Menu from "views/system/menu"
 import RoleGroup from "views/admin/roleGroup";
+import RoleSet from "views/system/role";
 
 
 // 원본 horizon-ui
@@ -116,8 +117,8 @@ const routes = [
             upper: 'MU230004',
             name: "권한 설정",
             layout: "/system",
-            path: "/ro",
-            component: NFTMarketplace,
+            path: "/roleSet",
+            component: RoleSet,
           },
         ]
       }

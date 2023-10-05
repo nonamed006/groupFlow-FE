@@ -6,7 +6,6 @@ import GnbCard from './component/GnbCard/GnbCard';
 import LnbGrid from './component/LnbGrid/LnbGrid';
 import InfoBox from './component/InfoBox/InfoBox';
 import LnbInfoBox from './component/LnbInfoBox/InfoBox';
-import { useSelector } from 'react-redux';
 
 /*
 남은 작업 : 

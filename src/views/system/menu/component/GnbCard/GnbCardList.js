@@ -1,9 +1,6 @@
 import { VStack, StackDivider, Box, Heading, Text, Icon, Image, Flex  } from '@chakra-ui/react';
 import { React, useEffect, useState } from 'react';
 import { MdHome } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMenu } from 'redux/menu';
-import { PORT } from 'set';
 
 const GnbCardList = ({list, menuInfo, setGnbMenuDetail, selectGnbMenuCd}) => {
 
