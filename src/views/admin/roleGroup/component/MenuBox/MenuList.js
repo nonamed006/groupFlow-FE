@@ -1,12 +1,12 @@
-import { Box} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
+import RealGrid from "../RealGrid";
 
 
-const MenuList = () => {
+const MenuList = ({list}) => {
     return (
-        <Box >
-            
-            
+        <Box borderRadius="lg" bg="white" h="fit-content" px="6">
+            <RealGrid org={list}  />
         </Box>
     );
 };
