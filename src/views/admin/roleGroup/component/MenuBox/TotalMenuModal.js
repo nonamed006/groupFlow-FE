@@ -1,38 +1,46 @@
-import { Box } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import RealGridRoleMenu from "../RealGridRoleMenu";
+import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
+import ModalLayout from "common/modal/ModalLayout";
+import React, { useState } from "react";
+import TotalMenuBox from "./TotalMenuBox";
 import { PORT } from "set";
 
-const TotalMenuModal = ({ rgCd, setCheckedMenuCd }) => {
-    const [menuList, setMenuList] = useState([]);
-    useEffect(() => {
-        fetchMenuList();
-    }, [])
+const TotalMenuModal = ({ isOpen, setIsOpen, rgCd }) => {
+    const [checkedMenuCd, setCheckedMenuCd] = useState([]); // 선택된 메뉴 코드 리스트
 
-    // 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
-    const fetchMenuList = () => {
-        let url = `${PORT}/roleMenu/total/${rgCd}`
+    const modifyBtnHandeler = () => {
+        fetchModifyRoleMenu();
+        setIsOpen(!isOpen);
+    }
+
+    // 권한그룹 메뉴 등록 및 수정
+    const fetchModifyRoleMenu = () => {
+        let url = `${PORT}/roleMenu/${rgCd}`
         fetch(url, {
-            method: "GET",
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(checkedMenuCd)
         })
             .then((res) => res.json())
             .then((res) => {
                 if (res.result === 'success') {
-                    setMenuList(res.data);
-                    let menuCds = [];
-                    res.data &&
-                        res.data.forEach(element => {
-                            if (element.state === 'true')
-                                menuCds.push(element.menuCd);
-                        });
-                    setCheckedMenuCd(menuCds);
+                    alert('수정 되었습니다.');
+                } else {
+                    alert('수정이 실패되었습니다.');
                 }
             });
     }
+
     return (
-        <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="6">
-            <RealGridRoleMenu org={menuList} setCheckedMenuCd={setCheckedMenuCd} />
-        </Box>
+
+        <>
+            {isOpen &&
+                <ModalLayout title={'권한 메뉴 수정'} buttonYn={true} onClose={() => setIsOpen(false)} size={'2xl'} btnText={'수정'} handleCheck={modifyBtnHandeler}>
+                    {rgCd && <TotalMenuBox rgCd={rgCd} setCheckedMenuCd={setCheckedMenuCd} />}
+                </ModalLayout>
+            }
+        </>
     );
 };
 
