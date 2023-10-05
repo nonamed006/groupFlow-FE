@@ -40,7 +40,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="fit-content" px="6">
+        <Box borderRadius="lg" bg="white" h="fit-content" px={10} >
             {(rgCd !== 'undefined' && rgCd !== undefined) &&
                 <RealGrid org={roleMenu} />
             }

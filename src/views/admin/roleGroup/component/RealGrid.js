@@ -16,7 +16,7 @@ const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
   ];
 
   var columns = [
-    { fieldName: "menuNm", name: "menuNm", width: 400, header: { text: "menuNm" } },
+    { fieldName: "menuNm", name: "menuNm", width: type==='modify'?410:500, header: { text: "menuNm" } },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" },},
     { fieldName: "menuCd", name: "menuCd", header: { text: "menuCd" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" },  },
@@ -34,15 +34,14 @@ const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
+    console.log(org)
     treeProvider.setRows(org, "menuPath", true, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
-    treeView.displayOptions.rowHeight = 36;
-    treeView.header.height = 40; 
-    treeView.footer.height = 0;
+    treeView.displayOptions.rowHeight = 42;
     treeView.stateBar.width = 30;
 
-    treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+    treeView.displayOptions.useFocusClass = false; //클릭 시 색상
 
     treeView.setStateBar({ visible: false }); //상태바 표시X
     treeView.setCheckBar({ visible: type==='modify'?true:false}); //체크박스 표시
@@ -74,6 +73,17 @@ const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
       "us.png",
       "ve.png",
     ];
+ 
+    treeView.setRowStyleCallback(function(grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if(depth === '1') {
+        return  "gnb-column";
+      }
+      else if(depth === '2') {
+        return  "bottom-gnb-column";
+      }
+
+    })
 
     //자식노드들이 모두 체크되었을때 부모노드도 체크되게
     treeView.onItemChecked = function (grid, itemIndex, checked) {

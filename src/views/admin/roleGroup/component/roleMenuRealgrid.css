@@ -20,6 +20,13 @@
   -ms-touch-action: none;
 }
 
+.gnb-column{
+  background: #E1E9F8;
+}
+.bottom-gnb-column{
+  background: #F4F7FE;
+}
+
 .rg-root .rg-table,
 .rg-root .rg-table tr,
 .rg-root .rg-table td {

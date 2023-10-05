@@ -19,7 +19,7 @@ const RoleGroup = () => {
         >
             {/* 권한그룹 목록 */}
             <GridItem colSpan={2} rowSpan={5}>
-                <GroupBox setRgCd={setRgCd}/>
+                <GroupBox rgCd={rgCd} setRgCd={setRgCd}/>
             </GridItem>
             {/* 메뉴 목록 */}
             <GridItem colSpan={3} rowSpan={5}>
