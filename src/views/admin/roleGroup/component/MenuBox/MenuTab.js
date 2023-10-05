@@ -1,14 +1,23 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
-import ModalLayout from "common/modal/ModalLayout";
-import React, { useState } from "react";
-import TotalMenuBox from "./TotalMenuBox";
-import { PORT } from "set";
-import TotalMenuModal from "./TotalMenuModal";
+import { Box, Grid, useColorModeValue, Button, Flex, Text} from "@chakra-ui/react";
+import React from "react";
 
-const MenuTab = ({ rgCd }) => {
+const MenuTab = ({ typeCd, setIsOpen, setTypeCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
-    const [isOpen, setIsOpen] = useState(false);    // 권한메뉴 수정 모달
+    const menuTypeList = [
+        {
+            typeCd : undefined,
+            typeNm: '전체'
+        },
+        {
+            typeCd : 'MUA0003',
+            typeNm: '사용자'
+        },
+        {
+            typeCd : 'MUA0002',
+            typeNm: '관리자'
+        },
+    ];
 
     return (
         <Box>
@@ -17,52 +26,34 @@ const MenuTab = ({ rgCd }) => {
                 align={{ sm: "flex-start", lg: "center" }}
                 justify="space-between"
                 w="100%"
-                px="22px"
-                pb="20px"
+                borderBottom={'1px'}
+                borderColor={'#CFD0D2'}
                 mb="10px"
+                pb="13px"
                 bg="white"
             >
                 <Flex w="100%">
-                    <Box m={2} >
-                        <Text
-                            color={textNumColor}
-                            fontSize="18px"
-                            fontWeight="700"
-                            lineHeight="100%"
-                        >
-                            {'전체'}
-                        </Text>
-                    </Box>
-                    <Box m={2} >
-                        <Text
-                            color={textColor}
-                            fontSize="18px"
-                            fontWeight="500"
-                            lineHeight="100%"
-                        >
-                            {'사용자메뉴'}
-                        </Text>
-                    </Box>
-                    <Box m={2} >
-                        <Text
-                            color={textColor}
-                            fontSize="18px"
-                            fontWeight="500"
-                            lineHeight="100%"
-                        >
-                            {'관리자메뉴'}
-                        </Text>
-                    </Box>
+                    {menuTypeList &&
+                        menuTypeList.map((menuType)=>{
+                            return  (
+                            <Button  bg={'white'} onClick={()=>setTypeCd(menuType.typeCd)}>
+                                 <Text
+                                    color={typeCd==menuType.typeCd?textNumColor:textColor}
+                                    fontSize="18px"
+                                    fontWeight="700"
+                                    lineHeight="100%"
+                                > 
+                                {menuType.typeNm}
+                             </Text> 
+                        </Button>);
+                        })
+                    }
                 </Flex>
 
                 <Button variant="action"
                     onClick={() => setIsOpen(true)}
                 >수정</Button>
-
             </Flex>
-
-            {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
-            <TotalMenuModal isOpen={isOpen} setIsOpen={setIsOpen} rgCd={rgCd} />
         </Box>
     );
 };

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const GroupCard = ({ group, index }) => {
+const GroupCard = ({ group, index, setRgCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
@@ -16,6 +16,7 @@ const GroupCard = ({ group, index }) => {
             onMouseOver={() => {
                 onMouseOver(index)
             }}
+            onClick={()=>setRgCd(group.rgCd)}
             boxShadow='lg'
             rounded='md'
             bg='white'

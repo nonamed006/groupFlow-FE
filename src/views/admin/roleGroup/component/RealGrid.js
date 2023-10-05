@@ -3,8 +3,9 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
-const RealGridRoleMenu = ({ org, setCheckedMenuCd }) => {
+const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
   const realgridElement = useRef(null);
+
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
     { fieldName: "menuNm", dataType: "text" },
@@ -16,9 +17,9 @@ const RealGridRoleMenu = ({ org, setCheckedMenuCd }) => {
 
   var columns = [
     { fieldName: "menuNm", name: "menuNm", width: 400, header: { text: "menuNm" } },
-    { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
+    { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" },},
     { fieldName: "menuCd", name: "menuCd", header: { text: "menuCd" } },
-    { fieldName: "depth", name: "depth", header: { text: "depth" }, },
+    { fieldName: "depth", name: "depth", header: { text: "depth" },  },
     { fieldName: "state", name: "state", header: { text: "Boolean" }, },
     { fieldName: "type", name: "type", header: { text: "type" }, },
   ];
@@ -37,14 +38,15 @@ const RealGridRoleMenu = ({ org, setCheckedMenuCd }) => {
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
-    treeView.header.height = 40;
-    treeView.footer.height = 40;
+    treeView.header.height = 40; 
+    treeView.footer.height = 0;
     treeView.stateBar.width = 30;
 
-    treeView.displayOptions.useFocusClass = false; //클릭 시 색상
+    treeView.displayOptions.useFocusClass = true; //클릭 시 색상
 
     treeView.setStateBar({ visible: false }); //상태바 표시X
-    treeView.setCheckBar({ visible: true, showAll: true }); //체크박스 표시X
+    treeView.setCheckBar({ visible: type==='modify'?true:false}); //체크박스 표시
+
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
 
     //해당 컬럼 표시X
@@ -73,18 +75,16 @@ const RealGridRoleMenu = ({ org, setCheckedMenuCd }) => {
       "ve.png",
     ];
 
-    let checkedMenuCd = [];
-
     //자식노드들이 모두 체크되었을때 부모노드도 체크되게
     treeView.onItemChecked = function (grid, itemIndex, checked) {
       var dataRow = grid.getDataRow(itemIndex);
       checkNode(grid, dataRow, checked);
-
+      let checkedMenuCd = [];
       // 체크된 행의 인덱스 배열
       treeView.getCheckedRows().forEach((i) => {
           // 중복없이 체크된 menuCd를 checkedMenuCd에 추가
-        if (!checkedMenuCd.includes(i)) {
-          let menuCd = grid._dataProvider.getValue(i, 2);
+        let menuCd = grid._dataProvider.getValue(i, 2);
+        if (!checkedMenuCd.includes(menuCd)) {
           checkedMenuCd.push(menuCd);
         }
       });

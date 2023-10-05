@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import GroupCard from "./GroupCard";
 
 
-const GroupCardList = ({roleGrpList}) => {
+const GroupCardList = ({roleGrpList, setRgCd}) => {
    
 	return (
         <Box overflowY={"scroll"} overflowX={'hidden'}
@@ -11,7 +11,7 @@ const GroupCardList = ({roleGrpList}) => {
                 {roleGrpList &&
                     roleGrpList.map((group, index)=>{
                     return (
-                        <GroupCard key={index} group={group} index={index} />
+                        <GroupCard key={index} group={group} index={index} setRgCd={setRgCd}/>
                     );
                 })}
             </Box> 

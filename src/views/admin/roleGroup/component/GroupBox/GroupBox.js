@@ -9,7 +9,7 @@ import GroupAddBox from "./GroupAddBox";
 import CardMenuBar from "common/component/CardMenuBar";
 
 
-const GroupBox = () => {
+const GroupBox = ({setRgCd}) => {
     const [keyword, setKeyword] = useState();   // 검색어
     const [searchCorp, setSearchCorp] = useState(); // 검색바에서 선택된 회사 코드
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -108,7 +108,7 @@ const GroupBox = () => {
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handelSearchBtn={handelSearchBtn} />
             {/* 목록 */}
-            <GroupCardList roleGrpList={roleGrpList} />
+            <GroupCardList roleGrpList={roleGrpList} setRgCd={setRgCd}/>
 
             {/* 권한그룹 추가 모달 */}
             {isOpen &&
