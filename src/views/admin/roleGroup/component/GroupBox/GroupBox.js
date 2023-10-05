@@ -9,7 +9,7 @@ import GroupAddBox from "./GroupAddBox";
 import CardMenuBar from "common/component/CardMenuBar";
 
 
-const GroupBox = () => {
+const GroupBox = ({setRgCd, rgCd}) => {
     const [keyword, setKeyword] = useState();   // 검색어
     const [searchCorp, setSearchCorp] = useState(); // 검색바에서 선택된 회사 코드
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -47,6 +47,8 @@ const GroupBox = () => {
             .then((res) => {
                 if(res.result === 'success')
                     setRoleGrpList(res.data);
+                    setRgCd(undefined);
+
             });
     };
 
@@ -77,6 +79,7 @@ const GroupBox = () => {
             .then((res) => {
                 if(res.result === 'success'){
                     alert("등록되었습니다.");
+                    fetchRoleGroup();
                 }else{
                     alert("등록실패");
                 }
@@ -91,7 +94,6 @@ const GroupBox = () => {
 
     // 권한그룹 추가 등록 버튼 클릭 시
     const handleAddBtn = () => {
-        console.log(roleGrp);
         setIsOpen(!isOpen); // 모달창 닫기
         fetchRoleGrpSave(); // 권한그룹 등록
     };
@@ -108,7 +110,7 @@ const GroupBox = () => {
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handelSearchBtn={handelSearchBtn} />
             {/* 목록 */}
-            <GroupCardList roleGrpList={roleGrpList} />
+            <GroupCardList  rgCd={rgCd} roleGrpList={roleGrpList} setRgCd={setRgCd} />
 
             {/* 권한그룹 추가 모달 */}
             {isOpen &&

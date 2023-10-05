@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
-/* #realgrid {
+#realgrid {
   width: 100%;
   height: 390px;
-} */
+}
 
 .rg-root {
   font-family: "Malgun Gothic", "맑은 고딕", AppleSDGothicNeo-Light, sans-serif;
@@ -18,6 +18,13 @@
   user-select: none;
   touch-action: none;
   -ms-touch-action: none;
+}
+
+.gnb-column{
+  background: #E1E9F8;
+}
+.bottom-gnb-column{
+  background: #F4F7FE;
 }
 
 .rg-root .rg-table,
