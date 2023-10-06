@@ -27,7 +27,7 @@ const RoleGroup = () => {
             </GridItem>
             {/* 사용자 목록 */}
             <GridItem colSpan={2} rowSpan={5}>
-                <UserBox />
+                <UserBox rgCd={rgCd} />
             </GridItem>
         </Grid>
 

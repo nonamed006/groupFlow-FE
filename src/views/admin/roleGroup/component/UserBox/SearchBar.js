@@ -1,5 +1,5 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Grid, Button, Text, GridItem, Input } from "@chakra-ui/react";
+import React from "react";
 
 const SearchBar = ({ setKeyword, handleSearchBtn }) => {
     return (
@@ -21,7 +21,6 @@ const SearchBar = ({ setKeyword, handleSearchBtn }) => {
                 </GridItem>
             </Grid>
         </Box>
-
 
     );
 };

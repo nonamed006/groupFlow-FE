@@ -1,5 +1,5 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input, Table, Th, Td, Tr, Tbody, Thead } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useColorModeValue, Text, Td, Tr, Thead } from "@chakra-ui/react";
+import React from "react";
 
 
 const ListCardTableHeader = ({ headerGroups }) => {
@@ -7,15 +7,15 @@ const ListCardTableHeader = ({ headerGroups }) => {
 
     return (
 
-        <Thead >
-            <Tr borderColor={headerColor}  boxShadow='lg' > 
+        <Thead>
+            <Tr bg={'#F4F7FE'} boxShadow='lg'> 
                 {headerGroups.map((header, index) => {
                     return (
                         <Td key={index} >
                             <Text
                                 color={headerColor}
-                                fontSize="15px"
-                                fontWeight="600"
+                                fontSize="16px"
+                                fontWeight="800"
                                 lineHeight="100%"
                             >
                                 {header}

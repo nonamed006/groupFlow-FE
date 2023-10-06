@@ -38,7 +38,8 @@ const SearchBar = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu 
 			<Grid templateColumns='repeat(14, 1fr)' gap={1}>
 				<GridItem colSpan={2}><Text style={{ textAlign: 'center' }}>대메뉴</Text></GridItem>
 				<GridItem colSpan={4}>
-					<Select name='useYn' borderRadius="14px" onChange={(e) => setSelectedMenu(e.target.value)} placeholder="대메뉴를 선택하세요" fontSize="0.95em">
+					<Select name='gnbMenu' borderRadius="14px" onChange={(e) => setSelectedMenu(e.target.value)} defaultValue={'undefined'} fontSize="0.95em">
+						<option value={'undefined'}>전체</option>
 						{menuList &&
 							menuList.map((menu, index) => {
 								return (<option key={index} value={menu.menuCd}>{menu.menuNm}</option>);
