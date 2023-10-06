@@ -21,10 +21,20 @@ const MenuBox = ({rgCd}) => {
         setChangeEdit(true);
     };
 
+    const changeTypeTab =(typeCd)=>{
+        setTypeCd(typeCd);
+        initSearchBar();
+    }
+    
+    const initSearchBar = ()=> {
+        setSelectedMenu(undefined);
+        setKeyword(undefined);
+    }
+
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab setIsOpen={setIsOpen} setTypeCd={setTypeCd} typeCd={typeCd}/>
+            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd}/>
             {/* 검색창 */}
             <SearchBar rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}

@@ -34,7 +34,7 @@ const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    console.log(org)
+ 
     treeProvider.setRows(org, "menuPath", true, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";

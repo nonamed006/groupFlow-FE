@@ -7,8 +7,9 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
 
     useEffect(() => {
-        if (changeEdit) setChangeEdit(false);
-        else fetchRoleMenu();
+        if((rgCd !== undefined && rgCd !=='undefined'))
+            changeEdit? setChangeEdit(false) : fetchRoleMenu();
+        
     }, [rgCd, changeEdit, typeCd]);
 
     // 권한메뉴 목록 조회 + 검색
@@ -29,7 +30,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
         if (paramString) {
             url += "?" + paramString;
         }
-
+        console.log(url);
         fetch(url, {
             method: "GET",
         })
@@ -42,6 +43,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" px={10} >
             {(rgCd !== 'undefined' && rgCd !== undefined) &&
+                roleMenu &&
                 <RealGrid org={roleMenu} />
             }
         </Box>

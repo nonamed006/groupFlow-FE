@@ -47,6 +47,7 @@ const GroupBox = ({setRgCd, rgCd}) => {
             .then((res) => {
                 if(res.result === 'success')
                     setRoleGrpList(res.data);
+                console.log(res.data);
                     setRgCd(undefined);
 
             });
