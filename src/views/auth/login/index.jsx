@@ -21,7 +21,7 @@
 
 */
 
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -47,6 +47,7 @@ import illustration from "assets/img/auth/douzoneImg.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { PORT } from "set";
 
 function SignIn() {
   // Chakra color mode
@@ -64,7 +65,32 @@ function SignIn() {
     { bg: "whiteAlpha.200" }
   );
   const [show, setShow] = React.useState(false);
+  const [empInfo, setEmpInfo] = useState({loginId:"", loginPw:""});
   const handleClick = () => setShow(!show);
+
+  const handleChange = (e) => {
+    setEmpInfo({...empInfo, [e.target.id]: e.target.value});
+  }
+
+  const empLogin = () => {
+    fetch(`${PORT}/login`, {
+			method: "POST",
+			body: JSON.stringify(empInfo),
+			headers: {
+				'Content-Type': "application/json; charset=utf-8"
+			}
+		}).then(res => {
+      for (let header of res.headers.entries()) {
+				if (header[0] === "authorization") {
+					let data = header[1];
+					//data = data.substring(7);
+					localStorage.setItem("Authorization", data);
+
+				}
+			}
+    });
+  }
+
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -114,15 +140,17 @@ function SignIn() {
               Id<Text color={brandStars}>*</Text>
             </FormLabel>
             <Input
+              id="loginId"
               isRequired={true}
               variant='auth'
               fontSize='sm'
               ms={{ base: "0px", md: "0px" }}
-              type='email'
+              type='text'
               placeholder='아이디를 입력하세요.'
               mb='24px'
               fontWeight='500'
               size='lg'
+              onChange={handleChange}
             />
             <FormLabel
               ms='4px'
@@ -134,6 +162,7 @@ function SignIn() {
             </FormLabel>
             <InputGroup size='md'>
               <Input
+                id="loginPw"
                 isRequired={true}
                 fontSize='sm'
                 placeholder='비밀번호를 입력하세요.'
@@ -141,6 +170,7 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                onChange={handleChange}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
@@ -178,6 +208,7 @@ function SignIn() {
               </NavLink>
             </Flex>
             <Button
+              onClick={empLogin}
               fontSize='sm'
               variant='brand'
               fontWeight='500'
