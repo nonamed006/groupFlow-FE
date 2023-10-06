@@ -5,6 +5,7 @@ const SearchBar = ({setSearchCorp, setKeyword, handelSearchBtn, corps}) => {
     
     return (
         <Grid
+            mb={5}
             gap={2}>
             <GridItem colSpan={14} colStart={0} colEnd={14}>
                 <Select name='coCd' borderRadius="14px"  defaultValue={''} onChange={(e)=>setSearchCorp(e.target.value)}  >

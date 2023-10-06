@@ -6,8 +6,13 @@ import GroupCard from "./GroupCard";
 const GroupCardList = ({ roleGrpList, setRgCd, rgCd }) => {
 
     return (
-        <Box overflowY={"scroll"} overflowX={'hidden'}
-            bg='white' borderRadius='lg' h={'75%'} p={2} mt={4}>
+        <Box
+            overflowY={"scroll"}
+            overflowX={'hidden'}
+            bg='white'
+            borderRadius='lg'
+            h={'76%'}
+            px={5}>
             {roleGrpList &&
                 roleGrpList.map((group, index) => {
                     return (
