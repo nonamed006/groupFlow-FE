@@ -8,16 +8,17 @@ import OrgChartModal from "common/orgChart/OrgChartModal";
 
 const Corporation = () => {
 	const [corpList, setCorpList] = useState([]); // 회사 데이터 목록
-	const [keyword, setKeyword] = useState(''); // 검색어
-	const [useYn, setUseYn] = useState(''); // 사용여부
+	const [keyword, setKeyword] = useState(""); // 검색어
+	const [useYn, setUseYn] = useState(""); // 사용여부
 	const [coCd, setCoCd] = useState(); // 선택된 회사코드
 	const [changeYn, setChangeYn] = useState(); // 변경 여부(회사목록 리렌더링 조건)
-	const [sortValue, setSortValue] = useState();   // 초기 정렬 기본값
+	const [sortValue, setSortValue] = useState(); // 초기 정렬 기본값
 	const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
 
-	useEffect(()=>{
+
+	useEffect(() => {
 		initCorpList();
-	},[]);
+	}, []);
 
 	// 회사 목록 조회 및 검색
 	const fetchCorpList = () => {
@@ -38,8 +39,10 @@ const Corporation = () => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				setCorpList(res.data);
-				setChangeYn(false);
+				if (res.result === 'success') {
+					setCorpList(res.data);
+					setChangeYn(false);
+				}
 			});
 	};
 
@@ -49,7 +52,9 @@ const Corporation = () => {
 		fetch(url, {
 			method: "GET"
 		}).then(res => res.json()).then(res => {
-			setSortValue(res.strData);
+			if (res.result === 'success') {
+				setSortValue(res.strData);
+			}
 		});
 	};
 

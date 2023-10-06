@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
@@ -26,6 +28,7 @@ const Test = () => {
   useEffect(() => {
     if (test === true) {
       setTest(false);
+      onClickSearchText();
     } else {
       onClickSearchText();
     }
