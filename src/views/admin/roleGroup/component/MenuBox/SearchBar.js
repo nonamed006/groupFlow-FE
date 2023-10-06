@@ -5,7 +5,8 @@ import { PORT } from "set";
 const SearchBar = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu }) => {
 	const [menuList, setMenuList] = useState();// 대메뉴 목록 (셀렉트박스에서 사용됨)
 	useEffect(() => {
-		fetchMenuList();
+		if((rgCd !== undefined && rgCd !=='undefined'))
+			fetchMenuList();
 	}, [rgCd, typeCd]);
 
 
@@ -32,17 +33,17 @@ const SearchBar = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu 
 		<Box bg='white'
 			align={{ sm: "flex-start", lg: "center" }}
 			w="100%"
-		
 			pb="13px"
 		>
 			<Grid templateColumns='repeat(14, 1fr)' gap={1}>
+
 				<GridItem colSpan={2}><Text style={{ textAlign: 'center' }}>대메뉴</Text></GridItem>
 				<GridItem colSpan={4}>
-					<Select name='gnbMenu' borderRadius="14px" onChange={(e) => setSelectedMenu(e.target.value)} defaultValue={'undefined'} fontSize="0.95em">
+					<Select name='gnbMenu' borderRadius="14px" onChange={(e) => setSelectedMenu(e.target.value)}  fontSize="0.95em">
 						<option value={'undefined'}>전체</option>
 						{menuList &&
 							menuList.map((menu, index) => {
-								return (<option key={index} value={menu.menuCd}>{menu.menuNm}</option>);
+								return (<option key={menu.menuCd} value={menu.menuCd}>{menu.menuNm}</option>);
 							})}
 					</Select>
 				</GridItem>

@@ -1,7 +1,7 @@
 import { Box, Grid, useColorModeValue, Button, Flex, Text} from "@chakra-ui/react";
 import React from "react";
 
-const MenuTab = ({ typeCd, setIsOpen, setTypeCd }) => {
+const MenuTab = ({ typeCd, setIsOpen, changeTypeTab }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const menuTypeList = [
@@ -18,6 +18,7 @@ const MenuTab = ({ typeCd, setIsOpen, setTypeCd }) => {
             typeNm: '관리자'
         },
     ];
+
 
     return (
         <Box>
@@ -36,7 +37,7 @@ const MenuTab = ({ typeCd, setIsOpen, setTypeCd }) => {
                     {menuTypeList &&
                         menuTypeList.map((menuType)=>{
                             return  (
-                            <Button  bg={'white'} onClick={()=>setTypeCd(menuType.typeCd)}>
+                            <Button  bg={'white'} onClick={()=>changeTypeTab(menuType.typeCd)}>
                                  <Text
                                     color={typeCd==menuType.typeCd?textNumColor:textColor}
                                     fontSize="18px"

@@ -11,7 +11,7 @@ const GroupCard = ({ rgCd, group, index, setRgCd }) => {
 
         <Card
             key={index}
-            backgroundColor={(mouseOverIndex === index) || (rgCd === group.rgCd)? 'navy.50' : 'white'}
+            backgroundColor={(mouseOverIndex === index) || (rgCd === group.rgCd)? 'navy.50' : !group.useYn? '#E5E4E2' :'white'}
             onMouseOut={onMouseOut}
             onMouseOver={() => {
                 onMouseOver(index)

@@ -1,6 +1,8 @@
 import {
+  Box,
     Button,
     Flex,
+    Spacer,
     Text,
     useColorModeValue,
   } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
@@ -26,9 +28,11 @@ import {
             fontSize="22px"
             fontWeight="700"
             lineHeight="100%"
+            marginRight={2}
           >
             {title}
           </Text>
+          
           {/* 검색 항목 수  */}
           <Text
             color={textNumColor}

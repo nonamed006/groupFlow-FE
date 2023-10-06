@@ -11,8 +11,11 @@ const UserBox = ({rgCd}) => {
     const [userList, setUserList] = useState([]); // 사용자목록
     const [keyword, setKeyword] = useState();   //  검색어
     useEffect(()=>{
-        if(rgCd !== undefined && rgCd !== 'undefined')
+        if(rgCd !== undefined && rgCd !== 'undefined'){
             fetchRoleUserList();
+            console.log(keyword);
+        }
+           
     },[rgCd]);
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
@@ -35,8 +38,10 @@ const UserBox = ({rgCd}) => {
             .then((res) => {console.log(res);
                 if(res.result === 'success'){
                     setUserList(res.data);
+                
                 }else{
                     setUserList([]);
+                    
                 }
             });
     };
@@ -44,13 +49,14 @@ const UserBox = ({rgCd}) => {
     // 검색 버튼 클릭 시
     const handleSearchBtn = ()=> {
         fetchRoleUserList();
+        setKeyword('');
     };
     return (
             <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" display={'inline-block'}>
                 {/* 상단 */}
                 <CardMenuBar title={'사용자 목록'} count={userList.length} buttonType={false}/>
                 {/* 검색바 */}
-                <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
+                <SearchBar keyword={keyword} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
                 {/* 목록 */}
                 <Box overflowY={'auto'} h={'80%'} mt={4}>
                     <CustomTable groupHeader={groupHeader} dataList={userList}/>
