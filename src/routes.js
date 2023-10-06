@@ -19,7 +19,7 @@ import Corporation from "views/admin/corporation";
 import Department from "views/admin/department";
 import Employee from "views/admin/employee";
 // Auth Imports
-import SignInCentered from "views/auth/signIn";
+import LogInCentered from "views/auth/login";
 import Menu from "views/system/menu"
 import RoleGroup from "views/admin/roleGroup";
 import RoleSet from "views/system/role";
@@ -161,11 +161,11 @@ const routes = [
     component: Profile,
   },
   {
-    name: "Sign In",
+    name: "로그인",
     layout: "/auth",
-    path: "/sign-in",
+    path: "/login",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-    component: SignInCentered,
+    component: LogInCentered,
   },
   {
     name: "RTL Admin",
