@@ -79,8 +79,8 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
             lineHeight="100%">
             {depGrp.dpPathNm &&
               depGrp.dpPathNm.map((pathNm, index) => {
-                return <>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
-                </>
+                return <span key={index}>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
+                </span>
               })}
           </Text>
         </Box>

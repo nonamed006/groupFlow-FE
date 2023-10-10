@@ -14,9 +14,9 @@ const RealGrid = (props) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 150, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 220, header: { text: "명칭" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
   ];
 

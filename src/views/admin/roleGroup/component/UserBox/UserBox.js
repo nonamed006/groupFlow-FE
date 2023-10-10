@@ -28,16 +28,17 @@ const UserBox = ({rgCd}) => {
          const paramString = params.toString();
          if (paramString) 
              url += "?" + paramString;
-         
+
         fetch(url, {
             method: "GET",
         })
             .then((res) => res.json())
             .then((res) => {
-                if(res.result === 'success')
+                if(res.result === 'success'){
                     setUserList(res.data);
-                else
+                } else{
                     setUserList([]);
+                }
             });
     };
 
