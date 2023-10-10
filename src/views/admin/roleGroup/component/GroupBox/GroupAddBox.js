@@ -1,8 +1,15 @@
 import { Box, Grid, GridItem, HStack, RadioGroup, Text, Select, Input, Radio } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
+    useEffect(()=>{
+        setRoleGrp({    // 생성할 권한그룹
+            coCd: '',
+            grpNm: '',
+            useYn: 'true',
+        });
+    },[])
     const onChange = (e) => {
         const { value, name } = e.target;
         setRoleGrp({
@@ -18,7 +25,7 @@ const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
                     <Text>회사</Text>
                 </GridItem>
                 <GridItem colStart={3} colEnd={8} m={'1'}>
-                    <Select name='coCd' borderRadius="14px" defaultValue={''} onChange={onChange} >
+                    <Select name='coCd' borderRadius="14px" onChange={onChange} placeholder="회사를 선택해주세요" >
                         {corps &&
                             corps.map((corp, index) => {
                                 return (<option key={index} value={corp.coCd}>{corp.coNm}</option>);

@@ -7,7 +7,7 @@ const GroupCardList = ({ roleGrpList, setRgCd, rgCd }) => {
 
     return (
         <Box
-            overflowY={"scroll"}
+            overflowY={"auto"}
             overflowX={'hidden'}
             bg='white'
             borderRadius='lg'
