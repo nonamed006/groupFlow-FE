@@ -73,7 +73,7 @@ function SignIn() {
   }
 
   const empLogin = () => {
-    fetch(`${PORT}/login`, {
+    fetch(`${PORT}/emp/loginEmp`, {
 			method: "POST",
 			body: JSON.stringify(empInfo),
 			headers: {
@@ -81,11 +81,10 @@ function SignIn() {
 			}
 		}).then(res => {
       for (let header of res.headers.entries()) {
-				if (header[0] === "authorization") {
+        //refreshtoken localStorage에 담기
+				if (header[0] === "refreshtoken") {
 					let data = header[1];
-					//data = data.substring(7);
 					localStorage.setItem("Authorization", data);
-
 				}
 			}
     });
