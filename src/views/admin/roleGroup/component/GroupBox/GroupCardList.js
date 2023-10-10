@@ -1,5 +1,5 @@
-import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box } from "@chakra-ui/react";
+import React from "react";
 import GroupCard from "./GroupCard";
 
 

@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem, HStack, RadioGroup, Text, Select, Input, Radio } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 
 const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {

@@ -30,7 +30,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
         if (paramString) {
             url += "?" + paramString;
         }
-        console.log(url);
+
         fetch(url, {
             method: "GET",
         })

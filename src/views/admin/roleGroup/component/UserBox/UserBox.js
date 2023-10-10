@@ -1,4 +1,4 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 import SearchBar from "./SearchBar";
@@ -13,9 +13,7 @@ const UserBox = ({rgCd}) => {
     useEffect(()=>{
         if(rgCd !== undefined && rgCd !== 'undefined'){
             fetchRoleUserList();
-            console.log(keyword);
         }
-           
     },[rgCd]);
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
@@ -35,14 +33,11 @@ const UserBox = ({rgCd}) => {
             method: "GET",
         })
             .then((res) => res.json())
-            .then((res) => {console.log(res);
-                if(res.result === 'success'){
+            .then((res) => {
+                if(res.result === 'success')
                     setUserList(res.data);
-                
-                }else{
+                else
                     setUserList([]);
-                    
-                }
             });
     };
 
@@ -56,7 +51,7 @@ const UserBox = ({rgCd}) => {
                 {/* 상단 */}
                 <CardMenuBar title={'사용자 목록'} count={userList.length} buttonType={false}/>
                 {/* 검색바 */}
-                <SearchBar keyword={keyword} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
+                <SearchBar rgCd={rgCd} keyword={keyword} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
                 {/* 목록 */}
                 <Box overflowY={'auto'} h={'80%'} mt={4}>
                     <CustomTable groupHeader={groupHeader} dataList={userList}/>

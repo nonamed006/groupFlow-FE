@@ -1,4 +1,4 @@
-import { Box, Grid, useColorModeValue, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import ModalLayout from "common/modal/ModalLayout";
 import React, { useState } from "react";
 import TotalMenuBox from "./TotalMenuBox";
@@ -6,7 +6,7 @@ import { PORT } from "set";
 
 const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit }) => {
     const [checkedMenuCd, setCheckedMenuCd] = useState([]); // 선택된 메뉴 코드 리스트
-    const textColor = useColorModeValue("secondaryGray.900", "white");
+
     const modifyBtnHandeler = () => {
         fetchModifyRoleMenu();
         setIsOpen(!isOpen);

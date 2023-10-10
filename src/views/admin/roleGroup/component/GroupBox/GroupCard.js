@@ -1,11 +1,10 @@
-import { Box, Text, useColorModeValue, Input, Flex, Checkbox } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Text, useColorModeValue, Flex, Checkbox } from "@chakra-ui/react";
+import React from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 
 const GroupCard = ({ rgCd, group, index, setRgCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
-    const textNumColor = useColorModeValue("brand.500", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     return (
 

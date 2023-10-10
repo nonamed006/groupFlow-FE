@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Button, useDisclosure, Text, Select, Input } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 
@@ -43,9 +43,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             .then((res) => {
                 if (res.result === 'success')
                     setRoleGrpList(res.data);
-                console.log(res.data);
                 setRgCd(undefined);
-
             });
     };
 
