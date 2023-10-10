@@ -1,10 +1,11 @@
-import { Box, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, Text, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { PORT } from "set";
-import DeleteModal from "common/modal/DeleteModal";
+import ModalLayout from "common/modal/ModalLayout";
+
 const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
@@ -168,14 +169,13 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
       </Box>
 
       {/* 삭제 확인 모달 */}
-      {isOpen ? (
-        <DeleteModal
-          isOpen={isOpen}
-          onClose={onClose}
-          handleCheck={handelDeleteBtn}
-        />
-      ) : (
-        ""
+      {isOpen && (
+        <ModalLayout title={'삭제여부'} onClose={onClose} isOpen={isOpen} buttonYn={true} btnText={'삭제'} size={'md'} handleCheck={handelDeleteBtn}>
+          <Box>
+            <Text>삭제하시겠습니까?</Text>
+          </Box>
+        </ModalLayout>
+
       )}
     </>
   );

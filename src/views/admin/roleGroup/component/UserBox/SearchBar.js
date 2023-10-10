@@ -1,7 +1,7 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Grid, Button, Text, GridItem, Input } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 
-const SearchBar = ({ setKeyword, handleSearchBtn }) => {
+const SearchBar = ({ keyword, setKeyword, handleSearchBtn }) => {
     return (
 
         <Box bg='white'>
@@ -13,7 +13,9 @@ const SearchBar = ({ setKeyword, handleSearchBtn }) => {
                         name='keyword'
                         size="md"
                         borderRadius="14px"
-                        onChange={(e) => setKeyword(e.target.value)} />
+                        onChange={(e) => setKeyword(e.target.value)}
+                        defaultValue={keyword}
+                         />
                 </GridItem>
 
                 <GridItem colStart={14} colEnd={14}>
@@ -21,7 +23,6 @@ const SearchBar = ({ setKeyword, handleSearchBtn }) => {
                 </GridItem>
             </Grid>
         </Box>
-
 
     );
 };

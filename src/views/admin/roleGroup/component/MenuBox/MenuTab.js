@@ -1,9 +1,25 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text, Spacer, GridItem, Select, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Grid, useColorModeValue, Button, Flex, Text} from "@chakra-ui/react";
+import React from "react";
 
-const MenuTab = () => {
+const MenuTab = ({ typeCd, setIsOpen, changeTypeTab }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
+    const menuTypeList = [
+        {
+            typeCd : undefined,
+            typeNm: '전체'
+        },
+        {
+            typeCd : 'MUA0003',
+            typeNm: '사용자'
+        },
+        {
+            typeCd : 'MUA0002',
+            typeNm: '관리자'
+        },
+    ];
+
+
     return (
         <Box>
             {/* 메뉴 상단 */}
@@ -11,51 +27,35 @@ const MenuTab = () => {
                 align={{ sm: "flex-start", lg: "center" }}
                 justify="space-between"
                 w="100%"
-                px="22px"
-                pb="20px"
+                borderBottom={'1px'}
+                borderColor={'#CFD0D2'}
                 mb="10px"
+                pb="13px"
                 bg="white"
             >
                 <Flex w="100%">
-                    <Box m={2} >
-                        <Text
-                            color={textNumColor}
-                            fontSize="18px"
-                            fontWeight="700"
-                            lineHeight="100%"
-                        >
-                            {'전체'}
-                        </Text>
-                    </Box>
-                    <Box m={2} >
-                        <Text
-                            color={textColor}
-                            fontSize="18px"
-                            fontWeight="500"
-                            lineHeight="100%"
-                        >
-                            {'사용자메뉴'}
-                        </Text>
-                    </Box>
-                    <Box m={2} >
-                        <Text
-                            color={textColor}
-                            fontSize="18px"
-                            fontWeight="500"
-                            lineHeight="100%"
-                        >
-                            {'관리자메뉴'}
-                        </Text>
-                    </Box>
+                    {menuTypeList &&
+                        menuTypeList.map((menuType)=>{
+                            return  (
+                            <Button  bg={'white'} onClick={()=>changeTypeTab(menuType.typeCd)}>
+                                 <Text
+                                    color={typeCd==menuType.typeCd?textNumColor:textColor}
+                                    fontSize="18px"
+                                    fontWeight="700"
+                                    lineHeight="100%"
+                                > 
+                                {menuType.typeNm}
+                             </Text> 
+                        </Button>);
+                        })
+                    }
                 </Flex>
 
                 <Button variant="action"
-                    onClick={() => {  // setCoCd 초기화
-                    }}
+                    onClick={() => setIsOpen(true)}
                 >수정</Button>
-              
             </Flex>
-          </Box>
+        </Box>
     );
 };
 
