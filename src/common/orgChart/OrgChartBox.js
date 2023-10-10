@@ -54,11 +54,10 @@ const OrgChartBox = () => {
         if (paramString) {
             url += '?' + paramString;
         }
-        console.log(url);
+    
         fetch(url, {
             method: "GET"
         }).then(res => res.json()).then(res => {
-            console.log(res.data);
             setDepGrpList(res.data);
         });
     };
