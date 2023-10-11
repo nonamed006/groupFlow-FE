@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import SearchBar from "./SearchBar";
 import MenuTab from "./MenuTab";
@@ -21,12 +21,22 @@ const MenuBox = ({rgCd}) => {
         setChangeEdit(true);
     };
 
+    const changeTypeTab =(typeCd)=>{ 
+        initSearchBar();
+        setTypeCd(typeCd);
+    }
+    
+    const initSearchBar = ()=> {
+        setSelectedMenu(undefined);
+        setKeyword(undefined);
+    }
+
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab setIsOpen={setIsOpen} setTypeCd={setTypeCd} typeCd={typeCd}/>
+            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd}/>
             {/* 검색창 */}
-            <SearchBar rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
+            <SearchBar changeEdit={changeEdit} selectedMenu={selectedMenu} rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}
             <MenuList rgCd={rgCd} typeCd={typeCd} changeEdit={changeEdit} setChangeEdit={setChangeEdit} keyword={keyword} selectedMenu={selectedMenu}/>
 
