@@ -28,7 +28,7 @@ const RoleCorp = () => {
             </GridItem>
             {/* 메뉴 목록 */}
             <GridItem colSpan={3} rowSpan={5}>
-                <MenuBox rgCd={rgCd} />
+                <MenuBox rgCd={rgCd} coCd={coCd}/>
             </GridItem>
         </Grid>
 

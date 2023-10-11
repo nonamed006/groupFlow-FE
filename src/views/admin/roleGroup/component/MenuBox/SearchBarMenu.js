@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { PORT } from "set";
 import SearchBar from "common/component/SearchBar";
 
-const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu, selectedMenu, changeEdit }) => {
+const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu, coCd }) => {
 	const [menuList, setMenuList] = useState();// 대메뉴 목록 (셀렉트박스에서 사용됨)
 	const formInputRef = useRef(null);
 
@@ -12,9 +12,12 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 			fetchMenuList();
 			onClearSelect();
 			setSelectedMenu();
-
 		}
 	}, [rgCd, typeCd]);
+
+	useEffect(()=>{
+		setMenuList();
+	},[coCd]);
 
 	const onClearSelect = () => {
 		if (formInputRef.current)

@@ -6,7 +6,7 @@ import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
 
-const MenuBox = ({rgCd, type}) => {
+const MenuBox = ({rgCd, type, coCd}) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [changeEdit, setChangeEdit] = useState(false);
@@ -35,9 +35,9 @@ const MenuBox = ({rgCd, type}) => {
             {/* 메뉴 상단 */}
             <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type}/>
             {/* 검색창 */}
-            <SearchBar changeEdit={changeEdit} selectedMenu={selectedMenu} rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
+            <SearchBar  coCd={coCd} changeEdit={changeEdit} selectedMenu={selectedMenu} rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}
-            <MenuList rgCd={rgCd} typeCd={typeCd} changeEdit={changeEdit} setChangeEdit={setChangeEdit} keyword={keyword} selectedMenu={selectedMenu}/>
+            <MenuList coCd={coCd} rgCd={rgCd} typeCd={typeCd} changeEdit={changeEdit} setChangeEdit={setChangeEdit} keyword={keyword} selectedMenu={selectedMenu}/>
 
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
             <TotalMenuModal isOpen={isOpen} setIsOpen={setIsOpen} setChangeEdit={setChangeEdit} rgCd={rgCd} />
