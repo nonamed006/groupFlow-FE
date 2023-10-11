@@ -48,6 +48,8 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { PORT } from "set";
+import { useDispatch } from "react-redux";
+import { setEmpData } from "redux/solution";
 
 function SignIn() {
   // Chakra color mode
@@ -65,28 +67,35 @@ function SignIn() {
     { bg: "whiteAlpha.200" }
   );
   const [show, setShow] = React.useState(false);
-  const [empInfo, setEmpInfo] = useState({loginId:"", loginPw:""});
+  const [empInfo, setEmpInfo] = useState({ loginId: "", loginPw: "" });
   const handleClick = () => setShow(!show);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setEmpInfo({...empInfo, [e.target.id]: e.target.value});
+    setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
   }
 
   const empLogin = () => {
     fetch(`${PORT}/emp/loginEmp`, {
-			method: "POST",
-			body: JSON.stringify(empInfo),
-			headers: {
-				'Content-Type': "application/json; charset=utf-8"
-			}
-		}).then(res => {
+      method: "POST",
+      body: JSON.stringify(empInfo),
+      headers: {
+        'Content-Type': "application/json; charset=utf-8"
+      }
+    }).then(res => {
       for (let header of res.headers.entries()) {
         //refreshtoken localStorage에 담기
-				if (header[0] === "refreshtoken") {
-					let data = header[1];
-					localStorage.setItem("Authorization", data);
-				}
-			}
+        if (header[0] === "refreshtoken") {
+          let data = header[1];
+          localStorage.setItem("Authorization", data);
+        }
+      }
+      res.json().then((res)=>{
+        console.log(res.data[0]);
+        dispatch(setEmpData(res.data[0]));
+      }).then(()=>{
+        window.location.replace("/");
+      });
     });
   }
 
@@ -127,7 +136,7 @@ function SignIn() {
           mx={{ base: "auto", lg: "unset" }}
           me='auto'
           mb={{ base: "20px", md: "auto" }}>
-                                   
+
           <FormControl>
             <FormLabel
               display='flex'

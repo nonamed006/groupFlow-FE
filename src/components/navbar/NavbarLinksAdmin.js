@@ -25,6 +25,7 @@ import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
 import routes from 'routes.js';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useSelector } from 'react-redux';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -41,6 +42,8 @@ export default function HeaderLinks(props) {
 		'14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
 	);
 	const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
+	const empInfo = useSelector(state => state.solution.empData);
+	console.log("empInfo", empInfo);
 	return (
 		<Flex
 			w={{ sm: '100%', md: 'auto' }}
@@ -87,6 +90,7 @@ export default function HeaderLinks(props) {
 						<Flex direction={'column'}  p="0px 10px">
 							<Text textAlign={'left'} fontSize="sm" fontWeight="600" color={textColor}>
 								유저이름
+								{empInfo.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor}>
 								회사명 | 부서명
