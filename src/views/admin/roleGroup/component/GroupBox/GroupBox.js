@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBarRoleGrp";
 import GroupCardList from "./GroupCardList";
 import ModalLayout from "common/modal/ModalLayout";
 import GroupAddBox from "./GroupAddBox";
@@ -83,7 +83,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     };
 
     // 검색 버튼 클릭 시
-    const handelSearchBtn = () => {
+    const handleSearchBtn = () => {
         // 검색 내용에 따른 목록 조회
         fetchRoleGroup();
     };
@@ -116,7 +116,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={roleGrpList.length} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
             {/* 검색바 */}
-            <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handelSearchBtn={handelSearchBtn} />
+            <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
             {/* 목록 */}
             <GroupCardList rgCd={rgCd} roleGrpList={roleGrpList} setRgCd={setRgCd} />
 

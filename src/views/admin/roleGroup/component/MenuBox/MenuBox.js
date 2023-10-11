@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBarMenu";
 import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
