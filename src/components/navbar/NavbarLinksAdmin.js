@@ -15,11 +15,11 @@ import {
 	useColorModeValue
 } from '@chakra-ui/react';
 // Custom Components
-import { ItemContent } from 'components/menu/ItemContent';
-import { SearchBar } from 'components/navbar/searchBar/SearchBar';
-import { SidebarResponsive } from 'components/sidebar/Sidebar';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { ItemContent } from "components/menu/ItemContent";
+import { SearchBar } from "components/navbar/searchBar/SearchBar";
+import { SidebarResponsive } from "components/sidebar/Sidebar";
+import PropTypes from "prop-types";
+import React from "react";
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
@@ -71,7 +71,8 @@ export default function HeaderLinks(props) {
 					</Text>
 				</Text>
 			</Flex>
-			<SidebarResponsive routes={routes} />
+			{/* 이혜윤 - 수정(메뉴 아이콘 때문에 안눌려서 주석 처리)
+			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
 				<MenuButton p="0px">
@@ -226,8 +227,8 @@ export default function HeaderLinks(props) {
 }
 
 HeaderLinks.propTypes = {
-	variant: PropTypes.string,
-	fixed: PropTypes.bool,
-	secondary: PropTypes.bool,
-	onOpen: PropTypes.func
+  variant: PropTypes.string,
+  fixed: PropTypes.bool,
+  secondary: PropTypes.bool,
+  onOpen: PropTypes.func,
 };

@@ -29,20 +29,14 @@ const LnbGrid = ({
     //   searchMenuNm: searchMenuNm
     // }
     const queryString = new URLSearchParams(search).toString();
-    console.log('search', search);
-    console.log('selectGnbMenuCd', selectGnbMenuCd);
     const menuCd = search.searchGnbMenuCd ? search.searchGnbMenuCd : (selectGnbMenuCd ? selectGnbMenuCd : '');
     await fetch(`${PORT}/menu/list-${menuCd}?${queryString}`, { method: 'GET', })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
         if(responseJson.result.toUpperCase() === 'SUCCESS') {
           setList(responseJson.data);
-          //setLnbMenuList(responseJson.data);
         } else {
-          //alert(responseJson.resultMsg);
           setList([]);
-          //setLnbMenuList([]);
         }
       });
   }

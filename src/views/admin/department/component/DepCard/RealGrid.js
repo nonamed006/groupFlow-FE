@@ -3,6 +3,7 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setDpCd }) => {
+  console.log(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "path", dataType: "text" },
@@ -64,7 +65,8 @@ const RealGrid = ({ org, setDpCd }) => {
       "us.png",
       "ve.png",
     ];
-
+    treeProvider.setObjectRows(org,)
+    //treeView.orderBy("path", "depth");
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];

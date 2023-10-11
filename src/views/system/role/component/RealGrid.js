@@ -28,7 +28,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "menuPath", false, null, "depth");
+    treeProvider.setRows(org, "menuPath", true, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
