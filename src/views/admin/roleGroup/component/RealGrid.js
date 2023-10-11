@@ -3,7 +3,7 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
-const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
+const RealGrid = ({ org, type, setCheckedMenuCd }) => {
   const realgridElement = useRef(null);
 
   var fields = [
@@ -156,4 +156,4 @@ const RealGridRoleMenu = ({ org, type, setCheckedMenuCd }) => {
   );
 };
 
-export default RealGridRoleMenu;
+export default RealGrid;

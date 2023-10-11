@@ -1,4 +1,5 @@
 import {
+  Box,
   Td,
   Text,
   Tr,
@@ -7,13 +8,14 @@ import {
 import React from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const ListCardTableTr = ({ data, index, setCoCd }) => {
+const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   return (
     <Tr
-      backgroundColor={mouseOverIndex === index ? "navy.50" : "white"}
+    backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' : 'white'}
+            
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);
@@ -21,12 +23,15 @@ const ListCardTableTr = ({ data, index, setCoCd }) => {
       onClick={() => {
         setCoCd(data.coCd);
       }}
-    >
-      <Td align="center">
+      borderColor={coCd === data.coCd && 'brand.500'}
+      shadow={coCd === data.coCd ? 'outline' : 'md'}
+      cursor={'pointer'}>
+
+      {/* <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
           {data.coCd}
         </Text>
-      </Td>
+      </Td> */}
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
           {data.coNm}
@@ -42,6 +47,13 @@ const ListCardTableTr = ({ data, index, setCoCd }) => {
           {data.ccNm}
         </Text>
       </Td>
+
+      <Td align="center">
+        <Box color={textColor} fontSize="sm" fontWeight="600">
+          {data.useYn?'사용':'미사용'}
+        </Box>
+      </Td>
+
     </Tr>
   );
 };

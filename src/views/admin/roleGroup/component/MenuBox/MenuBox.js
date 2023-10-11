@@ -6,8 +6,7 @@ import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
 
-
-const MenuBox = ({rgCd}) => {
+const MenuBox = ({rgCd, type}) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [changeEdit, setChangeEdit] = useState(false);
@@ -34,7 +33,7 @@ const MenuBox = ({rgCd}) => {
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd}/>
+            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type}/>
             {/* 검색창 */}
             <SearchBar changeEdit={changeEdit} selectedMenu={selectedMenu} rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
             {/* 메뉴리스트 */}

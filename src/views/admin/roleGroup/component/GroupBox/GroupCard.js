@@ -25,6 +25,7 @@ const GroupCard = ({ rgCd, group, index, setRgCd }) => {
             shadow={rgCd === group.rgCd ? 'outline' : 'md'}
             cursor={'pointer'}>
             <Flex>
+            <Checkbox mx='3' borderColor={'secondaryGray.600'} />
                 <Heading flex={1} fontSize='xl'>
                     <Text
                         color={textColor}

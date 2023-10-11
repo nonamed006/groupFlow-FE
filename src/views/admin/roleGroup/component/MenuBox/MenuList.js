@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import RealGrid from "../RealGrid";
 import { PORT } from "set";
+import RealGrid from "../RealGrid";
 
 const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keyword }) => {
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
@@ -9,7 +9,6 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     useEffect(() => {
         if((rgCd !== undefined && rgCd !=='undefined'))
             changeEdit? setChangeEdit(false) : fetchRoleMenu();
-        
     }, [rgCd, changeEdit, typeCd]);
 
     // 권한메뉴 목록 조회 + 검색

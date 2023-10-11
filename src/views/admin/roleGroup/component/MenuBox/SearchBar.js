@@ -55,6 +55,7 @@ const SearchBar = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu,
 					</GridItem>
 
 					<GridItem colStart={7} colEnd={9}><Text style={{ textAlign: 'center' }}>메뉴명</Text></GridItem>
+					
 					<GridItem colSpan={5}>
 						<Input placeholder="검색어를 입력하세요." name='keyword' size="md" borderRadius="14px" onChange={(e) => setKeyword(e.target.value)} />
 					</GridItem>
