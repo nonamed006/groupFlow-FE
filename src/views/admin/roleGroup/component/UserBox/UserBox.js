@@ -1,9 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
-import SearchBar from "./SearchBar";
+
 import CustomTable from "../tableList/CustomTable";
 import CardMenuBar from "common/component/CardMenuBar";
+import SearchBar from "common/component/SearchBar";
 
 
 const UserBox = ({rgCd}) => {
@@ -52,7 +53,8 @@ const UserBox = ({rgCd}) => {
                 {/* 상단 */}
                 <CardMenuBar title={'사용자 목록'} count={userList.length} buttonType={false}/>
                 {/* 검색바 */}
-                <SearchBar rgCd={rgCd} keyword={keyword} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn}/>
+                <SearchBar init={rgCd} textLabel={'이름'} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'검색어를 입력하세요'} btnText={'검색'} />
+    
                 {/* 목록 */}
                 <Box overflowY={'auto'} h={'80%'} mt={4}>
                     <CustomTable groupHeader={groupHeader} dataList={userList}/>
