@@ -49,9 +49,9 @@ const DepGrpInfo = ({ depGrp }) => {
               {depGrp.dpPathNm &&
                 depGrp.dpPathNm.map((pathNm, index) => {
                   return (
-                  <>
+                  <span key={index}>
                     {pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
-                  </>
+                  </span>
                   );
                 })} </Text>
           </GridItem>

@@ -27,7 +27,7 @@ const GnbCard = ({
     //   searchMenuNm: searchMenuNm
     // }
     const queryString = new URLSearchParams(search).toString();
-    await fetch(`${PORT}/menu/?${queryString}`, { method: 'GET', })
+    await fetch(`${PORT}/menu/list?${queryString}`, { method: 'GET', })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);

@@ -6,8 +6,13 @@ import GnbCard from './component/GnbCard/GnbCard';
 import LnbGrid from './component/LnbGrid/LnbGrid';
 import InfoBox from './component/InfoBox/InfoBox';
 import LnbInfoBox from './component/LnbInfoBox/InfoBox';
-import { useSelector } from 'react-redux';
 
+/*
+남은 작업 : 
+	1. 하위메뉴 수정 후 목록 새로고침
+	2. 파일 업로드(아이콘)
+	3. 상위 메뉴 변경
+*/
 const Menu = () => {
 	const [ gnbMenuList, setGnbMenuList ] = useState([]);			// GNB 메뉴 목록
 	const [ menuInfo, setMenuInfo ] = useState({});					// 선택한 메뉴 정보

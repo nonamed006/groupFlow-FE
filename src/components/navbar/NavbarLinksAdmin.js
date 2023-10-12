@@ -71,7 +71,8 @@ export default function HeaderLinks(props) {
 					</Text>
 				</Text>
 			</Flex>
-			<SidebarResponsive routes={routes} />
+			{/* 이혜윤 - 수정(메뉴 아이콘 때문에 안눌려서 주석 처리)
+			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
 				<MenuButton p="0px">

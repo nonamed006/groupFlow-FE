@@ -1,20 +1,20 @@
-import { Box, Grid, useColorModeValue, Button, Flex, Text} from "@chakra-ui/react";
+import { Box, useColorModeValue, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-const MenuTab = ({ typeCd, setIsOpen, changeTypeTab }) => {
+const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const menuTypeList = [
         {
-            typeCd : undefined,
+            typeCd: undefined,
             typeNm: '전체'
         },
         {
-            typeCd : 'MUA0003',
+            typeCd: 'MUA0003',
             typeNm: '사용자'
         },
         {
-            typeCd : 'MUA0002',
+            typeCd: 'MUA0002',
             typeNm: '관리자'
         },
     ];
@@ -35,25 +35,31 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab }) => {
             >
                 <Flex w="100%">
                     {menuTypeList &&
-                        menuTypeList.map((menuType)=>{
-                            return  (
-                            <Button  bg={'white'} onClick={()=>changeTypeTab(menuType.typeCd)}>
-                                 <Text
-                                    color={typeCd==menuType.typeCd?textNumColor:textColor}
-                                    fontSize="18px"
-                                    fontWeight="700"
-                                    lineHeight="100%"
-                                > 
-                                {menuType.typeNm}
-                             </Text> 
-                        </Button>);
+                        menuTypeList.map((menuType, index) => {
+                            return (
+                                <Button
+                                    key={index}
+                                    bg={'white'}
+                                    onClick={() => changeTypeTab(menuType.typeCd)}
+                                >
+                                    <Text
+                                        color={typeCd === menuType.typeCd ? textNumColor : textColor}
+                                        fontSize="18px"
+                                        fontWeight="700"
+                                        lineHeight="100%"
+                                    >
+                                        {menuType.typeNm}
+                                    </Text>
+                                </Button>);
                         })
                     }
                 </Flex>
+                {type === 'modify' &&
+                    <Button variant="action"
+                        onClick={() => setIsOpen(true)}
+                    >수정</Button>
+                }
 
-                <Button variant="action"
-                    onClick={() => setIsOpen(true)}
-                >수정</Button>
             </Flex>
         </Box>
     );

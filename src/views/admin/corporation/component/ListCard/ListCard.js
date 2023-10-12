@@ -3,7 +3,7 @@ import React from "react";
 import ListCardTable from "./ListCardTable";
 import { useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
-const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList }) => {
+const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList, coCd }) => {
 
   useEffect(() => { // 저장, 삭제, 수정 등의 이벤트가 있을 때 다시 값 가져오기
     if (changeYn) {
@@ -22,7 +22,7 @@ const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList }) => {
         btnText={'추가'} />
       {/* 목록 테이블 */}
       <Box w={'100%'} display={'inline-block'} overflowX={"auto"}  >
-        <ListCardTable listData={listData} setCoCd={setCoCd} />
+        <ListCardTable listData={listData} setCoCd={setCoCd} coCd={coCd}/>
       </Box>
 
     </Box>

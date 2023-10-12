@@ -1,7 +1,7 @@
 import React from "react";
 import ListCardTableTr from "./ListCardTableTr";
 import { Tbody } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-const ListCardTableTbody = ({ listData, setCoCd }) => {
+const ListCardTableTbody = ({ listData, setCoCd, coCd }) => {
   return (
     <Tbody>
       {listData &&
@@ -12,6 +12,7 @@ const ListCardTableTbody = ({ listData, setCoCd }) => {
               key={index}
               index={index}
               data={data}
+              coCd={coCd}
             />
           );
         })}
