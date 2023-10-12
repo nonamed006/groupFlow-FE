@@ -15,6 +15,7 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit }) => {
     // 권한그룹 메뉴 등록 및 수정
     const fetchModifyRoleMenu = () => {
         let url = `${PORT}/roleMenu/${rgCd}`
+        
         fetch(url, {
             method: "PUT",
             headers: {

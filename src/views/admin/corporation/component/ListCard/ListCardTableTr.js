@@ -14,8 +14,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
 
   return (
     <Tr
-    backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' : 'white'}
-            
+      backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' : 'white'}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);
@@ -50,7 +49,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
 
       <Td align="center">
         <Box color={textColor} fontSize="sm" fontWeight="600">
-          {data.useYn?'사용':'미사용'}
+          {data.useYn ? '사용' : '미사용'}
         </Box>
       </Td>
 

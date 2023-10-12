@@ -14,6 +14,8 @@ const UserBox = ({rgCd}) => {
     useEffect(()=>{
         if(rgCd !== undefined && rgCd !== 'undefined'){
             fetchRoleUserList();
+        }else{
+            setUserList([]);   
         }
     },[rgCd]);
 

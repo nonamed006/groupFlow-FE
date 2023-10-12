@@ -25,6 +25,7 @@ import AddrModal from './AddrModal';
     }
     return (
     <>
+      
               <GridItem colSpan={2} rowSpan={2}>
                   <Text fontSize="sm" fontWeight="600">
                     {title}
