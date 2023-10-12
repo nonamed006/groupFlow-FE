@@ -21,7 +21,7 @@ const ListCard = ({ title, setCoCd, listData, changeYn, initCorpList, coCd }) =>
         buttonType={true}
         btnText={'추가'} />
       {/* 목록 테이블 */}
-      <Box w={'100%'} display={'inline-block'} overflowX={"auto"}  >
+      <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'90%'} >
         <ListCardTable listData={listData} setCoCd={setCoCd} coCd={coCd}/>
       </Box>
 
