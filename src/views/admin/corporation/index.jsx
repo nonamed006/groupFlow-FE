@@ -95,6 +95,7 @@ const Corporation = () => {
 						setCoCd={setCoCd}
 						changeYn={changeYn}
 						initCorpList={initCorpList}
+						coCd={coCd}
 					/>
 				</GridItem>
 				{/* 회사정보 */}

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import RealGridRoleMenu from "../RealGrid";
 import { PORT } from "set";
+import RealGrid from "../RealGrid";
 
 const TotalMenuBox = ({ rgCd, setCheckedMenuCd }) => {
     const [menuList, setMenuList] = useState([]);
@@ -31,7 +31,7 @@ const TotalMenuBox = ({ rgCd, setCheckedMenuCd }) => {
     }
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="6">
-            <RealGridRoleMenu  type={'modify'} org={menuList} setCheckedMenuCd={setCheckedMenuCd} />
+            <RealGrid  type={'modify'} org={menuList} setCheckedMenuCd={setCheckedMenuCd} />
         </Box>
     );
 };

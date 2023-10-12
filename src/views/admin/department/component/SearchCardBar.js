@@ -12,6 +12,7 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res.data);
         setCorpNm(res.data);
       });
   };
@@ -35,8 +36,8 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
               }}
             >
               {corpNm.map((item, index) => (
-                <option key={index} value={item.co_cd}>
-                  {item.co_nm}
+                <option key={index} name="coCd" value={item.coCd}>
+                  {item.coNm}
                 </option>
               ))}
             </Select>

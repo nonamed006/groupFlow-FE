@@ -24,6 +24,7 @@ import DepUpperCd from "./DepUpperCd";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { PORT } from "set";
 const DepBasic = (props) => {
+  console.log(props);
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -75,7 +76,7 @@ const DepBasic = (props) => {
       });
   };
   useEffect(() => {
-    setDepDto(props.value);
+    setDepDto(props.depDto);
   }, [props]);
 
   return (
@@ -104,8 +105,10 @@ const DepBasic = (props) => {
         <GridItem colStart={7} colEnd={8}>
           <Button
             onClick={() => {
-              onOpen();
-              getOrg();
+              if (props.editState === "update") {
+                getOrg();
+                onOpen();
+              }
             }}
           >
             <DragHandleIcon />
@@ -137,14 +140,17 @@ const DepBasic = (props) => {
         <GridItem colStart={11} colEnd={15}>
           <RadioGroup
             value={recYN.toString()}
-            key={depDto.dpCd}
             onChange={(value) =>
               onChange({ target: { name: "recYN", value: value === "true" } })
             }
           >
             <HStack spacing="24px">
-              <Radio value="true">사용</Radio>
-              <Radio value="false">미사용</Radio>
+              <Radio value="true" isReadOnly={props.editState === "read"}>
+                사용
+              </Radio>
+              <Radio value="false" isReadOnly={props.editState === "read"}>
+                미사용
+              </Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -162,6 +168,7 @@ const DepBasic = (props) => {
             name="stnd"
             value={depDto.stnd || ""}
             key={depDto.dpCd}
+            isReadOnly={props.editState === "read"}
             onChange={onChange}
           />
         </GridItem>
@@ -179,6 +186,7 @@ const DepBasic = (props) => {
             name="reqNm"
             value={depDto.reqNm || ""}
             key={depDto.dpCd}
+            isReadOnly={props.editState === "read"}
             onChange={onChange}
           />
         </GridItem>
@@ -206,6 +214,7 @@ const DepBasic = (props) => {
             name="typeCd"
             value={depDto.typeCd || ""}
             key={depDto.dpCd}
+            isDisabled={props.editState === "read"}
             onChange={onChange}
           >
             <option value="부서">부서</option>
@@ -227,6 +236,7 @@ const DepBasic = (props) => {
             name="dpNm"
             value={depDto.dpNm || ""}
             key={depDto.dpCd}
+            isReadOnly={props.editState === "read"}
             onChange={onChange}
           />
         </GridItem>
@@ -244,6 +254,7 @@ const DepBasic = (props) => {
             name="dpAbb"
             value={depDto.dpAbb || ""}
             key={depDto.dpCd}
+            isReadOnly={props.editState === "read"}
             onChange={onChange}
           />
         </GridItem>
@@ -261,6 +272,7 @@ const DepBasic = (props) => {
             name="postNum"
             value={depDto.postNum || ""}
             key={depDto.dpCd}
+            isReadOnly={props.editState === "read"}
             onChange={onChange}
           />
         </GridItem>
@@ -284,8 +296,12 @@ const DepBasic = (props) => {
             }
           >
             <HStack spacing="24px">
-              <Radio value="true">사용</Radio>
-              <Radio value="false">미사용</Radio>
+              <Radio value="true" isReadOnly={props.editState === "read"}>
+                사용
+              </Radio>
+              <Radio value="false" isReadOnly={props.editState === "read"}>
+                미사용
+              </Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -299,6 +315,7 @@ const DepBasic = (props) => {
             value={depDto.addr || ""}
             key={depDto.dpCd}
             onChange={onChange}
+            isReadOnly={props.editState === "read"}
           />
         </GridItem>
 
@@ -316,8 +333,12 @@ const DepBasic = (props) => {
             }
           >
             <HStack spacing="24px">
-              <Radio value="true">표시</Radio>
-              <Radio value="false">미표시</Radio>
+              <Radio value="true" isReadOnly={props.editState === "read"}>
+                표시
+              </Radio>
+              <Radio value="false" isReadOnly={props.editState === "read"}>
+                미표시
+              </Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -331,6 +352,7 @@ const DepBasic = (props) => {
             value={depDto.addrDetail || ""}
             key={depDto.dpCd}
             onChange={onChange}
+            isReadOnly={props.editState === "read"}
           />
         </GridItem>
 
@@ -347,6 +369,7 @@ const DepBasic = (props) => {
             name="sort"
             value={depDto.sort || ""}
             onChange={onChange}
+            isReadOnly={props.editState === "read"}
           />
         </GridItem>
       </Grid>
