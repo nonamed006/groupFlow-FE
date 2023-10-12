@@ -7,7 +7,7 @@ const TableBody = ({ dataList }) => {
 
     return (
         <Tbody>
-            {dataList&&
+            {dataList &&
                 dataList.map((data, index) => {
                     return <TableTr data={data} key={index} index={index} />
             })}

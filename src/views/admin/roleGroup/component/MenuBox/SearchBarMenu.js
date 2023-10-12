@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { PORT } from "set";
 import SearchBar from "common/component/SearchBar";
 
-const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu, coCd }) => {
+const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu, coCd, grpNm }) => {
 	const [menuList, setMenuList] = useState();// 대메뉴 목록 (셀렉트박스에서 사용됨)
 	const formInputRef = useRef(null);
 
@@ -16,9 +16,9 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 		}
 	}, [rgCd, typeCd]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		setMenuList();
-	},[coCd]);
+	}, [coCd]);
 
 	const onClearSelect = () => {
 		if (formInputRef.current)
@@ -28,19 +28,22 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 	// 대메뉴 이름/코드 목록 조회
 	const fetchMenuList = () => {
 		let url = `${PORT}/roleMenu/gnbList`;
-		
-        const params = new URLSearchParams();
-        if(rgCd === 'total') params.append("coCd", coCd);
-        else params.append("rgCd", rgCd);
 
-        if (typeCd !== undefined && typeCd !== 'undefined') 
-            params.append("typeCd", typeCd);
+		const params = new URLSearchParams();
+		if (rgCd === 'total') {
+			params.append("coCd", coCd);
+			if (grpNm !== undefined && grpNm !== 'undefined') params.append("grpNm", grpNm);   // 권한그룹명 검색 시
+		}
+		else params.append("rgCd", rgCd);
 
-        // URL에 파라미터 추가
-        const paramString = params.toString();
-        if (paramString) {
-            url += "?" + paramString;
-        }
+		if (typeCd !== undefined && typeCd !== 'undefined')
+			params.append("typeCd", typeCd);
+
+		// URL에 파라미터 추가
+		const paramString = params.toString();
+		if (paramString) {
+			url += "?" + paramString;
+		}
 
 		fetch(url, {
 			method: "GET",
@@ -58,7 +61,7 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 			w="100%"
 		>
 			<form ref={formInputRef}>
-				<Flex>
+				<Flex justifyContent={"space-around"}>
 					<Text
 						mr={2}
 						style={{
@@ -80,13 +83,15 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 							})}
 					</Select>
 
-					<SearchBar
-						textLabel={'메뉴명'}
-						setKeyword={setKeyword}
-						handleSearchBtn={handelSearchBtn}
-						placeholder={'검색어를 입력하세요'}
-						btnText={'검색'}
-					/>
+					<Box w={'50%'}>
+						<SearchBar
+							textLabel={'메뉴명'}
+							setKeyword={setKeyword}
+							handleSearchBtn={handelSearchBtn}
+							placeholder={'검색어를 입력하세요'}
+							btnText={'검색'}
+						/>
+					</Box>
 				</Flex>
 			</form>
 		</Box>

@@ -7,8 +7,11 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
 
     useEffect(() => {
-        if((rgCd !== undefined && rgCd !=='undefined') )
+        if((rgCd !== undefined && rgCd !=='undefined') ){
             changeEdit? setChangeEdit(false) : fetchRoleMenu();
+        } else{
+            setRoleMenu();
+        }
     }, [rgCd, changeEdit, typeCd]);
 
 

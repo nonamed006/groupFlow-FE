@@ -38,6 +38,7 @@ const CorpList = ({ setCoCd, coCd }) => {
       .then((res) => {
 
         setCorpList(res.data);
+        setCoCd(undefined);
       });
   };
 

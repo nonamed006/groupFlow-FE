@@ -18,6 +18,8 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     useEffect(() => {
         if (coCd !== undefined && coCd !== 'undefined') {
             fetchRoleGroup(); // 권한그룹 목록 조회
+        }else{
+            setRoleGrpList([]);
         }
     }, [coCd]);
 
@@ -33,7 +35,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
         if (paramString) {
             url += "?" + paramString;
         }
-        console.log(url);
+   
         fetch(url, {
             method: "GET",
         })
@@ -41,11 +43,10 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             .then((res) => {
                 if (res.result === 'success') {
                     setRoleGrpList(res.data);
-                    setRgCd(undefined);
                 } else {
                     setRoleGrpList([]);
                 }
-
+                setRgCd(undefined);
             });
     };
 

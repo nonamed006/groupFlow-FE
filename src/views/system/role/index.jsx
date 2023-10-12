@@ -20,7 +20,7 @@ const RoleCorp = () => {
 
                 {/* 회사 목록 */}
                 <GridItem colSpan={2} rowSpan={5}>
-                    <CorpList 
+                    <CorpList
                         setCoCd={setCoCd}
                         coCd={coCd}
                     />
@@ -28,8 +28,8 @@ const RoleCorp = () => {
                 {/* 권한그룹 목록 */}
                 <GridItem colSpan={2} rowSpan={5}>
                     <RoleGrpBox
-                    keyword={keyword}
-                    setKeyword={setKeyword}
+                        keyword={keyword}
+                        setKeyword={setKeyword}
                         coCd={coCd}
                         rgCd={rgCd}
                         setRgCd={setRgCd}

@@ -11,7 +11,7 @@ const TotalMenuBox = ({ rgCd, setCheckedMenuCd }) => {
 
     // 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
     const fetchMenuList = () => {
-        let url = `${PORT}/roleMenu/total/${rgCd}`
+        let url = `${PORT}/roleMenu/menu/${rgCd}`
         fetch(url, {
             method: "GET",
         })

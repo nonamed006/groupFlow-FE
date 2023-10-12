@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
 const RealGrid = ({ org, type, setCheckedMenuCd }) => {
+
   const realgridElement = useRef(null);
 
   var fields = [

@@ -18,6 +18,7 @@ const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
         if(selectedMenu !== undefined && selectedMenu !== 'undefined' ){
             setChangeEdit(true);
         }
+        setTypeCd();
     },[rgCd]);
 
     // 검색 버튼 클릭 시
@@ -50,6 +51,7 @@ const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
                 handelSearchBtn={handelSearchBtn}
                 setKeyword={setKeyword}
                 setSelectedMenu={setSelectedMenu}
+                grpNm={grpNm}
             />
             {/* 메뉴리스트 */}
             <MenuList
