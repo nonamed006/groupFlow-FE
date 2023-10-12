@@ -13,6 +13,8 @@ const Test = () => {
   const [org, setOrg] = useState([]);
   const [dpCd, setDpCd] = useState(0);
   const [test, setTest] = useState(false);
+  const [editState, setEditState] = useState("read");
+  const [tabStatus, setTabStatus] = useState(1);
   const handleSearchBtn = () => {
     onClickSearchText();
   };
@@ -22,6 +24,7 @@ const Test = () => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res.data);
         setOrg(res.data);
       });
   };
@@ -50,10 +53,23 @@ const Test = () => {
           />
         </GridItem>
         <GridItem colSpan={2} rowSpan={5}>
-          <DepCard org={org} setDpCd={setDpCd} />
+          <DepCard
+            org={org}
+            setDpCd={setDpCd}
+            setEditState={setEditState}
+            setTabStatus={setTabStatus}
+          />
         </GridItem>
         <GridItem colSpan={4} rowSpan={5}>
-          <DepInfo setTest={setTest} dpCd={dpCd} setDpCd={setDpCd} />
+          <DepInfo
+            setTest={setTest}
+            dpCd={dpCd}
+            setDpCd={setDpCd}
+            editState={editState}
+            setEditState={setEditState}
+            tabStatus={tabStatus}
+            setTabStatus={setTabStatus}
+          />
         </GridItem>
       </Grid>
     </Box>

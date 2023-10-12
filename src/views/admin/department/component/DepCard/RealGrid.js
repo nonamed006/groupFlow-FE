@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = ({ org, setDpCd }) => {
+const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   console.log(org);
   const realgridElement = useRef(null);
   var fields = [
@@ -65,16 +65,18 @@ const RealGrid = ({ org, setDpCd }) => {
       "us.png",
       "ve.png",
     ];
-    treeProvider.setObjectRows(org,)
+    treeProvider.setRows(org, "path", true, null, "depth");
     //treeView.orderBy("path", "depth");
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
-        if (depth !== "0") {
+        if (depth !== "1") {
           let dpCdData =
             grid._dataProvider._rowMap[clickData.dataRow]._values[2];
           setDpCd(dpCdData);
-        } else if (depth === "0") {
+          setTabStatus(1);
+          setEditState("read");
+        } else if (depth === "1") {
           setDpCd(0);
         }
       }
