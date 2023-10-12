@@ -4,10 +4,20 @@ import {
   useColorModeValue,
   Grid,
   GridItem,
+  Stack,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
-import { useEffect } from "react";
-const InfoBox = ({ title, updateBtn, deleteBtn }) => {
+import { useEffect, useState } from "react";
+const InfoBox = ({
+  title,
+  updateBtn,
+  deleteBtn,
+  setEditState,
+  setDepDto,
+  tabStatus,
+  setTabStatus,
+}) => {
+  //const [tabStatus, setTabStatus] = useState(1);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   useEffect(() => {});
   return (
@@ -24,13 +34,50 @@ const InfoBox = ({ title, updateBtn, deleteBtn }) => {
       </GridItem>
 
       <GridItem colStart={12} colEnd={16}>
-        <Button variant="action" onClick={updateBtn}>
-          저장
-        </Button>
-        <Button variant="action" onClick={deleteBtn}>
-          삭제
-        </Button>
-        <Button variant="action">변경이력</Button>
+        {tabStatus === 1 ? (
+          <Stack direction="row" spacing={4}>
+            <Button
+              variant="action"
+              onClick={() => {
+                setEditState("update");
+                setTabStatus(2);
+              }}
+            >
+              수정
+            </Button>
+            <Button
+              variant="action"
+              onClick={() => {
+                deleteBtn();
+              }}
+            >
+              삭제
+            </Button>
+          </Stack>
+        ) : (
+          <Stack direction="row" spacing={4}>
+            <Button
+              variant="action"
+              onClick={() => {
+                updateBtn();
+                setTabStatus(1);
+                setEditState("read");
+              }}
+            >
+              저장
+            </Button>
+            <Button
+              variant="action"
+              onClick={() => {
+                setDepDto([]);
+                setTabStatus(1);
+                setEditState("read");
+              }}
+            >
+              취소
+            </Button>
+          </Stack>
+        )}
       </GridItem>
     </Grid>
   );

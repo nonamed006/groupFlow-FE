@@ -16,7 +16,14 @@ import { PORT } from "set";
 import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup";
 
-const EmpInfo = ({ setTest, dpCd }) => {
+const DepInfo = ({
+  setTest,
+  dpCd,
+  editState,
+  setEditState,
+  setTabStatus,
+  tabStatus,
+}) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
   const [dg, setDg] = useState([]);
@@ -100,6 +107,10 @@ const EmpInfo = ({ setTest, dpCd }) => {
           updateBtn={updateBtn}
           deleteBtn={deleteBtn}
           setTest={setTest}
+          setEditState={setEditState}
+          setDepDto={setDepDto}
+          tabStatus={tabStatus}
+          setTabStatus={setTabStatus}
         />
         <Tabs colorScheme="brandScheme">
           <TabList>
@@ -114,7 +125,7 @@ const EmpInfo = ({ setTest, dpCd }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <DepBasic value={depDto} change={change} />
+              <DepBasic depDto={depDto} editState={editState} change={change} />
             </TabPanel>
             <TabPanel>
               <DepGroup value={dg} />
@@ -126,4 +137,4 @@ const EmpInfo = ({ setTest, dpCd }) => {
   );
 };
 
-export default EmpInfo;
+export default DepInfo;

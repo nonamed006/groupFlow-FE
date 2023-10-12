@@ -9,7 +9,7 @@ import React from "react";
 import { useEffect } from "react";
 import RealGrid from "./RealGrid";
 
-const DepCard = ({ org, setDpCd }) => {
+const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   useEffect(() => {}, []);
@@ -37,12 +37,19 @@ const DepCard = ({ org, setDpCd }) => {
             variant="action"
             onClick={() => {
               setDpCd(0);
+              setEditState("update");
+              setTabStatus(2);
             }}
           >
             추가
           </Button>
         </Flex>
-        <RealGrid org={org} setDpCd={setDpCd}></RealGrid>
+        <RealGrid
+          org={org}
+          setDpCd={setDpCd}
+          setTabStatus={setTabStatus}
+          setEditState={setEditState}
+        ></RealGrid>
       </Box>
     </div>
   );
