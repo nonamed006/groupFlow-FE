@@ -8,8 +8,7 @@ import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardLis
 import RoleGrpSearchBar from "./RoleGrpSearchBar";
 
 
-const RoleGrpBox = ({ setRgCd, rgCd, coCd }) => {
-    const [keyword, setKeyword] = useState();   // 검색어
+const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
 
     // 선택한 권한 그룹 목록
@@ -34,7 +33,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd }) => {
         if (paramString) {
             url += "?" + paramString;
         }
-
+        console.log(url);
         fetch(url, {
             method: "GET",
         })

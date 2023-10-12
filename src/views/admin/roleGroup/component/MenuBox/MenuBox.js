@@ -6,7 +6,7 @@ import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
 
-const MenuBox = ({ rgCd, type, coCd }) => {
+const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [changeEdit, setChangeEdit] = useState(false);
@@ -60,6 +60,7 @@ const MenuBox = ({ rgCd, type, coCd }) => {
                 setChangeEdit={setChangeEdit}
                 keyword={keyword}
                 selectedMenu={selectedMenu} 
+                grpNm={grpNm}
             />
 
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}

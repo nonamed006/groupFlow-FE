@@ -8,7 +8,7 @@ import CorpList from "./component/Corp/CorpList/CorpList";
 const RoleCorp = () => {
     const [rgCd, setRgCd] = useState(); // 선택한 권한그룹 코드
     const [coCd, setCoCd] = useState(); // 선택한 회사 코드
-
+    const [keyword, setKeyword] = useState();   // 검색어
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
             <Grid
@@ -28,6 +28,8 @@ const RoleCorp = () => {
                 {/* 권한그룹 목록 */}
                 <GridItem colSpan={2} rowSpan={5}>
                     <RoleGrpBox
+                    keyword={keyword}
+                    setKeyword={setKeyword}
                         coCd={coCd}
                         rgCd={rgCd}
                         setRgCd={setRgCd}
@@ -38,6 +40,7 @@ const RoleCorp = () => {
                     <MenuBox
                         rgCd={rgCd}
                         coCd={coCd}
+                        grpNm={keyword}
                     />
                 </GridItem>
             </Grid>
