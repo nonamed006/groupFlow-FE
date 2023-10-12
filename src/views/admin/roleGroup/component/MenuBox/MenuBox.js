@@ -1,18 +1,24 @@
 import { Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SearchBar from "./SearchBarMenu";
 import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
 
-const MenuBox = ({rgCd, type, coCd}) => {
+const MenuBox = ({ rgCd, type, coCd }) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [changeEdit, setChangeEdit] = useState(false);
     const [typeCd, setTypeCd] = useState();
-    
+
     const [isOpen, setIsOpen] = useState(false);    // 권한메뉴 수정 모달
+
+    useEffect(()=>{
+        if(selectedMenu !== undefined && selectedMenu !== 'undefined' ){
+            setChangeEdit(true);
+        }
+    },[rgCd]);
 
     // 검색 버튼 클릭 시
     const handelSearchBtn = () => {
@@ -20,12 +26,12 @@ const MenuBox = ({rgCd, type, coCd}) => {
         setChangeEdit(true);
     };
 
-    const changeTypeTab =(typeCd)=>{ 
+    const changeTypeTab = (typeCd) => {
         initSearchBar();
         setTypeCd(typeCd);
     }
-    
-    const initSearchBar = ()=> {
+
+    const initSearchBar = () => {
         setSelectedMenu(undefined);
         setKeyword(undefined);
     }
@@ -33,16 +39,33 @@ const MenuBox = ({rgCd, type, coCd}) => {
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type}/>
+            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type} />
             {/* 검색창 */}
-            <SearchBar  coCd={coCd} changeEdit={changeEdit} selectedMenu={selectedMenu} rgCd={rgCd} typeCd={typeCd} handelSearchBtn={handelSearchBtn} setKeyword={setKeyword} setSelectedMenu={setSelectedMenu}/>
+            <SearchBar
+                coCd={coCd}
+                changeEdit={changeEdit}
+                selectedMenu={selectedMenu}
+                rgCd={rgCd}
+                typeCd={typeCd}
+                handelSearchBtn={handelSearchBtn}
+                setKeyword={setKeyword}
+                setSelectedMenu={setSelectedMenu}
+            />
             {/* 메뉴리스트 */}
-            <MenuList coCd={coCd} rgCd={rgCd} typeCd={typeCd} changeEdit={changeEdit} setChangeEdit={setChangeEdit} keyword={keyword} selectedMenu={selectedMenu}/>
+            <MenuList
+                coCd={coCd}
+                rgCd={rgCd}
+                typeCd={typeCd}
+                changeEdit={changeEdit}
+                setChangeEdit={setChangeEdit}
+                keyword={keyword}
+                selectedMenu={selectedMenu} 
+            />
 
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
             <TotalMenuModal isOpen={isOpen} setIsOpen={setIsOpen} setChangeEdit={setChangeEdit} rgCd={rgCd} />
         </Box>
-        
+
     );
 };
 

@@ -7,19 +7,27 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
 
     useEffect(() => {
-        if((rgCd !== undefined && rgCd !=='undefined'))
+        if((rgCd !== undefined && rgCd !=='undefined') )
             changeEdit? setChangeEdit(false) : fetchRoleMenu();
     }, [rgCd, changeEdit, typeCd]);
+
 
     useEffect(()=>{
         setRoleMenu();
     },[coCd]);
+
+
     // 권한메뉴 목록 조회 + 검색
     const fetchRoleMenu = () => {
-        let url = `${PORT}/roleMenu/${rgCd}`
-        console.log(rgCd);
+        let url = `${PORT}/roleMenu`
+
         // URL 파라미터 생성
         const params = new URLSearchParams();
+        if(rgCd === 'total')
+            params.append("coCd", coCd);
+        else
+            params.append("rgCd", rgCd);
+        
         if (selectedMenu !== undefined && selectedMenu !== 'undefined') 
             params.append("gnb", selectedMenu);
         if (keyword !== undefined && keyword !== 'undefined') 
@@ -38,14 +46,18 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
         })
             .then((res) => res.json())
             .then((res) => {
-                setRoleMenu(res.data);
+                if(res.result === 'success'){
+                    setRoleMenu(res.data);
+                }else{
+                    setRoleMenu();
+                }
             });
     };
 
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" px={5} >
-            {(rgCd !== 'undefined' && rgCd !== undefined) &&
-                roleMenu &&
+            {
+            roleMenu &&
                 <RealGrid org={roleMenu} />
             }
         </Box>

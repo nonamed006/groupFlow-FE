@@ -8,10 +8,11 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 	const formInputRef = useRef(null);
 
 	useEffect(() => {
-		if (rgCd !== undefined && rgCd !== 'undefined') {
+		if ((rgCd !== undefined && rgCd !== 'undefined')) {
 			fetchMenuList();
 			onClearSelect();
-			setSelectedMenu();
+			setSelectedMenu('undefined');
+			setKeyword();
 		}
 	}, [rgCd, typeCd]);
 
@@ -26,9 +27,21 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 
 	// 대메뉴 이름/코드 목록 조회
 	const fetchMenuList = () => {
-		let url = `${PORT}/roleMenu/gnbList/${rgCd}`;
-		if (typeCd !== undefined && typeCd !== 'undefined')
-			url += `?typeCd=${typeCd}`
+		let url = `${PORT}/roleMenu/gnbList`;
+		
+        const params = new URLSearchParams();
+        if(rgCd === 'total') params.append("coCd", coCd);
+        else params.append("rgCd", rgCd);
+
+        if (typeCd !== undefined && typeCd !== 'undefined') 
+            params.append("typeCd", typeCd);
+
+        // URL에 파라미터 추가
+        const paramString = params.toString();
+        if (paramString) {
+            url += "?" + paramString;
+        }
+
 		fetch(url, {
 			method: "GET",
 		})
@@ -62,13 +75,12 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 						fontSize="0.95em">
 						<option value={'undefined'} >전체</option>
 						{menuList &&
-							menuList.map((menu, index) => {
+							menuList.map((menu) => {
 								return (<option key={menu.menuCd} value={menu.menuCd}>{menu.menuNm}</option>);
 							})}
 					</Select>
 
 					<SearchBar
-						init={rgCd}
 						textLabel={'메뉴명'}
 						setKeyword={setKeyword}
 						handleSearchBtn={handelSearchBtn}
