@@ -17,8 +17,8 @@ const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
     useEffect(()=>{
         if(selectedMenu !== undefined && selectedMenu !== 'undefined' ){
             setChangeEdit(true);
+            initSearchBar();
         }
-        setTypeCd();
     },[rgCd]);
 
     // 검색 버튼 클릭 시
@@ -40,7 +40,7 @@ const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
     return (
         <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴 상단 */}
-            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type} />
+            <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} type={type} rgCd={rgCd} />
             {/* 검색창 */}
             <SearchBar
                 coCd={coCd}
@@ -63,6 +63,7 @@ const MenuBox = ({ rgCd, type, coCd, grpNm }) => {
                 keyword={keyword}
                 selectedMenu={selectedMenu} 
                 grpNm={grpNm}
+                initSearchBar={initSearchBar}
             />
 
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}

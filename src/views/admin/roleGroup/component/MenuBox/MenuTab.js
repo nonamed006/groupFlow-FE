@@ -1,7 +1,7 @@
 import { Box, useColorModeValue, Button, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 
-const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type }) => {
+const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type, rgCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const menuTypeList = [
@@ -19,6 +19,15 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type }) => {
         },
     ];
 
+    
+    useEffect(()=>{
+        // if(selectedMenu !== undefined && selectedMenu !== 'undefined' ){
+        //     setChangeEdit(true);
+        // }
+        // console.log('changeRgCd');
+        // setTypeCd(undefined);
+        changeTypeTab(undefined);
+    },[rgCd]);
 
     return (
         <Box>

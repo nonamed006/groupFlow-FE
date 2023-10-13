@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
@@ -8,7 +8,8 @@ import CorpList from "./component/Corp/CorpList/CorpList";
 const RoleCorp = () => {
     const [rgCd, setRgCd] = useState(); // 선택한 권한그룹 코드
     const [coCd, setCoCd] = useState(); // 선택한 회사 코드
-    const [keyword, setKeyword] = useState();   // 검색어
+    const [keyword, setKeyword] = useState();   // 권한그룹 검색어
+    
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
             <Grid

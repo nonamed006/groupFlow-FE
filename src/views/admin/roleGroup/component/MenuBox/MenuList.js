@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 import { PORT } from "set";
 import RealGrid from "../RealGrid";
 
-const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keyword, coCd, grpNm }) => {
+const MenuList = ({ typeCd, rgCd, changeEdit, initSearchBar, setChangeEdit, selectedMenu, keyword, coCd, grpNm }) => {
     const [roleMenu, setRoleMenu] = useState();  // 권한 메뉴 목록
 
     useEffect(() => {
+        initSearchBar();
         if((rgCd !== undefined && rgCd !=='undefined') ){
-            changeEdit? setChangeEdit(false) : fetchRoleMenu();
-        } else{
-            setRoleMenu();
-        }
-    }, [rgCd, changeEdit, typeCd]);
+           fetchRoleMenu();
+        } 
+    }, [rgCd, typeCd]);
 
-
+ 
     useEffect(()=>{
         setRoleMenu();
     },[coCd]);
 
 
+    useEffect(()=>{
+        if((rgCd !== undefined && rgCd !=='undefined') ){
+            changeEdit? setChangeEdit(false) : fetchRoleMenu();
+         } 
+    },[changeEdit]);
     // 권한메뉴 목록 조회 + 검색
     const fetchRoleMenu = () => {
         let url = `${PORT}/roleMenu`;
@@ -48,6 +52,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
         if (paramString) {
             url += "?" + paramString;
         }
+        console.log(url);
 
         fetch(url, {
             method: "GET",
@@ -56,6 +61,7 @@ const MenuList = ({ typeCd, rgCd, changeEdit, setChangeEdit, selectedMenu, keywo
             .then((res) => {
                 if(res.result === 'success'){
                     setRoleMenu(res.data);
+                    console.log(res.data);
                 }else{
                     setRoleMenu();
                 }

@@ -13,6 +13,7 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 			onClearSelect();
 			setSelectedMenu('undefined');
 			setKeyword();
+			setMenuList();
 		}
 	}, [rgCd, typeCd]);
 
