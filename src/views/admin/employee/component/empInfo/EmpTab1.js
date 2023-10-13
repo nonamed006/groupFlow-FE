@@ -234,7 +234,9 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.mailId}
-            isReadOnly={props.editState === "read" || props.editState === "update"}
+            isReadOnly={
+              props.editState === "read" || props.editState === "update"
+            }
             onChange={props.handleChange}
           />
         </GridItem>
@@ -251,7 +253,9 @@ const EmpTab1 = (props) => {
             size="md"
             borderRadius="14px"
             value={props.empDetail?.loginId}
-            isReadOnly={props.editState === "read" || props.editState === "update"}
+            isReadOnly={
+              props.editState === "read" || props.editState === "update"
+            }
             onChange={props.handleChange}
           />
         </GridItem>
@@ -270,7 +274,9 @@ const EmpTab1 = (props) => {
             name="loginPw"
             type="password"
             value={props.empDetail?.loginPw}
-            isReadOnly={props.editState === "read" || props.editState === "update"}
+            isReadOnly={
+              props.editState === "read" || props.editState === "update"
+            }
             onChange={props.handleChange}
           />
         </GridItem>
@@ -288,7 +294,9 @@ const EmpTab1 = (props) => {
             borderRadius="14px"
             type="password"
             value={props.empDetail?.signPw}
-            isReadOnly={props.editState === "read" || props.editState === "update"}
+            isReadOnly={
+              props.editState === "read" || props.editState === "update"
+            }
             onChange={props.handleChange}
           />
         </GridItem>

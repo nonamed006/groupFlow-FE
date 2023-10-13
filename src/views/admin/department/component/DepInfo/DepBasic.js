@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import DepUpperCd from "./DepUpperCd";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { PORT } from "set";
+import AddrBox from "common/addressAPI/AddrBox";
 const DepBasic = (props) => {
   console.log(props);
   const [depDto, setDepDto] = useState({});
@@ -82,16 +83,16 @@ const DepBasic = (props) => {
   return (
     <div>
       <Grid
-        templateColumns="repeat(15, 1fr)"
+        templateColumns="repeat(13, 1fr)"
         templateRows="repeat(12, 1fr)"
         gap={2}
       >
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             상위부서
           </Text>
         </GridItem>
-        <GridItem colStart={4} colEnd={7}>
+        <GridItem colStart={3} colEnd={6}>
           <Input
             placeholder="-"
             size="md"
@@ -102,7 +103,7 @@ const DepBasic = (props) => {
             readOnly
           />
         </GridItem>
-        <GridItem colStart={7} colEnd={8}>
+        <GridItem colStart={6} colEnd={7}>
           <Button
             onClick={() => {
               if (props.editState === "update") {
@@ -132,12 +133,12 @@ const DepBasic = (props) => {
           </Modal>
         </GridItem>
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colStart={8} colEnd={10}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             대내외 수신여부
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colSpan={4}>
           <RadioGroup
             value={recYN.toString()}
             onChange={(value) =>
@@ -155,12 +156,12 @@ const DepBasic = (props) => {
           </RadioGroup>
         </GridItem>
 
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             표준행정코드
           </Text>
         </GridItem>
-        <GridItem colStart={4} colEnd={8}>
+        <GridItem colStart={3} colEnd={7}>
           <Input
             placeholder="표준행정코드"
             size="md"
@@ -173,12 +174,12 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colStart={8} colEnd={10}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             발신인명
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colStart={10} colEnd={14}>
           <Input
             placeholder="발신인명"
             size="md"
@@ -191,23 +192,23 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             부서코드
           </Text>
         </GridItem>
-        <GridItem colStart={4} colEnd={8}>
+        <GridItem colStart={3} colEnd={7}>
           <Text color={textColor} fontSize="sm" fontWeight="500">
             {depDto.dpCd}
           </Text>
         </GridItem>
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colStart={8} colEnd={10}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             부서유형
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colStart={10} colEnd={14}>
           <Select
             placeholder=""
             borderRadius="14px"
@@ -223,12 +224,12 @@ const DepBasic = (props) => {
           </Select>
         </GridItem>
 
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             부서명
           </Text>
         </GridItem>
-        <GridItem colStart={4} colEnd={8}>
+        <GridItem colStart={3} colEnd={7}>
           <Input
             placeholder="부서명"
             size="md"
@@ -241,12 +242,12 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colStart={8} colEnd={10}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             부서약칭
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colStart={10} colEnd={14}>
           <Input
             placeholder="부서약칭"
             size="md"
@@ -259,7 +260,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={2} colEnd={4}>
+        {/*<GridItem colStart={2} colEnd={4}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             부서주소
           </Text>
@@ -280,14 +281,20 @@ const DepBasic = (props) => {
           <Button size="xs" variant="outline">
             우편번호
           </Button>
-        </GridItem>
+        </GridItem>*/}
+        <AddrBox
+          title={"부서주소"}
+          data={depDto}
+          setData={setDepDto}
+          editState={props.editState}
+        ></AddrBox>
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             사용여부
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colStart={3} colEnd={7}>
           <RadioGroup
             value={useYN.toString()}
             key={depDto.dpCd}
@@ -306,7 +313,7 @@ const DepBasic = (props) => {
           </RadioGroup>
         </GridItem>
 
-        <GridItem colStart={4} colEnd={8}>
+        {/*<GridItem colStart={4} colEnd={8}>
           <Input
             placeholder="주소"
             size="md"
@@ -317,14 +324,14 @@ const DepBasic = (props) => {
             onChange={onChange}
             isReadOnly={props.editState === "read"}
           />
-        </GridItem>
+        </GridItem>*/}
 
-        <GridItem colStart={9} colEnd={11}>
+        <GridItem colStart={8} colEnd={10}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             조작도표시
           </Text>
         </GridItem>
-        <GridItem colStart={11} colEnd={15}>
+        <GridItem colStart={10} colEnd={14}>
           <RadioGroup
             value={organYN.toString()}
             key={depDto.dpCd}
@@ -343,7 +350,7 @@ const DepBasic = (props) => {
           </RadioGroup>
         </GridItem>
 
-        <GridItem colStart={4} colEnd={8}>
+        {/*<GridItem colStart={4} colEnd={8}>
           <Input
             placeholder="상세주소"
             size="md"
@@ -354,14 +361,14 @@ const DepBasic = (props) => {
             onChange={onChange}
             isReadOnly={props.editState === "read"}
           />
-        </GridItem>
+        </GridItem>*/}
 
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colSpan={2}>
           <Text color={textColor} fontSize="sm" fontWeight="700">
             정렬
           </Text>
         </GridItem>
-        <GridItem colStart={4} colEnd={8}>
+        <GridItem colStart={3} colEnd={7}>
           <Input
             placeholder="정렬"
             size="md"
