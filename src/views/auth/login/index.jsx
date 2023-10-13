@@ -76,7 +76,7 @@ function SignIn() {
   }
 
   const empLogin = () => {
-    fetch(`${PORT}/emp/loginEmp`, {
+    fetch(`${PORT}/common/loginEmp`, {
       method: "POST",
       body: JSON.stringify(empInfo),
       headers: {
@@ -92,9 +92,9 @@ function SignIn() {
       }
       res.json().then((res)=>{
         console.log(res.data[0]);
-        dispatch(setEmpData(res.data[0]));
       }).then(()=>{
         window.location.replace("/");
+        
       });
     });
   }

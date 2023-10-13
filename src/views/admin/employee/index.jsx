@@ -55,6 +55,10 @@ const Employee = () => {
       `${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`,
       {
         method: "GET",
+        headers: {
+          'Content-Type': "application/json; charset=utf-8",
+          'Authorization': localStorage.getItem("Authorization")
+        }
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())

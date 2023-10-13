@@ -2,7 +2,9 @@
 import {
 	Avatar,
 	Button,
+	Checkbox,
 	Flex,
+	HStack,
 	Icon,
 	Image,
 	Link,
@@ -10,22 +12,33 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Radio,
+	RadioGroup,
 	Spacer,
+	Table,
+	TableCaption,
+	TableContainer,
+	Tbody,
+	Td,
 	Text,
+	Th,
+	Thead,
+	Tr,
 	useColorModeValue
 } from '@chakra-ui/react';
 // Custom Components
 import { ItemContent } from 'components/menu/ItemContent';
 import { SidebarResponsive } from 'components/sidebar/Sidebar';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
-import routes from 'routes.js';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { PORT } from 'set';
+import { setEmpData } from 'redux/solution';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -43,7 +56,32 @@ export default function HeaderLinks(props) {
 	);
 	const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
 	const empInfo = useSelector(state => state.solution.empData);
-	console.log("empInfo", empInfo);
+	const dispatch = useDispatch();
+
+	const getEmpInfo = () => {
+		fetch(
+			`${PORT}/emp/getEmpInfo`,
+			{
+				method: "post",
+				headers: {
+					'Content-Type': "application/json; charset=utf-8",
+					'Authorization': localStorage.getItem("Authorization")
+				}
+				// res에 결과가 들어옴
+			}
+		).then((res) => res.json())
+			.then((res) => {
+				dispatch(setEmpData(res.data));
+
+			});
+	}
+
+	useEffect(() => {
+		getEmpInfo();
+		console.log("useEff")
+	}, []);
+	console.log("empInfo: ", empInfo);
+
 	return (
 		<Flex
 			w={{ sm: '100%', md: 'auto' }}
@@ -87,19 +125,18 @@ export default function HeaderLinks(props) {
 							w="40px"
 							h="40px"
 						/>
-						<Flex direction={'column'}  p="0px 10px">
+						<Flex direction={'column'} p="0px 10px">
 							<Text textAlign={'left'} fontSize="sm" fontWeight="600" color={textColor}>
-								유저이름
-								{empInfo.empNm}
+								{empInfo[0]?.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								회사명 | 부서명
+								{empInfo[0]?.coNm} | {empInfo[0]?.dpNm}
 							</Text>
 						</Flex>
-					<ChevronDownIcon />
+						<ChevronDownIcon />
 					</Flex>
 				</MenuButton>
-				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
+				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none" minW="300px">
 					<Flex w="100%" mb="0px">
 						<Text
 							ps="20px"
@@ -111,24 +148,45 @@ export default function HeaderLinks(props) {
 							fontSize="sm"
 							fontWeight="700"
 							color={textColor}>
-							👋&nbsp; Hey, Adela
+							회사정보
 						</Text>
+						<Spacer />
+						<Text
+							ps="20px"
+							pt="16px"
+							pb="10px"
+							w="30%"
+							borderBottom="1px solid"
+							borderColor={borderColor}
+							fontSize="sm"
+							color="red"
+							_hover={{ cursor: 'pointer' }}
+						>logout</Text>
 					</Flex>
-					<Flex flexDirection="column" p="10px">
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
-							<Text fontSize="sm">Profile Settings</Text>
-						</MenuItem>
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
-							<Text fontSize="sm">Newsletter Settings</Text>
-						</MenuItem>
-						<MenuItem
-							_hover={{ bg: 'none' }}
-							_focus={{ bg: 'none' }}
-							color="red.400"
-							borderRadius="8px"
-							px="14px">
-							<Text fontSize="sm">Log out</Text>
-						</MenuItem>
+					<Flex flexDirection="column" p="5px">
+						<TableContainer>
+							<Table variant='simple' >
+								<Thead>
+									<Tr>
+										<Th>회사명</Th>
+										<Th>부서명</Th>
+										<Th>상태</Th>
+									</Tr>
+								</Thead>
+								<Tbody>
+									{empInfo?.map((column, index) => (
+										<Tr>
+											<Td>{column.coNm}</Td>
+											<Td>{column.dpNm}</Td>
+											<Td><Checkbox me='16px' colorScheme='brandScheme' /></Td>
+										</Tr>
+									))}
+								</Tbody>
+							</Table>
+						</TableContainer>
+					</Flex>
+					<Flex p="5px">
+						<Button variant="brand" w="100px" >확인</Button>
 					</Flex>
 				</MenuList>
 			</Menu>

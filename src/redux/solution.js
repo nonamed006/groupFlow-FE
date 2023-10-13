@@ -23,7 +23,7 @@ const initialState = {
     dataPk: 0,
     isRead: true,
     dataList: {},
-    empData: {},
+    empData: [],
   };
 
 
@@ -47,7 +47,6 @@ export default function solution(state = initialState, action) {
             isRead: action.isRead,
           };
           case SET_EMP_DATA :
-            console.log(action);
           return {
             ...state,
             empData: action.empData,

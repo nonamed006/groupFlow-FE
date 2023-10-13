@@ -124,7 +124,7 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
-                      {column.empId}
+                      {column.loginId}
                     </Text>
                   </Flex>
                 </Td>
