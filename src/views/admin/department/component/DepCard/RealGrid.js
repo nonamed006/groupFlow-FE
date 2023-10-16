@@ -3,7 +3,6 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
-  console.log(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "path", dataType: "text" },
@@ -13,7 +12,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 150, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 300, header: { text: "명칭" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },

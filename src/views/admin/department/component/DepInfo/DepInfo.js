@@ -57,20 +57,27 @@ const DepInfo = ({
       },
       body: JSON.stringify(depDto),
     })
+      .then((res) => res.json())
       .then((res) => {
-        console.log("qwe");
-        console.log(res);
+        console.log("res", res);
         if (res.status !== 200) {
-          throw Error("could not fetch the data that resource");
+          alert(res.resultMsg);
         }
-        res.json().then((res) => {
-          console.log(res);
-        });
-      })
-      .catch((err) => {
-        console.log("error");
-        console.log(err);
       });
+    //.then((res) => {
+    //  console.log("qwe");
+    //  console.log(res);
+    //  //if (res.status !== 200) {
+    //  //  throw Error("could not fetch the data that resource");
+    //  //}
+    //  res.json().then((res) => {
+    //    console.log(res);
+    //  });
+    //})
+    //.catch((err) => {
+    //  console.log("error");
+    //  console.log(err);
+    //});
   };
 
   const fetchUpdateDep = () => {

@@ -25,7 +25,6 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import { PORT } from "set";
 import AddrBox from "common/addressAPI/AddrBox";
 const DepBasic = (props) => {
-  console.log(props);
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -120,7 +119,7 @@ const DepBasic = (props) => {
               <ModalHeader>상위부서</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <DepUpperCd value={org} getValue={getValue} />
+                <DepUpperCd value={org} data={props} getValue={getValue} />
               </ModalBody>
 
               <ModalFooter>
