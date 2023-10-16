@@ -3,13 +3,17 @@ import React from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const GroupCard = ({ rgCd, group, index, setRgCd }) => {
+const GroupCard = ({ rgCd, group, index, setRgCd, isTotalRoleMenu }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     return (
         <Card
             key={index}
-            backgroundColor={(mouseOverIndex === index) || (rgCd === group.rgCd) ? 'navy.50' : !group.useYn ? 'gray.200' : 'white'}
+            backgroundColor={
+                ((mouseOverIndex === index) || ((rgCd === group.rgCd) ))? 
+                'navy.50' 
+                : !group.useYn ? 'gray.200' : 'white'
+            }
             onMouseOut={onMouseOut}
             onMouseOver={() => {
                 onMouseOver(index)
@@ -20,9 +24,11 @@ const GroupCard = ({ rgCd, group, index, setRgCd }) => {
             my='2'
             display={'inline-block'}
             p='3'
-            onClick={() => setRgCd(group.rgCd)}
-            borderColor={rgCd === group.rgCd && 'brand.500'}
-            shadow={rgCd === group.rgCd ? 'outline' : 'md'}
+            onClick={() => {
+                setRgCd(group.rgCd);
+            }}
+            borderColor={(rgCd === group.rgCd && !isTotalRoleMenu) && 'brand.500'}
+            shadow={(rgCd === group.rgCd) ? 'outline' : 'md'}
             cursor={'pointer'}
         >
             <Flex>

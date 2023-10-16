@@ -41,8 +41,12 @@ const GroupBox = ({ setRgCd, rgCd }) => {
         })
             .then((res) => res.json())
             .then((res) => {
-                if (res.result === 'success')
+                if (res.result === 'success'){
                     setRoleGrpList(res.data);
+                } else{
+                    setRoleGrpList([]);
+                }
+                    
                 setRgCd(undefined);
             });
     };
@@ -62,7 +66,6 @@ const GroupBox = ({ setRgCd, rgCd }) => {
 
     // 권한그룹 등록
     const fetchRoleGrpSave = () => {
-        console.log(roleGrp);
         let url = `${PORT}/roleGrp`;
         fetch(url, {
             method: "POST",

@@ -21,7 +21,7 @@ const DepGrpInfo = ({ depGrp }) => {
             borderRadius='full'
             boxSize='120px'
             src='https://bit.ly/dan-abramov'
-            alt='Dan Abramov'
+            alt='사원사진'
           />
         </Box>
         <Text

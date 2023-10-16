@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = (props) => {
+const RealGrid = ({ org, handelGrid}) => {
   const realgridElement = useRef(null);
 
   var fields = [
@@ -71,12 +71,12 @@ const RealGrid = (props) => {
       if (clickData.cellType !== "gridEmpty") {
         let dpCdData =
           grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-        props.handelGrid(dpCdData);
+        handelGrid(dpCdData);
       }
     };
 
     // props.value가 null인 경우 빈 배열로 대체하여 사용
-    treeProvider.setRows(props.value || [], "path", true, null, "depth");
+    treeProvider.setRows(org || [], "path", true, null, "depth");
 
     // 모두 열기
     treeView.expandAll();
@@ -90,13 +90,4 @@ const RealGrid = (props) => {
   return <Box ref={realgridElement} w={"100%"} h={"100%"} />;
 };
 
-// useEffect(()=>{
-//   if (props.isInit) {
-//     treeView.displayOptions.useFocusClass = false;
-//     props.setIsInit(false);
-//   } else {
-//     treeView.displayOptions.useFocusClass = true;
-//   }
-
-// }, [props.isInit]);
 export default RealGrid;

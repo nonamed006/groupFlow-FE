@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
 const RealGrid = ({ org, type, setCheckedMenuCd }) => {
+
   const realgridElement = useRef(null);
 
   var fields = [
@@ -40,7 +41,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
     console.log(org);
-    treeProvider.setRows(org, "menuPath", true, null, "depth");
+    treeProvider.setRows(org, "menuPath", false, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 42;
