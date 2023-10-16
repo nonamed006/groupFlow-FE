@@ -24,7 +24,6 @@ const Test = () => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data);
         setOrg(res.data);
       });
   };

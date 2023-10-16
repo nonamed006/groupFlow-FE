@@ -12,7 +12,6 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data);
         setCorpNm(res.data);
       });
   };

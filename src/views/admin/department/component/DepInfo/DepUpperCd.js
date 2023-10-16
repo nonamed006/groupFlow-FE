@@ -4,6 +4,7 @@ import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 import { useSelector } from "react-redux";
 
 function DepUpperCd(props) {
+  console.log(props);
   const realgridElement = useRef(null);
 
   var fields = [
@@ -69,8 +70,10 @@ function DepUpperCd(props) {
     ];
 
     treeView.onCellClicked = function (grid, clickData) {
+      let dpCd = props.data;
+      console.log("dpCd", dpCd);
       let dpData = grid._dataProvider._rowMap[clickData.dataRow];
-      console.log(dpData);
+      console.log("dpdata", dpData);
       props.getValue(dpData);
     };
     treeProvider.setRows(props.value, "path", true, null, "depth");
