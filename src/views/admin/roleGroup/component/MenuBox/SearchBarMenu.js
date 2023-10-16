@@ -1,58 +1,24 @@
 import { Box, Text, Select, Flex } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
-import { PORT } from "set";
+
 import SearchBar from "common/component/SearchBar";
 
-const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedMenu, coCd, grpNm }) => {
-	const [menuList, setMenuList] = useState();// 대메뉴 목록 (셀렉트박스에서 사용됨)
+const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
 	const formInputRef = useRef(null);
 
 	useEffect(() => {
-		if ((rgCd !== undefined && rgCd !== 'undefined')) {
+		if (rgCd !== undefined && rgCd !== 'undefined') {
 			fetchMenuList();
 			onClearSelect();
-			setSelectedMenu('undefined');
-			setKeyword();
 		}
 	}, [rgCd, typeCd]);
 
-	useEffect(() => {
-		setMenuList();
-	}, [coCd]);
 
 	const onClearSelect = () => {
 		if (formInputRef.current)
 			formInputRef.current.reset();
 	}
-
-	// 대메뉴 이름/코드 목록 조회
-	const fetchMenuList = () => {
-		let url = `${PORT}/roleMenu/gnbList`;
-
-		const params = new URLSearchParams();
-		if (rgCd === 'total') {
-			params.append("coCd", coCd);
-			if (grpNm !== undefined && grpNm !== 'undefined') params.append("grpNm", grpNm);   // 권한그룹명 검색 시
-		}
-		else params.append("rgCd", rgCd);
-
-		if (typeCd !== undefined && typeCd !== 'undefined')
-			params.append("typeCd", typeCd);
-
-		// URL에 파라미터 추가
-		const paramString = params.toString();
-		if (paramString) {
-			url += "?" + paramString;
-		}
-
-		fetch(url, {
-			method: "GET",
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				setMenuList(res.data);
-			});
-	}
+   
 
 	return (
 
@@ -87,7 +53,7 @@ const SearchBarMenu = ({ typeCd, rgCd, handelSearchBtn, setKeyword, setSelectedM
 						<SearchBar
 							textLabel={'메뉴명'}
 							setKeyword={setKeyword}
-							handleSearchBtn={handelSearchBtn}
+							handleSearchBtn={handleSearchBtn}
 							placeholder={'검색어를 입력하세요'}
 							btnText={'검색'}
 						/>

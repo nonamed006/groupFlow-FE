@@ -23,7 +23,7 @@ const RoleGroup = () => {
             </GridItem>
             {/* 메뉴 목록 */}
             <GridItem colSpan={3} rowSpan={5}>
-                <MenuBox rgCd={rgCd} type={'modify'}/>
+                <MenuBox rgCd={rgCd} modify={true}/>
             </GridItem>
             {/* 사용자 목록 */}
             <GridItem colSpan={2} rowSpan={5}>
