@@ -1,24 +1,10 @@
 import { Button, Input, Box } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 
-const SearchBar = ({ setKeyword, handleSearchBtn, init, textLabel, placeholder, btnText }) => {
-    const formInputRef = useRef(null);
-
-    useEffect(() => {
-        if (init !== undefined && init !== 'undefined') {   // init - 초기화 조건
-            // 초기화
-            onClearSelect();
-            setKeyword();
-        }
-    }, [init]);
-
-    const onClearSelect = () => {
-        if (formInputRef.current)
-            formInputRef.current.reset();
-    }
-
+const SearchBar = ({ setKeyword, handleSearchBtn, textLabel, placeholder, btnText }) => {
+  
     return (
-        <form ref={formInputRef}>
+
             <Box display="flex" bg="white" mb={4} justifyContent={"space-around"} w={'100%'}>
                 {textLabel &&
                     <Box style={{
@@ -38,7 +24,7 @@ const SearchBar = ({ setKeyword, handleSearchBtn, init, textLabel, placeholder, 
                 </Box>
 
             </Box>
-        </form>
+
     );
 };
 

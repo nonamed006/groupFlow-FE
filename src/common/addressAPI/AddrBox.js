@@ -26,10 +26,10 @@ const AddrBox = ({ title, data, setData, dataPk, editState }) => {
   return (
     <>
       <GridItem colSpan={2} rowSpan={2}>
-        <Text fontSize="sm" fontWeight="600">
-          {title}
-        </Text>
-      </GridItem>
+          <Text fontSize="sm" fontWeight="600">
+            {title}
+          </Text>
+        </GridItem>
 
       {/* 우편번호 */}
       <GridItem colStart={3} colEnd={7}>
