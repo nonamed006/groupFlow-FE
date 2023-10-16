@@ -61,7 +61,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
         }
     };
 
-    // 권한-회사 수정 시
+    // 권한-회사 맵핑 수정 시
     const fetchCheckedRoleGrp = () => {
         let url = `${PORT}/roleCorp/${coCd}`
 
@@ -84,16 +84,16 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={roleGrpList.length} buttonType={false} />
             {/* 검색바 */}
-            <RoleGrpSearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} coCd={coCd}/>
+            <RoleGrpSearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} code={coCd}/>
             {/* 목록 */}
             {roleGrpList.length > 0 &&
 
                 <GroupCardList
                     rgCd={rgCd}
-                    roleGrpList={roleGrpList}
-                    setRgCd={setRgCd}
-                    coCd={coCd}
-                    total={true}
+                    roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
+                    setRgCd={setRgCd}   // 권한그룹 선택
+                    code={coCd}
+                    total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
                 />
             }
         </Box>

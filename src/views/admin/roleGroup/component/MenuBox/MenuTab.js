@@ -1,7 +1,7 @@
 import { Box, useColorModeValue, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
-const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type, rgCd }) => {
+const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, modify }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const menuTypeList = [
@@ -18,16 +18,6 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type, rgCd }) => {
             typeNm: '관리자'
         },
     ];
-
-    
-    useEffect(()=>{
-        // if(selectedMenu !== undefined && selectedMenu !== 'undefined' ){
-        //     setChangeEdit(true);
-        // }
-        // console.log('changeRgCd');
-        // setTypeCd(undefined);
-        changeTypeTab(undefined);
-    },[rgCd]);
 
     return (
         <Box>
@@ -63,7 +53,7 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, type, rgCd }) => {
                         })
                     }
                 </Flex>
-                {type === 'modify' &&
+                {modify &&
                     <Button variant="action"
                         onClick={() => setIsOpen(true)}
                     >수정</Button>
