@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react"
 import EmpList from "./EmpList";
 import RoleList from "./RoleList";
+import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
 
 const EmpIndex = () => {
     return (
@@ -17,7 +18,7 @@ const EmpIndex = () => {
                     <RoleList/>
                 </GridItem>
 				<GridItem colSpan={2} h={'full'}>
-					
+					<MenuBox/>
 				</GridItem>
 			</Grid>
 		</Box>
