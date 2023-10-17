@@ -13,8 +13,8 @@ const CorpList = ({ setCoCd, coCd }) => {
 
   const [corpList, setCorpList] = useState([]); // 회사데이터 목록
   const [keyword, setKeyword] = useState(); // 검색어
-  
-  const [currentPage, setCurrentPage] = useState(1);   // 현재페이지
+
+  const [pageNum, setPageNum] = useState(1);   // 요청할 페이지
   const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
   const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
@@ -42,7 +42,7 @@ const CorpList = ({ setCoCd, coCd }) => {
     // URL 파라미터 생성
     const params = new URLSearchParams();
     if (keyword !== undefined && keyword !== 'undefined') params.append("keyword", keyword);
-    params.append("pageNum", currentPage);
+    params.append("pageNum", pageNum);
     // URL에 파라미터 추가
     const paramString = params.toString();
     if (paramString) {
@@ -59,7 +59,9 @@ const CorpList = ({ setCoCd, coCd }) => {
           setTotalCount(res.pageInfo.total);
           setCoCd(undefined);
           setIsLastPage(res.pageInfo.isLastPage);
-          setCurrentPage((currentPage) => currentPage + 1);
+         if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
+            setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
+          }
         }
       });
   };
@@ -68,7 +70,7 @@ const CorpList = ({ setCoCd, coCd }) => {
   const handleSearchBtn =  () => { // 초기화 
     setCorpList([]);
     setIsLastPage(false);
-    setCurrentPage(1);
+    setPageNum(1);
     setTotalCount(0);
     setInit(!init);
   };
