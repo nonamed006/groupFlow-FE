@@ -90,7 +90,8 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
         <Box minH={'560px'}>
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        <Box ref={infiniteScrollRef} bg={'white'} w={'100%'} h={'1px'}></Box>
+        
+        <Box ref={infiniteScrollRef}  h={'1px'} />
         {isLoading &&
           <SyncLoader />
         }

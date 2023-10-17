@@ -57,7 +57,6 @@ const CorpList = ({ setCoCd, coCd }) => {
         if (res.result === 'success') {
           setCorpList([...corpList, ...(res.pageInfo.list)]);
           setTotalCount(res.pageInfo.total);
-          setCoCd(undefined);
           setIsLastPage(res.pageInfo.isLastPage);
          if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
             setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
@@ -73,6 +72,7 @@ const CorpList = ({ setCoCd, coCd }) => {
     setPageNum(1);
     setTotalCount(0);
     setInit(!init);
+    setCoCd(undefined);
   };
 
   return (
@@ -89,10 +89,11 @@ const CorpList = ({ setCoCd, coCd }) => {
         <Box  minH={'560px'} >
             <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        {!isLoading ?
-        <Box ref={infiniteScrollRef} bg={'white'} w={'100%'} h={'1px'} ></Box>
+        <Box ref={infiniteScrollRef}  h={'1px'} />
+        {/* {!isLoading ?
+            <Box ref={infiniteScrollRef}  h={'1px'} />
           :<SyncLoader />
-        }
+        } */}
       </Box>
 
     </Box>

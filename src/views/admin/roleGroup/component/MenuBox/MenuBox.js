@@ -23,6 +23,8 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm }) => {
     }, [code]);
 
     useEffect(() => {
+        setRoleMenu();
+        setMenuList();
         changeTypeTab(undefined);
     }, [rgCd])
 
@@ -33,14 +35,10 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm }) => {
     };
 
     const changeTypeTab = (typeCd) => {
-        initSearchBar();
-        setTypeCd(typeCd);
-        setChangeEdit(true);
-    }
-
-    const initSearchBar = () => {
         setSelectedMenu(undefined);
         setKeyword(undefined);
+        setTypeCd(typeCd);
+        setChangeEdit(true);
     }
 
     // 대메뉴 이름/코드 목록 조회
