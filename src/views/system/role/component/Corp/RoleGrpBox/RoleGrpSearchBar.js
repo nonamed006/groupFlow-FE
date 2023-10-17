@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 import SearchBar from "common/component/SearchBar";
 

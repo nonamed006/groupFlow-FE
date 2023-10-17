@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { PORT } from "set";
 import ModalLayout from "common/modal/ModalLayout";
 
-const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
+const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [corp, setCorp] = useState({}); // 회사 데이터 (하나)
@@ -100,7 +100,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
       .then((res) => res.json())
       .then((res) => {
         alert(res.resultMsg);
-        setChangeYn(true); // 변경 여부 변경
+        setChangeYn(!changeYn); // 변경 여부 변경
       });
   };
 
@@ -117,7 +117,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
       .then((res) => res.json())
       .then((res) => {
         alert(res.resultMsg);
-        setChangeYn(true); // 변경 여부 변경
+        setChangeYn(!changeYn); // 변경 여부 변경
       });
   };
 
@@ -131,7 +131,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue }) => {
       .then((res) => {
         alert(res.resultMsg);
         setCoCd(); // coCd 초기화
-        setChangeYn(true); // 변경 여부 변경
+        setChangeYn(!changeYn); // 변경 여부 변경
       });
   };
 

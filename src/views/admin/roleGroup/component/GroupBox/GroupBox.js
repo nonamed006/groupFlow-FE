@@ -7,7 +7,7 @@ import GroupCardList from "./GroupCardList";
 import ModalLayout from "common/modal/ModalLayout";
 import GroupAddBox from "./GroupAddBox";
 import CardMenuBar from "common/component/CardMenuBar";
-
+import { useInView } from 'react-intersection-observer';
 
 const GroupBox = ({ setRgCd, rgCd }) => {
     const [keyword, setKeyword] = useState();   // 검색어
@@ -17,10 +17,31 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     const [isOpen, setIsOpen] = useState(false);    // 권한그룹 추가 모달
     const [roleGrp, setRoleGrp] = useState();
 
+    const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
+
+    const [pageNum, setPageNum] = useState(1);  // 요청할 페이지 번호
+    const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
+    const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
+    const [infiniteScrollRef, inView] = useInView();
+
+
     useEffect(() => {
         fetchCorpsNm(); // 회사 목록 조회
         fetchRoleGroup(); // 권한그룹 목록 조회
     }, []);
+
+    useEffect(async () => {
+        if (inView && !isLastPage) {
+            // await setIsLoading(true);
+            fetchRoleGroup();
+            // await setIsLoading(false);
+        }
+    }, [inView]);
+
+    useEffect(() => {
+        fetchRoleGroup();
+    }, [init]);
+
 
     // 권한그룹 목록 조회
     const fetchRoleGroup = () => {
@@ -30,6 +51,9 @@ const GroupBox = ({ setRgCd, rgCd }) => {
         const params = new URLSearchParams();
         if (searchCorp !== undefined && searchCorp !== 'undefined') params.append("coCd", searchCorp);
         if (keyword !== undefined && keyword !== 'undefined') params.append("grpNm", keyword);
+        // 페이지 요청
+        params.append("pageNum", pageNum);
+
         // URL에 파라미터 추가
         const paramString = params.toString();
         if (paramString) {
@@ -41,12 +65,16 @@ const GroupBox = ({ setRgCd, rgCd }) => {
         })
             .then((res) => res.json())
             .then((res) => {
-                if (res.result === 'success'){
-                    setRoleGrpList(res.data);
-                } else{
+                if (res.result === 'success') {
+                    setRoleGrpList([...roleGrpList, ...res.pageInfo.list]);
+                    setTotalCount(res.pageInfo.total);  // 총 데이터 수
+                    setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
+                    if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
+                        setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
+                    }
+                } else {
                     setRoleGrpList([]);
                 }
-                    
                 setRgCd(undefined);
             });
     };
@@ -86,9 +114,12 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     };
 
     // 검색 버튼 클릭 시
-    const handleSearchBtn = () => {
-        // 검색 내용에 따른 목록 조회
-        fetchRoleGroup();
+    const handleSearchBtn = () => { // 초기화 
+        setRoleGrpList([]);
+        setIsLastPage(false);
+        setPageNum(1);
+        setTotalCount(0);
+        setInit(!init);
     };
 
     // 권한그룹 추가 등록 버튼 클릭 시
@@ -115,14 +146,18 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white"  width={'550px'}>
             {/* 메뉴상단 */}
-            <CardMenuBar title={'권한그룹'} count={roleGrpList.length} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
+            <CardMenuBar title={'권한그룹'} count={totalCount} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
             {/* 목록 */}
-            <GroupCardList rgCd={rgCd} roleGrpList={roleGrpList} setRgCd={setRgCd} />
-
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
+                <Box minH={'510px'}>
+                    <GroupCardList rgCd={rgCd} roleGrpList={roleGrpList} setRgCd={setRgCd} />
+                </Box>
+                <Box ref={infiniteScrollRef}  h={'1px'} />
+            </Box>
             {/* 권한그룹 추가 모달 */}
             {isOpen &&
                 <ModalLayout title={'권한그룹추가'} buttonYn={true} onClose={changeIsOpen} size={'lg'} btnText={'등록'} handleCheck={handleAddBtn}>
