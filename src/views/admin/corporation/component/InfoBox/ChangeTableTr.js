@@ -25,7 +25,6 @@ const ListCardTableTr = ({ data, index }) => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setDetail(res.voData);
       });
   };
@@ -68,7 +67,7 @@ const ListCardTableTr = ({ data, index }) => {
       )}
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.ch_cd}
+          {data.chCd}
         </Text>
       </Td>
       <Td align="center">
@@ -78,17 +77,17 @@ const ListCardTableTr = ({ data, index }) => {
       </Td>
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.ch_div}
+          {data.chDiv}
         </Text>
       </Td>
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.co_nm}
+          {data.coNm}
         </Text>
       </Td>
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.emp_nm}({data.login_id})
+          {data.empNm}({data.loginId})
         </Text>
       </Td>
     </Tr>
