@@ -50,6 +50,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { PORT } from "set";
 import { useDispatch } from "react-redux";
 import { setEmpData } from "redux/solution";
+import { setCookie } from "common/common";
 
 function SignIn() {
   // Chakra color mode
@@ -87,14 +88,18 @@ function SignIn() {
         //refreshtoken localStorage에 담기
         if (header[0] === "refreshtoken") {
           let data = header[1];
-          localStorage.setItem("Authorization", data);
+          setCookie("Authorization", data, 2);
+          //localStorage.setItem("Authorization", data);
         }
       }
       res.json().then((res)=>{
-        console.log(res.data[0]);
+        res.data.forEach(function(data) {
+          if(data.dpType == "DGB0001"){
+            setCookie("Emp_Dp_Type", data.dpGrpCd, 2);
+          }
+        });
       }).then(()=>{
         window.location.replace("/");
-        
       });
     });
   }

@@ -4,7 +4,6 @@ import {
 	Button,
 	Checkbox,
 	Flex,
-	HStack,
 	Icon,
 	Image,
 	Link,
@@ -12,11 +11,8 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
-	Radio,
-	RadioGroup,
 	Spacer,
 	Table,
-	TableCaption,
 	TableContainer,
 	Tbody,
 	Td,
@@ -30,7 +26,7 @@ import {
 import { ItemContent } from 'components/menu/ItemContent';
 import { SidebarResponsive } from 'components/sidebar/Sidebar';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
@@ -39,6 +35,9 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { PORT } from 'set';
 import { setEmpData } from 'redux/solution';
+import { getCookie } from 'common/common';
+import { deleteCookie } from 'common/common';
+import { setCookie } from 'common/common';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -57,30 +56,70 @@ export default function HeaderLinks(props) {
 	const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
 	const empInfo = useSelector(state => state.solution.empData);
 	const dispatch = useDispatch();
+	const [dpType, setDpType] = useState("");
+	const [empDetail, setEmpDetail] = useState([]);
+	const [empTemp, setEmpTemp] = useState();
 
+	//사원 정보 조회, 리덕스에 저장
 	const getEmpInfo = () => {
+		let cookie = getCookie("Authorization");
+		if (cookie != undefined) {
+
+			fetch(
+				`${PORT}/emp/getEmpInfo`,
+				{
+					method: "post",
+					headers: {
+						'Content-Type': "application/json; charset=utf-8",
+						//'Authorization': localStorage.getItem("Authorization")
+						'Authorization': cookie
+					}
+					// res에 결과가 들어옴
+				}
+			).then((res) => res.json())
+				.then((res) => {
+					setDpType(getCookie("Emp_Dp_Type"));
+					dispatch(setEmpData(res.data));
+					setEmpDetail(res.data[0]);
+				});
+		}
+	}
+
+	//사원 로그아웃
+	const logoutemp = () => {
 		fetch(
-			`${PORT}/emp/getEmpInfo`,
+			`${PORT}/emp/logoutEmp`,
 			{
-				method: "post",
+				method: "get",
 				headers: {
 					'Content-Type': "application/json; charset=utf-8",
-					'Authorization': localStorage.getItem("Authorization")
+					'Authorization': getCookie("Authorization")
 				}
 				// res에 결과가 들어옴
 			}
 		).then((res) => res.json())
 			.then((res) => {
-				dispatch(setEmpData(res.data));
-
+				deleteCookie("Authorization");
+				deleteCookie("Emp_Dp_Type");
+				setDpType("");
+				window.location.replace("#/auth/login");
 			});
+	}
+
+	//체크박스 핸들링
+	const handleChange = (e, empInfo) => {
+		setDpType(e.target.value);
+		setEmpTemp(empInfo);
+	};
+
+	const clickHandle = () => {
+		setCookie("Emp_Dp_Type", dpType, 2);
+		setEmpDetail(empTemp);
 	}
 
 	useEffect(() => {
 		getEmpInfo();
-		console.log("useEff")
 	}, []);
-	console.log("empInfo: ", empInfo);
 
 	return (
 		<Flex
@@ -114,7 +153,7 @@ export default function HeaderLinks(props) {
 			{/* <SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px">
+				<MenuButton p="0px" onClick={() => { setDpType(getCookie("Emp_Dp_Type")); }}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: 'pointer' }}
@@ -127,16 +166,16 @@ export default function HeaderLinks(props) {
 						/>
 						<Flex direction={'column'} p="0px 10px">
 							<Text textAlign={'left'} fontSize="sm" fontWeight="600" color={textColor}>
-								{empInfo[0]?.empNm}
+								{empDetail?.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								{empInfo[0]?.coNm} | {empInfo[0]?.dpNm}
+								{empDetail?.coNm} | {empDetail?.dpNm}
 							</Text>
 						</Flex>
 						<ChevronDownIcon />
 					</Flex>
 				</MenuButton>
-				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none" minW="300px">
+				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none" minW="300px" >
 					<Flex w="100%" mb="0px">
 						<Text
 							ps="20px"
@@ -161,6 +200,7 @@ export default function HeaderLinks(props) {
 							fontSize="sm"
 							color="red"
 							_hover={{ cursor: 'pointer' }}
+							onClick={() => { logoutemp() }}
 						>logout</Text>
 					</Flex>
 					<Flex flexDirection="column" p="5px">
@@ -178,15 +218,21 @@ export default function HeaderLinks(props) {
 										<Tr>
 											<Td>{column.coNm}</Td>
 											<Td>{column.dpNm}</Td>
-											<Td><Checkbox me='16px' colorScheme='brandScheme' /></Td>
+											<Td><Checkbox 
+													me='16px' 
+													colorScheme='brandScheme' 
+													value={column.dpGrpCd} 
+													isChecked={column.dpGrpCd == dpType ? true : false} 
+													onChange={(e) => handleChange(e, column)} 
+												/></Td>
 										</Tr>
 									))}
 								</Tbody>
 							</Table>
 						</TableContainer>
 					</Flex>
-					<Flex p="5px">
-						<Button variant="brand" w="100px" >확인</Button>
+					<Flex p="5px" justifyContent="center">
+						<Button variant="brand" w="80px" size='sm' onClick={clickHandle}>확인</Button>
 					</Flex>
 				</MenuList>
 			</Menu>
