@@ -61,6 +61,9 @@ const CorpList = ({ setCoCd, coCd }) => {
          if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
             setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
           }
+        } else{
+          setCorpList([]);
+          setIsLastPage(true);
         }
       });
   };
