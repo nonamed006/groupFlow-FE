@@ -19,17 +19,23 @@ const InfoBoxBar = ({ title, onOpen, handelSaveBtn }) => {
 
   //변경이력 조회
   const handelChangeHistoryBtn = (page) => {
+    //현재 날짜 및 1달전 날짜 구하기
+    const today = new Date();
+    const monthAgo = new Date(today);
+    monthAgo.setMonth(today.getMonth() - 1);
+    today.setMonth(today.getMonth());
+    today.setDate(today.getDate() + 1);
+
     console.log(page);
     if (page === undefined) {
       page = 1;
     }
     if (chSearch.length === 0) {
-      chSearch.startCdt = "";
-      chSearch.endCdt = "";
+      chSearch.startCdt = monthAgo.toISOString().split("T")[0];
+      chSearch.endCdt = today.toISOString().split("T")[0];
       chSearch.chDiv = "";
       chSearch.cid = "";
     }
-
     let url = `${PORT}/corp/ch?startCdt=${chSearch.startCdt}&endCdt=${chSearch.endCdt}&chDiv=${chSearch.chDiv}&cid=${chSearch.cid}&pageNum=${page}`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())

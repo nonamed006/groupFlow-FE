@@ -4,7 +4,6 @@ import ListCardTableHeader from "views/admin/roleGroup/component/tableList/Table
 import ChangeModifyTableTbody from "./ChangeModifyTableTbody";
 const ChangeModifyTable = ({ detail }) => {
   const headerGroups = ["항목명", "변경전", "변경후"];
-
   return (
     <Table variant="simple" w={"100%"}>
       {/* Thead */}

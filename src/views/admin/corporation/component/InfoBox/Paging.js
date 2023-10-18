@@ -3,10 +3,13 @@ import {
   Flex,
   Box,
   Button,
+  Center,
+  Spacer,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
-import React from "react";
+import React, { useState } from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const pageSize = chHistory.pageSize;
   const navigatePages = chHistory.navigatePages;
   let endPage = Math.ceil(chHistory.total / pageSize);
@@ -17,16 +20,11 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
   } else {
     group = Math.floor(chHistory.pageNum / navigatePages) + 1;
   }
-  //if (chHistory.pages !== null) {
-  //  console.log("qweqwe", chHistory.pages);
-  //  //group = chHistory.pages.slice(0, -1);
-  //}
 
   let temp1 = endPage % navigatePages === 0 ? 5 : endPage % navigatePages;
   let limit = endNavigate === group ? temp1 : navigatePages;
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
   const test = (page) => {
-    console.log(page);
     handelChangeHistoryBtn(page);
   };
   const rendering = () => {
@@ -36,7 +34,7 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
         <Box
           p="3"
           backgroundColor={
-            mouseOverIndex === i
+            selectedIndex === i
               ? "navy.50"
               : mouseOverIndex === i
               ? "navy.50"
@@ -46,7 +44,10 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
           onMouseOver={() => {
             onMouseOver(i);
           }}
-          onClick={() => test((group - 1) * navigatePages + i)}
+          onClick={() => {
+            test((group - 1) * navigatePages + i);
+            setSelectedIndex(i);
+          }}
         >
           {(group - 1) * navigatePages + i}
         </Box>
@@ -56,13 +57,92 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
   };
   return (
     <div>
-      {chHistory.list.length > 0 && (
-        <Flex>
-          {chHistory.prePage > 0 && <Button> {"<<"} </Button>}
-          {chHistory.prePage > 0 && <Button> {"<"} </Button>}
+      {chHistory.list?.length > 0 && (
+        <Flex style={{ marginLeft: "400px" }}>
+          <Center>
+            <Button
+              onClick={() => {
+                test(1);
+                setSelectedIndex(1);
+              }}
+            >
+              {"<<"}
+            </Button>
+          </Center>
+          <Center>
+            <Button
+              onClick={() => {
+                if (chHistory.pageNum % navigatePages === 0) {
+                  test((Math.floor(chHistory.pageNum / navigatePages) - 1) * 5);
+                  setSelectedIndex(navigatePages);
+                  if (chHistory.pageNum <= navigatePages) {
+                    test(1);
+                    setSelectedIndex(1);
+                  }
+                } else {
+                  if (chHistory.pageNum <= navigatePages) {
+                    test(Math.floor(chHistory.pageNum / navigatePages) * 5);
+                    setSelectedIndex(1);
+                  } else {
+                    test(Math.floor(chHistory.pageNum / navigatePages) * 5);
+                    setSelectedIndex(navigatePages);
+                  }
+                }
+              }}
+            >
+              {"<"}
+            </Button>
+          </Center>
           {rendering()}
-          {chHistory.nextPage > 0 && <Button>{">"}</Button>}
-          {chHistory.nextPage > 0 && <Button>{">>"}</Button>}
+          <Center>
+            <Button
+              onClick={() => {
+                if (chHistory.pageNum % navigatePages === 0) {
+                  test(chHistory.nextPage);
+                  setSelectedIndex(1);
+                } else {
+                  if (chHistory.pageNum + navigatePages > chHistory.pages) {
+                    test(chHistory.pages);
+                    if (chHistory.pages % navigatePages === 0) {
+                      setSelectedIndex(navigatePages);
+                    } else {
+                      setSelectedIndex(chHistory.pages % navigatePages);
+                    }
+                  } else {
+                    test(
+                      (Math.floor(chHistory.pageNum / navigatePages) + 1) *
+                        navigatePages +
+                        1
+                    );
+                    setSelectedIndex(1);
+                  }
+                }
+                console.log(selectedIndex);
+              }}
+            >
+              {">"}
+            </Button>
+          </Center>
+          <Center>
+            <Button
+              onClick={() => {
+                test(chHistory.pages);
+                if (chHistory.pages % navigatePages === 0) {
+                  setSelectedIndex(navigatePages);
+                } else {
+                  setSelectedIndex(chHistory.pages % navigatePages);
+                }
+              }}
+            >
+              {">>"}
+            </Button>
+          </Center>
+          <Spacer></Spacer>
+          <Center>
+            <Text>
+              1-{chHistory.pages}페이지/총{chHistory.total}개
+            </Text>
+          </Center>
         </Flex>
       )}
     </div>

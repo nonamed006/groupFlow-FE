@@ -3,6 +3,7 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
+  console.log(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "path", dataType: "text" },
