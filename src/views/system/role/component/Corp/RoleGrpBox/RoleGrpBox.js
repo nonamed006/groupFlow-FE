@@ -66,6 +66,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                     }
                 } else {
                     setRoleGrpList([]);
+                    setIsLastPage(true);
                 }
                 setRgCd(undefined);
             });
