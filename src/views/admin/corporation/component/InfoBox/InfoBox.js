@@ -101,22 +101,26 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
 
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-    isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+    checkInputValues();
+    //isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
   };
 
-  //   const checkInputValues = () => {
-  //     - 회사명
-  // - 사용여부
-  // - 설립일
-  // - 개업일
-  // - 사업자번호
-  // - 회사구분(법인 필수 값)
+  const checkInputValues = () => {
+  //     - 회사명 coNm
+  // - 사용여부 useYn
+  // - 설립일 estDt
+  // - 개업일 opDt
+  // - 사업자번호 bsnsNum
+  // - 회사구분(법인 필수 값) bsCd
   // - 주소
   // - 대표자명
   // - 정렬(중복도 X)
+  console.log(corp.coNm);
+    if(corp.coNm === undefined){
+      alert("입력하세용");
+    }
 
-
-  //   }
+   }
 
   const handleCancle =()=>{
     setCoCd(); 
@@ -148,7 +152,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
           handleCancle={handleCancle}
           handleModify={handleModify}
         />
-        <Box>
+        <Box w={'100%'} justifyContent={"center"} alignContent={"center"}>
           <InputGrid
             corp={(corp !== undefined && corp !== 'undefined') && corp}
             setCorp={setCorp}

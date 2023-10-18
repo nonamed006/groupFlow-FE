@@ -85,7 +85,6 @@ const RoleCorp = () => {
                                     code={coCd} // 회사/부서/조직 코드
                                     grpNm={keyword} // 검색할 권한그룹명
                                     modify={false}  
-                                
                                 />
                             </GridItem>
                         </Grid>
