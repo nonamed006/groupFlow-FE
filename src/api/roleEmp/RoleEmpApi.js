@@ -1,24 +1,25 @@
 import { PORT } from "set";
+import { getPromise } from "api/Fetch";
 
-const getPromise = async (urlParam, methodParam) => {
-    return await fetch(`${PORT}/${urlParam}`, { method: methodParam })
-    .then((response) => response.json())
-    .then((responseJson) => responseJson);
-}
+// const getPromise = async (urlParam, methodParam) => {
+//     return await fetch(`${PORT}/${urlParam}`, { method: methodParam })
+//     .then((response) => response.json())
+//     .then((responseJson) => responseJson);
+// }
 
-export const getEmpListApi = (searchCoCd, searchDepNm, searchEmpNm) => {
+export const getEmpListApi = (searchCoCdParam, keywordParam, searchParam) => {
     const search = {
-        searchCoCd: searchCoCd,
-        searchDepNm: searchDepNm ? searchDepNm : '',
-        searchEmpNm: searchEmpNm ? searchEmpNm : '',
+        searchCoCd: searchCoCdParam,
+        keyword: keywordParam ? keywordParam : '',
+        search: keywordParam ? searchParam : '',
     }
     const queryString = new URLSearchParams(search).toString();
-    const promise = getPromise(`roleEmp/list?${queryString}`, 'GET');
+    const promise = getPromise({url: `roleEmp/list?${queryString}`, method: 'GET'});
     return promise.then((responseJson) => responseJson);
 }
 
 export const getCorpListApi = () => {
-    const promise = getPromise(`corp/list`, 'GET');
+    const promise = getPromise({url: `corp/list`, method: 'GET'});
 
     return promise.then((responseJson) => responseJson);
 }
