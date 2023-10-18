@@ -26,7 +26,7 @@ const EmpCard = (props) => {
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
 	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-const [selectedIndex, setSelectedIndex] = useState(undefined);
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   return (
     <div>
@@ -94,7 +94,7 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
-                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'navy.50': "white"}
+                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);

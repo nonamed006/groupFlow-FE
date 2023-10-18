@@ -12,7 +12,6 @@ import { createStore } from 'redux';
 import rootReducer from 'redux/rootReducer';
 import { Provider } from 'react-redux';
 import SystemLayout from 'layouts/system'; //이혜윤 - 추가
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 const store = createStore(rootReducer);
 ReactDOM.render(
@@ -21,7 +20,7 @@ ReactDOM.render(
 			<ThemeEditorProvider>
 				<HashRouter>
 					<Switch>
-						<Route path={`/system`} component={SystemLayout} />
+						<Route path={`/system`} component={SystemLayout}/>
 						<Route path={`/auth`} component={AuthLayout} />
 						<Route path={`/admin`} component={AdminLayout} />
 						<Route path={`/rtl`} component={RtlLayout} />

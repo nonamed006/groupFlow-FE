@@ -201,7 +201,7 @@ export default function HeaderLinks(props) {
 							color="red"
 							_hover={{ cursor: 'pointer' }}
 							onClick={() => { logoutemp() }}
-						>logout</Text>
+						>LogOut</Text>
 					</Flex>
 					<Flex flexDirection="column" p="5px">
 						<TableContainer>
