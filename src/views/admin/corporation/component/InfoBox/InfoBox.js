@@ -15,11 +15,11 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
     if (coCd !== "undefined" && coCd !== undefined) {
       // 선택된 coCd 값이 있다면
       fetchCorp(coCd); // coCd로 회사 조회
-      setIsEditing(true); // 수정모드
+    //  setIsEditing(true); // 수정모드
     } else {
       onReset();
-      setIsEditing(false);
-    }
+    
+    }  setIsEditing(false);
   }, [coCd, sortValue]);
 
   const onReset = () => {
@@ -162,9 +162,11 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
           title={"기본정보"}
           onOpen={onOpen}
           handelSaveBtn={handelSaveBtn}
+          setIsEditing={setIsEditing}
+          isEditing={isEditing}
         />
         <Box>
-          <InputGrid corp={corp} setCorp={setCorp} />
+          <InputGrid corp={corp} setCorp={setCorp} isEditing={isEditing} />
         </Box>
       </Box>
 

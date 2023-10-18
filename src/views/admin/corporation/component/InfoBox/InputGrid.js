@@ -6,7 +6,7 @@ import "assets/css/MiniCalendar.css";
 import { formatDate } from "common/common";
 import AddrBox from 'common/addressAPI/AddrBox';
 
-const InputGrid = ({ corp, setCorp }) => {
+const InputGrid = ({ corp, setCorp, isEditing }) => {
 
   const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum,fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd, sort } = corp; // 비구조화 할당을 통해 값 추출
   const useYn =  new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
@@ -43,8 +43,8 @@ const InputGrid = ({ corp, setCorp }) => {
         <GridItem colSpan={4}>
           <RadioGroup  name="useYn"  defaultValue={useYn.toString()} key={coCd} >
             <HStack spacing="24px">
-              <Radio name="useYn" value="true" onChange={onChange} >사용</Radio>
-              <Radio name="useYn" value="false" onChange={onChange} >미사용</Radio>
+              <Radio name="useYn" value="true" onChange={onChange} isReadOnly={!isEditing}>사용</Radio>
+              <Radio name="useYn" value="false" onChange={onChange} isReadOnly={!isEditing}>미사용</Radio>
             </HStack>
           </RadioGroup>
         </GridItem>
@@ -55,7 +55,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} key={coCd} onChange={onChange} />
+          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} key={coCd} onChange={onChange} readOnly={!isEditing}/>
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -64,7 +64,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange}  />
+          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange}  readOnly={!isEditing}/>
         </GridItem>
 
         <GridItem colSpan={2} >
@@ -73,7 +73,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} key={coCd}  onChange={onChange}  />
+          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} key={coCd}  onChange={onChange}  readOnly={!isEditing}/>
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -82,7 +82,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange}  />
+          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange}  readOnly={!isEditing}/>
         </GridItem>
 
 
@@ -92,7 +92,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} key={coCd} onChange={onChange} />
+          <Input id="stnd" name="stnd" size="md" borderRadius="14px" defaultValue={stnd} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
           <Text fontSize="sm" fontWeight="600">
@@ -101,6 +101,7 @@ const InputGrid = ({ corp, setCorp }) => {
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
           <Input
+            readOnly={!isEditing}
             placeholder="Select Date and Time"
             size="md"
             type="date"
@@ -127,6 +128,7 @@ const InputGrid = ({ corp, setCorp }) => {
             style={{ color: "gray" }}
             onChange={onChange}
             key={coCd}
+            readOnly={!isEditing}
           />
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
@@ -144,6 +146,7 @@ const InputGrid = ({ corp, setCorp }) => {
             style={{ color: "gray" }}
             onChange={onChange}
             key={coCd}
+            readOnly={!isEditing}
           />
         </GridItem>
 
@@ -153,7 +156,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} key={coCd} onChange={onChange} />
+          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} key={coCd} onChange={onChange} readOnly={!isEditing}/>
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -170,6 +173,7 @@ const InputGrid = ({ corp, setCorp }) => {
             style={{ color: "gray" }} 
             defaultValue={bsCd}
             key={coCd}
+            readOnly={!isEditing}
            >
             <option 
               name="bsCd" 
@@ -182,7 +186,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Select>
         </GridItem>
         <GridItem colStart={12} colEnd={14}>
-          <Input id="coNum" name="coNum" size="md" borderRadius="14px" defaultValue={coNum} key={coCd} onChange={onChange} placeholder="법인번호" />
+          <Input id="coNum" name="coNum" size="md" borderRadius="14px" defaultValue={coNum} key={coCd} onChange={onChange} placeholder="법인번호" readOnly={!isEditing} />
         </GridItem>
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
@@ -190,7 +194,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="ceoNm" name="ceoNm" size="md" borderRadius="14px" defaultValue={ceoNm} key={coCd} onChange={onChange}/>
+          <Input id="ceoNm" name="ceoNm" size="md" borderRadius="14px" defaultValue={ceoNm} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
           <Text fontSize="sm" fontWeight="600">
@@ -198,7 +202,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange}  />
+          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange} readOnly={!isEditing}  />
         </GridItem>
 
         <AddrBox title={'회사주소'} data={corp} setData={setCorp} dataPk={coCd}/>
@@ -209,7 +213,7 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="pageUrl" name="pageUrl" size="md" borderRadius="14px" defaultValue={pageUrl} key={coCd} onChange={onChange} />
+          <Input id="pageUrl" name="pageUrl" size="md" borderRadius="14px" defaultValue={pageUrl} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
         <GridItem colStart={8} colEnd={10}>
           <Text fontSize="sm" fontWeight="600">
@@ -217,15 +221,15 @@ const InputGrid = ({ corp, setCorp }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} key={coCd} onChange={onChange}  />
-        </GridItem>
+          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} key={coCd} onChange={onChange} readOnly={!isEditing}  />
+        </GridItem>!isEditing
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
             정렬
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sort} key={coCd} onChange={onChange}  />
+          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sort} key={coCd} onChange={onChange} readOnly={!isEditing}  />
         </GridItem>
 
       </Grid>
