@@ -101,8 +101,8 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
 
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-    checkInputValues();
-    //isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+  
+    isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
   };
 
   const checkInputValues = () => {
@@ -115,11 +115,6 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   // - 주소
   // - 대표자명
   // - 정렬(중복도 X)
-  console.log(corp.coNm);
-    if(corp.coNm === undefined){
-      alert("입력하세용");
-    }
-
    }
 
   const handleCancle =()=>{
