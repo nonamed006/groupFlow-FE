@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { Box, Grid, GridItem, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-=======
-import { Box, Grid, GridItem } from "@chakra-ui/react";
->>>>>>> main
-import React, { useState } from "react";
+import { React, useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
 import CorpList from "./component/Corp/CorpList/CorpList";
