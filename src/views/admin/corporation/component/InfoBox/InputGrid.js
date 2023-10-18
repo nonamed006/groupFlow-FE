@@ -1,4 +1,4 @@
-import { Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio} from '@chakra-ui/react';
+import { Select, Grid, Input, GridItem, Text, RadioGroup, HStack, Radio } from '@chakra-ui/react';
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -8,8 +8,8 @@ import AddrBox from 'common/addressAPI/AddrBox';
 
 const InputGrid = ({ corp, setCorp, isEditing }) => {
 
-  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum,fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd, sort } = corp; // 비구조화 할당을 통해 값 추출
-  const useYn =  new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
+  const { coCd, coNm, ceoNm, bsType, bsStock, bsCd, coNum, fax, coDomain, pageUrl, bsnsNum, estDt, opDt, clsDt, coAbb, stnd, sort } = corp; // 비구조화 할당을 통해 값 추출
+  const useYn = new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -41,7 +41,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colSpan={4}>
-          <RadioGroup  name="useYn"  defaultValue={useYn.toString()} key={coCd} >
+          <RadioGroup name="useYn" defaultValue={useYn.toString()} key={coCd} >
             <HStack spacing="24px">
               <Radio name="useYn" value="true" onChange={onChange} isReadOnly={!isEditing}>사용</Radio>
               <Radio name="useYn" value="false" onChange={onChange} isReadOnly={!isEditing}>미사용</Radio>
@@ -55,7 +55,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} key={coCd} onChange={onChange} readOnly={!isEditing}/>
+          <Input id="coNm" name="coNm" size="md" borderRadius="14px" defaultValue={coNm} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -64,7 +64,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange}  readOnly={!isEditing}/>
+          <Input id="coAbb" name="coAbb" size="md" borderRadius="14px" defaultValue={coAbb} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
         <GridItem colSpan={2} >
@@ -73,7 +73,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} key={coCd}  onChange={onChange}  readOnly={!isEditing}/>
+          <Input id="bsType" name="bsType" size="md" borderRadius="14px" defaultValue={bsType} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -82,7 +82,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange}  readOnly={!isEditing}/>
+          <Input id="bsStock" name="bsStock" size="md" borderRadius="14px" defaultValue={bsStock} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
 
@@ -106,7 +106,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
             size="md"
             type="date"
             name='estDt'
-            defaultValue={estDt!==null&&formatDate(estDt)}
+            defaultValue={estDt !== null && formatDate(estDt)}
             style={{ color: "gray" }}
             onChange={onChange}
             key={coCd}
@@ -124,7 +124,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
             size="md"
             type="date"
             name='opDt'
-            defaultValue={opDt!==null&&formatDate(opDt)}
+            defaultValue={opDt !== null && formatDate(opDt)}
             style={{ color: "gray" }}
             onChange={onChange}
             key={coCd}
@@ -142,7 +142,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
             size="md"
             type="date"
             name='clsDt'
-            defaultValue={clsDt!==null&&formatDate(clsDt)}
+            defaultValue={clsDt !== null && formatDate(clsDt)}
             style={{ color: "gray" }}
             onChange={onChange}
             key={coCd}
@@ -156,7 +156,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} key={coCd} onChange={onChange} readOnly={!isEditing}/>
+          <Input id="bsnsNum" name="bsnsNum" size="md" borderRadius="14px" defaultValue={bsnsNum} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
         <GridItem colStart={8} colEnd={10}>
@@ -165,23 +165,23 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={12}>
-          <Select 
-            borderRadius="14px" 
-            name="bsCd" 
-            onChange={onChange} 
+          <Select
+            borderRadius="14px"
+            name="bsCd"
+            onChange={onChange}
             placeholder='회사구분'
-            style={{ color: "gray" }} 
+            style={{ color: "gray" }}
             defaultValue={bsCd}
             key={coCd}
             readOnly={!isEditing}
-           >
-            <option 
-              name="bsCd" 
-              value='COA0001' 
+          >
+            <option
+              name="bsCd"
+              value='COA0001'
             >개인</option>
-            <option 
-              name="bsCd" 
-              value='COA0002' 
+            <option
+              name="bsCd"
+              value='COA0002'
             >법인</option>
           </Select>
         </GridItem>
@@ -202,10 +202,16 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange} readOnly={!isEditing}  />
+          <Input id="fax" name="fax" size="md" borderRadius="14px" defaultValue={fax} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
-        <AddrBox title={'회사주소'} data={corp} setData={setCorp} dataPk={coCd}/>
+        <AddrBox
+          title={'회사주소'}
+          data={corp}
+          setData={setCorp}
+          dataPk={coCd}
+          editState={isEditing && 'update'}
+        />
 
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
@@ -221,15 +227,15 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           </Text>
         </GridItem>
         <GridItem colStart={10} colEnd={14}>
-          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} key={coCd} onChange={onChange} readOnly={!isEditing}  />
-        </GridItem>!isEditing
+          <Input id="coDomain" name="coDomain" size="md" borderRadius="14px" defaultValue={coDomain} key={coCd} onChange={onChange} readOnly={!isEditing} />
+        </GridItem>
         <GridItem colSpan={2}>
           <Text fontSize="sm" fontWeight="600">
             정렬
           </Text>
         </GridItem>
         <GridItem colStart={3} colEnd={7}>
-          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sort} key={coCd} onChange={onChange} readOnly={!isEditing}  />
+          <Input id="sort" name="sort" size="md" borderRadius="14px" defaultValue={sort} key={coCd} onChange={onChange} readOnly={!isEditing} />
         </GridItem>
 
       </Grid>

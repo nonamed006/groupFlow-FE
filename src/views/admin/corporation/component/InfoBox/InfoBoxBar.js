@@ -11,7 +11,7 @@ import ChangeMenuBar from "./ChangeMenuBar";
 import ChangeTable from "./ChangeTable";
 import { PORT } from "set";
 
-const InfoBoxBar = ({ title, onOpen, handelSaveBtn, isEditing, setIsEditing }) => {
+const InfoBoxBar = ({ title, onOpen, handleSaveBtn, isEditing, handleCancle, handleModify }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [isOpen, setIsOpen] = React.useState(false);
   const [chSearch, setChSearch] = React.useState([]); //변경이력 구분 [추가, 수정, 삭제
@@ -60,23 +60,23 @@ const InfoBoxBar = ({ title, onOpen, handelSaveBtn, isEditing, setIsEditing }) =
       <Flex>
         {
           !isEditing ?
-            <Flex>
-              <Button variant="brand" onClick={()=>setIsEditing(!isEditing)}>
+          <>
+              <Button variant="brand" onClick={handleModify}>
                 수정
               </Button>
               <Button variant="action" onClick={onOpen}>
                 삭제
               </Button>
-            </Flex>
+          </>
             :
-            <Flex>
-            <Button variant="brand" onClick={handelSaveBtn}>
+          <>
+            <Button variant="brand" onClick={handleSaveBtn}>
               저장
             </Button>
-            <Button variant="action" onClick={()=>setIsEditing(!isEditing)}>
+            <Button variant="action" onClick={handleCancle}>
               취소
             </Button>
-          </Flex>
+          </>
         }
 
         <Button

@@ -38,7 +38,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState }) => {
           name="postNum"
           size="md"
           borderRadius="14px"
-          value={data && data.postNum}
+          defaultValue={data ? data.postNum:''}
           placeholder="우편번호"
           readOnly
         />
@@ -66,7 +66,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState }) => {
           name="addr"
           size="md"
           borderRadius="14px"
-          value={data && data.addr}
+          defaultValue={data ? data.addr: ''}
           placeholder="주소를 선택하세요"
           readOnly
         />
@@ -80,9 +80,10 @@ const AddrBox = ({ title, data, setData, dataPk, editState }) => {
           size="md"
           borderRadius="14px"
           onChange={onChangeAddrDetail}
-          defaultValue={data && data.addrDetail}
+          defaultValue={data ? data.addrDetail:''}
           key={dataPk}
           placeholder="상세주소를 입력하세요."
+          readOnly={editState === "update"?false:true}
         />
       </GridItem>
 

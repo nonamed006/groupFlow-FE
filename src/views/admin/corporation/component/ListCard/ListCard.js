@@ -79,11 +79,14 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
     return;
   };
 
+  const handleOnClik = () => {
+    setCoCd(0);
+  }
   return (
     <Box borderRadius="lg" bg="white" h="700px" p="6">
       {/* 목록 상단 */}
       <CardMenuBar
-        handelOnClik={setCoCd}
+        handleOnClik={handleOnClik}
         title={title}
         count={totalCount}
         buttonType={true}
