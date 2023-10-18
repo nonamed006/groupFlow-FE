@@ -18,10 +18,9 @@ const ListCardTableTr = ({ data, index }) => {
   const [chDiv, setChDiv] = React.useState("");
   const [detail, setDetail] = React.useState({});
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-
   //변경이력 상세조회
   const handelChangeHistoryDetailBtn = () => {
-    let url = `${PORT}/corp/chDetail?chCd=${data.ch_cd}&chDiv=${data.ch_div}`;
+    let url = `${PORT}/corp/chDetail?chCd=${data.chCd}&chDiv=${data.chDiv}`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
@@ -36,7 +35,7 @@ const ListCardTableTr = ({ data, index }) => {
         onMouseOver(index);
       }}
       onClick={() => {
-        setChDiv(data.ch_div);
+        setChDiv(data.chDiv);
         setIsOpen(true);
         handelChangeHistoryDetailBtn();
       }}

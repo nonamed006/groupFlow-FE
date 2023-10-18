@@ -2,21 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
+const RealGrid = ({ org, setListDetail }) => {
   console.log(org);
   const realgridElement = useRef(null);
   var fields = [
-    { fieldName: "path", dataType: "text" },
-    { fieldName: "name", dataType: "text" },
     { fieldName: "code", dataType: "text" },
+    { fieldName: "name", dataType: "text" },
+    { fieldName: "path", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 300, header: { text: "명칭" } },
-    { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
-    { fieldName: "depth", name: "depth", header: { text: "depth" } },
+    { fieldName: "path", name: "path", width: 50, header: { text: "path" } },
+    { fieldName: "name", name: "name", width: 300, header: { text: "name" } },
+    { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
+    { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
   ];
 
   var treeProvider, treeView;
@@ -29,15 +29,17 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "path", true, null, "depth");
+    //treeProvider.setRows(org, "dpPath", true, null, null);
+    treeProvider.setObjectRows({rows: org}, 'rows', '', '');
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
     treeView.header.height = 40;
     treeView.footer.height = 40;
-    treeView.stateBar.width = 20;
+    treeView.stateBar.width = 30;
 
-    treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+    treeView.displayOptions.useFocusClass = true;     // 클릭 시 색상
+    //treeView.setDisplayOptions({vscrollBar: false});  // 수직 스크롤바 표시 여부
 
     treeView.setStateBar({ visible: false }); //상태바 표시X
     treeView.setCheckBar({ visible: false }); //체크박스 표시X
@@ -45,9 +47,8 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
 
     //해당 컬럼 표시X
     treeView.columnByName("path").visible = false;
-    treeView.columnByName("depth").visible = false;
-    treeView.columnByName("depth").visible = false;
     treeView.columnByName("code").visible = false;
+    treeView.columnByName("depth").visible = false;
     treeView.columnByName("name").editable = false;
 
     treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
@@ -65,20 +66,19 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
       "us.png",
       "ve.png",
     ];
-    treeProvider.setRows(org, "path", true, null, "depth");
-    //treeView.orderBy("path", "depth");
+
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
-        let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
-        if (depth !== "1") {
-          let dpCdData =
-            grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-          setDpCd(dpCdData);
-          setTabStatus(1);
-          setEditState("read");
-        } else if (depth === "1") {
-          setDpCd(0);
-        }
+        let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+        setListDetail(cd)
+        // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
+        // if (depth !== "0") {
+        //   let dpCdData =
+        //     grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+        //   setMenuDetail(dpCdData);
+        // } else if (depth === "0") {
+        //   setMenuDetail(0);
+        // }
       }
     };
 
@@ -90,7 +90,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
+    <div ref={realgridElement} style={{ height: "100%", width: "100%" }}></div>
   );
 };
 
