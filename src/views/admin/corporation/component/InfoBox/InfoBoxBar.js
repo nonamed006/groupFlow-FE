@@ -18,20 +18,24 @@ const InfoBoxBar = ({ title, onOpen, handelSaveBtn }) => {
   const [chHistory, setChHistory] = useState([]);
 
   //변경이력 조회
-  const handelChangeHistoryBtn = () => {
-    console.log(chSearch.startCdt);
-    console.log(chSearch.length);
+  const handelChangeHistoryBtn = (page) => {
+    console.log(page);
+    if (page === undefined) {
+      page = 1;
+    }
     if (chSearch.length === 0) {
       chSearch.startCdt = "";
       chSearch.endCdt = "";
       chSearch.chDiv = "";
       chSearch.cid = "";
     }
-    let url = `${PORT}/corp/ch?startCdt=${chSearch.startCdt}&endCdt=${chSearch.endCdt}&chDiv=${chSearch.chDiv}&cid=${chSearch.cid}`;
+
+    let url = `${PORT}/corp/ch?startCdt=${chSearch.startCdt}&endCdt=${chSearch.endCdt}&chDiv=${chSearch.chDiv}&cid=${chSearch.cid}&pageNum=${page}`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        setChHistory(res.data);
+        console.log(res.pageInfo);
+        setChHistory(res.pageInfo);
       });
   };
 
@@ -87,7 +91,10 @@ const InfoBoxBar = ({ title, onOpen, handelSaveBtn }) => {
               />
             </Box>
             <Box borderRadius="lg" bg="white" p="6">
-              <ChangeTable chHistory={chHistory} />
+              <ChangeTable
+                chHistory={chHistory}
+                handelChangeHistoryBtn={handelChangeHistoryBtn}
+              />
             </Box>
           </ModalLayout>
         )}

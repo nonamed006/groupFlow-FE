@@ -1,19 +1,18 @@
-import { Box } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 import SearchBar from "common/component/SearchBar";
 
 
-const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, coCd }) => {
+const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
 
     const formInputRef = useRef(null);
 
     useEffect(() => {
-        if (coCd !== undefined && coCd !== 'undefined') {   // init - 초기화 조건
+        if (code !== undefined && code !== 'undefined') {   // init - 초기화 조건
             // 초기화
             onClearSelect();
             setKeyword();
         }
-    }, [coCd]);
+    }, [code]);
 
     const onClearSelect = () => {
         if (formInputRef.current)

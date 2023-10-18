@@ -84,7 +84,12 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
         />
       </GridItem>
       <GridItem colStart={20} colEnd={22}>
-        <Button variant="brand" onClick={handelChangeHistoryBtn}>
+        <Button
+          variant="brand"
+          onClick={() => {
+            handelChangeHistoryBtn();
+          }}
+        >
           검색
         </Button>
       </GridItem>

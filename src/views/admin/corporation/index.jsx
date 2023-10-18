@@ -7,7 +7,6 @@ import { PORT } from "set";
 import OrgChartModal from "common/orgChart/OrgChartModal";
 
 const Corporation = () => {
-	const [corpList, setCorpList] = useState([]); // 회사 데이터 목록
 	const [keyword, setKeyword] = useState(""); // 검색어
 	const [useYn, setUseYn] = useState(""); // 사용여부
 	const [coCd, setCoCd] = useState(); // 선택된 회사코드
@@ -15,36 +14,13 @@ const Corporation = () => {
 	const [sortValue, setSortValue] = useState(); // 초기 정렬 기본값
 	const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
 
-
 	useEffect(() => {
-		initCorpList();
+		fetchMaxSort();
 	}, []);
 
-	// 회사 목록 조회 및 검색
-	const fetchCorpList = () => {
-		let url = `${PORT}/corp`;
-
-		// URL 파라미터 생성
-		const params = new URLSearchParams();
-		if (keyword !== "") params.append("keyword", keyword);
-		if (useYn !== "") params.append("useYn", useYn);
-		// URL에 파라미터 추가
-		const paramString = params.toString();
-		if (paramString) {
-			url += "?" + paramString;
-		}
-
-		fetch(url, {
-			method: "GET",
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				if (res.result === 'success') {
-					setCorpList(res.data);
-					setChangeYn(false);
-				}
-			});
-	};
+	useEffect(() => { // 저장, 삭제, 수정 등의 이벤트가 있을 때 다시 값 가져오기
+		fetchMaxSort();
+	}, [changeYn]);
 
 	// 정렬 기본값 가져오기
 	const fetchMaxSort = () => {
@@ -60,16 +36,9 @@ const Corporation = () => {
 
 	// 검색 버튼 클릭 시
 	const handleSearchBtn = () => {
-		fetchCorpList();
+		setChangeYn(!changeYn);
 		setCoCd();
 	};
-
-	// 초기 데이터 목록 및 정렬값 설정
-	const initCorpList = () => {
-		fetchCorpList();
-		fetchMaxSort();
-	};
-
 
 	return (
 		<Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -91,16 +60,22 @@ const Corporation = () => {
 				<GridItem colSpan={2} rowSpan={5}>
 					<ListCard
 						title={"회사"}
-						listData={corpList}
+						keyword={keyword}
+						useYn={useYn}
 						setCoCd={setCoCd}
 						changeYn={changeYn}
-						initCorpList={initCorpList}
 						coCd={coCd}
 					/>
 				</GridItem>
 				{/* 회사정보 */}
 				<GridItem colSpan={4} rowSpan={5}>
-					<InfoBox sortValue={sortValue} coCd={coCd} setCoCd={setCoCd} setChangeYn={setChangeYn} />
+					<InfoBox
+						sortValue={sortValue}
+						coCd={coCd}
+						setCoCd={setCoCd}
+						setChangeYn={setChangeYn}
+						changeYn={changeYn}
+					/>
 				</GridItem>
 			</Grid>
 

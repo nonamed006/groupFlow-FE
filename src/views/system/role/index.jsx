@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Box, Grid, GridItem, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+=======
+import { Box, Grid, GridItem } from "@chakra-ui/react";
+>>>>>>> main
 import React, { useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
@@ -9,9 +13,9 @@ import EmpList from "./component/Emp/EmpList";
 
 const RoleCorp = () => {
     const [rgCd, setRgCd] = useState(); // 선택한 권한그룹 코드
-    const [coCd, setCoCd] = useState(); // 선택한 회사 코드
-    const [keyword, setKeyword] = useState();   // 검색어
-
+    const [coCd, setCoCd] = useState(); // 선택한 회사코드
+    const [keyword, setKeyword] = useState();   // 권한그룹 검색어
+    
 	return (
         <Box borderRadius="lg" h="500px" mt={{ base: '130px', md: '130px', xl: '120px' }} px={'20px'} pt={'20px'}>
             <Tabs colorScheme="brandScheme">
@@ -53,13 +57,13 @@ const RoleCorp = () => {
                         </Grid>
                     </TabPanel>
                     <TabPanel>
-                    <Grid
-                        h="500px"
-                        templateRows="repeat(11, 1fr)"
-                        templateColumns="repeat(7, 1fr)"
-                        gap={5}
-                    >
-                            
+                        <Grid
+                            h="500px"
+                            templateRows="repeat(11, 1fr)"
+                            templateColumns="repeat(7, 1fr)"
+                            gap={5}
+                        >
+
                             {/* 회사 목록 */}
                             <GridItem colSpan={2} rowSpan={5}>
                                 <CorpList
@@ -80,9 +84,12 @@ const RoleCorp = () => {
                             {/* 메뉴 목록 */}
                             <GridItem colSpan={3} rowSpan={5}>
                                 <MenuBox
-                                    rgCd={rgCd}
-                                    coCd={coCd}
-                                    grpNm={keyword}
+                                    rgCd={rgCd} // 선택되는 권한그룹 코드
+                                    type={'corp'}   // 권한맵핑 기준
+                                    code={coCd} // 회사/부서/조직 코드
+                                    grpNm={keyword} // 검색할 권한그룹명
+                                    modify={false}  
+                                
                                 />
                             </GridItem>
                         </Grid>
