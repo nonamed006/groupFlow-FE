@@ -6,6 +6,7 @@ import {
   useColorModeValue,
   Select,
   Button,
+  Center,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 
@@ -21,9 +22,16 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
   return (
     <Grid templateColumns="repeat(22, 1fr)" gap={2}>
       <GridItem colStart={1} colEnd={3}>
-        <Text color="while" fontSize="sm" fontWeight="700">
-          변경일자
-        </Text>
+        <div
+          style={{
+            lineHeight: "40px",
+            textAlign: "center",
+          }}
+        >
+          <Text color="while" fontSize="sm" fontWeight="700">
+            변경일자
+          </Text>
+        </div>
       </GridItem>
       <GridItem colStart={3} colEnd={4}>
         <Input
@@ -35,6 +43,7 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
           onChange={onChange}
         />
       </GridItem>
+
       <GridItem colStart={4} colEnd={5}>
         <Input
           placeholder="Select Date and Time"
@@ -46,9 +55,16 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
         />
       </GridItem>
       <GridItem colStart={6} colEnd={8}>
-        <Text color="while" fontSize="sm" fontWeight="700">
-          변경구분
-        </Text>
+        <div
+          style={{
+            lineHeight: "40px",
+            textAlign: "center",
+          }}
+        >
+          <Text color="while" fontSize="sm" fontWeight="700">
+            변경구분
+          </Text>
+        </div>
       </GridItem>
       <GridItem colStart={8} colEnd={11}>
         <Select
@@ -70,9 +86,16 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
         </Select>
       </GridItem>
       <GridItem colStart={12} colEnd={15}>
-        <Text color="while" fontSize="sm" fontWeight="700">
-          변경자(ID)
-        </Text>
+        <div
+          style={{
+            lineHeight: "40px",
+            textAlign: "center",
+          }}
+        >
+          <Text color="while" fontSize="sm" fontWeight="700">
+            변경자(ID)
+          </Text>
+        </div>
       </GridItem>
       <GridItem colStart={15} colEnd={19}>
         <Input

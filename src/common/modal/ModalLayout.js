@@ -1,15 +1,15 @@
 import {
   Box,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-    useColorModeValue,
-    ModalFooter,
-    Button,
-  } from "@chakra-ui/react"
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useColorModeValue,
+  ModalFooter,
+  Button,
+} from "@chakra-ui/react";
 
 import React from "react";
 
@@ -20,35 +20,50 @@ import React from "react";
 // btnText : 버튼 내용
 // onClose: 모달 엑스창 클릭시 이벤트 (setIsOpen(!isOpen); <- 의 함수 넣기 )
 // size = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', 'full']
-  const ModalLayout = ({ title, onClose, children, buttonYn, handleCheck, size, btnText }) => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
-    const finalRef = React.useRef(null);
-    
-    return (
-        <>
-        <Modal scrollBehavior={'inside'} finalFocusRef={finalRef} size={size} isOpen={true} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            {/* 모달 제목 */}
-            <ModalHeader color={textColor} >{title}</ModalHeader>
-            {/* 모달 닫기 버튼 */}
-            <ModalCloseButton />
-            {/* 모달 내용 */}
-            <ModalBody  >
-                {children}
-            </ModalBody>
-            {/* 확인 및 취소 버튼 */}
-            {buttonYn&&
-            <ModalFooter >
-                <Button m='2' variant="brand" onClick={handleCheck}>{btnText}</Button>
-                <Button onClick={onClose} variant="action">취소</Button>
+const ModalLayout = ({
+  title,
+  onClose,
+  children,
+  buttonYn,
+  handleCheck,
+  size,
+  btnText,
+}) => {
+  const textColor = useColorModeValue("secondaryGray.900", "white");
+  const finalRef = React.useRef(null);
+
+  return (
+    <>
+      <Modal
+        scrollBehavior={"inside"}
+        finalFocusRef={finalRef}
+        size={size}
+        isOpen={true}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          {/* 모달 제목 */}
+          <ModalHeader color={textColor}>{title}</ModalHeader>
+          {/* 모달 닫기 버튼 */}
+          <ModalCloseButton />
+          {/* 모달 내용 */}
+          <ModalBody>{children}</ModalBody>
+          {/* 확인 및 취소 버튼 */}
+          {buttonYn && (
+            <ModalFooter>
+              <Button m="2" variant="brand" onClick={handleCheck}>
+                {btnText}
+              </Button>
+              <Button onClick={onClose} variant="action">
+                취소
+              </Button>
             </ModalFooter>
-            }
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  };
-  
-  export default ModalLayout;
-  
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default ModalLayout;
