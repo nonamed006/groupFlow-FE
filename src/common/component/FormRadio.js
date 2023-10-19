@@ -8,7 +8,7 @@ import "assets/css/MiniCalendar.css";
 const FormRadio = ({ title, name, defaultValue, pk, onChange, readOnly, isRequired, values }) => {
   return (
     <FormControl  display={'flex'} w={'100%'} isRequired={isRequired}>
-        <FormLabel fontSize="md" fontWeight="400" w={'50%'} >{title}</FormLabel>
+         <FormLabel fontSize="md" fontWeight="600" w={'50%'} >{title}</FormLabel>
         <RadioGroup name={name} defaultValue={defaultValue} key={pk} >
             <HStack spacing="24px">
                 {

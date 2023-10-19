@@ -2,6 +2,8 @@ import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 
+import { roleGrpSchema } from "common/Schema";
+
 import SearchBar from "./SearchBarRoleGrp";
 import GroupCardList from "./GroupCardList";
 import ModalLayout from "common/modal/ModalLayout";
@@ -124,20 +126,16 @@ const GroupBox = ({ setRgCd, rgCd }) => {
 
     // 권한그룹 추가 등록 버튼 클릭 시
     const handleAddBtn = () => {
-        if (roleGrp.coCd === '')
-            alert("회사를 선택해주세요");
-        else if (roleGrp.grpNm === '')
-            alert("그룹명을 입력하세요");
-        else if (roleGrp.useYn === '') {
-            setRoleGrp({
-                ...roleGrp,
-                useYn: true
-            });
-        } else {
-            setIsOpen(!isOpen); // 모달창 닫기
+        roleGrpSchema.validate(roleGrp)
+        .then(() => {
             fetchRoleGrpSave(); // 권한그룹 등록
-        }
-
+            setIsOpen(!isOpen); // 모달창 닫기
+        })
+        .catch(errors => {
+            // 유효성 검사 실패한 경우 에러 처리
+            console.log(errors);
+            alert(errors.message);
+        });
     };
 
     // 모달창 열고 닫기
@@ -146,9 +144,9 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white"  width={'550px'}>
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴상단 */}
-            <CardMenuBar title={'권한그룹'} count={totalCount} handelOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
+            <CardMenuBar title={'권한그룹'} count={totalCount} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
             {/* 검색바 */}
             <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
             {/* 목록 */}
@@ -156,7 +154,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
                 <Box minH={'510px'}>
                     <GroupCardList rgCd={rgCd} roleGrpList={roleGrpList} setRgCd={setRgCd} />
                 </Box>
-                <Box ref={infiniteScrollRef}  h={'1px'} />
+                <Box ref={infiniteScrollRef} h={'1px'} />
             </Box>
             {/* 권한그룹 추가 모달 */}
             {isOpen &&
