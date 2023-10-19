@@ -2,6 +2,7 @@
 const SET_DATA_PK = 'solution/SET_DATA_PK';
 const SET_DATA = 'solution/SET_DATA';
 const SET_IS_READ = 'solution/SET_IS_READ';
+const SET_EMP_DATA = 'solution/SET_EMP_DATA';
 
 
 
@@ -10,6 +11,7 @@ const SET_IS_READ = 'solution/SET_IS_READ';
 export const setDataPk = dataPk =>({ type: SET_DATA_PK, dataPk});
 export const setData = dataList =>({ type: SET_DATA, dataList});
 export const setIsRead = isRead =>({ type: SET_IS_READ, isRead});
+export const setEmpData = empData =>({ type: SET_EMP_DATA, empData });
 
 
 
@@ -21,6 +23,7 @@ const initialState = {
     dataPk: 0,
     isRead: true,
     dataList: {},
+    empData: [],
   };
 
 
@@ -42,6 +45,11 @@ export default function solution(state = initialState, action) {
           return {
             ...state,
             isRead: action.isRead,
+          };
+          case SET_EMP_DATA :
+          return {
+            ...state,
+            empData: action.empData,
           };
         default:
           return state;
