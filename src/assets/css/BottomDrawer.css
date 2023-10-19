@@ -1,0 +1,13 @@
+.drawerBody{
+    position: fixed;
+    bottom: 0px;
+    right: 16px;
+    /* https://make.wordpress.org/core/files/2021/02/wordpress-admin-color-palette-WP57.png */
+    background: #043959;
+    width: 100%;
+    height: 7%;
+}
+
+button:hover{
+    color: black;
+}

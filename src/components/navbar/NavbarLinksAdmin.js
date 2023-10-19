@@ -102,7 +102,7 @@ export default function HeaderLinks(props) {
 				deleteCookie("Authorization");
 				deleteCookie("Emp_Dp_Type");
 				setDpType("");
-				window.location.replace("#/auth/login");
+				window.location.replace("/auth/login");
 			});
 	}
 

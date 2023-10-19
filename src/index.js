@@ -12,13 +12,14 @@ import { createStore } from 'redux';
 import rootReducer from 'redux/rootReducer';
 import { Provider } from 'react-redux';
 import SystemLayout from 'layouts/system'; //이혜윤 - 추가
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 const store = createStore(rootReducer);
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<Provider store={store}>
 			<ThemeEditorProvider>
-				<HashRouter>
+				<BrowserRouter>
 					<Switch>
 						<Route path={`/system`} component={SystemLayout}/>
 						<Route path={`/auth`} component={AuthLayout} />
@@ -26,7 +27,7 @@ ReactDOM.render(
 						<Route path={`/rtl`} component={RtlLayout} />
 						<Redirect from='/' to='/auth' />
 					</Switch>
-				</HashRouter>
+				</BrowserRouter>
 			</ThemeEditorProvider>
 	</Provider>
 	</ChakraProvider>,

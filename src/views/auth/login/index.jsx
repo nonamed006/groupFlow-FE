@@ -99,7 +99,7 @@ function SignIn() {
           }
         });
       }).then(()=>{
-        window.location.replace("/");
+        window.location.replace("/admin/default");
       });
     });
   }
