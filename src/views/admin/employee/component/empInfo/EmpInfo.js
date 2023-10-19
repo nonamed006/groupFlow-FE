@@ -124,6 +124,10 @@ const EmpInfo = (props) => {
                       <Button
                         variant="action"
                         onClick={() => {
+                          if(Object.keys(props.empDetail).length< 1){
+                            alert("사원을 선택해주세요.");
+                            return;
+                          }
                           setModalType(1);
                           setModalTabStatus("type1");
                           onOpen();
@@ -134,6 +138,10 @@ const EmpInfo = (props) => {
                       <Button
                         variant="action"
                         onClick={() => {
+                          if(Object.keys(props.empDetail).length< 1){
+                            alert("사원을 선택해주세요.");
+                            return;
+                          }
                           setModalType(2);
                           setModalTabStatus("type1");
                           onOpen();
@@ -144,6 +152,10 @@ const EmpInfo = (props) => {
                       <Button
                         variant="action"
                         onClick={() => {
+                          if(Object.keys(props.empDetail).length< 1){
+                            alert("사원을 선택해주세요.");
+                            return;
+                          }
                           setModalType(3);
                           setModalTabStatus("type1");
                           onOpen();
@@ -155,9 +167,13 @@ const EmpInfo = (props) => {
                     <Button
                         variant="action"
                         onClick={() => {
+                          if(Object.keys(props.empDetail).length< 1){
+                            alert("사원을 선택해주세요.");
+                            return;
+                          }
                           props.resetInput();
-                          props.setInfoEditState("insert");
-                          props.setEmpDept({...props.empDept, ['dpGrpcd']:"insert"});
+                          props.setEditState("deptUpdate");
+                          props.setEmpDept([...props.empDept]);
                         }}
                       >
                         조직정보 추가
@@ -167,10 +183,14 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
+                        if(Object.keys(props.empDetail).length< 1){
+                          alert("사원을 선택해주세요.");
+                          return;
+                        }
                         if(tabStatus === 1){
                           props.setEditState("update");
                         }else if(tabStatus === 2){
-                          props.setInfoEditState("update");
+                          props.setEditState("deptUpdate");
                         }
                       }}
                     >
@@ -179,6 +199,10 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
+                        if(Object.keys(props.empDetail).length< 1){
+                          alert("사원을 선택해주세요.");
+                          return;
+                        }
                          if(tabStatus === 1){
                             setModalType(4);
                             setModalTabStatus("type4");
@@ -195,10 +219,18 @@ const EmpInfo = (props) => {
                     <Button
                       variant="brand"
                       onClick={() => {
-                        if(props.editState === "insert"){
-                          props.onSaveEmpDetail();
-                        }else if(props.editState === "update"){
-                          props.updateEmpInfo();
+                        if(tabStatus === 1){
+                          if(props.editState === "insert"){
+                            props.onSaveEmpDetail();
+                          }else if(props.editState === "update"){
+                            props.updateEmpInfo();
+                          }
+                        }else if(tabStatus === 2){
+                          if(props.editState === "deptInsert"){
+
+                          }else if(props.editState === "deptUpdate"){
+
+                          }
                         }
                       }}
                     >
@@ -207,19 +239,6 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        if(tabStatus === 1){
-                          if(props.editState === "insert"){
-                            props.onSaveEmpDetail();
-                          }else if(props.editState === "update"){
-                            props.updateEmpInfo();
-                          }
-                        }else if(tabStatus === 2){
-                          if(props.infoEditState === "insert"){
-
-                          }else if(props.infoEditState === "update"){
-
-                          }
-                        }
                         props.setEditState("read");
                         props.resetInput();
                       }}
