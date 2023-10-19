@@ -3,7 +3,7 @@ import { number, object, string, date } from "yup";
 
 export const corpSchema = object().shape({
     coCd: string().nullable(),
-    useYn: string().required("사용여부를 체크해주세요."),
+    useYn: string().default("false").required("사용여부를 체크해주세요."),
     coNm: string().required("회사명을 입력해주세요."),
     coAbb: string().nullable(),
     bsStock: string().nullable(),
@@ -39,11 +39,11 @@ export const depSchema = object().shape({
     addr: string().nullable(),
     addrDetail: string().nullable(),
     dpAbb: string().nullable(),
-    recYn: string().required("대내외 수신여부를 선택해주세요."),
+    recYn: string().default("false").required("대내외 수신여부를 선택해주세요."),
     stnd: string().nullable(),
     reqNm: string().nullable(),
-    useYn: string().required("사용여부를 선택해주세요."),
-    organYn: string().required("조직도 표시여부를 선택해주세요."),
+    useYn: string().default("false").required("사용여부를 선택해주세요."),
+    organYn: string().default("false").required("조직도 표시여부를 선택해주세요."),
     dpPath: string().nullable(),
     sort: number().required("정렬값을 입력해주세요.").positive().integer(),
     depth: number().nullable(),
