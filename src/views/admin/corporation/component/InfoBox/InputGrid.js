@@ -1,4 +1,4 @@
-import {  Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -8,7 +8,6 @@ import AddrBox from 'common/addressAPI/AddrBox';
 import FormRadio from 'common/component/FormRadio';
 import FormInput from 'common/component/FormInput';
 import FormSelect from 'common/component/FormSelect';
-
 
 const InputGrid = ({ corp, setCorp, isEditing }) => {
 
@@ -34,7 +33,8 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
       >
 
         <GridItem colStart={1} colEnd={5} colSpan={5}>
-          <FormInput title={'회사코드'} name={'coCd'} value={coCd} pk={coCd} onChange={onChange} readOnly={true} isRequired={false} />
+          <FormInput 
+          title={'회사코드'} name={'coCd'} value={coCd} pk={coCd} onChange={onChange} readOnly={true} isRequired={false} />
         </GridItem>
 
         <GridItem colStart={6} colEnd={10} colSpan={5}>
@@ -59,7 +59,10 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
         </GridItem>
 
         <GridItem colStart={1} colEnd={5} colSpan={5}>
-          <FormInput title={'회사명'} name={'coNm'} value={coNm} pk={coCd} onChange={onChange} readOnly={!isEditing} isRequired={true} />
+          <FormInput title={'회사명'} 
+          
+               name={'coNm'} value={coNm} pk={coCd} onChange={onChange} readOnly={!isEditing} isRequired={true} />
+         
         </GridItem>
 
         <GridItem colStart={6} colEnd={10} colSpan={5}>
@@ -117,7 +120,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
         <GridItem colStart={6} colEnd={10} colSpan={5}>
           <FormInput title={'사업자번호'} name={'bsnsNum'} value={bsnsNum} pk={coCd} onChange={onChange} readOnly={!isEditing} isRequired={false} />
         </GridItem>
-   
+
         <GridItem colStart={1} colEnd={5}>
           <FormSelect
             title={'회사구분'}

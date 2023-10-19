@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { PORT } from "set";
 import ModalLayout from "common/modal/ModalLayout";
+import { corpSchema } from "common/Schema";
 
 const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
@@ -12,11 +13,11 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   const [corp, setCorp] = useState(); // 회사 데이터 (하나)
 
   useEffect(() => {
-    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0) 
+    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0)
       fetchCorp(coCd); // coCd로 회사 조회
-    else 
+    else
       onReset();
-    setIsEditing(coCd === 0?true:false);
+    setIsEditing(coCd === 0 ? true : false);
   }, [coCd, sortValue]);
 
   const onReset = () => {
@@ -101,32 +102,28 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
 
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-  
-    isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+    corpSchema.validate(corp)
+      .then(() => {
+        // 유효성 검사 통과한 데이터 처리
+        coCd !== 0 ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+      })
+      .catch(errors => {
+        // 유효성 검사 실패한 경우 에러 처리
+        console.log(errors);
+        alert(errors.message);
+      });
   };
 
-  const checkInputValues = () => {
-  //     - 회사명 coNm
-  // - 사용여부 useYn
-  // - 설립일 estDt
-  // - 개업일 opDt
-  // - 사업자번호 bsnsNum
-  // - 회사구분(법인 필수 값) bsCd
-  // - 주소
-  // - 대표자명
-  // - 정렬(중복도 X)
-   }
-
-  const handleCancle =()=>{
-    setCoCd(); 
+  const handleCancle = () => {
+    setCoCd();
   }
 
-  const handleModify =()=>{
-    if(coCd !== undefined && coCd !== 'undefined'){
-       setIsEditing(true);  
-       return ; 
+  const handleModify = () => {
+    if (coCd !== undefined && coCd !== 'undefined') {
+      setIsEditing(true);
+      return;
     }
-   alert("회사를 선택하세요.");
+    alert("회사를 선택하세요.");
   }
 
   return (

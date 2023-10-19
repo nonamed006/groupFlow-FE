@@ -4,6 +4,7 @@ import {
   Flex,
   Box,
   useColorModeValue,
+  Spacer,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import ModalLayout from "common/modal/ModalLayout";
 import React, { useState } from "react";
@@ -50,7 +51,7 @@ const InfoBoxBar = ({ title, onOpen, handleSaveBtn, isEditing, handleCancle, han
       align={{ sm: "flex-start", lg: "center" }}
       justify="space-between"
       w="100%"
-      px="22px"
+      px="20px"
       pb="20px"
       mb="10px"
     >
@@ -67,19 +68,19 @@ const InfoBoxBar = ({ title, onOpen, handleSaveBtn, isEditing, handleCancle, han
         {
           !isEditing ?
           <>
-              <Button variant="brand" onClick={handleModify}>
+              <Button variant="brand" borderRadius={'10px'} fontWeight={'600'} m={1} onClick={handleModify}>
                 수정
               </Button>
-              <Button variant="action" onClick={onOpen}>
+              <Button variant="action" borderRadius={'10px'} fontWeight={'600'}   m={1} onClick={onOpen}>
                 삭제
               </Button>
           </>
             :
           <>
-            <Button variant="brand" onClick={handleSaveBtn}>
+            <Button variant="brand"  borderRadius={'10px'} fontWeight={'600'} m={1} onClick={handleSaveBtn}>
               저장
             </Button>
-            <Button variant="action" onClick={handleCancle}>
+            <Button variant="action" borderRadius={'10px'} fontWeight={'600'} m={1}  onClick={handleCancle}>
               취소
             </Button>
           </>
@@ -87,6 +88,9 @@ const InfoBoxBar = ({ title, onOpen, handleSaveBtn, isEditing, handleCancle, han
 
         <Button
           variant="action"
+          borderRadius={'10px'} 
+          fontWeight={'600'}  
+          m={1}
           onClick={() => {
             setIsOpen(true);
             handelChangeHistoryBtn();
