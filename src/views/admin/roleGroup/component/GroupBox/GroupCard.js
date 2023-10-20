@@ -3,7 +3,7 @@ import React from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const GroupCard = ({ rgCd, group, index, setRgCd, isTotalRoleMenu }) => {
+const GroupCard = ({ checkedList, checkHandler, rgCd, group, index, setRgCd, isTotalRoleMenu }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
     return (
@@ -35,9 +35,10 @@ const GroupCard = ({ rgCd, group, index, setRgCd, isTotalRoleMenu }) => {
                 <Checkbox
                     mx='3'
                     borderColor={'secondaryGray.600'}
-                    defaultChecked={group.state === 1 ? true : false}
-                    
+                    isChecked={checkedList.includes(group.rgCd) ? true : false}
+                    onChange={(e) => checkHandler(e, group.rgCd)}
                 />
+
                 <Heading flex={1} fontSize='xl'>
                     <Text
                         color={textColor}

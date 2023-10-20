@@ -27,8 +27,6 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
 
   // 검색 버튼 클릭 시
   const handleSearchBtn = () => { // 초기화 
-    setCorpList([]);
-    setIsLastPage(false);
     setPageNum(1);
     setTotalCount(0);
     setInit(!init);
@@ -65,7 +63,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
     }).then((res) => res.json())
       .then((res) => {
         if (res.result === 'success') { // 성공일 때
-          setCorpList([...corpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
+          setCorpList(pageNum===1?res.pageInfo.list:[...corpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
           setTotalCount(res.pageInfo.total);  // 총 데이터 수
           setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
           if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면

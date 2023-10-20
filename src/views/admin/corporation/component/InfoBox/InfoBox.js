@@ -1,11 +1,11 @@
-import { Box, Text, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box,useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { PORT } from "set";
-import ModalLayout from "common/modal/ModalLayout";
 import { corpSchema } from "common/Schema";
+import DeleteModal from "common/modal/DeleteModal";
 
 const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
@@ -45,7 +45,6 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   // 회사 저장
   const fetchCorpSave = () => {
     let url = `${PORT}/corp`;
-    console.log(url);
     fetch(url, {
       method: "POST",
       headers: {
@@ -96,7 +95,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   const handleDeleteBtn = () => {
     coCd !== "undefined" && coCd !== undefined
       ? fetchCorpDelete(coCd)
-      : alert("삭제할 회사가 존재하지 않습니다");
+      : alert('삭제할 회사가 존재하지않습니다.');
     onClose();
   };
 
@@ -154,14 +153,13 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
       </Box>
 
       {/* 삭제 확인 모달 */}
-      {(isOpen && !isEditing) && (
-        <ModalLayout title={'삭제여부'} onClose={onClose} isOpen={isOpen} buttonYn={true} btnText={'삭제'} size={'md'} handleCheck={handleDeleteBtn}>
-          <Box>
-            <Text>삭제하시겠습니까?</Text>
-          </Box>
-        </ModalLayout>
-
-      )}
+      {(isOpen && !isEditing) &&
+        <DeleteModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleCheck={handleDeleteBtn}
+        />
+      }
     </>
   );
 };
