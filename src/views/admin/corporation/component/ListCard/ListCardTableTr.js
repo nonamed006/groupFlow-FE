@@ -32,23 +32,23 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
         </Text>
       </Td> */}
       <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.coNm}
         </Text>
       </Td>
       <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.ceoNm}
         </Text>
       </Td>
       <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.ccNm}
         </Text>
       </Td>
 
       <Td align="center">
-        <Box color={textColor} fontSize="sm" fontWeight="600">
+        <Box color={textColor} fontSize="sm" fontWeight="500">
           {data.useYn ? '사용' : '미사용'}
         </Box>
       </Td>

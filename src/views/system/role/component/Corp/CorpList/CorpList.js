@@ -61,6 +61,9 @@ const CorpList = ({ setCoCd, coCd }) => {
          if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
             setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
           }
+        } else{
+          setCorpList([]);
+          setIsLastPage(true);
         }
       });
   };
@@ -76,7 +79,7 @@ const CorpList = ({ setCoCd, coCd }) => {
   };
 
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6">
+    <Box borderRadius="lg" bg="white" h="700px" p="6" w={'500px'}>
       {/* 목록 상단 */}
       <CardMenuBar
         title={'회사'}

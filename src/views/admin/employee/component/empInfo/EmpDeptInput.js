@@ -12,7 +12,6 @@ import {
 import { minTimeDate } from "common/common";
 import SelectCommon from "common/component/SelectCommon";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const EmpDeptInput = ({ column, handleChange, infoEditState }) => {
 
@@ -61,25 +60,7 @@ const EmpDeptInput = ({ column, handleChange, infoEditState }) => {
         />
       </GridItem>
 
-      <GridItem colStart={8} colEnd={10}>
-        <Text fontSize="sm" fontWeight="600">
-          전화번호
-        </Text>
-      </GridItem>
-      <GridItem colStart={10} colEnd={14}>
-        <Input
-          id="telNum"
-          name="telNum"
-          placeholder="example@mail.com"
-          size="md"
-          borderRadius="14px"
-          value={column?.telNum}
-          isReadOnly={infoEditState === "read"}
-          onChange={handleChange}
-        />
-      </GridItem>
-
-      <GridItem colSpan={2}>
+      <GridItem colStart={1} colEnd={3}>
         <Text fontSize="sm" fontWeight="600">
           회사구분
         </Text>
