@@ -20,6 +20,7 @@ import { PORT } from "set";
 import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
 import EmpInfoDel from "../empDel/EmpInfoDel";
+import { getCookie } from "common/common";
 const EmpInfo = (props) => {
 
   const [tabStatus, setTabStatus] = useState(1);
@@ -83,11 +84,33 @@ const EmpInfo = (props) => {
         if (res.result === "success") {
           alert("퇴사처리되었습니다.");
           onClose();
+          props.setIsReload(!props.isReload);
         } else {
           alert("퇴사실패했습니다.");
         }
       });
   };
+
+  //사원 삭제
+  const empDelete = () => {
+    let cookie = getCookie("Authorization");
+    fetch(`${PORT}/emp/deleteEmp/${props.empDetail.empCd}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': "application/json; charset=utf-8",
+        'Authorization': cookie
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+        if(res.result === "success"){
+          alert("삭제되었습니다.");
+          onClose();
+          props.setIsReload(!props.isReload);
+        }else{
+          alert("삭제 실패하였습니다.");
+        }
+      });
+  }
 
   return (
     <div>
@@ -284,7 +307,7 @@ const EmpInfo = (props) => {
         onClose={onClose}
         btnText="확인"
         handleCheck={
-          modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : props.empDelete
+          modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : empDelete
         }
         children={
           modalType == 1 ? (
@@ -296,7 +319,7 @@ const EmpInfo = (props) => {
               modalTabStatus={modalTabStatus}
             />
           ) : modalType == 2 ? (
-            <EmpPwdChg
+            <EmpPwdChg 
               setEmpPwd={setEmpPwd}
               setModalTabStatus={setModalTabStatus}
             />

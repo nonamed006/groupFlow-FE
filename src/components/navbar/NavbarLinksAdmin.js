@@ -38,6 +38,7 @@ import { setEmpData } from 'redux/solution';
 import { getCookie } from 'common/common';
 import { deleteCookie } from 'common/common';
 import { setCookie } from 'common/common';
+import { ThemeEditor } from './ThemeEditor';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -63,8 +64,9 @@ export default function HeaderLinks(props) {
 	//사원 정보 조회, 리덕스에 저장
 	const getEmpInfo = () => {
 		let cookie = getCookie("Authorization");
+		console.log("sdlfjosdg", cookie);
 		if (cookie != undefined) {
-
+			console.log("👽👾👽👻👽");
 			fetch(
 				`${PORT}/emp/getEmpInfo`,
 				{
@@ -78,6 +80,7 @@ export default function HeaderLinks(props) {
 				}
 			).then((res) => res.json())
 				.then((res) => {
+					console.log("res.data",res.data);
 					setDpType(getCookie("Emp_Dp_Type"));
 					dispatch(setEmpData(res.data));
 					setEmpDetail(res.data[0]);
@@ -329,6 +332,9 @@ export default function HeaderLinks(props) {
 						</Link>
 					</Flex>
 				</MenuList>
+			</Menu>
+			<Menu>
+			<ThemeEditor navbarIcon={navbarIcon} />
 			</Menu>
 		</Flex>
 	);

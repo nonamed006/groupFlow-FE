@@ -132,89 +132,13 @@ const routes = [
     component: MainDashboard,
   },
   {
-    name: "NFT Marketplace",
-    layout: "/admin",
-    path: "/nft-marketplace",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
-    ),
-    component: NFTMarketplace,
-    secondary: true,
-  },
-  {
-    name: "Data Tables",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
-    component: DataTables,
-  },
-  {
-    name: "Profile",
-    layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-    component: Profile,
-  },
-  {
     name: "로그인",
     layout: "/auth",
     path: "/login",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: LogInCentered,
   },
-  {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: RTL,
-  },
-  {
-    code:'MU230005',
-    upper: 'MU230002',
-    name: "회사관리",
-    layout: "/system",
-    name: "부서관리",
-    layout: "/admin",
-    path: "/department",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Department,
-  },
-  {
-    name: "Corporation",
-    layout: "/admin",
-    path: "/corporation",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Corporation,
-  },
-  {
-    code:'MU230006',
-    upper: 'MU230002',
-    name: "부서관리",
-    layout: "/system",
-    path: "/department",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Department,
-  },
-  {
-    name: "Corporation",
-    layout: "/admin",
-    path: "/corporation",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Corporation,
-  },
-  {
-    name: "사원관리",
-    layout: "/system",
-    path: "/emp",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Employee,
-  },
+
   
 ];
 
