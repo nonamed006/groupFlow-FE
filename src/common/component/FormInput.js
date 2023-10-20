@@ -1,9 +1,8 @@
-import { Input, FormControl, FormLabel } from '@chakra-ui/react';
+import { Input, FormControl, FormLabel } from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
-
 
 const FormInput = ({ title, name, value, pk, onChange, readOnly, isRequired, inputType, placeholder }) => {
 
