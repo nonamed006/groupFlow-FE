@@ -38,6 +38,10 @@ const InfoBox = ({
           <Stack direction="row" spacing={4}>
             <Button
               variant="action"
+              textColor={textColor}
+              background={"#E2E8F0"}
+              borderRadius={"10"}
+              fontWeight="600"
               onClick={() => {
                 setEditState("update");
                 setTabStatus(2);

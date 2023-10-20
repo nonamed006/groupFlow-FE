@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Link } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
@@ -20,10 +20,13 @@ const Test = () => {
   };
 
   const onClickSearchText = () => {
-    let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
+    //let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
+    console.log(searchText);
+    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=${selectedCoCd}&keyword=${searchText}&search=dep`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setOrg(res.data);
       });
   };
@@ -38,6 +41,9 @@ const Test = () => {
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+      <Link href="/system/corporation" fontWeight="bold" fontSize="34px">
+        qweqwe
+      </Link>
       <Grid
         h="1000px"
         templateRows="repeat(11, 1fr)"

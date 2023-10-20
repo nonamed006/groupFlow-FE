@@ -20,10 +20,9 @@ import Department from "views/admin/department";
 import Employee from "views/admin/employee";
 // Auth Imports
 import LogInCentered from "views/auth/login";
-import Menu from "views/system/menu"
+import Menu from "views/system/menu";
 import RoleGroup from "views/admin/roleGroup";
 import RoleSet from "views/system/role";
-
 
 // 원본 horizon-ui
 // https://horizon-ui.com/
@@ -42,180 +41,102 @@ import RoleSet from "views/system/role";
   (중요)redirect시 url(상단설명참조)기준으로 이동
 */
 
-
 const routes = [
   {
-    code:'MU230001',
+    code: "MU230001",
     name: "시스템 설정",
     layout: "/system",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     items: [
       {
-        code:'MU230002',
-        upper: 'MU230001',
+        code: "MU230002",
+        upper: "MU230001",
         name: "조직관리",
         layout: "/system",
-        items : [
+        items: [
           {
-            code:'MU230005',
-            upper: 'MU230002',
+            code: "MU230005",
+            upper: "MU230002",
             name: "회사관리",
             layout: "/system",
             path: "/corporation",
             component: Corporation,
           },
           {
-            code:'MU230006',
-            upper: 'MU230002',
+            code: "MU230006",
+            upper: "MU230002",
             name: "부서관리",
             layout: "/system",
             path: "/department",
             component: Department,
           },
-        ]
+        ],
       },
       {
-        code:'MU230003',
-        upper: 'MU230001',
+        code: "MU230003",
+        upper: "MU230001",
         name: "사원관리",
         layout: "/system",
-        items : [
+        items: [
           {
-            code:'MU230007',
-            upper: 'MU230003',
+            code: "MU230007",
+            upper: "MU230003",
             name: "사원관리",
             layout: "/system",
             path: "/employee",
             component: Employee,
           },
-        ]
+        ],
       },
       {
-        code:'MU230004',
-        upper: 'MU230001',
+        code: "MU230004",
+        upper: "MU230001",
         name: "권한관리",
         layout: "/system",
-        items : [
+        items: [
           {
-            code:'MU230008',
-            upper: 'MU230004',
+            code: "MU230008",
+            upper: "MU230004",
             name: "메뉴관리",
             layout: "/system",
             path: "/menu",
             component: Menu,
           },
           {
-            code:'MU230009',
-            upper: 'MU230004',
+            code: "MU230009",
+            upper: "MU230004",
             name: "권한 그룹 설정",
             layout: "/system",
             path: "/gr",
             component: RoleGroup,
           },
           {
-            code:'MU230010',
-            upper: 'MU230004',
+            code: "MU230010",
+            upper: "MU230004",
             name: "권한 설정",
             layout: "/system",
             path: "/roleSet",
             component: RoleSet,
           },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   {
     name: "Main Dashboard",
     layout: "/admin",
     path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: MainDashboard,
   },
-  {
-    name: "NFT Marketplace",
-    layout: "/admin",
-    path: "/nft-marketplace",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
-    ),
-    component: NFTMarketplace,
-    secondary: true,
-  },
-  {
-    name: "Data Tables",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
-    component: DataTables,
-  },
-  {
-    name: "Profile",
-    layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-    component: Profile,
-  },
+
   {
     name: "로그인",
     layout: "/auth",
     path: "/login",
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: LogInCentered,
   },
-  {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: RTL,
-  },
-  {
-    code:'MU230005',
-    upper: 'MU230002',
-    name: "회사관리",
-    layout: "/system",
-    name: "부서관리",
-    layout: "/admin",
-    path: "/department",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Department,
-  },
-  {
-    name: "Corporation",
-    layout: "/admin",
-    path: "/corporation",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Corporation,
-  },
-  {
-    code:'MU230006',
-    upper: 'MU230002',
-    name: "부서관리",
-    layout: "/system",
-    path: "/department",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Department,
-  },
-  {
-    name: "Corporation",
-    layout: "/admin",
-    path: "/corporation",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Corporation,
-  },
-  {
-    name: "사원관리",
-    layout: "/system",
-    path: "/emp",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Employee,
-  },
-  
 ];
 
 export default routes;
