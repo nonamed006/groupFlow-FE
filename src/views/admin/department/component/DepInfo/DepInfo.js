@@ -15,6 +15,7 @@ import DepInfoBox from "./DepInfoBox";
 import { PORT } from "set";
 import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup";
+import { depSchema } from "common/Schema";
 
 const DepInfo = ({
   setTest,
@@ -97,11 +98,20 @@ const DepInfo = ({
   const change = (depDto) => {
     setDepDto(depDto);
   };
-  const updateBtn = async () => {
-    isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-    setTest(true);
-    setDepDto([]);
+  const updateBtn = async () => { 
+    depSchema.validate(depDto)
+    .then(async() => {
+      // 유효성 검사 통과한 데이터 처리
+      isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+      setTest(true);
+      setDepDto([]);
+    })
+    .catch(errors => {
+      // 유효성 검사 실패한 경우 에러 메세지
+      alert(errors.message);
+    });
   };
+
   const deleteBtn = () => {
     setTest(true);
     let url = `${PORT}/dep?dpCd=${dpCd}`;

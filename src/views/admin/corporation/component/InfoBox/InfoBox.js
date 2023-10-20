@@ -108,8 +108,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
         coCd !== 0 ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
       })
       .catch(errors => {
-        // 유효성 검사 실패한 경우 에러 처리
-        console.log(errors);
+        // 유효성 검사 실패한 경우 에러 메세지
         alert(errors.message);
       });
   };
@@ -135,6 +134,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
+        w={'1100px'}
       >
         <InfoBoxBar
           title={"기본정보"}
