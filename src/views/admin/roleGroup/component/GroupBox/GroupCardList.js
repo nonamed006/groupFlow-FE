@@ -5,7 +5,7 @@ import { UseMouseOver } from "hook/UseMouseOver";
 import GroupCard from "./GroupCard";
 
 
-const GroupCardList = ({ roleGrpList, setRgCd, rgCd, total, coCd }) => {
+const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, total, coCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
@@ -55,6 +55,8 @@ const GroupCardList = ({ roleGrpList, setRgCd, rgCd, total, coCd }) => {
                 roleGrpList.map((group, index) => {
                     return (
                         <GroupCard
+                        checkedList={checkedList} 
+                        checkHandler={checkHandler}
                             rgCd={rgCd}
                             key={index}
                             group={group}

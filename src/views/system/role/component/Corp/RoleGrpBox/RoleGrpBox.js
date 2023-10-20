@@ -7,6 +7,8 @@ import CardMenuBar from "common/component/CardMenuBar";
 import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardList";
 import RoleGrpSearchBar from "./RoleGrpSearchBar";
 
+import BottomDrawer from "common/component/BottomDrawer";
+import { UseDrawerOpen } from "hook/UseDrawerOpen";
 
 const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -18,10 +20,12 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
     const [infiniteScrollRef, inView] = useInView();
 
-    // 선택한 권한 그룹 목록
-    const [checkedRgCd, setCheckedRgCd] = useState();
+    const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
+    const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
+    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
+        isDrawerClose();
         initPageInfo(); // 권한그룹 목록 조회
     }, [coCd]);
 
@@ -58,7 +62,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             .then((res) => res.json())
             .then((res) => {
                 if (res.result === 'success') {
-                    setRoleGrpList([...roleGrpList, ...res.pageInfo.list]);
+                    setRoleGrpList(pageNum===1?res.pageInfo.list:[...roleGrpList, ...res.pageInfo.list]); // 이전 페이지 데이터 리스트에 추가
                     setTotalCount(res.pageInfo.total);  // 총 데이터 수
                     setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
                     if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
@@ -67,11 +71,25 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                 } else {
                     setRoleGrpList([]);
                     setIsLastPage(true);
+                   
                 }
+                setCheckedList([]);
                 setRgCd(undefined);
             });
     };
 
+    useEffect(async ()=>{
+        roleGrpList.map(async (roleGrp)=>{
+            if(roleGrp.state === 1) {
+                await checkedList.includes(roleGrp.rgCd);
+                await checkedItemHandler(roleGrp.rgCd, true);
+            }
+        });
+    },[roleGrpList]);
+
+    useEffect(() => {
+        checkedList.length > 0 && isDrawerOpen();
+    }, [checkedList]);
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
@@ -85,8 +103,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
 
     // 검색 버튼 클릭 시
     const initPageInfo = () => { // 초기화 
-        setRoleGrpList([]);
-        setIsLastPage(false);
         setPageNum(1);
         setTotalCount(0);
         setInit(!init);
@@ -101,17 +117,51 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(checkedRgCd)
+            body: JSON.stringify(checkedList)
         })
             .then((res) => res.json())
             .then((res) => {
                 if (res.result === 'success')
+                    checkedList.length === 0 && isDrawerClose();
                     alert('수정되었습니다');
             });
     };
 
+    // 체크리스트 추가 및 삭제
+    const checkedItemHandler = async (value, isChecked) => {
+        if (isChecked) {
+            setCheckedList((prev) => [...prev, value]);
+            return;
+        }
+        if (!isChecked && checkedList.includes(value)) {
+            setCheckedList(checkedList.filter((item) => item !== value));
+            return;
+        }
+        return;
+    };
+
+    // 체크박스 핸들러
+    const checkHandler = (e, value) => {
+        setIsChecked(!isChecked);
+        checkedItemHandler(value, e.target.checked);
+    };
+
+   // 체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if(checked) {
+      // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
+      const rgCdList = [];
+      roleGrpList.forEach((roleGrp) => rgCdList.push(roleGrp.rgCd));
+      setCheckedList(rgCdList);
+    }
+    else {
+      // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
+      setCheckedList([]);
+    }
+  }
+
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" w={'450px'}>
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
             {/* 검색바 */}
@@ -125,6 +175,8 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                 <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
                     <Box minH={'510px'}>
                         <GroupCardList
+                            checkHandler={checkHandler}
+                            checkedList={checkedList}
                             rgCd={rgCd}
                             roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
                             setRgCd={setRgCd}   // 권한그룹 선택
@@ -132,10 +184,14 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                             total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
                         />
                     </Box>
-                    <Box ref={infiniteScrollRef}  h={'1px'} />
+                    <Box ref={infiniteScrollRef} h={'1px'} />
                 </Box>
             }
+            {isDrawer &&
+                <BottomDrawer cnt={checkedList.length} handler={fetchCheckedRoleGrp} isDrawerClose={()=>setCheckedList([])} type={4} />
+            }
         </Box>
+
 
     );
 };
