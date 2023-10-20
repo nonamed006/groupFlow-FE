@@ -98,18 +98,18 @@ const DepInfo = ({
   const change = (depDto) => {
     setDepDto(depDto);
   };
-  const updateBtn = async () => { 
-    depSchema.validate(depDto)
-    .then(async() => {
-      // 유효성 검사 통과한 데이터 처리
-      isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-      setTest(true);
-      setDepDto([]);
-    })
-    .catch(errors => {
-      // 유효성 검사 실패한 경우 에러 메세지
-      alert(errors.message);
-    });
+  const updateBtn = async () => {
+    //depSchema.validate(depDto)
+    //.then(async() => {
+    //  // 유효성 검사 통과한 데이터 처리
+    isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+    setTest(true);
+    setDepDto([]);
+    //})
+    //.catch(errors => {
+    //  // 유효성 검사 실패한 경우 에러 메세지
+    //  alert(errors.message);
+    //});
   };
 
   const deleteBtn = () => {

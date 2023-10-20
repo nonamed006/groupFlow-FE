@@ -28,6 +28,7 @@ const DepBasic = (props) => {
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  //const [updatedDepDto, setUpdatedDepDto] = useState({});
   const [org, setOrg] = useState([]);
   const recYN = new Boolean(depDto.recYN);
   const useYN = new Boolean(depDto.useYN);
@@ -53,22 +54,21 @@ const DepBasic = (props) => {
 
   let updatedDepDto;
   const getValue = (text) => {
-    updatedDepDto = { ...depDto };
-    updatedDepDto.upperCd = text._values[2];
-    updatedDepDto.upperName = text.values[1];
+    //setUpdatedDepDto(text);
+    updatedDepDto = text;
   };
 
   const click = () => {
     onChange2({
       target: {
         name: ["upperCd", "upperName"], // 여러 값을 배열에 넣음
-        value: [updatedDepDto.upperCd, updatedDepDto.upperName], // 값을 배열에 넣음
+        value: [updatedDepDto?._values[2], updatedDepDto?._values[1]], // 값을 배열에 넣음
       },
     });
     onClose();
   };
   const getOrg = () => {
-    let url = `${PORT}/dep?text=&coCd=`;
+    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=&keyword=&search=dep`;
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
