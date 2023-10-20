@@ -64,10 +64,10 @@ const InfoBoxBar = ({ title, onOpen, handelSaveBtn }) => {
       </Text>
 
       <Flex>
-        <Button variant="brand" onClick={handelSaveBtn}>
+        <Button variant="brand" borderRadius={"10px"} onClick={handelSaveBtn}>
           저장
         </Button>
-        <Button variant="action" onClick={onOpen}>
+        <Button variant="action" borderRadius={"10px"} onClick={onOpen}>
           삭제
         </Button>
         <Button
