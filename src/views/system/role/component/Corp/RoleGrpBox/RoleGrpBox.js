@@ -146,20 +146,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
         checkedItemHandler(value, e.target.checked);
     };
 
-   // 체크박스 전체 선택
-  const handleAllCheck = (checked) => {
-    if(checked) {
-      // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
-      const rgCdList = [];
-      roleGrpList.forEach((roleGrp) => rgCdList.push(roleGrp.rgCd));
-      setCheckedList(rgCdList);
-    }
-    else {
-      // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
-      setCheckedList([]);
-    }
-  }
-
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" w={'450px'}>
             {/* 메뉴상단 */}

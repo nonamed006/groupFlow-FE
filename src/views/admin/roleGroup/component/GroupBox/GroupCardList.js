@@ -45,7 +45,7 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
                         fontWeight="700"
                         lineHeight="40px"
                         textAlign={'left'}>
-                        {'전체 권한그룹'}</Text>
+                        {'적용된 권한그룹'}</Text>
                     </Box>
                     
                 </Card>

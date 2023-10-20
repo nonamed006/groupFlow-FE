@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useEffect, useState } from "react";
 import { PORT } from "set";
 
@@ -13,13 +13,15 @@ import { useInView } from 'react-intersection-observer';
 
 import BottomDrawer from "common/component/BottomDrawer";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
+import DeleteModal from "common/modal/DeleteModal";
 
 const GroupBox = ({ setRgCd, rgCd }) => {
     const [keyword, setKeyword] = useState();   // 검색어
     const [searchCorp, setSearchCorp] = useState(); // 검색바에서 선택된 회사 코드
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
     const [corps, setCorps] = useState([]); // 회사 코드 및 명 목록 (셀렉트박스에서 사용됨)
-    const [isOpen, setIsOpen] = useState(false);    // 권한그룹 추가 모달
+    const [isAddOpen, setIsAddOpen] = useState(false);    // 권한그룹 추가 모달
+    const [isDelOpen, setIsDelOpen] = useState(false);    // 권한그룹 삭제 모달
     const [roleGrp, setRoleGrp] = useState();
 
     const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
@@ -33,10 +35,8 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
-    const [ useYn, setUseYn ] = useState();
 
     useEffect(() => {
-        isDrawerClose();
         fetchCorpsNm(); // 회사 목록 조회
         fetchRoleGroup(); // 권한그룹 목록 조회
     }, []);
@@ -85,6 +85,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
                     }
                 } else {
                     setRoleGrpList([]);
+                    isDrawerClose();
                     setIsLastPage(true);
                 }
                 setRgCd(undefined);
@@ -137,7 +138,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
         roleGrpSchema.validate(roleGrp)
             .then(() => {
                 fetchRoleGrpSave(); // 권한그룹 등록
-                setIsOpen(!isOpen); // 모달창 닫기
+                setIsAddOpen(!isAddOpen); // 모달창 닫기
             })
             .catch(errors => {
                 // 유효성 검사 실패한 경우 에러 메세지 출력
@@ -146,17 +147,16 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     };
 
     useEffect(() => {
-        console.log(checkedList.length);
-        checkedList.length > 0 && isDrawerOpen();
+        checkedList.length > 0 ? isDrawerOpen() : isDrawerClose();
     }, [checkedList]);
 
     //  권한그룹 사용여부 변경
     const fetchRoleGrpModufy = (useYn) => {
         let url = `${PORT}/roleGrp/useYn`;
-        let bodyData = {'useYn' : useYn, 'rgCdList':checkedList }
+        let bodyData = { 'useYn': useYn, 'rgCdList': checkedList }
 
         fetch(url, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -166,7 +166,6 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             .then((res) => {
                 if (res.result === 'success') {
                     alert("수정되었습니다");
-                    checkedList.length === 0 && isDrawerClose();
                     fetchRoleGroup();
                 } else {
                     alert("수정실패");
@@ -174,9 +173,32 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             });
     };
 
+    //  권한그룹 삭제
+    const fetchRoleGrpDelete = () => {
+        let url = `${PORT}/roleGrp/delYn`;
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(checkedList)
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.status === 200) {
+                    alert("수정되었습니다");
+                    fetchRoleGroup();
+                    setIsDelOpen(false);
+                } else {
+                    alert("수정실패");
+                }
+            });
+    };
+
+
     // 모달창 열고 닫기
     const changeIsOpen = () => {
-        setIsOpen(!isOpen);
+        setIsAddOpen(!isAddOpen);
     };
 
     // 체크리스트 추가 및 삭제
@@ -198,20 +220,6 @@ const GroupBox = ({ setRgCd, rgCd }) => {
         checkedItemHandler(value, e.target.checked);
     };
 
-    // 체크박스 전체 선택
-    const handleAllCheck = (checked) => {
-        if (checked) {
-            // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
-            const rgCdList = [];
-            roleGrpList.forEach((roleGrp) => rgCdList.push(roleGrp.rgCd));
-            setCheckedList(rgCdList);
-        }
-        else {
-            // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
-            setCheckedList([]);
-        }
-    }
-
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴상단 */}
@@ -231,16 +239,34 @@ const GroupBox = ({ setRgCd, rgCd }) => {
                 </Box>
                 <Box ref={infiniteScrollRef} h={'1px'} />
             </Box>
+
             {/* 권한그룹 추가 모달 */}
-            {isOpen &&
+            {isAddOpen &&
                 <ModalLayout title={'권한그룹추가'} buttonYn={true} onClose={changeIsOpen} size={'lg'} btnText={'등록'} handleCheck={handleAddBtn}>
                     <GroupAddBox corps={corps} roleGrp={roleGrp} setRoleGrp={setRoleGrp} />
                 </ModalLayout>
             }
 
+            {/* 삭제 확인 모달 */}
+            {isDelOpen ?
+                <DeleteModal
+                    isOpen={() => setIsDelOpen(true)}
+                    onClose={() => setIsDelOpen(false)}
+                    handleCheck={fetchRoleGrpDelete}
+                />
+                : ''
+            }
+
+            {/* 체크박스 컴포넌트 */}
             {isDrawer &&
-                useYn? <BottomDrawer cnt={checkedList.length} handler={()=>fetchRoleGrpModufy(true)} isDrawerClose={() => handleAllCheck(false)} type={2} />
-                :<BottomDrawer cnt={checkedList.length} handler={()=>fetchRoleGrpModufy(true)} isDrawerClose={() => handleAllCheck(false)} type={1} />
+                <BottomDrawer
+                    cnt={checkedList.length}
+                    handler1={() => fetchRoleGrpModufy(true)}
+                    handler2={() => fetchRoleGrpModufy(false)}
+                    onDelete={() => setIsDelOpen(true)}
+                    isDrawerClose={() => setCheckedList([])}
+                    type={1}
+                />
             }
         </Box>
 
