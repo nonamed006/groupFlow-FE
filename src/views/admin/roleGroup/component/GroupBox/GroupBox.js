@@ -132,8 +132,7 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             setIsOpen(!isOpen); // 모달창 닫기
         })
         .catch(errors => {
-            // 유효성 검사 실패한 경우 에러 처리
-            console.log(errors);
+            // 유효성 검사 실패한 경우 에러 메세지 출력
             alert(errors.message);
         });
     };
