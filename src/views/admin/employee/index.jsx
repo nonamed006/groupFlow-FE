@@ -4,6 +4,7 @@ import SearchCardBar from "./component/SearchCardBar";
 import { PORT } from "set";
 import EmpCard from "./component/empCard/EmpCard";
 import EmpInfo from "./component/empInfo/EmpInfo";
+import { getCookie } from "common/common";
 
 const Employee = () => {
 
@@ -55,6 +56,10 @@ const Employee = () => {
       `${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`,
       {
         method: "GET",
+        headers: {
+          'Content-Type': "application/json; charset=utf-8",
+          'Authorization': getCookie("Authorization")
+        }
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())
@@ -68,6 +73,10 @@ const Employee = () => {
   const getDeptInfo = (empCd) => {
     fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
       method: "GET",
+      headers: {
+        'Content-Type': "application/json; charset=utf-8",
+        'Authorization': getCookie("Authorization")
+      }
     }).then((res) => res.json())
       .then((res) => {
         if(res.data.length > 0){

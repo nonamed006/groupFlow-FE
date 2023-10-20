@@ -14,6 +14,8 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import { minTimeDate } from "common/common";
+import BottomDrawer from "common/component/BottomDrawer";
+import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React from "react";
 import { useState } from "react";
@@ -26,7 +28,8 @@ const EmpCard = (props) => {
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
 	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-const [selectedIndex, setSelectedIndex] = useState(undefined);
+	const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   return (
     <div>
@@ -64,6 +67,9 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
             명
           </Text>
           <Spacer />
+          <Button variant="outline" onClick={() => {isDrawerOpen()}}>
+            test
+          </Button>
           <Button
             variant="action"
             onClick={() => {
@@ -94,7 +100,7 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
-                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'navy.50': "white"}
+                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);
@@ -124,7 +130,7 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
-                      {column.empId}
+                      {column.loginId}
                     </Text>
                   </Flex>
                 </Td>
@@ -144,6 +150,10 @@ const [selectedIndex, setSelectedIndex] = useState(undefined);
           </Tbody>
         </Table>
       </Box>
+      {isDrawer ?
+      <BottomDrawer cnt={drawerCnt} isDrawerClose={isDrawerClose}/>
+      : ""
+    }
     </div>
   );
 };
