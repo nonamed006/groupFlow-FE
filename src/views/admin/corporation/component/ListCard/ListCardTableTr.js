@@ -26,11 +26,6 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       shadow={coCd === data.coCd ? 'outline' : 'md'}
       cursor={'pointer'}>
 
-      {/* <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.coCd}
-        </Text>
-      </Td> */}
       <Td align="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.coNm}

@@ -5,6 +5,7 @@ import ListCard from "./component/ListCard/ListCard";
 import InfoBox from "./component/InfoBox/InfoBox";
 import { PORT } from "set";
 import OrgChartModal from "common/orgChart/OrgChartModal";
+import CommonAlert from "common/component/CommonAlert";
 
 const Corporation = () => {
 	const [keyword, setKeyword] = useState(""); // 검색어
@@ -12,7 +13,10 @@ const Corporation = () => {
 	const [coCd, setCoCd] = useState(); // 선택된 회사코드
 	const [changeYn, setChangeYn] = useState(); // 변경 여부(회사목록 리렌더링 조건)
 	const [sortValue, setSortValue] = useState(); // 초기 정렬 기본값
-	const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
+
+	const [alertInfo, setAlertInfo] = useState({
+		isOpen: false
+	});
 
 	useEffect(() => {
 		fetchMaxSort();
@@ -75,12 +79,19 @@ const Corporation = () => {
 						setCoCd={setCoCd}
 						setChangeYn={setChangeYn}
 						changeYn={changeYn}
+						setAlertInfo={setAlertInfo}
 					/>
 				</GridItem>
 			</Grid>
 
-			<Button onClick={onOpen}>조직도</Button>
-			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null}
+			{alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
+			{/* <Button onClick={onOpen}>조직도</Button>
+			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null} */}
 		</Box>
 	);
 };
