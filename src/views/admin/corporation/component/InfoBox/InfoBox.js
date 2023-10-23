@@ -1,4 +1,4 @@
-import { Box,useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Alert, AlertIcon, AlertTitle, Box,Button,ChakraProvider,CloseButton,useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import { PORT } from "set";
 import { corpSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
+import CommonAlert from "common/component/CommonAlert";
 
-const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
+const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   const [isEditing, setIsEditing] = useState(); // 저장 및 수정 상태 (기본값 false - 저장)
   const [corp, setCorp] = useState(); // 회사 데이터 (하나)
+
 
   useEffect(() => {
     if (coCd !== "undefined" && coCd !== undefined && coCd !== 0)
@@ -54,7 +56,12 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        alert(res.resultMsg);
+        setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setChangeYn(!changeYn); // 변경 여부 변경
       });
   };
@@ -71,7 +78,12 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        alert(res.resultMsg);
+        setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setIsEditing(false);
         setChangeYn(!changeYn); // 변경 여부 변경
       });
@@ -85,7 +97,12 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        alert(res.resultMsg);
+        setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setCoCd(); // coCd 초기화
         setChangeYn(!changeYn); // 변경 여부 변경
       });
@@ -94,21 +111,36 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   // 삭제 버튼 클릭 시
   const handleDeleteBtn = () => {
     coCd !== "undefined" && coCd !== undefined
-      ? fetchCorpDelete(coCd)
-      : alert('삭제할 회사가 존재하지않습니다.');
+      ? fetchCorpDelete(coCd) 
+      :
+      setAlertInfo({
+        isOpen : true,
+        status : 'warning',
+        title : '선택된 회사가 없습니다.',
+        width : 'fit-content'
+      });
+      // : alert('삭제할 회사가 존재하지않습니다.');
     onClose();
   };
 
+
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
+    console.log('ddddd');
     corpSchema.validate(corp)
       .then(() => {
         // 유효성 검사 통과한 데이터 처리
         coCd !== 0 ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
       })
-      .catch(errors => {
+      .catch( errors => {
         // 유효성 검사 실패한 경우 에러 메세지
-        alert(errors.message);
+        setAlertInfo({
+          isOpen : true,
+          status : 'warning',
+          title : '입력값을 확인해주세요.',
+          detail : errors.message,
+          width : 'fit-content'
+        });
       });
   };
 
@@ -121,7 +153,12 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
       setIsEditing(true);
       return;
     }
-    alert("회사를 선택하세요.");
+    setAlertInfo({
+      isOpen : true,
+      status : 'warning',
+      title : '회사를 선택하세요',
+      width : 'fit-content'
+    });
   }
 
   return (
@@ -150,6 +187,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
             isEditing={isEditing}
           />
         </Box>
+       
       </Box>
 
       {/* 삭제 확인 모달 */}

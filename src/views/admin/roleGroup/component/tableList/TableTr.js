@@ -23,17 +23,17 @@ const TableTr = ({ data, index }) => {
         >
             <Td align="center" >
                 <Text color={textColor} fontSize="md" fontWeight="500">
-                    {data.depGrpDto.dpNm}
+                    {data.dpNm}
                 </Text>
             </Td>
             <Td align="center" >
                 <Text color={textColor} fontSize="md" fontWeight="500">
-                    {data.depGrpDto.rankNm} / {data.depGrpDto.pstnNm}
+                    {data.rankNm} / {data.pstnNm}
                 </Text>
             </Td>
             <Td align="center" >
                 <Text color={textColor} fontSize="md" fontWeight="500">
-                    {data.depGrpDto.empNm} ({data.depGrpDto.mailId})
+                    {data.empNm} ({data.mailId})
                 </Text>
             </Td>
         </Tr>
