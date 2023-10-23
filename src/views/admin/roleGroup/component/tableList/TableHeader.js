@@ -10,7 +10,7 @@ const ListCardTableHeader = ({ headerGroups }) => {
         <Thead>
             <Tr bg={'#F4F7FE'} boxShadow='lg'> 
                 {headerGroups.map((header, index) => {
-                    return (
+                    return ( 
                         <Td key={index} >
                             <Text
                                 color={headerColor}
