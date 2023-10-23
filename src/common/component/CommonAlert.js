@@ -2,6 +2,7 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from
 
 import React, { useEffect } from "react";
 
+// status: 'success', 'error', 'warning', 'info'
 const CommonAlert = ({ alertInfo, setAlertInfo }) => {
 
     const { status, title, detail, width } = alertInfo;

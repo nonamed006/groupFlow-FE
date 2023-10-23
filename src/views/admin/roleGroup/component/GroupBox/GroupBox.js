@@ -1,7 +1,5 @@
-import { Box, Text, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useEffect, useState } from "react";
-import { PORT } from "set";
-
 import { roleGrpSchema } from "common/Schema";
 
 import SearchBar from "./SearchBarRoleGrp";
@@ -14,8 +12,9 @@ import { useInView } from 'react-intersection-observer';
 import BottomDrawer from "common/component/BottomDrawer";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import DeleteModal from "common/modal/DeleteModal";
+import api from "api/Fetch";
 
-const GroupBox = ({ setRgCd, rgCd }) => {
+const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     const [keyword, setKeyword] = useState();   // 검색어
     const [searchCorp, setSearchCorp] = useState(); // 검색바에서 선택된 회사 코드
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -55,75 +54,52 @@ const GroupBox = ({ setRgCd, rgCd }) => {
 
 
     // 권한그룹 목록 조회
-    const fetchRoleGroup = () => {
-        let url = `${PORT}/roleGrp`
-
-        // URL 파라미터 생성
-        const params = new URLSearchParams();
-        if (searchCorp !== undefined && searchCorp !== 'undefined') params.append("coCd", searchCorp);
-        if (keyword !== undefined && keyword !== 'undefined') params.append("grpNm", keyword);
-        // 페이지 요청
-        params.append("pageNum", pageNum);
-
-        // URL에 파라미터 추가
-        const paramString = params.toString();
-        if (paramString) {
-            url += "?" + paramString;
+    const fetchRoleGroup = async () => {
+        let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
+        if (res.status === 200) {
+            setRoleGrpList(pageNum === 1 ? res.pageInfo.list : [...roleGrpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
+            setTotalCount(res.pageInfo.total);  // 총 데이터 수
+            setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
+            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
+                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
+            }
+        } else {
+            setRoleGrpList([]);
+            isDrawerClose();
+            setIsLastPage(true);
         }
+        setRgCd(undefined);
 
-        fetch(url, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    setRoleGrpList(pageNum === 1 ? res.pageInfo.list : [...roleGrpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
-                    setTotalCount(res.pageInfo.total);  // 총 데이터 수
-                    setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
-                    if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                        setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-                    }
-                } else {
-                    setRoleGrpList([]);
-                    isDrawerClose();
-                    setIsLastPage(true);
-                }
-                setRgCd(undefined);
-            });
     };
 
     // 회사명/회사코드 목록 조회
-    const fetchCorpsNm = () => {
-        let url = `${PORT}/corp/list`;
-        fetch(url, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success')
-                    setCorps(res.data);
-            });
+    const fetchCorpsNm = async() => {
+        let res = await api.corp.getCorpsNmList();
+        if (res.status === 200 ) setCorps(res.data);
+        else setCorps([]);
     }
 
     // 권한그룹 등록
-    const fetchRoleGrpSave = () => {
-        let url = `${PORT}/roleGrp`;
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(roleGrp)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    alert("등록되었습니다.");
-                    fetchRoleGroup();
-                } else {
-                    alert("등록실패");
-                }
-            });
+    const fetchRoleGrpSave = async () => {
+        let res = await api.roleGrp.postRoleGrp;
+        if (res.status === 'success') {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'succes',
+                    title: res.resultMsg,
+                    width: 'fit-content'
+                });
+            fetchRoleGroup();
+        } else {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'error',
+                    title: '등록 실패',
+                    detail: res.resultMsg,
+                    width: 'fit-content'
+                });
+        }
+
     };
 
     // 검색 버튼 클릭 시
@@ -142,7 +118,13 @@ const GroupBox = ({ setRgCd, rgCd }) => {
             })
             .catch(errors => {
                 // 유효성 검사 실패한 경우 에러 메세지 출력
-                alert(errors.message);
+                setAlertInfo( {
+                        isOpen: true,
+                        status: 'warning',
+                        title: '등록 실패',
+                        detail: errors.message,
+                        width: 'fit-content'
+                    });
             });
     };
 
@@ -151,48 +133,52 @@ const GroupBox = ({ setRgCd, rgCd }) => {
     }, [checkedList]);
 
     //  권한그룹 사용여부 변경
-    const fetchRoleGrpModufy = (useYn) => {
-        let url = `${PORT}/roleGrp/useYn`;
-        let bodyData = { 'useYn': useYn, 'rgCdList': checkedList }
+    const fetchRoleGrpModufy = async (useYn) => {
+        let res = await api.roleGrp.putRoleGrp({ 'useYn': useYn, 'rgCdList': checkedList });
 
-        fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(bodyData)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    alert("수정되었습니다");
-                    fetchRoleGroup();
-                } else {
-                    alert("수정실패");
-                }
-            });
+        if (res.status === 200) {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'succes',
+                    title: res.resultMsg,
+                    width: 'fit-content'
+                });
+            fetchRoleGroup();
+            setIsDelOpen(false);
+        } else {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'error',
+                    title: '수정 실패',
+                    detail: res.resultMsg,
+                    width: 'fit-content'
+                });
+        }
     };
 
     //  권한그룹 삭제
-    const fetchRoleGrpDelete = () => {
-        let url = `${PORT}/roleGrp/delYn`;
-        fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(checkedList)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.status === 200) {
-                    alert("수정되었습니다");
-                    fetchRoleGroup();
-                    setIsDelOpen(false);
-                } else {
-                    alert("수정실패");
-                }
-            });
+    const fetchRoleGrpDelete = async () => {
+        let res = await api.roleGrp.deleteRoleGrp(checkedList);
+
+        if (res.status === 200) {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'succes',
+                    title: res.resultMsg,
+                    width: 'fit-content'
+                });
+            fetchRoleGroup();
+            setIsDelOpen(false);
+        } else {
+            setAlertInfo({
+                    isOpen: true,
+                    status: 'error',
+                    title: '삭제 실패',
+                    detail: res.resultMsg,
+                    width: 'fit-content'
+                });
+        }
+
     };
 
 

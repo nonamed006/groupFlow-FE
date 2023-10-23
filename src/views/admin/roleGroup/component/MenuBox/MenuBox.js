@@ -6,6 +6,7 @@ import SearchBar from "./SearchBarMenu";
 import MenuTab from "./MenuTab";
 import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
+import api from "api/Fetch";
 
 const MenuBox = ({ rgCd, type, modify, code, grpNm }) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
@@ -42,77 +43,17 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm }) => {
     }
 
     // 대메뉴 이름/코드 목록 조회
-    const fetchMenuList = () => {
-        let url = `${PORT}/roleMenu/gnbList`;
-
-        if (rgCd === 'total') {
-            url += `/${type}/${code}`;
-        } else {
-            url += `/roleGrp/${rgCd}`;
-        }
-        // URL 파라미터 생성
-        const params = new URLSearchParams();
-
-        if (rgCd === 'total' && grpNm !== undefined && grpNm !== 'undefined')
-            params.append("grpNm", grpNm);   // 권한그룹명 검색 시
-        if (typeCd !== undefined && typeCd !== 'undefined')
-            params.append("menuType", typeCd);
-
-        // URL에 파라미터 추가
-        const paramString = params.toString();
-        if (paramString) {
-            url += "?" + paramString;
-        }
-
-        fetch(url, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                setMenuList(res.data);
-            });
+    const fetchMenuList = async () => {
+        let res = await api.roleMenu.getRoleMenuGnbList(rgCd, type, code, grpNm, typeCd);
+        if (res.status === 200) setMenuList(res.data);
+        else setMenuList([]);
     }
 
     // 권한메뉴 목록 조회 + 검색
-    const fetchRoleMenu = () => {
-        let url = `${PORT}/roleMenu`;
-
-        if (rgCd === 'total') {
-            url += `/${type}/${code}`;
-        } else {
-            url += `/roleGrp/${rgCd}`;
-        }
-
-        // URL 파라미터 생성
-        const params = new URLSearchParams();
-
-        // 검색 조건
-        if (rgCd === 'total' && grpNm !== undefined && grpNm !== 'undefined')
-            params.append("grpNm", grpNm);   // 권한그룹명 검색 시
-        if (selectedMenu !== undefined && selectedMenu !== 'undefined')
-            params.append("gnb", selectedMenu);
-        if (keyword !== undefined && keyword !== 'undefined')
-            params.append("keyword", keyword);
-        if (typeCd !== undefined && typeCd !== 'undefined')
-            params.append("menuType", typeCd);
-
-        // URL에 파라미터 추가
-        const paramString = params.toString();
-        if (paramString) {
-            url += "?" + paramString;
-        }
-
-        fetch(url, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    setRoleMenu(res.data);
-                } else {
-                    setRoleMenu();
-                }
-            });
+    const fetchRoleMenu = async () => {
+        let res = await api.roleMenu.getRoleMenuList(rgCd, type, code, grpNm, selectedMenu, keyword, typeCd);
+        if (res.status === 200) setRoleMenu(res.data);
+        else setRoleMenu();
     };
 
     return (
