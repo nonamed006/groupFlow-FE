@@ -17,6 +17,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -24,16 +26,21 @@ import DepUpperCd from "./DepUpperCd";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { PORT } from "set";
 import AddrBox from "common/addressAPI/AddrBox";
+import FormRadio from "common/component/FormRadio";
+import FormInput from "common/component/FormInput";
+import FormSelect from "common/component/FormSelect";
 const DepBasic = (props) => {
+  console.log(props);
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   //const [updatedDepDto, setUpdatedDepDto] = useState({});
   const [org, setOrg] = useState([]);
-  const recYN = new Boolean(depDto.recYN);
-  const useYN = new Boolean(depDto.useYN);
-  const organYN = new Boolean(depDto.organYN);
+  console.log(depDto);
+  const recYN = new Boolean(depDto?.recYN);
+  const useYN = new Boolean(depDto?.useYN);
   const onChange = (e) => {
+    console.log(e.target.value);
     const { value, name } = e.target;
     const updateData = {
       ...depDto,
@@ -80,29 +87,31 @@ const DepBasic = (props) => {
   }, [props]);
 
   return (
-    <div>
+    <>
       <Grid
-        templateColumns="repeat(13, 1fr)"
-        templateRows="repeat(12, 1fr)"
+        templateColumns="repeat(10, 1fr)"
+        templateRows="repeat(10, 1fr)"
         gap={2}
+        w={"100%"}
+        paddingLeft={10}
       >
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            상위부서
-          </Text>
+        <GridItem colStart={1} colEnd={5} colSpan={5}>
+          <FormControl display={"flex"} w={"100%"} isRequired={true}>
+            <FormLabel fontSize="md" fontWeight="600" w={"50%"}>
+              상위부서
+            </FormLabel>
+            <Input
+              w={"100%"}
+              fontSize={"14px"}
+              borderRadius="5px"
+              name="upperName"
+              value={depDto?.upperName}
+              key={depDto?.dpCd}
+              readOnly
+            />
+          </FormControl>
         </GridItem>
-        <GridItem colStart={3} colEnd={6}>
-          <Input
-            placeholder="-"
-            size="md"
-            borderRadius="14px"
-            name="upperName"
-            value={depDto.upperName || ""}
-            key={depDto.dpCd}
-            readOnly
-          />
-        </GridItem>
-        <GridItem colStart={6} colEnd={7}>
+        <GridItem colStart={5} colEnd={6}>
           <Button
             onClick={() => {
               if (props.editState === "update") {
@@ -132,155 +141,111 @@ const DepBasic = (props) => {
           </Modal>
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            대내외 수신여부
-          </Text>
-        </GridItem>
-        <GridItem colSpan={4}>
-          <RadioGroup
+        <GridItem colStart={6} colEnd={10} colSpan={5}>
+          <FormRadio
+            title={"대내외 수신여부"}
+            name={"recYN"}
             value={recYN.toString()}
-            onChange={(value) =>
-              onChange({ target: { name: "recYN", value: value === "true" } })
-            }
-          >
-            <HStack spacing="24px">
-              <Radio value="true" isReadOnly={props.editState === "read"}>
-                사용
-              </Radio>
-              <Radio value="false" isReadOnly={props.editState === "read"}>
-                미사용
-              </Radio>
-            </HStack>
-          </RadioGroup>
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            표준행정코드
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-            placeholder="표준행정코드"
-            size="md"
-            borderRadius="14px"
-            name="stnd"
-            value={depDto.stnd || ""}
-            key={depDto.dpCd}
-            isReadOnly={props.editState === "read"}
+            pk={depDto?.dpCd}
             onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: "true",
+                name: "사용",
+              },
+              {
+                value: "false",
+                name: "미사용",
+              },
+            ]}
+          />
+        </GridItem>
+        <GridItem colSpan={5} colStart={1} colEnd={5}>
+          <FormInput
+            title={"표준행정코드"}
+            name={"stnd"}
+            value={depDto?.stnd}
+            pk={depDto?.dpCd}
+            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            발신인명
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
-            placeholder="발신인명"
-            size="md"
-            borderRadius="14px"
-            name="reqNm"
-            value={depDto.reqNm || ""}
-            key={depDto.dpCd}
-            isReadOnly={props.editState === "read"}
+        <GridItem colStart={6} colEnd={10} colSpan={5}>
+          <FormInput
+            title={"발신인명"}
+            name={"reqNm"}
+            value={depDto?.reqNm}
+            pk={depDto?.dpCd}
             onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
+          />
+        </GridItem>
+        <GridItem colStart={1} colEnd={5} colSpan={5}>
+          <FormInput
+            title={"부서코드"}
+            name={"dpCd"}
+            value={depDto?.dpCd}
+            pk={depDto?.dpCd}
+            onChange={onChange}
+            readOnly={true}
+            isRequired={false}
           />
         </GridItem>
 
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            부서코드
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Text color={textColor} fontSize="sm" fontWeight="500">
-            {depDto.dpCd}
-          </Text>
-        </GridItem>
-
-        <GridItem colStart={8} colEnd={10}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            부서유형
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Select
-            placeholder=""
-            borderRadius="14px"
-            name="typeCd"
-            value={depDto.typeCd || ""}
-            key={depDto.dpCd}
-            isDisabled={props.editState === "read"}
+        <GridItem colStart={6} colEnd={10} colSpan={5}>
+          <FormSelect
+            title={"부서유형"}
+            name={"typeCd"}
+            value={depDto?.typeCd}
+            pk={depDto?.dpCd}
             onChange={onChange}
-          >
-            <option value="부서">부서</option>
-            <option value="임시">임시</option>
-            <option value="팀">팀</option>
-          </Select>
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            부서명
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-            placeholder="부서명"
-            size="md"
-            borderRadius="14px"
-            name="dpNm"
-            value={depDto.dpNm || ""}
-            key={depDto.dpCd}
-            isReadOnly={props.editState === "read"}
-            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: "DPA0001",
+                name: "부서",
+              },
+              {
+                value: "DPA0002",
+                name: "팀",
+              },
+              {
+                value: "DPA0003",
+                name: "임시",
+              },
+            ]}
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            부서약칭
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
-            placeholder="부서약칭"
-            size="md"
-            borderRadius="14px"
-            name="dpAbb"
-            value={depDto.dpAbb || ""}
-            key={depDto.dpCd}
-            isReadOnly={props.editState === "read"}
+        <GridItem colStart={1} colEnd={5} colSpan={5}>
+          <FormInput
+            title={"부서명"}
+            name={"dpNm"}
+            value={depDto?.dpNm}
+            pk={depDto?.dpCd}
             onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
           />
         </GridItem>
 
-        {/*<GridItem colStart={2} colEnd={4}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            부서주소
-          </Text>
-        </GridItem>
-        <GridItem colStart={4} colEnd={7}>
-          <Input
-            placeholder="우편번호"
-            size="md"
-            borderRadius="14px"
-            name="postNum"
-            value={depDto.postNum || ""}
-            key={depDto.dpCd}
-            isReadOnly={props.editState === "read"}
+        <GridItem colStart={6} colEnd={10} colSpan={5}>
+          <FormInput
+            title={"발신인명"}
+            name={"dpAbb"}
+            value={depDto?.dpAbb}
+            pk={depDto?.dpCd}
             onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
           />
         </GridItem>
-        <GridItem colStart={7} colEnd={8}>
-          <Button size="xs" variant="outline">
-            우편번호
-          </Button>
-        </GridItem>*/}
         <AddrBox
           title={"부서주소"}
           data={depDto}
@@ -288,98 +253,41 @@ const DepBasic = (props) => {
           editState={props.editState}
         ></AddrBox>
 
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            사용여부
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <RadioGroup
+        <GridItem colStart={1} colEnd={5} colSpan={5}>
+          <FormRadio
+            title={"사용여부"}
+            name={"useYN"}
             value={useYN.toString()}
-            key={depDto.dpCd}
-            onChange={(value) =>
-              onChange({ target: { name: "useYN", value: value === "true" } })
-            }
-          >
-            <HStack spacing="24px">
-              <Radio value="true" isReadOnly={props.editState === "read"}>
-                사용
-              </Radio>
-              <Radio value="false" isReadOnly={props.editState === "read"}>
-                미사용
-              </Radio>
-            </HStack>
-          </RadioGroup>
-        </GridItem>
-
-        {/*<GridItem colStart={4} colEnd={8}>
-          <Input
-            placeholder="주소"
-            size="md"
-            borderRadius="14px"
-            name="addr"
-            value={depDto.addr || ""}
-            key={depDto.dpCd}
+            pk={depDto?.dpCd}
             onChange={onChange}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: "true",
+                name: "사용",
+              },
+              {
+                value: "false",
+                name: "미사용",
+              },
+            ]}
           />
-        </GridItem>*/}
-
-        <GridItem colStart={8} colEnd={10}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            조작도표시
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <RadioGroup
-            value={organYN.toString()}
-            key={depDto.dpCd}
-            onChange={(value) =>
-              onChange({ target: { name: "organYN", value: value === "true" } })
-            }
-          >
-            <HStack spacing="24px">
-              <Radio value="true" isReadOnly={props.editState === "read"}>
-                표시
-              </Radio>
-              <Radio value="false" isReadOnly={props.editState === "read"}>
-                미표시
-              </Radio>
-            </HStack>
-          </RadioGroup>
         </GridItem>
 
-        {/*<GridItem colStart={4} colEnd={8}>
-          <Input
-            placeholder="상세주소"
-            size="md"
-            borderRadius="14px"
-            name="addrDetail"
-            value={depDto.addrDetail || ""}
-            key={depDto.dpCd}
+        <GridItem colStart={6} colEnd={10} colSpan={5}>
+          <FormInput
+            title={"정렬"}
+            name={"sort"}
+            value={depDto?.sort}
+            pk={depDto?.dpCd}
             onChange={onChange}
-            isReadOnly={props.editState === "read"}
-          />
-        </GridItem>*/}
-
-        <GridItem colSpan={2}>
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            정렬
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-            placeholder="정렬"
-            size="md"
-            borderRadius="14px"
-            name="sort"
-            value={depDto.sort || ""}
-            onChange={onChange}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
+            isRequired={true}
           />
         </GridItem>
       </Grid>
-    </div>
+    </>
   );
 };
 

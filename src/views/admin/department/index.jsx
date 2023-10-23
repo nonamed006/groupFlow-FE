@@ -1,11 +1,9 @@
-/* eslint-disable */
-
 import { Box, Grid, GridItem, Link } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
-import { PORT } from "set";
+import { getDepOrganizationApi } from "api/dep/DepApi";
 
 const Test = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
@@ -19,15 +17,10 @@ const Test = () => {
     onClickSearchText();
   };
 
-  const onClickSearchText = () => {
-    //let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
-    console.log(searchText);
-    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=${selectedCoCd}&keyword=${searchText}&search=dep`;
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((res) => {
-        setOrg(res.data);
-      });
+  //조직도 조회
+  const onClickSearchText = async () => {
+    const response = await getDepOrganizationApi(selectedCoCd, searchText);
+    setOrg(response.data);
   };
   useEffect(() => {
     if (test === true) {
@@ -40,9 +33,6 @@ const Test = () => {
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <Link href="/system/corporation" fontWeight="bold" fontSize="34px">
-        qweqwe
-      </Link>
       <Grid
         h="1000px"
         templateRows="repeat(11, 1fr)"
