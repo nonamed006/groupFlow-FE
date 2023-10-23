@@ -43,7 +43,7 @@ const UserBox = ({ rgCd }) => {
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
     const fetchRoleUserList = () => {
-        let url = `${PORT}/roleEmp/${rgCd}`;
+        let url = `${PORT}/roleGrp/${rgCd}`;
 
         // URL 파라미터 생성
         const params = new URLSearchParams();

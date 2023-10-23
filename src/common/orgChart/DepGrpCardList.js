@@ -20,8 +20,6 @@ const DepGrpCardList = ({changeYn, corpDepCd, setDepGrp, keyword, search }) => {
 
   useEffect(async () => {
     if (inView && !isLastPage) {
-      
-    console.log('inView');
      // await setIsLoading(true);
      fetchDepGrpList();
       // await setIsLoading(false);
@@ -29,8 +27,6 @@ const DepGrpCardList = ({changeYn, corpDepCd, setDepGrp, keyword, search }) => {
   }, [inView]);
 
   useEffect(() => {
-    console.log('changeYn');
-    console.log(changeYn);
     (changeYn !== undefined && changeYn !== 'undefined') &&
       handleSearchBtn();
   }, [changeYn]);
