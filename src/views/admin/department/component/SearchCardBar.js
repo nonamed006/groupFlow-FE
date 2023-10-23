@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Select, Grid, Input, GridItem } from "@chakra-ui/react";
-import { PORT } from "set";
 import { getCorpNmListApi } from "api/dep/DepApi";
 const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
   const [corpNm, setCorpNm] = useState([]);

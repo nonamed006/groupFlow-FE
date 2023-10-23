@@ -52,7 +52,13 @@ export default function AdminNavbar(props) {
   //방문한 페이지 삭제
   const pageDelete = (item, index) => () => {
     if (item.location.pathname === props.location.pathname) {
-      alert("현재 페이지는 삭제할 수 없습니다.");
+      props.setAlertInfo({
+        isOpen: true,
+        title: "현재 페이지는 삭제할 수 없습니다.",
+        status: "error",
+        width: "fit-content",
+      });
+      //alert("현재 페이지는 삭제할 수 없습니다.");
       return false;
     }
     const newHistory = history.filter((item, i) => i !== index);

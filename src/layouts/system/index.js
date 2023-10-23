@@ -1,5 +1,5 @@
 // Chakra imports
-import { Portal, Box, useDisclosure, HStack } from "@chakra-ui/react";
+import { Portal, Box, useDisclosure, HStack, Flex } from "@chakra-ui/react";
 import Footer from "components/footer/FooterAdmin.js";
 // Layout components
 import Navbar from "components/navbar/NavbarAdmin";
@@ -8,7 +8,7 @@ import Sidebar from "components/sidebar/Sidebar.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
-import { Flex } from "@chakra-ui/react";
+import CommonAlert from "common/component/CommonAlert";
 
 /*
 layouts/admin/index.js
@@ -17,6 +17,9 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const [alertInfo, setAlertInfo] = useState({
+    isOpen: false,
+  });
   // 사용자가 요청한 PATH를 찾아서 반환
   const findPath = (data, targetPath) => {
     for (const item of data) {
@@ -184,6 +187,7 @@ export default function Dashboard(props) {
               brandText={getActiveRoute(routes)}
               secondary={getActiveNavbar(routes)}
               message={getActiveNavbarText(routes)}
+              setAlertInfo={setAlertInfo}
               fixed={fixed}
               routes={routes}
               {...rest}
@@ -201,6 +205,9 @@ export default function Dashboard(props) {
             {getRoutes(routes)}
             <Redirect from="/" to="/system/corporation" />
           </Switch>
+          {alertInfo.isOpen && (
+            <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+          )}
         </Box>
         <Box>
           <Footer />

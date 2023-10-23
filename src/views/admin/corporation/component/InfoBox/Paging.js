@@ -58,7 +58,7 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
   return (
     <div>
       {chHistory.list?.length > 0 && (
-        <Flex style={{ marginLeft: "400px" }}>
+        <Flex style={{ marginLeft: "250px" }}>
           <Center>
             <Button
               onClick={() => {

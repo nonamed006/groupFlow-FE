@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   Box,
   Flex,
@@ -9,14 +7,15 @@ import {
   Tabs,
   TabList,
   Spacer,
+  useDisclosure,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 
 import React, { useEffect, useState } from "react";
 import DepInfoBox from "./DepInfoBox";
-import { PORT } from "set";
 import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup/DepGroup";
 import { depSchema } from "common/Schema";
+import DeleteModal from "common/modal/DeleteModal";
 import {
   getDepDtoApi,
   getDepGroupApi,
@@ -32,10 +31,12 @@ const DepInfo = ({
   setEditState,
   setTabStatus,
   tabStatus,
+  setAlertInfo,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
   const [dg, setDg] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
 
   //부서 상세조회
   const getDepDto = async () => {
@@ -53,13 +54,23 @@ const DepInfo = ({
   const fetchSaveDep = async () => {
     const response = await fetchSaveDepApi(depDto);
     if (response.status !== 200) {
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
+      });
     } else {
       setTest(true);
       setDepDto([]);
       setTabStatus(1);
       setEditState("read");
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
     }
   };
 
@@ -67,13 +78,23 @@ const DepInfo = ({
   const fetchUpdateDep = async () => {
     const response = await fetchUpdateDepApi(depDto);
     if (response.status !== 200) {
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
+      });
     } else {
       setTest(true);
       setDepDto([]);
       setTabStatus(1);
       setEditState("read");
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
     }
   };
   const change = (depDto) => {
@@ -94,15 +115,27 @@ const DepInfo = ({
       });
   };
 
+  //부서 삭제
   const deleteBtn = async () => {
     const response = await deleteBtnApi(dpCd);
     if (response.status !== 200) {
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
+      });
     } else {
       setDepDto([]);
       setTest(true);
-      alert(response.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
     }
+    onClose();
   };
   useEffect(() => {
     if (dpCd !== 0) {
@@ -139,13 +172,15 @@ const DepInfo = ({
             </Flex>
             <Spacer />
             <DepInfoBox
+              depDto={depDto}
               updateBtn={updateBtn}
-              deleteBtn={deleteBtn}
+              onOpen={onOpen}
               setTest={setTest}
               setEditState={setEditState}
               setDepDto={setDepDto}
               tabStatus={tabStatus}
               setTabStatus={setTabStatus}
+              setAlertInfo={setAlertInfo}
             />
           </TabList>
           <TabPanels>
@@ -164,6 +199,14 @@ const DepInfo = ({
           </TabPanels>
         </Tabs>
       </Box>
+      {/* 삭제 확인 모달 */}
+      {isOpen && isEditing && (
+        <DeleteModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleCheck={deleteBtn}
+        />
+      )}
     </>
   );
 };
