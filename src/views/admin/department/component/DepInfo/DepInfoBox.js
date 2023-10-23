@@ -1,23 +1,24 @@
 import {
   Button,
-  Text,
   useColorModeValue,
-  Grid,
-  GridItem,
   Stack,
   Flex,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 const InfoBox = ({
+  depDto,
   updateBtn,
-  deleteBtn,
+  onOpen,
   setEditState,
   setDepDto,
   tabStatus,
   setTabStatus,
+  setAlertInfo,
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+
   useEffect(() => {});
   return (
     <Flex marginBottom={5}>
@@ -30,8 +31,17 @@ const InfoBox = ({
             borderRadius={"10"}
             fontWeight="600"
             onClick={() => {
-              setEditState("update");
-              setTabStatus(2);
+              if (depDto.length === 0 || depDto.dpCd === "") {
+                setAlertInfo({
+                  isOpen: true,
+                  title: "부서를 선택해주세요.",
+                  status: "warning",
+                  width: "fit-content",
+                });
+              } else {
+                setEditState("update");
+                setTabStatus(2);
+              }
             }}
           >
             수정
@@ -39,7 +49,16 @@ const InfoBox = ({
           <Button
             variant="action"
             onClick={() => {
-              deleteBtn();
+              if (depDto.length === 0 || depDto.dpCd === "") {
+                setAlertInfo({
+                  isOpen: true,
+                  title: "부서를 선택해주세요.",
+                  status: "warning",
+                  width: "fit-content",
+                });
+              } else {
+                onOpen();
+              }
             }}
           >
             삭제

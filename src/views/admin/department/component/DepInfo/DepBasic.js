@@ -1,13 +1,8 @@
 import {
-  Text,
   useColorModeValue,
   Input,
   useDisclosure,
   Button,
-  Radio,
-  RadioGroup,
-  HStack,
-  Select,
   Grid,
   GridItem,
   Modal,
@@ -30,17 +25,12 @@ import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
 const DepBasic = (props) => {
-  console.log(props);
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const textColor = useColorModeValue("secondaryGray.900", "white");
-  //const [updatedDepDto, setUpdatedDepDto] = useState({});
   const [org, setOrg] = useState([]);
-  console.log(depDto);
   const recYN = new Boolean(depDto?.recYN);
   const useYN = new Boolean(depDto?.useYN);
   const onChange = (e) => {
-    console.log(e.target.value);
     const { value, name } = e.target;
     const updateData = {
       ...depDto,
@@ -145,7 +135,7 @@ const DepBasic = (props) => {
           <FormRadio
             title={"대내외 수신여부"}
             name={"recYN"}
-            value={recYN.toString()}
+            defaultValue={recYN.toString()}
             pk={depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
@@ -257,7 +247,7 @@ const DepBasic = (props) => {
           <FormRadio
             title={"사용여부"}
             name={"useYN"}
-            value={useYN.toString()}
+            defaultValue={useYN.toString()}
             pk={depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
