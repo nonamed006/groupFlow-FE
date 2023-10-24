@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import { Box } from "@chakra-ui/react";
 
-const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setIsReload, isReload, fetchRoleGroup}) => {
+const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, fetchRoleGroup}) => {
 
   const realgridElement = useRef(null);
 
@@ -86,7 +86,7 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setIsReload, isRel
       if (clickData.cellType !== "gridEmpty") {
         let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
         fetchRoleGroup(cd);
-        setIsReload(!isReload);
+        setDpCd(cd);
       }
     };
 

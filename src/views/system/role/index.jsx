@@ -60,6 +60,7 @@ const Role = () => {
                     <TabPanel>
                        <RoleCorp />
                     </TabPanel>
+                    {/* 권한-부서기준 */}
                     <TabPanel>
                         <DepRole />
                     </TabPanel>
