@@ -89,7 +89,8 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
-                title: '회사를 선택하세요'
+                title: '회사를 선택하세요',
+                width: 'fit-content'
             });
         }
     };
@@ -143,7 +144,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" w={'450px'}>
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
             {/* 검색바 */}

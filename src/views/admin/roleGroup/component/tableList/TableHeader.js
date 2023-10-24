@@ -11,7 +11,7 @@ const ListCardTableHeader = ({ headerGroups }) => {
             <Tr bg={'#F4F7FE'} boxShadow='lg' > 
                 {headerGroups.map((header, index) => {
                     return ( 
-                        <Td key={index} >
+                        <Td key={index} textAlign={"center"} >
                             <Text
                                 color={headerColor}
                                 fontSize="md"

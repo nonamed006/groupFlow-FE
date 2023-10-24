@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { React, useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
@@ -8,6 +8,7 @@ const RoleCorp = () => {
     const [rgCd, setRgCd] = useState(); // 선택한 권한그룹 코드
     const [coCd, setCoCd] = useState(); // 선택한 회사코드
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
+
 
     return (
 
@@ -47,7 +48,36 @@ const RoleCorp = () => {
             </GridItem>
         </Grid>
 
-        
+        // <Flex>
+        //     {/* 회사 목록 */}
+        //     <Box w={'550px'} mr={5}>
+        //         <CorpList
+        //             setCoCd={setCoCd}
+        //             coCd={coCd}
+        //         />
+        //     </Box>
+        //     {/* 권한그룹 목록 */}
+        //     <Box w={'400px'} mr={5}>
+        //         <RoleGrpBox
+        //             keyword={keyword}
+        //             setKeyword={setKeyword}
+        //             coCd={coCd}
+        //             rgCd={rgCd}
+        //             setRgCd={setRgCd}
+        //         />
+        //     </Box>
+        //     {/* 메뉴 목록 */}
+        //     <Box w={'700px'} >
+        //         <MenuBox
+        //             rgCd={rgCd} // 선택되는 권한그룹 코드
+        //             type={'corp'}   // 권한맵핑 기준
+        //             code={coCd} // 회사/부서/조직 코드
+        //             grpNm={keyword} // 검색할 권한그룹명
+        //             modify={false}
+        //         />
+        //     </Box>
+        // </Flex>
+
     );
 };
 

@@ -18,7 +18,7 @@ const CorpList = ({ setCoCd, coCd }) => {
   const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
   const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
-  const [isLoading, setIsLoading] = useState(false);
+ // const [isLoading, setIsLoading] = useState(false);
   const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const CorpList = ({ setCoCd, coCd }) => {
   };
 
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6" w={'450px'}>
+    <Box borderRadius="lg" bg="white" h="700px" p="6">
       {/* 목록 상단 */}
       <CardMenuBar
         title={'회사'}
@@ -69,8 +69,8 @@ const CorpList = ({ setCoCd, coCd }) => {
       />
       <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
       {/* 목록 테이블 */}
-      <Box w={'100%'} display={'inline-block'} overflowY={"auto"} height={'550px'} >
-        <Box minH={'560px'} >
+      <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
+        <Box minH={'560px'} w={'100%'}  >
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
         <Box ref={infiniteScrollRef} h={'1px'} />

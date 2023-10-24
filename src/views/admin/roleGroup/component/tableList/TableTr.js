@@ -22,17 +22,17 @@ const TableTr = ({ data, index }) => {
             mb={'7'}
         >
 
-            <Td align="center" fontWeight={500} fontSize={'sm'} >
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
                 <Text  color={textColor}  textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
                 {data.dpNm}
                 </Text>
             </Td>
-            <Td align="center" fontWeight={500} fontSize={'sm'} >
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
                 <Text  color={textColor} textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
                 {data.rankNm} / {data.pstnNm}
                 </Text>
             </Td>
-            <Td align="center" fontWeight={500} fontSize={'sm'}>
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'}>
                 <Text  color={textColor}   textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'100px'} overflow={'hidden'}>
                     {data.empNm} ({data.mailId})
                 </Text>

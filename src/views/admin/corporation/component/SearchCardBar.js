@@ -30,8 +30,8 @@ const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
 					name='useYn'
 					setKeyword={setUseYn}
 					isSelect={true}
+					defaultValue={''}
 					values={[
-						{ code: '', name: '전체' },
 						{ code: 1, name: '사용' },
 						{ code: 0, name: '미사용' },
 					]}

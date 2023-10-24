@@ -57,7 +57,7 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm,  setAlertInfo }) => {
     };
 
     return (
-        <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white" >
+        <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white">
             {/* 메뉴 상단 */}
             <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} modify={modify} />
             {/* 검색창 */}

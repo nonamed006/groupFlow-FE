@@ -29,7 +29,6 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
   // 검색 버튼 클릭 시
   const handleSearchBtn = () => { // 초기화 
     setPageNum(1);
-    setTotalCount(0);
     setInit(!init);
   };
 
@@ -55,6 +54,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
           setPageNum((prev)=>prev+1);
     } else {
       setCorpList([]);
+      setTotalCount(0);
       setIsLastPage(true);
     }
     return;
@@ -73,7 +73,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
         buttonType={true}
         btnText={'추가'} />
       {/* 목록 테이블 */}
-      <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'550px'} >
+      <Box w={'100%'} display={'inline-block'} overflowX={"hidden"} overflowY={"auto"} h={'550px'} >
         <Box minH={'560px'}>
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
