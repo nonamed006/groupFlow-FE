@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
-import { useSelector } from "react-redux";
 
 function DepUpperCd(props) {
-  console.log("props", props);
   const realgridElement = useRef(null);
 
   var fields = [
@@ -74,13 +72,16 @@ function DepUpperCd(props) {
       let dpData = grid._dataProvider._rowMap[clickData.dataRow];
 
       let dataArray = dpData._values[0].split("/");
-      if (dataArray.includes(props.data.depDto.dpCd)) {
-        alert("하위부서는 선택할 수 없습니다.");
-        return 0;
+      if (props.data.depDto.dpCd == "") {
+      } else {
+        if (dataArray.includes(props.data.depDto.dpCd)) {
+          alert("하위부서는 선택할 수 없습니다.");
+          return 0;
+        }
       }
-      console.log("dpData", dpData);
       props.getValue(dpData);
     };
+
     treeProvider.setObjectRows({ rows: props.value }, "rows", "", "");
     treeView.expandAll();
     return () => {

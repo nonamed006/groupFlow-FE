@@ -16,7 +16,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" h="600px" p="6">
+      <Box borderRadius="lg" bg="white" h="700px" p="6">
         <Flex
           align={{ sm: "flex-start", lg: "center" }}
           justify="space-between"

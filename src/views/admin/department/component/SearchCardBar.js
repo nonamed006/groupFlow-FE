@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Select, Grid, Input, GridItem } from "@chakra-ui/react";
-import { PORT } from "set";
-
+import { getCorpNmListApi } from "api/dep/DepApi";
 const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
   const [corpNm, setCorpNm] = useState([]);
 
-  const getCorpNmList = () => {
-    let url = `${PORT}/corp/list`;
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setCorpNm(res.data);
-      });
+  const getCorpNmList = async () => {
+    const response = await getCorpNmListApi();
+    setCorpNm(response.data);
   };
 
   useEffect(() => {

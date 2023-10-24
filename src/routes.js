@@ -137,6 +137,8 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: LogInCentered,
   },
+
+  
 ];
 
 export default routes;
