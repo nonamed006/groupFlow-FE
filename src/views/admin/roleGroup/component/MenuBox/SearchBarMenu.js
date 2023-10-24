@@ -1,10 +1,21 @@
-import { Box, Text, Select, Flex } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 
 import SearchBar from "common/component/SearchBar";
 
 const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
+	let [values, setValues] = useState();
 	const formInputRef = useRef(null);
+
+	useEffect(() => {
+		if (menuList) {
+			const updatedValues = menuList.map(menu => ({
+				code: menu.menuCd,
+				name: menu.menuNm
+			}));
+			setValues(updatedValues);
+		}
+	}, [menuList]);
 
 	useEffect(() => {
 		if (rgCd !== undefined && rgCd !== 'undefined') {
@@ -18,7 +29,7 @@ const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn,
 		if (formInputRef.current)
 			formInputRef.current.reset();
 	}
-   
+
 	return (
 
 		<Box bg='white'
@@ -27,27 +38,17 @@ const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn,
 		>
 			<form ref={formInputRef}>
 				<Flex justifyContent={"space-around"}>
-					<Text
-						mr={2}
-						style={{
-							height: "40px",
-							lineHeight: "40px",
-							textAlign: "left",
-						}}>대메뉴</Text>
-					<Select
-						w={'30%'}
-						mr={4}
-						name='gnbMenu'
-						borderRadius="14px"
-						onChange={(e) => setSelectedMenu(e.target.value)}
-						fontSize="0.95em">
-						<option value={'undefined'} >전체</option>
-						{menuList &&
-							menuList.map((menu) => {
-								return (<option key={menu.menuCd} value={menu.menuCd}>{menu.menuNm}</option>);
-							})}
-					</Select>
-
+					<Box w={'50%'}>
+						<SearchBar
+							textLabel={'대메뉴'}
+							setKeyword={setSelectedMenu}
+							placeholder={'전체'}
+							isSelect={true}
+							values={values}
+							name={'gnbMenu'}
+							defaultValue={'undefined'}
+						/>
+					</Box>
 					<Box w={'50%'}>
 						<SearchBar
 							textLabel={'메뉴명'}
@@ -55,6 +56,8 @@ const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn,
 							handleSearchBtn={handleSearchBtn}
 							placeholder={'검색어를 입력하세요'}
 							btnText={'검색'}
+							name={'keyword'}
+							defaultValue={''}
 						/>
 					</Box>
 				</Flex>

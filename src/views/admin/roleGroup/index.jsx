@@ -8,7 +8,10 @@ import CommonAlert from "common/component/CommonAlert";
 
 const RoleGroup = () => {
     const [rgCd, setRgCd] = useState();
-    const [alertInfo, setAlertInfo] = useState({ isOpen: false });
+    const [alertInfo, setAlertInfo] = useState({
+		isOpen: false
+	});
+
 
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }} >
@@ -33,12 +36,13 @@ const RoleGroup = () => {
                 </GridItem>
             </Grid>
 
-            {alertInfo.isOpen &&
-                <CommonAlert
-                    alertInfo={alertInfo}
-                    setAlertInfo={setAlertInfo}
-                />
-            }
+            
+			{alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
         </Box>
     );
 };

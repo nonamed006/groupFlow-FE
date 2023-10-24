@@ -1,7 +1,7 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from '@chakra-ui/react';
 
 import React, { useState, useEffect } from "react";
-import SearchBar from "./compoment/SearchBar";
+import SearchBarOrga from "./compoment/SearchBarOrga";
 import OrgList from './compoment/orgList/OrgList';
 import DepGrpCardList from './compoment/depGrpList/DepGrpCardList';
 import DepGrpInfo from './compoment/depGrpInfo/DepGrpInfo';
@@ -29,7 +29,8 @@ const OrgChartBox = () => {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
-                detail: '검색기준을 선택하세요'
+                detail: '검색기준을 선택하세요',
+                width: 'fit-content'
             });
         } else {
             setChangeYn(true);
@@ -64,7 +65,7 @@ const OrgChartBox = () => {
             >
                 {/* 검색바 */}
                 <GridItem colSpan={4}   >
-                    <SearchBar corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
+                    <SearchBarOrga corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
@@ -79,9 +80,10 @@ const OrgChartBox = () => {
                     <DepGrpInfo depGrp={depGrp} />
                 </GridItem>
             </Grid>
+
             {
                 alertInfo.isOpen &&
-                <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo}/>
+                <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
             }
         </Box>
     );

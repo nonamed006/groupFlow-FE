@@ -10,7 +10,7 @@ export const corpSchema = object().shape({
   sort: number().required("정렬값을 입력해주세요.").positive().integer(),
   chCd: string().nullable(),
   estDt: date().required("설립일을 입력해주세요."),
-  opDt: date().required(" 업일을 입력해주세요."),
+  opDt: date().required("개업일을 입력해주세요."),
   clsDt: date().nullable(),
 });
 

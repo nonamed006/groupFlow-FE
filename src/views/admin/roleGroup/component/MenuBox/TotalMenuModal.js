@@ -20,7 +20,7 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo }
             setAlertInfo({
                 isOpen: true,
                 title: res.resultMsg,
-                status: 'succes',
+                status: 'success',
                 width: 'fit-content'
             });
             setChangeEdit(true);

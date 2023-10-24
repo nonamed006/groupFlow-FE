@@ -46,14 +46,14 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm,  setAlertInfo }) => {
     const fetchMenuList = async () => {
         let res = await api.roleMenu.getRoleMenuGnbList(rgCd, type, code, grpNm, typeCd);
         if (res.status === 200 && res.data) setMenuList(res.data);
-        else setMenuList([]);
+        else setMenuList();
     }
 
     // 권한메뉴 목록 조회 + 검색
     const fetchRoleMenu = async () => {
         let res = await api.roleMenu.getRoleMenuList(rgCd, type, code, grpNm, selectedMenu, keyword, typeCd);
         if (res.status === 200 && res.data) setRoleMenu(res.data);
-        else setRoleMenu([]);
+        else setRoleMenu();
     };
 
     return (

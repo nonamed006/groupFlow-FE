@@ -1,7 +1,10 @@
-import { Button, Input, Box } from "@chakra-ui/react";
+import { Button, Input, Box, Select } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 
-const SearchBar = ({ setKeyword, handleSearchBtn, textLabel, placeholder, btnText }) => {
+const SearchBar = ({ setKeyword, defaultValue, name, handleSearchBtn, textLabel, placeholder, btnText, isSelect, values }) => {
+	useEffect(() => {
+		console.log(values);
+	}, []);
 
     return (
 
@@ -16,18 +19,43 @@ const SearchBar = ({ setKeyword, handleSearchBtn, textLabel, placeholder, btnTex
                     {textLabel}
                 </Box>}
             <Box w={'100%'} marginRight={'2'}>
-                <Input
-                    placeholder={placeholder}
-                    name='keyword'
-                    onChange={(e) => { setKeyword(e.target.value) }}
-                    size="md"
-                    borderRadius="14px"
-                    defaultValue={''}
-                />
+                {
+                    isSelect !== true ?
+                        <Input
+                            placeholder={placeholder}
+                            name={name}
+                            onChange={(e) => { setKeyword(e.target.value) }}
+                            size="md"
+                            borderRadius="5px"
+                            defaultValue={defaultValue}
+                        />
+                        :
+                        <Select
+                            w={'80%'}
+                            mr={4}
+                            name={name}
+                            borderRadius="5px"
+                            onChange={(e) => setKeyword(e.target.value)}
+                        >
+                            <option value={defaultValue} >{placeholder}</option>
+                            {values &&
+                                values.map((value) => {
+                                    return (<option key={value.code} value={value.code}>{value.name}</option>);
+                                })}
+                        </Select>
+                }
             </Box>
-            <Box >
-                <Button variant="brand" onClick={() => handleSearchBtn()}>{btnText}</Button>
-            </Box>
+            {btnText &&
+                <Box >
+                    <Button
+                        variant="brand"
+                        borderRadius="10px"
+                        fontWeight={600}
+                        onClick={() => handleSearchBtn()}
+                    >{btnText}</Button>
+                </Box>
+            }
+
 
         </Box>
 
