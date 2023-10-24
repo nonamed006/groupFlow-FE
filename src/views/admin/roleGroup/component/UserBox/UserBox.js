@@ -53,16 +53,14 @@ const UserBox = ({ rgCd }) => {
                 setPageNum((prev)=>prev+1);
         } else {
             setUserList([]);
+            setTotalCount(0);
             setIsLastPage(true);
         }
     };
 
     // 검색 버튼 클릭 시
     const initPageInfo = () => {
-        setUserList([]);
-        setIsLastPage(false);
         setPageNum(1);
-        setTotalCount(0);
         setInit(!init);
     };
 

@@ -47,16 +47,14 @@ const CorpList = ({ setCoCd, coCd }) => {
         setPageNum((prev) => prev + 1);
     } else {
       setCorpList([]);
+      setTotalCount(0);
       setIsLastPage(true);
     }
   };
 
   // 검색 버튼 클릭 시
   const handleSearchBtn = () => { // 초기화 
-    setCorpList([]);
-    setIsLastPage(false);
     setPageNum(1);
-    setTotalCount(0);
     setInit(!init);
     setCoCd(undefined);
   };

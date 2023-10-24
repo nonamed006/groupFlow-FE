@@ -66,6 +66,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
         } else {
             setRoleGrpList([]);
             isDrawerClose();
+            setTotalCount(0);
             setIsLastPage(true);
         }
         setRgCd(undefined);
@@ -105,7 +106,6 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => { // 초기화 
         setPageNum(1);
-        setTotalCount(0);
         setInit(!init);
     };
 

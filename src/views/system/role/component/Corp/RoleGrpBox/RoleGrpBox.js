@@ -23,7 +23,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [infiniteScrollRef, inView] = useInView();
 
     // 체크박스
-    const [isDrawer, isDrawerOpen, isDrawerClose ] = UseDrawerOpen();
+    const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
 
@@ -61,6 +61,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
         } else {
             setRoleGrpList([]);
             setIsLastPage(true);
+            setTotalCount(0);
         }
         setCheckedList([]);
         setRgCd(undefined);
@@ -96,7 +97,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     // 검색 버튼 클릭 시
     const initPageInfo = () => { // 초기화 
         setPageNum(1);
-        setTotalCount(0);
         setInit(!init);
     };
 
