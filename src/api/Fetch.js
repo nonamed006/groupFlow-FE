@@ -2,6 +2,7 @@ import { PORT } from "set";
 import corp from "./corp/CorpApi";
 import roleGrp from "./roleGrp/RoleGrpApi";
 import roleMenu from "./roleMenu/RoleMenuApi";
+import roleCorp from "./roleCorp/RoleCorpApi";
 
 export const getPromise = async ({url, method, body, header}) => {
     return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header && header})
@@ -12,7 +13,8 @@ export const getPromise = async ({url, method, body, header}) => {
 const api ={
     corp,
     roleGrp,
-    roleMenu
+    roleMenu,
+    roleCorp
 };
 
 export default api;

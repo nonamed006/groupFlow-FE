@@ -1,5 +1,5 @@
 import { Box, Text, Select, Flex } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import SearchBar from "common/component/SearchBar";
 
@@ -19,7 +19,6 @@ const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn,
 			formInputRef.current.reset();
 	}
    
-
 	return (
 
 		<Box bg='white'

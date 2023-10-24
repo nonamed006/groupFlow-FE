@@ -8,6 +8,7 @@ import ListCardTable from "views/admin/corporation/component/ListCard/ListCardTa
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
 import { SyncLoader } from "react-spinners"
+import api from "api/Fetch";
 
 const CorpList = ({ setCoCd, coCd }) => {
 
@@ -18,17 +19,17 @@ const CorpList = ({ setCoCd, coCd }) => {
   const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
   const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
-  const [init, setInit] =useState(); // 첫로딩, 검색시 초기화
+  const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
   const [isLoading, setIsLoading] = useState(false);
   const [infiniteScrollRef, inView] = useInView();
 
-  useEffect( () => {
+  useEffect(() => {
     fetchCorpList();
   }, [init]);
 
   useEffect(async () => {
-    if (inView && !isLastPage ) {
-     // await setIsLoading(true);
+    if (inView && !isLastPage) {
+      // await setIsLoading(true);
       fetchCorpList();
       //setIsLoading(false);
     }
@@ -37,39 +38,23 @@ const CorpList = ({ setCoCd, coCd }) => {
 
   // 회사 목록 조회 및 검색
   const fetchCorpList = async () => {
-    let url = `${PORT}/corp`;
+    let res = await api.corp.getCorpList(keyword, undefined, pageNum);
 
-    // URL 파라미터 생성
-    const params = new URLSearchParams();
-    if (keyword !== undefined && keyword !== 'undefined') params.append("keyword", keyword);
-    params.append("pageNum", pageNum);
-    // URL에 파라미터 추가
-    const paramString = params.toString();
-    if (paramString) {
-      url += "?" + paramString;
+    if (res.status === 200 && res.pageInfo) {
+      let { list, total, isLastPage, hasNextPage } = res.pageInfo;
+      setCorpList(pageNum === 1 ? list : [...corpList, ...list]);
+      setTotalCount(total);
+      setIsLastPage(isLastPage);
+      if (hasNextPage)
+        setPageNum((prev) => prev + 1);
+    } else {
+      setCorpList([]);
+      setIsLastPage(true);
     }
-
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.result === 'success') {
-          setCorpList([...corpList, ...(res.pageInfo.list)]);
-          setTotalCount(res.pageInfo.total);
-          setIsLastPage(res.pageInfo.isLastPage);
-         if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
-            setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
-          }
-        } else{
-          setCorpList([]);
-          setIsLastPage(true);
-        }
-      });
   };
 
   // 검색 버튼 클릭 시
-  const handleSearchBtn =  () => { // 초기화 
+  const handleSearchBtn = () => { // 초기화 
     setCorpList([]);
     setIsLastPage(false);
     setPageNum(1);
@@ -89,10 +74,10 @@ const CorpList = ({ setCoCd, coCd }) => {
       <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
       {/* 목록 테이블 */}
       <Box w={'100%'} display={'inline-block'} overflowY={"auto"} height={'550px'} >
-        <Box  minH={'560px'} >
-            <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
+        <Box minH={'560px'} >
+          <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        <Box ref={infiniteScrollRef}  h={'1px'} />
+        <Box ref={infiniteScrollRef} h={'1px'} />
         {/* {!isLoading ?
             <Box ref={infiniteScrollRef}  h={'1px'} />
           :<SyncLoader />

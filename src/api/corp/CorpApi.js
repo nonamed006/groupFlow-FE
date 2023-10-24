@@ -71,8 +71,10 @@ const corp = {
     getCorpList: (keyword, useYn, pageNum) => {
         const params = new URLSearchParams();
         // 검색
-        if (keyword !== "") params.append("keyword", keyword);
-        if (useYn !== "") params.append("useYn", useYn);
+        if (keyword !== "" && keyword !== undefined && keyword !== 'undefined') 
+            params.append("keyword", keyword);
+        if (useYn !== "" && useYn !== undefined && useYn !== 'undefined') 
+            params.append("useYn", useYn);
         // 페이지 요청
         params.append("pageNum", pageNum);
         // URL에 파라미터 추가

@@ -1,4 +1,4 @@
-import { Box, Text, useColorModeValue, Flex, Checkbox, Heading } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";

@@ -30,8 +30,8 @@ const Corporation = () => {
 	// 정렬 기본값 가져오기
 	const fetchMaxSort = async () => {
 		let res = await api.corp.getCorpSortApi();
-		if (res.status === 200) {
-		 		setSortValue(res.strData);
+		if (res.status === 200 && res.strData) {
+		 	setSortValue(res.strData);
 		} 
 	};
 

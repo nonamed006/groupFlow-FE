@@ -44,13 +44,13 @@ const UserBox = ({ rgCd }) => {
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
     const fetchRoleUserList = async() => {
         let res = await api.roleGrp.getRoleGrpUserList(rgCd, keyword, pageNum);
-        if (res.status === 200) {
-            setUserList([...userList, ...res.pageInfo.list]);
-            setTotalCount(res.pageInfo.total);
-            setIsLastPage(res.pageInfo.isLastPage);
-            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-            }
+        if (res.status === 200 && res.pageInfo ) {
+            let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+            setUserList(pageNum === 1 ? list : [...userList, ...list]);
+            setTotalCount(total);
+            setIsLastPage(isLastPage);
+            if (hasNextPage)
+                setPageNum((prev)=>prev+1);
         } else {
             setUserList([]);
             setIsLastPage(true);

@@ -46,20 +46,17 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
   const fetchCorpList = async () => {
     let res = await api.corp.getCorpList(keyword, useYn, pageNum);
 
-    if (res.status === 200) { // 성공일 때
-      setCorpList(
-        pageNum === 1 ? res.pageInfo.list 
-         : [...corpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
-      setTotalCount(res.pageInfo.total);  // 총 데이터 수
-      setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
-      if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-        setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-      }
+    if ( res.status === 200 && res.pageInfo ) {
+      let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+      setCorpList(pageNum === 1 ? list : [...corpList, ...list]);
+      setTotalCount(total);
+      setIsLastPage(isLastPage);
+      if (hasNextPage)
+          setPageNum((prev)=>prev+1);
     } else {
       setCorpList([]);
       setIsLastPage(true);
     }
-
     return;
   };
 

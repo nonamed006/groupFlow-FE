@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import RealGrid from "../RealGrid";
 

@@ -56,13 +56,13 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
         let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
-        if (res.status === 200) {
-            setRoleGrpList(pageNum === 1 ? res.pageInfo.list : [...roleGrpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
-            setTotalCount(res.pageInfo.total);  // 총 데이터 수
-            setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
-            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-            }
+        if (res.status === 200 && res.pageInfo) {
+            let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+            setRoleGrpList(pageNum === 1 ? list : [...roleGrpList, ...list]);
+            setTotalCount(total);
+            setIsLastPage(isLastPage);
+            if (hasNextPage)
+                setPageNum((prev)=>prev+1);
         } else {
             setRoleGrpList([]);
             isDrawerClose();
@@ -75,14 +75,14 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     // 회사명/회사코드 목록 조회
     const fetchCorpsNm = async() => {
         let res = await api.corp.getCorpsNmList();
-        if (res.status === 200 ) setCorps(res.data);
+        if (res.status === 200 && res.data) setCorps(res.data);
         else setCorps([]);
     }
 
     // 권한그룹 등록
     const fetchRoleGrpSave = async () => {
         let res = await api.roleGrp.postRoleGrp;
-        if (res.status === 'success') {
+        if (res.status === 200) {
             setAlertInfo({
                     isOpen: true,
                     status: 'succes',
