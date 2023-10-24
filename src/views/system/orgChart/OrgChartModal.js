@@ -1,7 +1,7 @@
 import React from "react";
 
 import ModalLayout from 'common/modal/ModalLayout';
-import OrgChartBox from './OrgChartBox';
+import OrgChartBox from '.';
 
 const OrgChartModal = ({onClose, isOpen }) => {
   return (

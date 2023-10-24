@@ -1,9 +1,8 @@
-import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import ListCard from "./component/ListCard/ListCard";
 import InfoBox from "./component/InfoBox/InfoBox";
-import OrgChartModal from "common/orgChart/OrgChartModal";
 import CommonAlert from "common/component/CommonAlert";
 import api from "api/Fetch";
 
@@ -87,8 +86,6 @@ const Corporation = () => {
 					setAlertInfo={setAlertInfo}
 				/>
 			}
-			{/* <Button onClick={onOpen}>조직도</Button>
-			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={onClose} /> : null} */}
 		</Box>
 	);
 };

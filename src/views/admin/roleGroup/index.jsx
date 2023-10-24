@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useState } from "react";
 import GroupBox from "./component/GroupBox/GroupBox";
 import MenuBox from "./component/MenuBox/MenuBox";
@@ -32,7 +32,7 @@ const RoleGroup = () => {
                     <UserBox rgCd={rgCd} />
                 </GridItem>
             </Grid>
-            
+
             {alertInfo.isOpen &&
                 <CommonAlert
                     alertInfo={alertInfo}

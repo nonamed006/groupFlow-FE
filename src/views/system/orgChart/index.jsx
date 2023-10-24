@@ -1,19 +1,23 @@
 import { Box, Grid, GridItem, Button, useDisclosure } from '@chakra-ui/react';
 
 import React, { useState, useEffect } from "react";
-import SearchBar from "./SearchBar";
-import OrgList from './OrgList';
-import DepGrpCardList from './DepGrpCardList';
-import DepGrpInfo from './DepGrpInfo';
+import SearchBar from "./compoment/SearchBar";
+import OrgList from './compoment/orgList/OrgList';
+import DepGrpCardList from './compoment/depGrpList/DepGrpCardList';
+import DepGrpInfo from './compoment/depGrpInfo/DepGrpInfo';
 import { PORT } from "set";
+import CommonAlert from 'common/component/CommonAlert';
 
 const OrgChartBox = () => {
     const [depGrp, setDepGrp] = useState();  // 선택된 부서원 데이터 하나
     const [search, setSearch] = useState(''); // 검색 기준
     const [keyword, setKeyword] = useState('');   // 검색어
-    const [corpDepCd, setCorpDepCd] = useState();
+    const [corpDep, setCorpDep] = useState();
     const [corpDepList, setCorpDepList] = useState();  // 회사 및 부서 목록
     const [changeYn, setChangeYn] = useState(); // 첫로딩, 검색시 초기화
+
+    const [alertInfo, setAlertInfo] = useState({isOpen:false});
+
     useEffect(() => {
         fetchCorpDepList(); // 회사 및 부서 목록 조회
     }, []);
@@ -21,12 +25,15 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        console.log('dddddd');
-        if (keyword.length > 0 && search == '') {
-            alert("검색기준을 선택하세요");
+        if (keyword.length > 0 && search === '') {
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                detail: '검색기준을 선택하세요'
+            });
         } else {
-            setChangeYn(!changeYn);
-            setCorpDepCd();
+            setChangeYn(true);
+            setCorpDep({code:undefined,name:'검색결과'});
             setDepGrp();
         }
     }
@@ -42,15 +49,13 @@ const OrgChartBox = () => {
     };
 
     // 조직도 그리드 클릭 시
-    const handelGridCd = (corpDepCd) => {
-        console.log('ddd');
-        setCorpDepCd(corpDepCd);
+    const handleGrid = (corpDep) => {
+        setCorpDep(corpDep);
         setDepGrp();
-        setChangeYn(!changeYn);
+        setChangeYn(true);
     };
 
     return (
-
         <Box bg='white' w='auto'>
             <Grid
                 h='auto'
@@ -59,21 +64,25 @@ const OrgChartBox = () => {
             >
                 {/* 검색바 */}
                 <GridItem colSpan={4}   >
-                    <SearchBar setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
+                    <SearchBar corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
                 </GridItem>
                 {/* 조직도 그리드 */}
                 <GridItem colSpan={1} rowSpan={5} >
-                    <OrgList handelGridCd={handelGridCd} corpDepList={corpDepList} />
+                    <OrgList handleGrid={handleGrid} corpDepList={corpDepList} />
                 </GridItem>
                 {/* 사원 목록 */}
                 <GridItem colSpan={2} rowSpan={5} >
-                    <DepGrpCardList changeYn={changeYn} corpDepCd={corpDepCd} search={search} keyword={keyword} setDepGrp={setDepGrp} />
+                    <DepGrpCardList setChangeYn={setChangeYn} changeYn={changeYn} corpDep={corpDep&&corpDep} search={search} keyword={keyword} setDepGrp={setDepGrp} />
                 </GridItem>
                 {/* 사원 정보 */}
                 <GridItem colSpan={1} rowSpan={5} >
                     <DepGrpInfo depGrp={depGrp} />
                 </GridItem>
             </Grid>
+            {
+                alertInfo.isOpen &&
+                <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo}/>
+            }
         </Box>
     );
 };

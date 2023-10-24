@@ -1,5 +1,5 @@
-import { Input, Button, GridItem, Text, useDisclosure, Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Button, GridItem, Text, useDisclosure } from "@chakra-ui/react";
+import React from "react";
 import AddrModal from "./AddrModal";
 import FormInput from "common/component/FormInput";
 

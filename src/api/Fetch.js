@@ -3,6 +3,7 @@ import corp from "./corp/CorpApi";
 import roleGrp from "./roleGrp/RoleGrpApi";
 import roleMenu from "./roleMenu/RoleMenuApi";
 import roleCorp from "./roleCorp/RoleCorpApi";
+import depGrp from "./depGrp/DepGrpApi";
 
 export const getPromise = async ({url, method, body, header}) => {
     return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header && header})
@@ -14,7 +15,8 @@ const api ={
     corp,
     roleGrp,
     roleMenu,
-    roleCorp
+    roleCorp,
+    depGrp
 };
 
 export default api;

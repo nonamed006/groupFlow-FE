@@ -23,7 +23,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [infiniteScrollRef, inView] = useInView();
 
     // 체크박스
-    const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
+    const [isDrawer, isDrawerOpen, isDrawerClose ] = UseDrawerOpen();
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
 

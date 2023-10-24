@@ -3,11 +3,9 @@ import React, { useState } from "react";
 
 import { useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
-import { PORT } from "set";
 import ListCardTable from "views/admin/corporation/component/ListCard/ListCardTable";
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
-import { SyncLoader } from "react-spinners"
 import api from "api/Fetch";
 
 const CorpList = ({ setCoCd, coCd }) => {
