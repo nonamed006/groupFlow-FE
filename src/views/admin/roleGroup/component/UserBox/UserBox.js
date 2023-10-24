@@ -44,38 +44,36 @@ const UserBox = ({ rgCd }) => {
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
     const fetchRoleUserList = async() => {
         let res = await api.roleGrp.getRoleGrpUserList(rgCd, keyword, pageNum);
-        if (res.status === 200) {
-            setUserList([...userList, ...res.pageInfo.list]);
-            setTotalCount(res.pageInfo.total);
-            setIsLastPage(res.pageInfo.isLastPage);
-            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-            }
+        if (res.status === 200 && res.pageInfo ) {
+            let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+            setUserList(pageNum === 1 ? list : [...userList, ...list]);
+            setTotalCount(total);
+            setIsLastPage(isLastPage);
+            if (hasNextPage)
+                setPageNum((prev)=>prev+1);
         } else {
             setUserList([]);
+            setTotalCount(0);
             setIsLastPage(true);
         }
     };
 
     // 검색 버튼 클릭 시
     const initPageInfo = () => {
-        setUserList([]);
-        setIsLastPage(false);
         setPageNum(1);
-        setTotalCount(0);
         setInit(!init);
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" display={'inline-block'}>
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" display={'inline-block'} w={'480px'}>
             {/* 상단 */}
             <CardMenuBar title={'사용자 목록'} count={totalCount} buttonType={false} />
             {/* 검색바 */}
             <SearchBar init={rgCd} textLabel={'이름'} setKeyword={setKeyword} handleSearchBtn={initPageInfo} placeholder={'검색어를 입력하세요'} btnText={'검색'} />
 
             {/* 목록 */}
-            <Box overflowY={'auto'} mt={4} height={'550px'} >
-                <Box minH={'560px'} >
+            <Box overflowY={'auto'} mt={4} height={'550px'} w={'430px'} display={'block'} >
+                <Box minH={'560px'}  >
                     <CustomTable groupHeader={groupHeader} dataList={userList} />
                 </Box>
                 <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />

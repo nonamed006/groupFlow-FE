@@ -1,8 +1,6 @@
 import {
-  Box,
   Button,
   Flex,
-  Spacer,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";

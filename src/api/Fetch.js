@@ -2,6 +2,8 @@ import { PORT } from "set";
 import corp from "./corp/CorpApi";
 import roleGrp from "./roleGrp/RoleGrpApi";
 import roleMenu from "./roleMenu/RoleMenuApi";
+import roleCorp from "./roleCorp/RoleCorpApi";
+import depGrp from "./depGrp/DepGrpApi";
 import { getCookie } from "common/common";
 
 const header = {
@@ -18,7 +20,9 @@ export const getPromise = async ({url, method, body}) => {
 const api ={
     corp,
     roleGrp,
-    roleMenu
+    roleMenu,
+    roleCorp,
+    depGrp
 };
 
 export default api;

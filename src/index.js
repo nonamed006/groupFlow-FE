@@ -16,6 +16,7 @@ import SystemLayout from 'layouts/system'; //이혜윤 - 추가
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 const store = createStore(rootReducer);
+
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<Provider store={store}>

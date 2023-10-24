@@ -24,26 +24,28 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       }}
       borderColor={coCd === data.coCd && 'brand.500'}
       shadow={coCd === data.coCd ? 'outline' : 'md'}
-      cursor={'pointer'}>
-
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="500">
+      cursor={'pointer'}
+      >
+      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'} >
           {data.coNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="500">
+      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+
           {data.ceoNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="500">
+      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+
           {data.ccNm}
         </Text>
       </Td>
 
-      <Td align="center">
-        <Box color={textColor} fontSize="sm" fontWeight="500">
+      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+        <Box color={textColor} fontSize="sm" fontWeight="500" textOverflow={'ellipsis'} whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
           {data.useYn ? '사용' : '미사용'}
         </Box>
       </Td>

@@ -2,9 +2,9 @@ import { Box, Text } from "@chakra-ui/react";
 import ModalLayout from "common/modal/ModalLayout";
 import React, { useState } from "react";
 import TotalMenuBox from "./TotalMenuBox";
-import { PORT } from "set";
+import api from "api/Fetch";
 
-const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit }) => {
+const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo }) => {
     const [checkedMenuCd, setCheckedMenuCd] = useState([]); // 선택된 메뉴 코드 리스트
 
     const modifyBtnHandeler = () => {
@@ -13,25 +13,27 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit }) => {
     }
 
     // 권한그룹 메뉴 등록 및 수정
-    const fetchModifyRoleMenu = () => {
-        let url = `${PORT}/roleMenu/${rgCd}`
-        
-        fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(checkedMenuCd)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    alert('수정 되었습니다.');
-                    setChangeEdit(true);
-                } else {
-                    alert('수정이 실패되었습니다.');
-                }
+    const fetchModifyRoleMenu = async () => {
+        let res = await api.roleMenu.putRoleMenu(rgCd, checkedMenuCd);
+
+        if (res.status === 200) {
+            setAlertInfo({
+                isOpen: true,
+                title: res.resultMsg,
+                status: 'success',
+                width: 'fit-content'
             });
+            setChangeEdit(true);
+        } else {
+            setAlertInfo({
+                isOpen: true,
+                title: '수정 실패',
+                detail: res.resultMsg,
+                status: 'error',
+                width: 'fit-content'
+            });
+        }
+
     }
 
     return (
@@ -46,7 +48,7 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit }) => {
                     <ModalLayout title={'알림'} onClose={() => setIsOpen(false)} size={'md'} >
                         <Box mb={10}>
                             <Text
-                             
+
                                 fontSize="17px"
                                 fontWeight="600"
                                 lineHeight="100%">

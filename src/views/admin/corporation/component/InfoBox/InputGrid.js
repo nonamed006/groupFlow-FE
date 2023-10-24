@@ -129,7 +129,6 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
             pk={coCd}
             onChange={onChange}
             readOnly={!isEditing}
-            isRequired={true}
             placeholder={'회사구분'}
             values={
               [
