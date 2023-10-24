@@ -301,7 +301,6 @@ const EmpInfo = (props) => {
             ? "퇴사처리"
             : "사원삭제"
         }
-        children="test"
         buttonYn="false"
         isOpen={isOpen}
         onClose={onClose}
