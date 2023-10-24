@@ -3,6 +3,7 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setListDetail }) => {
+  console.log("emp");
   console.log(org);
   const realgridElement = useRef(null);
   var fields = [
@@ -30,7 +31,7 @@ const RealGrid = ({ org, setListDetail }) => {
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
     //treeProvider.setRows(org, "dpPath", true, null, null);
-    treeProvider.setObjectRows({rows: org}, 'rows', '', '');
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -38,7 +39,7 @@ const RealGrid = ({ org, setListDetail }) => {
     treeView.footer.height = 40;
     treeView.stateBar.width = 30;
 
-    treeView.displayOptions.useFocusClass = true;     // 클릭 시 색상
+    treeView.displayOptions.useFocusClass = true; // 클릭 시 색상
     //treeView.setDisplayOptions({vscrollBar: false});  // 수직 스크롤바 표시 여부
 
     treeView.setStateBar({ visible: false }); //상태바 표시X
@@ -70,7 +71,7 @@ const RealGrid = ({ org, setListDetail }) => {
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-        setListDetail(cd)
+        setListDetail(cd);
         // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
         // if (depth !== "0") {
         //   let dpCdData =

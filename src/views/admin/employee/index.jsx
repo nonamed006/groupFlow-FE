@@ -15,6 +15,7 @@ const Employee = () => {
   const [imgFile, setImgFile] = useState(null); //파일
   const [editState, setEditState] = useState("read");
   const [infoEditState, setInfoEditState] = useState("read");
+  const [isReload, setIsReload] = useState(false);
   const [empDept, setEmpDept] = useState([
     {
       addr: "",
@@ -201,21 +202,10 @@ const Employee = () => {
       });
   }
 
-  //사원 삭제
-  const empDelete = () => {
-    fetch(`${PORT}/emp/deleteEmp/${empDetail.empCd}`, {
-      method: "GET",
-    }).then((res) => res.json())
-      .then((res) => {
-        if(res.result === "success"){
-          alert("삭제되었습니다.");
-        }
-      });
-  }
-
   useEffect(() => {
+    resetInput();
     getEmpList("", "", "");
-  }, []);
+  }, [isReload]);
 
   return (
     <div>
@@ -241,6 +231,8 @@ const Employee = () => {
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>
             <EmpInfo
+              setIsReload={setIsReload}
+              isReload={isReload}
               empDetail={empDetail}
               setEmpDetail={setEmpDetail}
               empDept={empDept}
@@ -253,7 +245,6 @@ const Employee = () => {
               infoEditState={infoEditState}
               setInfoEditState={setInfoEditState}
               updateEmpInfo={updateEmpInfo}
-              empDelete={empDelete}
             />
           </GridItem>
         </Grid>

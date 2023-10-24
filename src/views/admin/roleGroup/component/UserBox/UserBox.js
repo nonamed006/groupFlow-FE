@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { PORT } from "set";
 
 import CustomTable from "../tableList/CustomTable";
 import CardMenuBar from "common/component/CardMenuBar";
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
+import api from "api/Fetch";
 
 const UserBox = ({ rgCd }) => {
     const groupHeader = ['부서명', '부서/직책', '이름(ID)'];
@@ -21,7 +21,7 @@ const UserBox = ({ rgCd }) => {
     const [infiniteScrollRef, inView] = useInView();
 
     useEffect(() => {
-        if( rgCd !== undefined && rgCd !== 'undefined' ){
+        if (rgCd !== undefined && rgCd !== 'undefined') {
             initPageInfo();
             setKeyword();
         }
@@ -32,8 +32,8 @@ const UserBox = ({ rgCd }) => {
             fetchRoleUserList();
     }, [init]);
 
-    useEffect( () => {
-        if (inView && !isLastPage 
+    useEffect(() => {
+        if (inView && !isLastPage
             && rgCd !== undefined && rgCd !== 'undefined') {
             // await setIsLoading(true);
             fetchRoleUserList();
@@ -42,36 +42,19 @@ const UserBox = ({ rgCd }) => {
     }, [inView]);
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
-    const fetchRoleUserList = () => {
-        let url = `${PORT}/roleEmp/${rgCd}`;
-
-        // URL 파라미터 생성
-        const params = new URLSearchParams();
-        if (keyword !== undefined && keyword !== 'undefined'){
-            params.append("keyword", keyword);
+    const fetchRoleUserList = async() => {
+        let res = await api.roleGrp.getRoleGrpUserList(rgCd, keyword, pageNum);
+        if (res.status === 200) {
+            setUserList([...userList, ...res.pageInfo.list]);
+            setTotalCount(res.pageInfo.total);
+            setIsLastPage(res.pageInfo.isLastPage);
+            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
+                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
+            }
+        } else {
+            setUserList([]);
+            setIsLastPage(true);
         }
-        params.append("pageNum", pageNum);
-        // URL에 파라미터 추가
-        const paramString = params.toString();
-        if (paramString)
-            url += "?" + paramString;
-        fetch(url, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.result === 'success') {
-                    setUserList([...userList, ...res.pageInfo.list]);
-                    setTotalCount(res.pageInfo.total);
-                    setIsLastPage(res.pageInfo.isLastPage);
-                    if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                        setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-                    }
-                } else {
-                    setUserList([]);
-                    setIsLastPage(true);
-                }
-            });
     };
 
     // 검색 버튼 클릭 시
@@ -95,7 +78,7 @@ const UserBox = ({ rgCd }) => {
                 <Box minH={'560px'} >
                     <CustomTable groupHeader={groupHeader} dataList={userList} />
                 </Box>
-                <Box ref={infiniteScrollRef} h={'1px'} bg={'white'}/>
+                <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
             </Box>
         </Box>
 

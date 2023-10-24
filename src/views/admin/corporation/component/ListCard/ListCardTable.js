@@ -12,7 +12,7 @@ const ListCardTable = ({ listData, setCoCd, coCd }) => {
   return (
     <Table variant="simple" w={'100%'} >
       {/* Thead */}
-      <ListCardTableHeader headerGroups={headerGroups}/>
+      <ListCardTableHeader headerGroups={headerGroups}/> 
       {/* Tbody */}
       <ListCardTableTbody listData={listData} setCoCd={setCoCd} coCd={coCd}/>
     </Table>

@@ -1,11 +1,10 @@
-/* eslint-disable */
-
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
-import { PORT } from "set";
+import { getDepOrganizationApi } from "api/dep/DepApi";
+import CommonAlert from "common/component/CommonAlert";
 
 const Test = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
@@ -15,17 +14,19 @@ const Test = () => {
   const [test, setTest] = useState(false);
   const [editState, setEditState] = useState("read");
   const [tabStatus, setTabStatus] = useState(1);
+
+  const [alertInfo, setAlertInfo] = useState({
+    isOpen: false,
+  });
+
   const handleSearchBtn = () => {
     onClickSearchText();
   };
 
-  const onClickSearchText = () => {
-    let url = `${PORT}/dep?text=${searchText}&coCd=${selectedCoCd}`;
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((res) => {
-        setOrg(res.data);
-      });
+  //조직도 조회
+  const onClickSearchText = async () => {
+    const response = await getDepOrganizationApi(selectedCoCd, searchText);
+    setOrg(response.data);
   };
   useEffect(() => {
     if (test === true) {
@@ -68,9 +69,14 @@ const Test = () => {
             setEditState={setEditState}
             tabStatus={tabStatus}
             setTabStatus={setTabStatus}
+            setAlertInfo={setAlertInfo}
           />
         </GridItem>
       </Grid>
+
+      {alertInfo.isOpen && (
+        <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+      )}
     </Box>
   );
 };

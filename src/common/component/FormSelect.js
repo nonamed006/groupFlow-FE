@@ -8,7 +8,7 @@ import "assets/css/MiniCalendar.css";
 const FormSelect = ({ title, name, defaultValue, pk, onChange, readOnly, isRequired, placeholder, values }) => {
   return (
     <FormControl  display={'flex'} w={'100%'} isRequired={isRequired}>
-        <FormLabel fontSize="md" fontWeight="400" w={'50%'} >{title}</FormLabel>
+        <FormLabel fontSize="md" fontWeight="600" w={'50%'} >{title}</FormLabel>
         <Select w={'100%'} name={name} defaultValue={defaultValue} key={pk} onChange={onChange} placeholder={placeholder} disabled={readOnly} >
                 {
                     values.map((value)=>{

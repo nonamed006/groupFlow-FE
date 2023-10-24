@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   Box,
   Flex,
@@ -8,13 +6,23 @@ import {
   Tab,
   Tabs,
   TabList,
+  Spacer,
+  useDisclosure,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 
 import React, { useEffect, useState } from "react";
 import DepInfoBox from "./DepInfoBox";
-import { PORT } from "set";
 import DepBasic from "./DepBasic";
-import DepGroup from "./DepGroup";
+import DepGroup from "./DepGroup/DepGroup";
+import { depSchema } from "common/Schema";
+import DeleteModal from "common/modal/DeleteModal";
+import {
+  getDepDtoApi,
+  getDepGroupApi,
+  fetchSaveDepApi,
+  fetchUpdateDepApi,
+  deleteBtnApi,
+} from "api/dep/DepApi";
 
 const DepInfo = ({
   setTest,
@@ -23,92 +31,111 @@ const DepInfo = ({
   setEditState,
   setTabStatus,
   tabStatus,
+  setAlertInfo,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
   const [dg, setDg] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
 
   //부서 상세조회
-  const getDepDto = () => {
-    let url = `${PORT}/dep/detail?dpCd=${dpCd}`;
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((res) => {
-        setDepDto(res.voData);
-      });
+  const getDepDto = async () => {
+    const response = await getDepDtoApi(dpCd);
+    setDepDto(response.voData);
   };
 
   //부서원 조회
-  const getDepGroup = () => {
-    let url = `${PORT}/dep/dg?dpCd=${dpCd}`;
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((res) => {
-        setDg(res.data);
-      });
+  const getDepGroup = async () => {
+    const response = await getDepGroupApi(dpCd);
+    setDg(response.data);
   };
 
-  const fetchSaveDep = () => {
-    let url = `${PORT}/dep`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(depDto),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("res", res);
-        if (res.status !== 200) {
-          alert(res.resultMsg);
-        }
+  //부서 등록
+  const fetchSaveDep = async () => {
+    const response = await fetchSaveDepApi(depDto);
+    if (response.status !== 200) {
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
       });
-    //.then((res) => {
-    //  console.log("qwe");
-    //  console.log(res);
-    //  //if (res.status !== 200) {
-    //  //  throw Error("could not fetch the data that resource");
-    //  //}
-    //  res.json().then((res) => {
-    //    console.log(res);
-    //  });
-    //})
-    //.catch((err) => {
-    //  console.log("error");
-    //  console.log(err);
-    //});
+    } else {
+      setTest(true);
+      setDepDto([]);
+      setTabStatus(1);
+      setEditState("read");
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
+    }
   };
 
-  const fetchUpdateDep = () => {
-    let url = `${PORT}/dep`;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(depDto),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setDepDto(res);
+  //부서 수정
+  const fetchUpdateDep = async () => {
+    const response = await fetchUpdateDepApi(depDto);
+    if (response.status !== 200) {
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
       });
+    } else {
+      setTest(true);
+      setDepDto([]);
+      setTabStatus(1);
+      setEditState("read");
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
+    }
   };
   const change = (depDto) => {
     setDepDto(depDto);
   };
-  const updateBtn = async () => {
-    isEditing ? await fetchUpdateDep() : await fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-    setTest(true);
-    setDepDto([]);
+  const updateBtn = () => {
+    console.log(depDto);
+    depSchema
+      .validate(depDto)
+      .then(() => {
+        //  // 유효성 검사 통과한 데이터 처리
+        isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+        console.log("유효성 검사 통과");
+      })
+      .catch((errors) => {
+        // 유효성 검사 실패한 경우 에러 메세지
+        alert(errors.message);
+      });
   };
-  const deleteBtn = () => {
-    setTest(true);
-    let url = `${PORT}/dep?dpCd=${dpCd}`;
-    fetch(url, {
-      method: "DELETE",
-    }).then((res) => res.json());
-    setDepDto([]);
+
+  //부서 삭제
+  const deleteBtn = async () => {
+    const response = await deleteBtnApi(dpCd);
+    if (response.status !== 200) {
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "error",
+        width: "fit-content",
+      });
+    } else {
+      setDepDto([]);
+      setTest(true);
+      setAlertInfo({
+        isOpen: true,
+        title: response.resultMsg,
+        status: "success",
+        width: "fit-content",
+      });
+    }
+    onClose();
   };
   useEffect(() => {
     if (dpCd !== 0) {
@@ -116,26 +143,26 @@ const DepInfo = ({
       getDepGroup();
       setIsEditing(true);
     } else {
-      setDepDto([]);
+      setDepDto({
+        dpCd: "",
+      });
       setIsEditing(false);
     }
   }, [dpCd]);
   return (
-    <div>
-      <Box borderRadius="lg" bg="white" h="600px" p="6" w={"100%"}>
-        <DepInfoBox
-          title={"상세정보"}
-          updateBtn={updateBtn}
-          deleteBtn={deleteBtn}
-          setTest={setTest}
-          setEditState={setEditState}
-          setDepDto={setDepDto}
-          tabStatus={tabStatus}
-          setTabStatus={setTabStatus}
-        />
+    <>
+      <Box
+        borderRadius="lg"
+        bg="white"
+        h="700px"
+        p="6"
+        backgroundColor="white"
+        overflowY={"auto"}
+        w={"1100px"}
+      >
         <Tabs colorScheme="brandScheme">
           <TabList>
-            <Flex align={{ sm: "flex-start", lg: "center" }} w="100%">
+            <Flex>
               <Tab fontSize="22px" fontWeight="700" lineHeight="100%">
                 기본정보
               </Tab>
@@ -143,10 +170,28 @@ const DepInfo = ({
                 부서원 정보
               </Tab>
             </Flex>
+            <Spacer />
+            <DepInfoBox
+              depDto={depDto}
+              updateBtn={updateBtn}
+              onOpen={onOpen}
+              setTest={setTest}
+              setEditState={setEditState}
+              setDepDto={setDepDto}
+              tabStatus={tabStatus}
+              setTabStatus={setTabStatus}
+              setAlertInfo={setAlertInfo}
+            />
           </TabList>
           <TabPanels>
             <TabPanel>
-              <DepBasic depDto={depDto} editState={editState} change={change} />
+              <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
+                <DepBasic
+                  depDto={depDto}
+                  editState={editState}
+                  change={change}
+                />
+              </Box>
             </TabPanel>
             <TabPanel>
               <DepGroup value={dg} />
@@ -154,7 +199,15 @@ const DepInfo = ({
           </TabPanels>
         </Tabs>
       </Box>
-    </div>
+      {/* 삭제 확인 모달 */}
+      {isOpen && isEditing && (
+        <DeleteModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleCheck={deleteBtn}
+        />
+      )}
+    </>
   );
 };
 

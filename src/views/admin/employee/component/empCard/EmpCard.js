@@ -19,11 +19,13 @@ import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React from "react";
 import { useState } from "react";
+import ListCardTableHeader from "views/admin/roleGroup/component/tableList/TableHeader";
 
 const EmpCard = (props) => {
 
 	const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
+  const headerColor = useColorModeValue("#8F9BBA",'white');
 
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
@@ -81,22 +83,8 @@ const EmpCard = (props) => {
           </Button>
         </Flex>
         <Table variant="simple" color="gray.500">
-          <Thead>
-            <Tr>
-              {headerGroups.map((column, index) => (
-                <Th pe="10px" key={index} borderColor="transparent">
-                  <Flex
-                    justify="space-between"
-                    align="center"
-                    fontSize={{ sm: "10px", lg: "12px" }}
-                    color="gray.400"
-                  >
-                    {column}
-                  </Flex>
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
+          {/* Thead */}
+          <ListCardTableHeader headerGroups={headerGroups}/> 
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
@@ -112,9 +100,9 @@ const EmpCard = (props) => {
                 }}
               >
                 <Td
+                  borderColor="gray.400"
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="transparent"
                 >
                   <Flex align="center">
                     <Avatar src="" w="30px" h="30px" me="8px" />
@@ -126,7 +114,7 @@ const EmpCard = (props) => {
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="transparent"
+                  borderColor="gray.400"
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
@@ -137,7 +125,7 @@ const EmpCard = (props) => {
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="transparent"
+                  borderColor="gray.400"
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">

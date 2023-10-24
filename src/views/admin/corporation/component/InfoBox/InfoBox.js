@@ -1,22 +1,24 @@
-import { Box, Text, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { PORT } from "set";
-import ModalLayout from "common/modal/ModalLayout";
+import { corpSchema } from "common/Schema";
+import DeleteModal from "common/modal/DeleteModal";
+import api from "api/Fetch";
 
-const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
+const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   const [isEditing, setIsEditing] = useState(); // 저장 및 수정 상태 (기본값 false - 저장)
   const [corp, setCorp] = useState(); // 회사 데이터 (하나)
 
+
   useEffect(() => {
-    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0) 
+    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0)
       fetchCorp(coCd); // coCd로 회사 조회
-    else 
+    else
       onReset();
-    setIsEditing(coCd === 0?true:false);
+    setIsEditing(coCd === 0 ? true : false);
   }, [coCd, sortValue]);
 
   const onReset = () => {
@@ -29,104 +31,131 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
   };
 
   // 회사 조회
-  const fetchCorp = (coCd) => {
-    let url = `${PORT}/corp/${coCd}`;
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
+  const fetchCorp = async (coCd) => {
+    let res = await api.corp.getCorpInfo(coCd);
+    if(res.status === 200){
         let data = res.voData;
         data !== null && setCorp(data);
-      });
+    }
   };
 
   // 회사 저장
-  const fetchCorpSave = () => {
-    let url = `${PORT}/corp`;
-    console.log(url);
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corp),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        alert(res.resultMsg);
+  const fetchCorpSave = async () => {
+    let res = await api.corp.postCorpInfo(corp);
+    console.log(res);
+    if(res.status === 200){
+       setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setChangeYn(!changeYn); // 변경 여부 변경
+    }else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+    }
   };
 
   // 회사 정보 수정
-  const fetchCorpUpdate = () => {
-    let url = `${PORT}/corp`;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corp),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        alert(res.resultMsg);
-        setIsEditing(false);
-        setChangeYn(!changeYn); // 변경 여부 변경
+  const fetchCorpUpdate = async () => {
+    let res = await api.corp.putCorpInfo(corp);
+    if(res.status === 200){
+      setAlertInfo({
+        isOpen : true,
+        status : 'success',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+      setIsEditing(false);
+      setChangeYn(!changeYn); // 변경 여부 변경
+    } else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
+      });
+    }
   };
 
   // 회사 삭제
-  const fetchCorpDelete = () => {
-    let url = `${PORT}/corp/${coCd}`;
-    fetch(url, {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        alert(res.resultMsg);
+  const fetchCorpDelete = async () => {
+    let res = await api.corp.deleteCorpInfo(coCd);
+    if(res.status === 200){
+       setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setCoCd(); // coCd 초기화
         setChangeYn(!changeYn); // 변경 여부 변경
+    }else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+    }
   };
 
   // 삭제 버튼 클릭 시
   const handleDeleteBtn = () => {
     coCd !== "undefined" && coCd !== undefined
-      ? fetchCorpDelete(coCd)
-      : alert("삭제할 회사가 존재하지 않습니다");
+      ? fetchCorpDelete(coCd) 
+      :
+      setAlertInfo({
+        isOpen : true,
+        status : 'warning',
+        title : '선택된 회사가 없습니다.',
+        width : 'fit-content'
+      });
+      // : alert('삭제할 회사가 존재하지않습니다.');
     onClose();
   };
 
+
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-  
-    isEditing ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+    console.log('ddddd');
+    corpSchema.validate(corp)
+      .then(() => {
+        // 유효성 검사 통과한 데이터 처리
+        coCd !== 0 ? fetchCorpUpdate() : fetchCorpSave(); // isEditing: true => 수정 / false => 저장
+      })
+      .catch( errors => {
+        // 유효성 검사 실패한 경우 에러 메세지
+        setAlertInfo({
+          isOpen : true,
+          status : 'warning',
+          title : '입력값을 확인해주세요.',
+          detail : errors.message,
+          width : 'fit-content'
+        });
+      });
   };
 
-  const checkInputValues = () => {
-  //     - 회사명 coNm
-  // - 사용여부 useYn
-  // - 설립일 estDt
-  // - 개업일 opDt
-  // - 사업자번호 bsnsNum
-  // - 회사구분(법인 필수 값) bsCd
-  // - 주소
-  // - 대표자명
-  // - 정렬(중복도 X)
-   }
-
-  const handleCancle =()=>{
-    setCoCd(); 
+  const handleCancle = () => {
+    setCoCd();
   }
 
-  const handleModify =()=>{
-    if(coCd !== undefined && coCd !== 'undefined'){
-       setIsEditing(true);  
-       return ; 
+  const handleModify = () => {
+    if (coCd !== undefined && coCd !== 'undefined') {
+      setIsEditing(true);
+      return;
     }
-   alert("회사를 선택하세요.");
+    setAlertInfo({
+      isOpen : true,
+      status : 'warning',
+      title : '선택된 회사가 없습니다.',
+      width : 'fit-content'
+    });
   }
 
   return (
@@ -138,6 +167,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
+        w={'1100px'}
       >
         <InfoBoxBar
           title={"기본정보"}
@@ -154,17 +184,17 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn }) => {
             isEditing={isEditing}
           />
         </Box>
+       
       </Box>
 
       {/* 삭제 확인 모달 */}
-      {(isOpen && !isEditing) && (
-        <ModalLayout title={'삭제여부'} onClose={onClose} isOpen={isOpen} buttonYn={true} btnText={'삭제'} size={'md'} handleCheck={handleDeleteBtn}>
-          <Box>
-            <Text>삭제하시겠습니까?</Text>
-          </Box>
-        </ModalLayout>
-
-      )}
+      {(isOpen && !isEditing) &&
+        <DeleteModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleCheck={handleDeleteBtn}
+        />
+      }
     </>
   );
 };

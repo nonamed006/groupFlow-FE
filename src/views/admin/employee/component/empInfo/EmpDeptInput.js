@@ -226,24 +226,6 @@ const EmpDeptInput = ({ column, handleChange, infoEditState }) => {
         />
       </GridItem>
 
-      <GridItem colStart={8} colEnd={10}>
-        <Text fontSize="sm" fontWeight="600">
-          퇴사여부
-        </Text>
-      </GridItem>
-      <GridItem colStart={10} colEnd={14}>
-        <RadioGroup defaultValue="1">
-          <HStack spacing="24px">
-            <Radio value="EMC0005" name="workTypeCd" isReadOnly={infoEditState === "read"} onChange={handleChange}>
-              Y
-            </Radio>
-            <Radio value="EMC0001" name="workTypeCd" isReadOnly={infoEditState === "read"} onChange={handleChange}>
-              N
-            </Radio>
-          </HStack>
-        </RadioGroup>
-      </GridItem>
-
       <GridItem colStart={1} colEnd={3}>
         <Text fontSize="sm" fontWeight="600">
           우편번호

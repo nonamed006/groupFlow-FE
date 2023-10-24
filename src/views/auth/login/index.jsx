@@ -82,26 +82,18 @@ function SignIn() {
       body: JSON.stringify(empInfo),
       headers: {
         'Content-Type': "application/json; charset=utf-8"
-      }
-    }).then(res => {
-      for (let header of res.headers.entries()) {
-        //refreshtoken localStorage에 담기
-        if (header[0] === "refreshtoken") {
-          let data = header[1];
-          setCookie("Authorization", data, 2);
-          //localStorage.setItem("Authorization", data);
+      },
+      credentials: 'include'
+    }).then((res) => res.json())
+    .then((res) => {
+      res.data.forEach(function(data) {
+        if(data.dpType == "DGB0001"){
+          setCookie("Emp_Dp_Type", data.dpGrpCd, 2);
         }
-      }
-      res.json().then((res)=>{
-        res.data.forEach(function(data) {
-          if(data.dpType == "DGB0001"){
-            setCookie("Emp_Dp_Type", data.dpGrpCd, 2);
-          }
-        });
-      }).then(()=>{
-        window.location.replace("/admin/default");
       });
-    });
+    }).then(()=>{
+      window.location.replace("/admin/default");
+    });;
   }
 
   return (

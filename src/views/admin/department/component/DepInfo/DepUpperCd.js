@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
-import { useSelector } from "react-redux";
 
 function DepUpperCd(props) {
-  console.log(props);
   const realgridElement = useRef(null);
 
   var fields = [
@@ -41,6 +39,7 @@ function DepUpperCd(props) {
     treeView.stateBar.width = 16;
 
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
+
     treeView.setStateBar({ visible: false }); //상태바 표시X
     treeView.setCheckBar({ visible: false }); //체크박스 표시X
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
@@ -70,13 +69,20 @@ function DepUpperCd(props) {
     ];
 
     treeView.onCellClicked = function (grid, clickData) {
-      let dpCd = props.data;
-      console.log("dpCd", dpCd);
       let dpData = grid._dataProvider._rowMap[clickData.dataRow];
-      console.log("dpdata", dpData);
+
+      let dataArray = dpData._values[0].split("/");
+      if (props.data.depDto.dpCd == "") {
+      } else {
+        if (dataArray.includes(props.data.depDto.dpCd)) {
+          alert("하위부서는 선택할 수 없습니다.");
+          return 0;
+        }
+      }
       props.getValue(dpData);
     };
-    treeProvider.setRows(props.value, "path", true, null, "depth");
+
+    treeProvider.setObjectRows({ rows: props.value }, "rows", "", "");
     treeView.expandAll();
     return () => {
       treeProvider.clearRows();

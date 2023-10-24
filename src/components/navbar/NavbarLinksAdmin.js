@@ -1,32 +1,25 @@
 // Chakra Imports
 import {
-	Avatar,
-	Button,
-	Checkbox,
-	Flex,
-	Icon,
-	Image,
-	Link,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Spacer,
-	Table,
-	TableContainer,
-	Tbody,
-	Td,
-	Text,
-	Th,
-	Thead,
-	Tr,
-	useColorModeValue
-} from '@chakra-ui/react';
+  Avatar,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 // Custom Components
-import { ItemContent } from 'components/menu/ItemContent';
-import { SidebarResponsive } from 'components/sidebar/Sidebar';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { ItemContent } from "components/menu/ItemContent";
+import { SearchBar } from "components/navbar/searchBar/SearchBar";
+import { SidebarResponsive } from "components/sidebar/Sidebar";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
@@ -38,6 +31,7 @@ import { setEmpData } from 'redux/solution';
 import { getCookie } from 'common/common';
 import { deleteCookie } from 'common/common';
 import { setCookie } from 'common/common';
+import { ThemeEditor } from './ThemeEditor';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -64,7 +58,6 @@ export default function HeaderLinks(props) {
 	const getEmpInfo = () => {
 		let cookie = getCookie("Authorization");
 		if (cookie != undefined) {
-
 			fetch(
 				`${PORT}/emp/getEmpInfo`,
 				{
@@ -73,7 +66,8 @@ export default function HeaderLinks(props) {
 						'Content-Type': "application/json; charset=utf-8",
 						//'Authorization': localStorage.getItem("Authorization")
 						'Authorization': cookie
-					}
+					},
+          credentials: 'include'
 					// res에 결과가 들어옴
 				}
 			).then((res) => res.json())
@@ -152,125 +146,149 @@ export default function HeaderLinks(props) {
 			</Flex>
 			{/* 이혜윤 - 수정(메뉴 아이콘 때문에 안눌려서 주석 처리)
 			<SidebarResponsive routes={routes} /> */}
-			{/* <SidebarResponsive routes={routes} /> */}
 
-			<Menu>
-				<MenuButton p="0px" onClick={() => { setDpType(getCookie("Emp_Dp_Type")); }}>
-					<Flex align="center" justify="center">
-						<Avatar
-							_hover={{ cursor: 'pointer' }}
-							color="white"
-							name="Adela Parkson"
-							bg="#11047A"
-							size="sm"
-							w="40px"
-							h="40px"
-						/>
-						<Flex direction={'column'} p="0px 10px">
-							<Text textAlign={'left'} fontSize="sm" fontWeight="600" color={textColor}>
-								{empDetail?.empNm}
-							</Text>
-							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								{empDetail?.coNm} | {empDetail?.dpNm}
-							</Text>
-						</Flex>
-						<ChevronDownIcon />
-					</Flex>
-				</MenuButton>
-				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none" minW="300px" >
-					<Flex w="100%" mb="0px">
-						<Text
-							ps="20px"
-							pt="16px"
-							pb="10px"
-							w="100%"
-							borderBottom="1px solid"
-							borderColor={borderColor}
-							fontSize="sm"
-							fontWeight="700"
-							color={textColor}>
-							회사정보
-						</Text>
-						<Spacer />
-						<Text
-							ps="20px"
-							pt="16px"
-							pb="10px"
-							w="30%"
-							borderBottom="1px solid"
-							borderColor={borderColor}
-							fontSize="sm"
-							color="red"
-							_hover={{ cursor: 'pointer' }}
-							onClick={() => { logoutemp() }}
-						>LogOut</Text>
-					</Flex>
-					<Flex flexDirection="column" p="5px">
-						<TableContainer>
-							<Table variant='simple' >
-								<Thead>
-									<Tr>
-										<Th>회사명</Th>
-										<Th>부서명</Th>
-										<Th>상태</Th>
-									</Tr>
-								</Thead>
-								<Tbody>
-									{empInfo?.map((column, index) => (
-										<Tr>
-											<Td>{column.coNm}</Td>
-											<Td>{column.dpNm}</Td>
-											<Td><Checkbox 
-													me='16px' 
-													colorScheme='brandScheme' 
-													value={column.dpGrpCd} 
-													isChecked={column.dpGrpCd == dpType ? true : false} 
-													onChange={(e) => handleChange(e, column)} 
-												/></Td>
-										</Tr>
-									))}
-								</Tbody>
-							</Table>
-						</TableContainer>
-					</Flex>
-					<Flex p="5px" justifyContent="center">
-						<Button variant="brand" w="80px" size='sm' onClick={clickHandle}>확인</Button>
-					</Flex>
-				</MenuList>
-			</Menu>
-			<Spacer />
-			<Menu>
-				<MenuButton p="0px">
-					<Icon mt="6px" as={MdNotificationsNone} color={navbarIcon} w="18px" h="18px" me="10px" />
-				</MenuButton>
-				<MenuList
-					boxShadow={shadow}
-					p="20px"
-					borderRadius="20px"
-					bg={menuBg}
-					border="none"
-					mt="22px"
-					me={{ base: '30px', md: 'unset' }}
-					minW={{ base: 'unset', md: '400px', xl: '450px' }}
-					maxW={{ base: '360px', md: 'unset' }}>
-					<Flex jusitfy="space-between" w="100%" mb="20px">
-						<Text fontSize="md" fontWeight="600" color={textColor}>
-							Notifications
-						</Text>
-						<Text fontSize="sm" fontWeight="500" color={textColorBrand} ms="auto" cursor="pointer">
-							Mark all read
-						</Text>
-					</Flex>
-					<Flex flexDirection="column">
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon UI Dashboard PRO" aName="Alicia" />
-						</MenuItem>
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon Design System Free" aName="Josh Henry" />
-						</MenuItem>
-					</Flex>
-				</MenuList>
-			</Menu>
+      <Menu>
+        <MenuButton p="0px">
+          <Flex align="center" justify="center">
+            <Avatar
+              _hover={{ cursor: "pointer" }}
+              color="white"
+              name="Adela Parkson"
+              bg="#11047A"
+              size="sm"
+              w="40px"
+              h="40px"
+            />
+            <Flex direction={"column"} p="0px 10px">
+              <Text
+                textAlign={"left"}
+                fontSize="sm"
+                fontWeight="600"
+                color={textColor}
+              >
+                유저이름
+              </Text>
+              <Text fontSize="sm" fontWeight="600" color={textColor}>
+                회사명 | 부서명
+              </Text>
+            </Flex>
+            <ChevronDownIcon />
+          </Flex>
+        </MenuButton>
+        <MenuList
+          boxShadow={shadow}
+          p="0px"
+          mt="10px"
+          borderRadius="20px"
+          bg={menuBg}
+          border="none"
+        >
+          <Flex w="100%" mb="0px">
+            <Text
+              ps="20px"
+              pt="16px"
+              pb="10px"
+              w="100%"
+              borderBottom="1px solid"
+              borderColor={borderColor}
+              fontSize="sm"
+              fontWeight="700"
+              color={textColor}
+            >
+              👋&nbsp; Hey, Adela
+            </Text>
+          </Flex>
+          <Flex flexDirection="column" p="10px">
+            <MenuItem
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              borderRadius="8px"
+              px="14px"
+            >
+              <Text fontSize="sm">Profile Settings</Text>
+            </MenuItem>
+            <MenuItem
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              borderRadius="8px"
+              px="14px"
+            >
+              <Text fontSize="sm">Newsletter Settings</Text>
+            </MenuItem>
+            <MenuItem
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              color="red.400"
+              borderRadius="8px"
+              px="14px"
+            >
+              <Text fontSize="sm">Log out</Text>
+            </MenuItem>
+          </Flex>
+        </MenuList>
+      </Menu>
+      <Spacer />
+      <Menu>
+        <MenuButton p="0px">
+          <Icon
+            mt="6px"
+            as={MdNotificationsNone}
+            color={navbarIcon}
+            w="18px"
+            h="18px"
+            me="10px"
+          />
+        </MenuButton>
+        <MenuList
+          boxShadow={shadow}
+          p="20px"
+          borderRadius="20px"
+          bg={menuBg}
+          border="none"
+          mt="22px"
+          me={{ base: "30px", md: "unset" }}
+          minW={{ base: "unset", md: "400px", xl: "450px" }}
+          maxW={{ base: "360px", md: "unset" }}
+        >
+          <Flex jusitfy="space-between" w="100%" mb="20px">
+            <Text fontSize="md" fontWeight="600" color={textColor}>
+              Notifications
+            </Text>
+            <Text
+              fontSize="sm"
+              fontWeight="500"
+              color={textColorBrand}
+              ms="auto"
+              cursor="pointer"
+            >
+              Mark all read
+            </Text>
+          </Flex>
+          <Flex flexDirection="column">
+            <MenuItem
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              px="0"
+              borderRadius="8px"
+              mb="10px"
+            >
+              <ItemContent info="Horizon UI Dashboard PRO" aName="Alicia" />
+            </MenuItem>
+            <MenuItem
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              px="0"
+              borderRadius="8px"
+              mb="10px"
+            >
+              <ItemContent
+                info="Horizon Design System Free"
+                aName="Josh Henry"
+              />
+            </MenuItem>
+          </Flex>
+        </MenuList>
+      </Menu>
 
 			<Menu>
 				<MenuButton p='0px'>
@@ -329,6 +347,9 @@ export default function HeaderLinks(props) {
 						</Link>
 					</Flex>
 				</MenuList>
+			</Menu>
+			<Menu>
+			<ThemeEditor navbarIcon={navbarIcon} />
 			</Menu>
 		</Flex>
 	);
