@@ -1,12 +1,11 @@
-import { Alert, AlertIcon, AlertTitle, Box,Button,ChakraProvider,CloseButton,useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, useDisclosure } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import InfoBoxBar from "./InfoBoxBar";
 import InputGrid from "./InputGrid";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { PORT } from "set";
 import { corpSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
-import CommonAlert from "common/component/CommonAlert";
+import api from "api/Fetch";
 
 const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
@@ -32,72 +31,63 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo
   };
 
   // 회사 조회
-  const fetchCorp = (coCd) => {
-    let url = `${PORT}/corp/${coCd}`;
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
+  const fetchCorp = async (coCd) => {
+    let res = await api.corp.getCorpInfo(coCd);
+    if(res.status === 200){
         let data = res.voData;
         data !== null && setCorp(data);
-      });
+    }
   };
 
   // 회사 저장
-  const fetchCorpSave = () => {
-    let url = `${PORT}/corp`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corp),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setAlertInfo({
+  const fetchCorpSave = async () => {
+    let res = await api.corp.postCorpInfo(corp);
+    console.log(res);
+    if(res.status === 200){
+       setAlertInfo({
           isOpen : true,
           status : 'success',
           title : res.resultMsg,
           width : 'fit-content'
         });
         setChangeYn(!changeYn); // 변경 여부 변경
+    }else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+    }
   };
 
   // 회사 정보 수정
-  const fetchCorpUpdate = () => {
-    let url = `${PORT}/corp`;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corp),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setAlertInfo({
-          isOpen : true,
-          status : 'success',
-          title : res.resultMsg,
-          width : 'fit-content'
-        });
-        setIsEditing(false);
-        setChangeYn(!changeYn); // 변경 여부 변경
+  const fetchCorpUpdate = async () => {
+    let res = await api.corp.putCorpInfo(corp);
+    if(res.status === 200){
+      setAlertInfo({
+        isOpen : true,
+        status : 'success',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+      setIsEditing(false);
+      setChangeYn(!changeYn); // 변경 여부 변경
+    } else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
+      });
+    }
   };
 
   // 회사 삭제
-  const fetchCorpDelete = () => {
-    let url = `${PORT}/corp/${coCd}`;
-    fetch(url, {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setAlertInfo({
+  const fetchCorpDelete = async () => {
+    let res = await api.corp.deleteCorpInfo(coCd);
+    if(res.status === 200){
+       setAlertInfo({
           isOpen : true,
           status : 'success',
           title : res.resultMsg,
@@ -105,7 +95,14 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo
         });
         setCoCd(); // coCd 초기화
         setChangeYn(!changeYn); // 변경 여부 변경
+    }else{
+      setAlertInfo({
+        isOpen : true,
+        status : 'error',
+        title : res.resultMsg,
+        width : 'fit-content'
       });
+    }
   };
 
   // 삭제 버튼 클릭 시
@@ -156,7 +153,7 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo
     setAlertInfo({
       isOpen : true,
       status : 'warning',
-      title : '회사를 선택하세요',
+      title : '선택된 회사가 없습니다.',
       width : 'fit-content'
     });
   }

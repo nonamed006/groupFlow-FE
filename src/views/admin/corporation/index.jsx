@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import ListCard from "./component/ListCard/ListCard";
 import InfoBox from "./component/InfoBox/InfoBox";
-import { PORT } from "set";
 import OrgChartModal from "common/orgChart/OrgChartModal";
 import CommonAlert from "common/component/CommonAlert";
+import api from "api/Fetch";
+
 
 const Corporation = () => {
 	const [keyword, setKeyword] = useState(""); // 검색어
@@ -27,15 +28,11 @@ const Corporation = () => {
 	}, [changeYn]);
 
 	// 정렬 기본값 가져오기
-	const fetchMaxSort = () => {
-		let url = `${PORT}/corp/sort`;
-		fetch(url, {
-			method: "GET"
-		}).then(res => res.json()).then(res => {
-			if (res.result === 'success') {
-				setSortValue(res.strData);
-			}
-		});
+	const fetchMaxSort = async () => {
+		let res = await api.corp.getCorpSortApi();
+		if (res.status === 200) {
+		 		setSortValue(res.strData);
+		} 
 	};
 
 	// 검색 버튼 클릭 시

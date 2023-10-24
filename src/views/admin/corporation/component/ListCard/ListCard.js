@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
 import { useInView } from 'react-intersection-observer';
 import { SyncLoader } from "react-spinners"
-import { PORT } from "set";
+import api from "api/Fetch";
+
 const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
   const [corpList, setCorpList] = useState([]); // 회사데이터 목록
   const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
@@ -34,7 +35,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
 
   useEffect(async () => {
     if (inView && !isLastPage) {
-     // await setIsLoading(true);
+      // await setIsLoading(true);
       fetchCorpList();
       // await setIsLoading(false);
     }
@@ -43,37 +44,22 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
 
   // 회사 목록 조회 및 검색
   const fetchCorpList = async () => {
-    let url = `${PORT}/corp`;
-    // URL 파라미터 생성
-    const params = new URLSearchParams();
-    // 검색
-    if (keyword !== "") params.append("keyword", keyword);
-    if (useYn !== "") params.append("useYn", useYn);
-    // 페이지 요청
-    params.append("pageNum", pageNum);
+    let res = await api.corp.getCorpList(keyword, useYn, pageNum);
 
-    // URL에 파라미터 추가
-    const paramString = params.toString();
-    if (paramString) {
-      url += "?" + paramString;
+    if (res.status === 200) { // 성공일 때
+      setCorpList(
+        pageNum === 1 ? res.pageInfo.list 
+         : [...corpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
+      setTotalCount(res.pageInfo.total);  // 총 데이터 수
+      setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
+      if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
+        setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
+      }
+    } else {
+      setCorpList([]);
+      setIsLastPage(true);
     }
 
-    fetch(url, {
-      method: "GET",
-    }).then((res) => res.json())
-      .then((res) => {
-        if (res.result === 'success') { // 성공일 때
-          setCorpList(pageNum===1?res.pageInfo.list:[...corpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
-          setTotalCount(res.pageInfo.total);  // 총 데이터 수
-          setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
-          if(res.pageInfo.hasNextPage){  // 다음페이지가 있다면
-            setPageNum(res.pageInfo.pageNum+1); // 다음페이지 번호 set
-          }
-        } else{
-          setCorpList([]);
-          setIsLastPage(true);
-        }
-      });
     return;
   };
 
@@ -94,8 +80,8 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
         <Box minH={'560px'}>
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        
-        <Box ref={infiniteScrollRef}  h={'1px'} />
+
+        <Box ref={infiniteScrollRef} h={'1px'} />
         {isLoading &&
           <SyncLoader />
         }
