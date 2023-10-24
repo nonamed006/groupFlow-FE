@@ -4,9 +4,15 @@ import roleGrp from "./roleGrp/RoleGrpApi";
 import roleMenu from "./roleMenu/RoleMenuApi";
 import roleCorp from "./roleCorp/RoleCorpApi";
 import depGrp from "./depGrp/DepGrpApi";
+import { getCookie } from "common/common";
 
-export const getPromise = async ({url, method, body, header}) => {
-    return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header && header})
+const header = {
+    'Content-Type': "application/json; charset=utf-8",
+    'Authorization': getCookie("Authorization")
+}
+
+export const getPromise = async ({url, method, body}) => {
+    return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header, credentials: 'include'}) 
     .then((response) => response.json())
     .then((responseJson) => responseJson);
 }

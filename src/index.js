@@ -27,7 +27,8 @@ ReactDOM.render(
 						<Route path={`/auth`} component={AuthLayout} />
 						<Route path={`/admin`} component={AdminLayout} />
 						<Route path={`/rtl`} component={RtlLayout} />
-						<Redirect from='/' to='/auth' />
+						{/* 로그인 안했을때 */}
+						<Redirect from='/' to='/auth/login' />
 					</Switch>
 				</BrowserRouter>
 			</ThemeEditorProvider>
