@@ -64,7 +64,7 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
       
       <CardListTitle corpDepNm={corpDep && corpDep.name} totalCnt={totalCount?totalCount:0}/>
       
-      <Box overflowY={"auto"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='lg' h={'590px'} p={2}>
+      <Box overflowY={totalCount>0?"auto":"hidden"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='lg' h={'590px'} p={2}>
         <Box minH={'600px'}>
           {depGrpList &&
             depGrpList.map((depGrp) => {

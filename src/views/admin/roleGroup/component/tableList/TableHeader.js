@@ -8,15 +8,16 @@ const ListCardTableHeader = ({ headerGroups }) => {
     return (
 
         <Thead>
-            <Tr bg={'#F4F7FE'} boxShadow='lg'> 
+            <Tr bg={'#F4F7FE'} boxShadow='lg' > 
                 {headerGroups.map((header, index) => {
                     return ( 
                         <Td key={index} >
                             <Text
                                 color={headerColor}
-                                fontSize="16px"
-                                fontWeight="800"
+                                fontSize="md"
+                                fontWeight="600"
                                 lineHeight="100%"
+                                w={'80px'}
                             >
                                 {header}
                             </Text>
