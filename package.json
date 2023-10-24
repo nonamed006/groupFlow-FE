@@ -73,5 +73,6 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
-  }
+  },
+  "proxy" : "http://34.64.42.133:9090/"
 }
