@@ -4,6 +4,7 @@ import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
 import RoleList from "./component/Emp/RoleList";
 import EmpList from "./component/Emp/EmpList";
 import RoleCorp from "./RoleCorp";
+import DepRole from "./component/dep/DepRole";
 
 
 const Role = () => {
@@ -26,6 +27,13 @@ const Role = () => {
                             lineHeight="100%"
                         >
                             회사 기준
+                        </Tab>
+                        <Tab
+                            fontSize="22px"
+                            fontWeight="700"
+                            lineHeight="100%"
+                        >
+                            부서 기준
                         </Tab>
                     </Flex>
                 </TabList>
@@ -51,6 +59,9 @@ const Role = () => {
                     {/* 권한-회사기준 */}
                     <TabPanel>
                        <RoleCorp />
+                    </TabPanel>
+                    <TabPanel>
+                        <DepRole />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

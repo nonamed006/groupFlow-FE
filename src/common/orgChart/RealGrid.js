@@ -68,14 +68,6 @@ const RealGrid = ({ org, handelGrid }) => {
       "ve.png",
     ];
     
-    treeView.setRowStyleCallback(function (grid, item, fixed) {
-      var depth = grid.getValue(item.index, "depth");
-      if (depth === "0") {
-        return "gnb-column";
-      } else if (depth === "2") {
-        return "bottom-gnb-column";
-      }
-    });
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {

@@ -19,7 +19,7 @@ import { ItemContent } from "components/menu/ItemContent";
 import { SearchBar } from "components/navbar/searchBar/SearchBar";
 import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
@@ -57,9 +57,7 @@ export default function HeaderLinks(props) {
 	//사원 정보 조회, 리덕스에 저장
 	const getEmpInfo = () => {
 		let cookie = getCookie("Authorization");
-		console.log("sdlfjosdg", cookie);
 		if (cookie != undefined) {
-			console.log("👽👾👽👻👽");
 			fetch(
 				`${PORT}/emp/getEmpInfo`,
 				{
@@ -68,12 +66,12 @@ export default function HeaderLinks(props) {
 						'Content-Type': "application/json; charset=utf-8",
 						//'Authorization': localStorage.getItem("Authorization")
 						'Authorization': cookie
-					}
+					},
+          credentials: 'include'
 					// res에 결과가 들어옴
 				}
 			).then((res) => res.json())
 				.then((res) => {
-					console.log("res.data",res.data);
 					setDpType(getCookie("Emp_Dp_Type"));
 					dispatch(setEmpData(res.data));
 					setEmpDetail(res.data[0]);
