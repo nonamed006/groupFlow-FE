@@ -15,7 +15,7 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" p="6">
+      <Box borderRadius="lg" bg="white" p="6" w={"93%"}>
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
           <GridItem colSpan={1}>
             <div style={{ lineHeight: "40px", textAlign: "center" }}>회사</div>

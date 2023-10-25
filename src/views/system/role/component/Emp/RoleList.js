@@ -1,45 +1,113 @@
-import { Box, Grid, GridItem, Select, Button, Input, VStack, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { React, useState, useEffect } from "react";
+import CardMenuBar from "common/component/CardMenuBar";
+import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardList";
+import api from "api/Fetch";
+import { UseDrawerOpen } from "hook/UseDrawerOpen";
+import BottomDrawer from "common/component/BottomDrawer";
+import SearchBar from "common/component/SearchBar";
 
-const RoleList = ({}) => {
+const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword}) => {//coCd, empCd
+    const [ roleList, setRoleList ] = useState([]);
+    const [ total, setTotal ] = useState(0);
+
+    const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
+    const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
+    const [isChecked, setIsChecked] = useState(false);
+
+    // 사용자 회사의 권한 목록 조회
+    const getRoleList = async () => {
+        const response = await api.roleEmp.getRoleListApi(dpGrpCd, keyword);//coCd, empCd
+        setRoleList(response.data);
+        setTotal(response.data.length);
+        setRgCd('');
+    }
+
+    // 사용자 권한 매핑 수정
+    const setEmpRole = async () => {
+        const response = await api.roleEmp.mappingEmpRoleApi(dpGrpCd, checkedList);
+        if(response.status === 200) {
+            alert(response.resultMsg);
+            getRoleList();
+        } else {
+            alert(response.resultMsg);
+        }
+    }
+
+    const checkedItemHandler = (value, isChecked) => {
+        if (isChecked) {
+            setCheckedList((prev) => [...prev, value]);
+            return;
+        }
+        if (!isChecked && checkedList.includes(value)) {
+            setCheckedList(checkedList.filter((item) => item !== value));
+            return;
+        }
+        return;
+    }
+
+    // 체크박스 핸들러
+    const checkHandler = (e, value) => {
+        setIsChecked(!isChecked);
+        checkedItemHandler(value, e.target.checked);
+    };
+
+    const handleSearchBtn = () => {
+        if(!dpGrpCd) {
+            alert('사용자를 선택해주세요.');
+            return false;
+        }
+
+        getRoleList();
+    }
+
+    // 사용자 코드 변화에 따라 권한 목록 변경
+    useEffect(() => {
+        getRoleList();
+    }, [dpGrpCd]);
+
+    // 권한 목록 변화에 따라 체크 목록 설정
+    useEffect(() => {
+        setCheckedList(roleList.filter(role => role.state === 1).map(role => role.rgCd));
+        if(checkedList.length > 0) {
+            isDrawerOpen();
+        } else {
+            isDrawerClose();
+        }
+    }, [roleList]);
+
+    // 체크리스트 변화에 따라 하단 설정란 표시
+    useEffect(() => {
+        if(checkedList.length > 0) {
+            isDrawerOpen();
+        } else {
+            isDrawerClose();
+        }
+    }, [checkedList]);
   
   return (
-      <Box borderRadius="lg" bg="white" h={'full'} p="6" overflowY={'scroll'}>
-        <Grid templateColumns='repeat(4, 1fr)' gap={2}>
-            <GridItem colSpan={3}>
-                <Input placeholder="부서명/사원명을 입력하세요." name='keyword' defaultValue={''} size="md" borderRadius="14px"  onChange={(e) => {
-                    // setSearch({
-                    // 	...search,
-                    // 	searchMenuNm: e.target.value
-                    // })
-                }}/>
-            </GridItem>
-            <GridItem colStart={4} colEnd={4}>
-                <Button variant="brand" onClick={() => {
-                    // setSearch({
-                    // 	...search,
-                    // 	onSearchClick: !search.onSearchClick
-                    // })
-                }}>검색</Button>
-            </GridItem>
-        </Grid>
-        <VStack spacing={4} align='stretch'>
-            <Box
-                py={7}
-                px={5}
-                borderWidth='1px'
-                borderRadius={'xl'}
-                borderColor={'brand.500'}
-                shadow={'md'}
-                backgroundColor={'white'}
-                cursor={'pointer'}>
-                <Flex>
-                <Heading flex={1} fontSize='xl'>Test</Heading>
-                <Text textAlign={'right'} color={'gray.400'} w={'45px'}>{true ? '사용' : '미사용'}</Text>
-                </Flex>
+    <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
+        {/* 메뉴상단 */}
+        <CardMenuBar title={'권한그룹'} count={total} buttonType={false} />
+        {/* 검색바 */}
+        <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
+        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
+            <Box minH={'510px'}>
+                <GroupCardList
+                    checkedList={checkedList}
+                    checkHandler={checkHandler}
+                    rgCd={rgCd}
+                    roleGrpList={roleList}  // 해당 회사의 권한 그룹 목록
+                    setRgCd={setRgCd}       // 권한그룹 선택
+                    coCd={dpGrpCd}
+                    total={true}            // 내 권한그룹의 전체 메뉴 조회 여부
+                />
             </Box>
-        </VStack>
-      </Box>
+        </Box>
+        {isDrawer &&
+            <BottomDrawer cnt={checkedList.length} handler1={setEmpRole} isDrawerClose={()=>setCheckedList([])} type={4} />
+        }
+    </Box>
   );
 };
   

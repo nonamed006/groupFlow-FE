@@ -1,32 +1,31 @@
 import { Box, Grid, GridItem, Select, Button, Input } from "@chakra-ui/react";
-import { getEmpListApi, getCorpListApi } from "api/roleEmp/RoleEmpApi";
+import api from "api/Fetch";
 import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
 import CardMenuBar from "common/component/CardMenuBar";
 
-const EmpList = () => {
-    //const searchCorpList = getCorpList();
-    const [ searchCoCd, setSearchCoCd ] = useState('');
-    const [ searchCorpList, setSearchCorpList ] = useState([]);
-    const [ search, setSearch ] = useState('');
-    const [ keyword, setKeyword ] = useState('');
-    const [ list, setList ] = useState([]);
-    const [ empCount, setEmpCount ] = useState([]);
-    const [ emp, setEmp ] = useState({});
+const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
+    const [ searchCoCd, setSearchCoCd ] = useState('');         // 회사 카테고리 코드
+    const [ searchCorpList, setSearchCorpList ] = useState([]); // 회사 카테고리 목록
+    const [ keyword, setKeyword ] = useState('');               // 검색어
+    const [ list, setList ] = useState([]);                     // 회사 + 부서 + 사용자 목록
+    const [ empCount, setEmpCount ] = useState([]);             // 사용자 카운트
 
+    // 회사 + 부서 + 사용자 목록 조회
     const getEmpList = async() => {
-        const response = await getEmpListApi(searchCoCd, keyword, search);
+        const response = await api.roleEmp.getEmpListApi(searchCoCd, keyword);
         setList(response.data);
         setEmpCount(response.voData.empCount);
-    } 
+    }
+
+    // 회사 카테고리 조회
+    const getCorpList = async() => {
+        const response = await api.roleEmp.getCorpListApi();
+        setSearchCorpList(response.data);
+    }
 
     useEffect(() => {
-        const getCorpList = async() => {
-            const response = await getCorpListApi();
-            setSearchCorpList(response.data);
-        }
         getCorpList();
-
         getEmpList();
     }, [])
 
@@ -61,7 +60,7 @@ const EmpList = () => {
 			</Grid>
             
             <Box w={"full"} h={'500px'} overflowY={'scroll'}>
-                <RealGrid org={list} setListDetail={setEmp}/>
+                <RealGrid org={list} setListDetail={setDpGrpCd}/>
             </Box>
         </Box>
     )
