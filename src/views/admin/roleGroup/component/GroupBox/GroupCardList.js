@@ -1,5 +1,5 @@
-import { Box, Text, useColorModeValue, Flex, Checkbox, Heading } from "@chakra-ui/react";
-import React from "react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 import GroupCard from "./GroupCard";
@@ -8,7 +8,6 @@ import GroupCard from "./GroupCard";
 const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, total, coCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-
     return (
         <Box
             overflowY={"auto"}

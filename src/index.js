@@ -15,21 +15,24 @@ import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 const store = createStore(rootReducer);
+
 ReactDOM.render(
-  <ChakraProvider theme={theme}>
-    <Provider store={store}>
-      <ThemeEditorProvider>
-        <BrowserRouter>
-          <Switch>
-            <Route path={`/system`} component={SystemLayout} />
-            <Route path={`/auth`} component={AuthLayout} />
-            <Route path={`/admin`} component={AdminLayout} />
-            <Route path={`/rtl`} component={RtlLayout} />
-            <Redirect from="/" to="/auth" />
-          </Switch>
-        </BrowserRouter>
-      </ThemeEditorProvider>
-    </Provider>
-  </ChakraProvider>,
-  document.getElementById("root")
+
+	<ChakraProvider theme={theme}>
+		<Provider store={store}>
+			<ThemeEditorProvider>
+				<BrowserRouter>
+					<Switch>
+						<Route path={`/system`} component={SystemLayout}/>
+						<Route path={`/auth`} component={AuthLayout} />
+						<Route path={`/admin`} component={AdminLayout} />
+						<Route path={`/rtl`} component={RtlLayout} />
+						{/* 로그인 안했을때 */}
+						<Redirect from='/' to='/auth/login' />
+					</Switch>
+				</BrowserRouter>
+			</ThemeEditorProvider>
+	</Provider>
+	</ChakraProvider>,
+	document.getElementById('root')
 );

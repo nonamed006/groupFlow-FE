@@ -4,9 +4,9 @@ const roleGrp = {
 
    /**
     * 
-    * @param {string} searchCorp  검색할 회사
-    * @param {string} keyword 권한그룹명 검색어
-    * @param {number} pageNum 
+    * @param {*} searchCorp  검색할 회사
+    * @param {*} keyword 권한그룹명 검색어
+    * @param {*} pageNum 
     * @returns 
     */
     getRoleGrpList: (searchCorp, keyword, pageNum) => {

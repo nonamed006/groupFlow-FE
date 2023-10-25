@@ -69,7 +69,38 @@ const roleMenu = {
         }
         const promise = getPromise({ url: url, method: 'GET' });
         return promise.then((responseJson) => responseJson);
+    },
+
+    /**
+     * 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
+     * @param {*} rgCd 권한그룹 코드
+     * @returns 
+     */
+    getMenuListWithRole: (rgCd) => {
+        const promise = getPromise({ url: `roleMenu/menu/${rgCd}`, method: 'GET' });
+        return promise.then((responseJson) => responseJson);
+    },
+
+
+    /**
+     * 권한그룹 메뉴 등록 및 수정
+     * @param {string} rgCd 
+     * @param {*} menuCdList 등록 및 삭제할 메뉴코드 리스트 
+     * @returns 
+     */
+    putRoleMenu: (rgCd, menuCdList)=> {
+        const promise = getPromise({ 
+            url: `roleMenu/${rgCd}`, 
+            method: "PUT",
+            header: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(menuCdList)
+        });
+        return promise.then((responseJson) => responseJson);
     }
+
+
 };
 
 export default roleMenu;

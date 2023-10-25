@@ -56,56 +56,57 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
         let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
-        if (res.status === 200) {
-            setRoleGrpList(pageNum === 1 ? res.pageInfo.list : [...roleGrpList, ...(res.pageInfo.list)]); // 이전 페이지 데이터 리스트에 추가
-            setTotalCount(res.pageInfo.total);  // 총 데이터 수
-            setIsLastPage(res.pageInfo.isLastPage); // 마지막 페이지인지
-            if (res.pageInfo.hasNextPage) {  // 다음페이지가 있다면
-                setPageNum(res.pageInfo.pageNum + 1); // 다음페이지 번호 set
-            }
+        console.log('fetchRoleGroup');
+        if (res.status === 200 && res.pageInfo) {
+            let { list, total, isLastPage, hasNextPage } = res.pageInfo;
+            setRoleGrpList(pageNum === 1 ? list : [...roleGrpList, ...list]);
+            console.log('fetchRoleGroupddddddd');
+            setTotalCount(total);
+            setIsLastPage(isLastPage);
+            if (hasNextPage)
+                setPageNum((prev) => prev + 1);
         } else {
             setRoleGrpList([]);
             isDrawerClose();
+            setTotalCount(0);
             setIsLastPage(true);
         }
         setRgCd(undefined);
-
     };
 
     // 회사명/회사코드 목록 조회
-    const fetchCorpsNm = async() => {
+    const fetchCorpsNm = async () => {
         let res = await api.corp.getCorpsNmList();
-        if (res.status === 200 ) setCorps(res.data);
+        if (res.status === 200 && res.data) setCorps(res.data);
         else setCorps([]);
     }
 
     // 권한그룹 등록
     const fetchRoleGrpSave = async () => {
-        let res = await api.roleGrp.postRoleGrp;
-        if (res.status === 'success') {
+        let res = await api.roleGrp.postRoleGrp(roleGrp);
+        if (res.status === 200) {
             setAlertInfo({
-                    isOpen: true,
-                    status: 'succes',
-                    title: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'success',
+                title: res.resultMsg,
+                width: 'fit-content'
+            });
+            setIsAddOpen(!isAddOpen); // 모달창 닫기
             fetchRoleGroup();
         } else {
             setAlertInfo({
-                    isOpen: true,
-                    status: 'error',
-                    title: '등록 실패',
-                    detail: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'error',
+                title: '등록 실패',
+                detail: res.resultMsg,
+                width: 'fit-content'
+            });
         }
-
     };
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => { // 초기화 
         setPageNum(1);
-        setTotalCount(0);
         setInit(!init);
     };
 
@@ -114,17 +115,16 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
         roleGrpSchema.validate(roleGrp)
             .then(() => {
                 fetchRoleGrpSave(); // 권한그룹 등록
-                setIsAddOpen(!isAddOpen); // 모달창 닫기
             })
             .catch(errors => {
                 // 유효성 검사 실패한 경우 에러 메세지 출력
-                setAlertInfo( {
-                        isOpen: true,
-                        status: 'warning',
-                        title: '등록 실패',
-                        detail: errors.message,
-                        width: 'fit-content'
-                    });
+                setAlertInfo({
+                    isOpen: true,
+                    status: 'warning',
+                    title: '등록 실패',
+                    detail: errors.message,
+                    width: 'fit-content'
+                });
             });
     };
 
@@ -138,22 +138,22 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
         if (res.status === 200) {
             setAlertInfo({
-                    isOpen: true,
-                    status: 'succes',
-                    title: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'success',
+                title: res.resultMsg,
+                width: 'fit-content'
+            });
             fetchRoleGroup();
-            setIsDelOpen(false);
         } else {
             setAlertInfo({
-                    isOpen: true,
-                    status: 'error',
-                    title: '수정 실패',
-                    detail: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'error',
+                title: '수정 실패',
+                detail: res.resultMsg,
+                width: 'fit-content'
+            });
         }
+        setIsDelOpen(false);
     };
 
     //  권한그룹 삭제
@@ -161,24 +161,27 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
         let res = await api.roleGrp.deleteRoleGrp(checkedList);
 
         if (res.status === 200) {
+            checkedList.map(code => {
+                checkedItemHandler(code, false);
+            })
+
             setAlertInfo({
-                    isOpen: true,
-                    status: 'succes',
-                    title: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'success',
+                title: res.resultMsg,
+                width: 'fit-content'
+            });
             fetchRoleGroup();
-            setIsDelOpen(false);
         } else {
             setAlertInfo({
-                    isOpen: true,
-                    status: 'error',
-                    title: '삭제 실패',
-                    detail: res.resultMsg,
-                    width: 'fit-content'
-                });
+                isOpen: true,
+                status: 'error',
+                title: '삭제 실패',
+                detail: res.resultMsg,
+                width: 'fit-content'
+            });
         }
-
+        setIsDelOpen(false);
     };
 
 

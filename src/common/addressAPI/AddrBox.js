@@ -1,5 +1,5 @@
-import { Input, Button, GridItem, Text, useDisclosure, Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Button, GridItem, Text, useDisclosure } from "@chakra-ui/react";
+import React from "react";
 import AddrModal from "./AddrModal";
 import FormInput from "common/component/FormInput";
 
@@ -31,7 +31,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
         <FormInput
           title={'우편번호'}
           name={'postNum'}
-          value={data ? data.postNum : ''}
+          value={data.postNum?data.postNum:''}
           readOnly={true}
           isRequired={isRequired}
           placeholder="주소를 선택하세요"
@@ -57,7 +57,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
         <FormInput
           title={'주소'}
           name={'addr'}
-          value={data ? data.addr : ''}
+          value={data.addr?data.addr:''}
           readOnly={true}
           isRequired={isRequired}
           placeholder="주소를 선택하세요"
@@ -68,7 +68,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       <GridItem colStart={5} colEnd={10} colSpan={5}>
         <FormInput
           name={'addrDetail'}
-          value={data ? data.addrDetail : ''}
+          value={data.addrDetail?data.addrDetail:''}
           readOnly={editState === "update" ? false : true}
           isRequired={isRequired}
           placeholder="상세주소를 입력하세요"

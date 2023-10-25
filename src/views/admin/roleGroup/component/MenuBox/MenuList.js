@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import RealGrid from "../RealGrid";
 
@@ -15,7 +15,7 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit }) 
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" px={5} >
             {
-                roleMenu &&
+                roleMenu  &&
                 <RealGrid org={roleMenu} />
             }
         </Box>

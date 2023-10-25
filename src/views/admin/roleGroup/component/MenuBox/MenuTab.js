@@ -1,5 +1,5 @@
 import { Box, useColorModeValue, Button, Flex, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 
 const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, modify }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");

@@ -93,7 +93,6 @@ function SignIn() {
       });
     }).then(()=>{
       window.location.replace("/admin/default");
-      console.log("들어옴");
     });;
   }
 

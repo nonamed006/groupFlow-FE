@@ -3,7 +3,7 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
-const RealGrid = ({ org, handelGrid }) => {
+const RealGrid = ({ org, handleGrid }) => {
 
   const realgridElement = useRef(null);
 
@@ -68,20 +68,14 @@ const RealGrid = ({ org, handelGrid }) => {
       "ve.png",
     ];
     
-    treeView.setRowStyleCallback(function (grid, item, fixed) {
-      var depth = grid.getValue(item.index, "depth");
-      if (depth === "0") {
-        return "gnb-column";
-      } else if (depth === "2") {
-        return "bottom-gnb-column";
-      }
-    });
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
-        let dpCdData =
-          grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-        handelGrid(dpCdData);
+        // let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
+        handleGrid({
+            code: grid._dataProvider._rowMap[clickData.dataRow]._values[0],
+            name: grid._dataProvider._rowMap[clickData.dataRow]._values[1]
+        });
       }
     };
 

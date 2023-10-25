@@ -21,18 +21,19 @@ const TableTr = ({ data, index }) => {
             boxShadow='lg'
             mb={'7'}
         >
-            <Td align="center" >
-                <Text color={textColor} fontSize="md" fontWeight="500">
-                    {data.dpNm}
+
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+                <Text  color={textColor}  textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
+                {data.dpNm}
                 </Text>
             </Td>
-            <Td align="center" >
-                <Text color={textColor} fontSize="md" fontWeight="500">
-                    {data.rankNm} / {data.pstnNm}
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
+                <Text  color={textColor} textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
+                {data.rankNm} / {data.pstnNm}
                 </Text>
             </Td>
-            <Td align="center" >
-                <Text color={textColor} fontSize="md" fontWeight="500">
+            <Td textAlign="center" fontWeight={500} fontSize={'sm'}>
+                <Text  color={textColor}   textOverflow={'ellipsis'}  whiteSpace={"nowrap"}  w={'100px'} overflow={'hidden'}>
                     {data.empNm} ({data.mailId})
                 </Text>
             </Td>

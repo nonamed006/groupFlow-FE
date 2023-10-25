@@ -1,11 +1,6 @@
-import {
-  Input,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  HStack,
-  Radio,
-} from "@chakra-ui/react";
+
+import { FormControl, FormLabel, RadioGroup, HStack, Radio } from '@chakra-ui/react';
+
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
