@@ -33,9 +33,6 @@ const roleCorp = {
         const promise = getPromise({
             url: `roleCorp/${coCd}`,
             method: 'PUT',
-            header: {
-                "Content-Type": 'application/json'
-            },
             body: JSON.stringify(roleCorpCd)
          });
         return promise.then((responseJson) => responseJson);

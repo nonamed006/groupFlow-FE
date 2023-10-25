@@ -10,7 +10,7 @@ const ListCardTable = ({ listData, setCoCd, coCd }) => {
   const headerGroups = ["회사명", "대표자", "회사구분", "사용" ];
 
   return (
-    <Table variant="simple" w={'100%'} >
+    <Table variant="simple" w={'100%'} colorScheme={'facebook'}>
       {/* Thead */}
       <ListCardTableHeader headerGroups={headerGroups}/> 
       {/* Tbody */}

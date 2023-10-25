@@ -43,7 +43,8 @@ const OrgChartBox = () => {
     }
 
     // 회사 및 부서 목록 조회
-    const fetchCorpDepList = () => {
+    const fetchCorpDepList = async () => {
+        //await setIsLoading(true);
         let url = `${PORT}/roleEmp/list?empYn=N`;
         fetch(url, {
             method: "GET"
@@ -81,11 +82,11 @@ const OrgChartBox = () => {
                         </GridItem>
                         {/* 사원 목록 */}
                         <GridItem colSpan={2} rowSpan={5} >
-                            <DepGrpCardList setChangeYn={setChangeYn} changeYn={changeYn} corpDep={corpDep && corpDep} search={search} keyword={keyword} setDepGrp={setDepGrp} />
+                            <DepGrpCardList setIsLoading={setIsLoading} setChangeYn={setChangeYn} changeYn={changeYn} corpDep={corpDep && corpDep} search={search} keyword={keyword} setDepGrp={setDepGrp} />
                         </GridItem>
                         {/* 사원 정보 */}
                         <GridItem colSpan={1} rowSpan={5} >
-                            <DepGrpInfo depGrp={depGrp} />
+                            <DepGrpInfo setIsLoading={setIsLoading} depGrp={depGrp} />
                         </GridItem>
                     </Grid>
                 }

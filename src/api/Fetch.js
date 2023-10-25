@@ -12,7 +12,7 @@ const header = {
     'Authorization': getCookie("Authorization")
 }
 
-export const getPromise = async ({url, method, body}) => {
+export const getPromise = async ({url, method, headers, body}) => {
     return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header, credentials: 'include'}) 
     .then((response) => response.json())
     .then((responseJson) => responseJson);

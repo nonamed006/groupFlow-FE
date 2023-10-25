@@ -1,5 +1,5 @@
 
-import { FormControl, FormLabel, RadioGroup, HStack, Radio } from '@chakra-ui/react';
+import { FormControl, FormLabel, RadioGroup, HStack, Radio, useColorModeValue } from '@chakra-ui/react';
 
 import React from "react";
 
@@ -15,9 +15,11 @@ const FormRadio = ({
   isRequired,
   values,
 }) => {
+  const textColor = useColorModeValue("secondaryGray.900", "white");
+
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
-      <FormLabel fontSize="md" fontWeight="600" w={"50%"}>
+      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"}>
         {title}
       </FormLabel>
       <RadioGroup name={name} defaultValue={defaultValue} key={pk}>
