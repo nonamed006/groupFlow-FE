@@ -44,9 +44,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
     useEffect(async () => {
         if (inView && !isLastPage) {
-            // await setIsLoading(true);
             fetchRoleGroup();
-            // await setIsLoading(false);
         }
     }, [inView]);
 
@@ -57,7 +55,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
-       // await setIsLoading(true);
+        await setIsLoading(true);
         let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
         if (res.status === 200 && res.pageInfo) {
             let { list, total, isLastPage, hasNextPage } = res.pageInfo;
@@ -213,16 +211,17 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
-            {
-                isLoading ?
-                    <Loading />
-                    :
-                    <Box>
-                        {/* 메뉴상단 */}
-                        <CardMenuBar title={'권한그룹'} count={totalCount} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
-                        {/* 검색바 */}
-                        <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
-                        {/* 목록 */}
+
+            <Box>
+                {/* 메뉴상단 */}
+                <CardMenuBar title={'권한그룹'} count={totalCount} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
+                {/* 검색바 */}
+                <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
+                {/* 목록 */}
+                {
+                    isLoading ?
+                        <Loading />
+                        :
                         <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
                             <Box minH={'510px'}>
                                 <GroupCardList
@@ -235,37 +234,37 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                             </Box>
                             <Box ref={infiniteScrollRef} h={'1px'} />
                         </Box>
+                }
+                {/* 권한그룹 추가 모달 */}
+                {isAddOpen &&
+                    <ModalLayout title={'권한그룹추가'} buttonYn={true} onClose={changeIsOpen} size={'lg'} btnText={'등록'} handleCheck={handleAddBtn}>
+                        <GroupAddBox corps={corps} roleGrp={roleGrp} setRoleGrp={setRoleGrp} />
+                    </ModalLayout>
+                }
 
-                        {/* 권한그룹 추가 모달 */}
-                        {isAddOpen &&
-                            <ModalLayout title={'권한그룹추가'} buttonYn={true} onClose={changeIsOpen} size={'lg'} btnText={'등록'} handleCheck={handleAddBtn}>
-                                <GroupAddBox corps={corps} roleGrp={roleGrp} setRoleGrp={setRoleGrp} />
-                            </ModalLayout>
-                        }
+                {/* 삭제 확인 모달 */}
+                {isDelOpen ?
+                    <DeleteModal
+                        isOpen={() => setIsDelOpen(true)}
+                        onClose={() => setIsDelOpen(false)}
+                        handleCheck={fetchRoleGrpDelete}
+                    />
+                    : ''
+                }
 
-                        {/* 삭제 확인 모달 */}
-                        {isDelOpen ?
-                            <DeleteModal
-                                isOpen={() => setIsDelOpen(true)}
-                                onClose={() => setIsDelOpen(false)}
-                                handleCheck={fetchRoleGrpDelete}
-                            />
-                            : ''
-                        }
+                {/* 체크박스 컴포넌트 */}
+                {isDrawer &&
+                    <BottomDrawer
+                        cnt={checkedList.length}
+                        handler1={() => fetchRoleGrpModufy(true)}
+                        handler2={() => fetchRoleGrpModufy(false)}
+                        onDelete={() => setIsDelOpen(true)}
+                        isDrawerClose={() => setCheckedList([])}
+                        type={1}
+                    />
+                }
+            </Box>
 
-                        {/* 체크박스 컴포넌트 */}
-                        {isDrawer &&
-                            <BottomDrawer
-                                cnt={checkedList.length}
-                                handler1={() => fetchRoleGrpModufy(true)}
-                                handler2={() => fetchRoleGrpModufy(false)}
-                                onDelete={() => setIsDelOpen(true)}
-                                isDrawerClose={() => setCheckedList([])}
-                                type={1}
-                            />
-                        }
-                    </Box>
-            }
 
 
         </Box>

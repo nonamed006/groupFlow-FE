@@ -4,7 +4,7 @@ import { MoonLoader } from 'react-spinners';
 function Loading() {
     return (
         <Box
-            bg={'rgba(0,0,0,0.1)'}
+            // bg={'rgba(0,0,0,0.1)'}
             position={'fixed'}
             overflow={'hidden'}
             w={'100%'}
