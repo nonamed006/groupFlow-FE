@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
-import { ClipLoader } from 'react-spinners';
+import { MoonLoader } from 'react-spinners';
 function Loading() {
     return (
         <Box
@@ -17,19 +17,15 @@ function Loading() {
             alignItems={'center'}
             justifyContent={'center'}
         >
-        <Box position={'absolute'}>
-            <ClipLoader
-                color="#7551FF"
-                size={50}
-                w={'100%'}
-                h={'100%'}
-            />
+            <Box position={'absolute'}>
+                <MoonLoader
+                    color="#7551FF"
+                    size={50}
+                    w={'100%'}
+                    h={'100%'}
+                />
+            </Box>
         </Box>
-            
-
-
-        </Box>
-
     );
 };
 export default Loading;

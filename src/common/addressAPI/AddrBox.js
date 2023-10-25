@@ -40,6 +40,9 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       <GridItem colStart={5} colEnd={10} >
         {/* 우편번호 찾기 부분 ! */}
         <Button
+          bg={'#E2E8F0'}
+          borderRadius={'10px'}
+          fontWeight={600}
           id="postNumBtn"
           onClick={() => {
             if (editState === "update") {
