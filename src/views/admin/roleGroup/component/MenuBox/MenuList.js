@@ -12,11 +12,10 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit,isL
 
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" px={5} >
-            {
-                isLoading ?
-                    <Loading />
-                    :
-                    roleMenu && <RealGrid org={roleMenu} />
+            {isLoading ?
+                <Loading />
+                :
+                roleMenu && <RealGrid org={roleMenu} />
             }
         </Box>
     );
