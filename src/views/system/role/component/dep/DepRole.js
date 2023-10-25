@@ -10,13 +10,16 @@ const DepRole = () => {
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [rgCd, setRgCd] = useState();
+    const [cdCd, setCoCd] = useState();
+    const [dpCd, setDpCd] = useState();
 
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
-    const [dpCd, setDpCd] = useState();
     const [isReload, setIsReload] = useState(false);
 
     const [pageNum, setPageNum] = useState(1);  // 요청할 페이지 번호
     const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
+
+    const [dpCdList, setDpCdList] = useState([]);
 
     useEffect(() => {
         fetchRoleGroup();
@@ -24,8 +27,8 @@ const DepRole = () => {
     
 
     // 권한그룹 목록 조회
-    const fetchRoleGroup = (clickDpCd) => {
-        let url = `${PORT}/roleDep/${clickDpCd}`
+    const fetchRoleGroup = (clickDpCd, clickCoCd) => {
+        let url = `${PORT}/roleDep/${clickCoCd}/${clickDpCd}`
 
         // URL 파라미터 생성
         const params = new URLSearchParams();
@@ -65,9 +68,16 @@ const DepRole = () => {
         // 검색 내용에 따른 목록 조회
         if (dpCd !== undefined && dpCd !== 'undefined') {
             fetchRoleGroup(dpCd); // 권한그룹 목록 조회
+            initPageInfo();
         } else {
             alert('부서를 선택하세요');
         }
+    };
+
+    // 검색 버튼 클릭 시
+    const initPageInfo = () => { // 초기화 
+        setPageNum(1);
+        setTotalCount(0);
     };
 
     return (
@@ -82,8 +92,10 @@ const DepRole = () => {
             <GridItem colSpan={2} rowSpan={5}>
                 <DepList 
                     setDpCd={setDpCd}
+                    setCoCd={setCoCd}
                     fetchRoleGroup={fetchRoleGroup}
                     setIsReload={setIsReload}
+                    setDpCdList={setDpCdList}
                 />
             </GridItem>
             {/* 권한그룹 목록 */}
@@ -96,6 +108,11 @@ const DepRole = () => {
                     roleGrpList={roleGrpList}
                     totalCount={totalCount}
                     handleSearchBtn={handleSearchBtn}
+                    checkedList={checkedList}
+                    setCheckedList={setCheckedList}
+                    dpCdList={dpCdList}
+                    setIsReload={setIsReload}
+                    isReload={isReload}
                 />
             </GridItem>
             {/* 메뉴 목록 */}

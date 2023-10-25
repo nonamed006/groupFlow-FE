@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { PORT } from 'set';
 import DepRealGrid from '../DepRealGrid';
 
-const GridList = ({setDpCd, fetchRoleGroup, setTotalCount}) => {
+const GridList = ({setDpCd, fetchRoleGroup, setCoCd, setTotalCount, setDpCdList}) => {
     const [org, setOrg] = useState([]);
     const [checkedMenuCd, setCheckedMenuCd] = useState([]); // 선택된 메뉴 코드 리스트
 
@@ -22,8 +22,16 @@ const GridList = ({setDpCd, fetchRoleGroup, setTotalCount}) => {
 
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="6">
-            <DepRealGrid org={org} setCheckedMenuCd={setCheckedMenuCd} setDpCd={setDpCd} fetchRoleGroup={fetchRoleGroup}/>
+            <DepRealGrid 
+            org={org} 
+            setCheckedMenuCd={setCheckedMenuCd} 
+            setDpCd={setDpCd} 
+            setCoCd={setCoCd} 
+            fetchRoleGroup={fetchRoleGroup} 
+            setDpCdList={setDpCdList}
+            />
         </Box>
+
     );
 };
 
