@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+//import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setMenuDetail }) => {
-
-
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
@@ -14,9 +12,19 @@ const RealGrid = ({ org, setMenuDetail }) => {
   ];
 
   var columns = [
-    { fieldName: "menuNm", name: "menuNm", width: 300, header: { text: "menuNm" } },
+    {
+      fieldName: "menuNm",
+      name: "menuNm",
+      width: 300,
+      header: { text: "menuNm" },
+    },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
-    { fieldName: "menuCd", name: "menuCd", width: 70, header: { text: "menuCd" } },
+    {
+      fieldName: "menuCd",
+      name: "menuCd",
+      width: 70,
+      header: { text: "menuCd" },
+    },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
   ];
 
@@ -70,7 +78,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         let menuCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-        setMenuDetail(menuCd)
+        setMenuDetail(menuCd);
         // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
         // if (depth !== "0") {
         //   let dpCdData =

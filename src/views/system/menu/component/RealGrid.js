@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+//import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setMenuDetail }) => {
   const realgridElement = useRef(null);

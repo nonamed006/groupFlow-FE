@@ -123,7 +123,12 @@ const DepBasic = (props) => {
               <ModalHeader>상위부서</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <DepUpperCd value={org} data={props} getValue={getValue} />
+                <DepUpperCd
+                  value={org}
+                  data={props}
+                  getValue={getValue}
+                  setAlertInfo={props.setAlertInfo}
+                />
               </ModalBody>
 
               <ModalFooter>
