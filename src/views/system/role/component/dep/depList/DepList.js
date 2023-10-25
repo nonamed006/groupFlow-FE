@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import ListCardTable from 'views/admin/corporation/component/ListCard/ListCardTable';
 import GridList from './GridList';
 
-const DepList = ({setDpCd, fetchRoleGroup}) => {
+const DepList = ({setDpCd, setCoCd, fetchRoleGroup, setDpCdList}) => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
     return (
@@ -20,7 +20,7 @@ const DepList = ({setDpCd, fetchRoleGroup}) => {
             {/* 목록 테이블 */}
             <Box w={'100%'} display={'inline-block'} height={'550px'} >
                 <Box minH={'560px'} >
-                    <GridList setDpCd={setDpCd} fetchRoleGroup={fetchRoleGroup} setTotalCount={setTotalCount}/>
+                    <GridList setDpCd={setDpCd} setCoCd={setCoCd} fetchRoleGroup={fetchRoleGroup} setTotalCount={setTotalCount} setDpCdList={setDpCdList}/>
                 </Box>
             </Box>
 
