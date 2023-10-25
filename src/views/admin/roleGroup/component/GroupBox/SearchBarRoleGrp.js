@@ -8,7 +8,7 @@ const SearchBarRoleGrp = ({ setSearchCorp, setKeyword, handleSearchBtn, corps })
         <Box >
             <Select
                 name='coCd'
-                borderRadius="14px"
+                borderRadius="10px"
                 defaultValue={''}
                 onChange={(e) => setSearchCorp(e.target.value)}  
                 mb={1}>

@@ -8,30 +8,44 @@ import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';
 import { PORT } from 'set';
 
-const DepGrpBox = ({setRgCd, rgCd, dpCd, setKeyword, roleGrpList, totalCount, handleSearchBtn}) => {
+const DepGrpBox = ({setRgCd, rgCd, dpCd, setKeyword, roleGrpList, totalCount, handleSearchBtn, checkedList, setCheckedList, dpCdList, isReload, setIsReload}) => {
     const [infiniteScrollRef, inView] = useInView();
 
     const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
-    const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
+
+    useEffect(async ()=>{
+        roleGrpList.map(async (roleGrp)=>{
+            if(roleGrp.state === 1) {
+                await checkedList.includes(roleGrp.rgCd);
+                await checkedItemHandler(roleGrp.rgCd, true);
+            }
+        });
+    },[roleGrpList]);
 
 
     // 권한-회사 맵핑 수정 시
     const fetchCheckedRoleGrp = () => {
-        let url = `${PORT}/roleDep/${dpCd}`
+        let url = `${PORT}/roleDep`
+        let arr = [];
+        let list = new Object();
+        list.rgCdList = checkedList;
+        list.dpCdList = dpCdList;
 
+        arr.push(list);
         fetch(url, {
-            method: "PUT",
+            method: "post",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(checkedList)
+            body: JSON.stringify(list)
         })
             .then((res) => res.json())
             .then((res) => {
                 if (res.result === 'success')
                     checkedList.length === 0 && isDrawerClose();
                     alert('수정되었습니다');
+                    setIsReload(!isReload);
             });
     };
 
@@ -53,6 +67,15 @@ const DepGrpBox = ({setRgCd, rgCd, dpCd, setKeyword, roleGrpList, totalCount, ha
         setIsChecked(!isChecked);
         checkedItemHandler(value, e.target.checked);
     };
+
+    // drawer open
+    useEffect(() => {
+        if(checkedList.length > 0){
+            isDrawerOpen();
+        }else{
+            isDrawerClose();
+        }
+    }, [checkedList]);
 
     return (
         <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" w={'450px'}>
@@ -82,7 +105,7 @@ const DepGrpBox = ({setRgCd, rgCd, dpCd, setKeyword, roleGrpList, totalCount, ha
                 </Box>
             }
             {isDrawer &&
-                <BottomDrawer cnt={checkedList.length} handler={fetchCheckedRoleGrp} isDrawerClose={()=>setCheckedList([])} type={4} />
+                <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={()=>setCheckedList([])} type={4} />
             }
         </Box>
     );

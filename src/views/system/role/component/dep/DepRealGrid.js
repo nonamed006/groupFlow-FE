@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import { Box } from "@chakra-ui/react";
 
-const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, fetchRoleGroup}) => {
+const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdList, fetchRoleGroup}) => {
 
   const realgridElement = useRef(null);
 
@@ -54,6 +54,8 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, fetchRoleGroup}) =
     treeView.columnByName("code").visible = false;
     treeView.columnByName("type").visible = false;
 
+    treeView.columnByName("name").editable = false;
+
     // //옵션설정
     treeView.checkBar.fieldName = "state"; //state 필드와 체크박스 체크 여부 연결
 
@@ -84,11 +86,30 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, fetchRoleGroup}) =
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
-        let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
-        fetchRoleGroup(cd);
-        setDpCd(cd);
+        var provider = grid.getDataSource();
+        let dpCd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
+        let coCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2].split("/")[0];
+        let arr = [];
+
+        var dataRow = grid.getDataRow(clickData.itemIndex);
+        var desRows = provider.getDescendants(dataRow);
+        if(desRows != null){
+          desRows.push(dataRow);
+          arr = desRows;
+        }else{
+          arr.push(dataRow);
+        }
+        const dpCdArr = arr.map((item)=>{
+          return provider.getValues(item)[0]
+        });
+
+        //클릭시 fetch
+        fetchRoleGroup(dpCd, coCd);
+        setDpCdList(dpCdArr);
+        setDpCd(dpCd);
+        setCoCd(coCd);
       }
-    };
+    }; 
 
     //자식노드들이 모두 체크되었을때 부모노드도 체크되게
     treeView.onItemChecked = function (grid, itemIndex, checked) {
@@ -117,7 +138,7 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, fetchRoleGroup}) =
     var provider = grid.getDataSource();
 
     // 형제 노드 체크 후 부모 노드 체크
-    checkSiblingNode(grid, dataRow, checked);
+    //checkSiblingNode(grid, dataRow, checked);
 
     // 자식 노드 체크
     var desRows = provider.getDescendants(dataRow);

@@ -2,14 +2,17 @@ import { PORT } from "set";
 import corp from "./corp/CorpApi";
 import roleGrp from "./roleGrp/RoleGrpApi";
 import roleMenu from "./roleMenu/RoleMenuApi";
+import roleCorp from "./roleCorp/RoleCorpApi";
+import depGrp from "./depGrp/DepGrpApi";
 import { getCookie } from "common/common";
+import roleEmp from "./roleEmp/RoleEmpApi";
 
 const header = {
     'Content-Type': "application/json; charset=utf-8",
     'Authorization': getCookie("Authorization")
 }
 
-export const getPromise = async ({url, method, body}) => {
+export const getPromise = async ({url, method, headers, body}) => {
     return await fetch(`${PORT}/${url}`, { method: method, body: body && body, headers: header, credentials: 'include'}) 
     .then((response) => response.json())
     .then((responseJson) => responseJson);
@@ -18,7 +21,10 @@ export const getPromise = async ({url, method, body}) => {
 const api ={
     corp,
     roleGrp,
-    roleMenu
+    roleMenu,
+    roleCorp,
+    depGrp,
+    roleEmp,
 };
 
 export default api;

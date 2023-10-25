@@ -42,7 +42,6 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo
   // 회사 저장
   const fetchCorpSave = async () => {
     let res = await api.corp.postCorpInfo(corp);
-    console.log(res);
     if(res.status === 200){
        setAlertInfo({
           isOpen : true,
@@ -109,14 +108,12 @@ const InfoBox = ({ coCd, setCoCd, setChangeYn, sortValue, changeYn, setAlertInfo
   const handleDeleteBtn = () => {
     coCd !== "undefined" && coCd !== undefined
       ? fetchCorpDelete(coCd) 
-      :
-      setAlertInfo({
+      : setAlertInfo({
         isOpen : true,
         status : 'warning',
         title : '선택된 회사가 없습니다.',
         width : 'fit-content'
       });
-      // : alert('삭제할 회사가 존재하지않습니다.');
     onClose();
   };
 

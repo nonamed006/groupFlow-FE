@@ -1,4 +1,4 @@
-import { Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { Input, FormControl, FormLabel, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -15,10 +15,12 @@ const FormInput = ({
   inputType,
   placeholder,
 }) => {
+  const textColor = useColorModeValue("secondaryGray.900", "white");
+
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
       {title && (
-        <FormLabel fontSize="md" fontWeight="600" w={"50%"}>
+        <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"} lineHeight={"40px"}>
           {title}
         </FormLabel>
       )}

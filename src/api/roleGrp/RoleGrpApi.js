@@ -3,10 +3,10 @@ import { getPromise } from "api/Fetch";
 const roleGrp = {
 
    /**
-    * 
-    * @param {string} searchCorp  검색할 회사
-    * @param {string} keyword 권한그룹명 검색어
-    * @param {number} pageNum 
+    * 권한그룹 목록 조회
+    * @param {*} searchCorp  검색할 회사
+    * @param {*} keyword 권한그룹명 검색어
+    * @param {*} pageNum 
     * @returns 
     */
     getRoleGrpList: (searchCorp, keyword, pageNum) => {
@@ -23,7 +23,7 @@ const roleGrp = {
     },
 
  /**
-  * 권한그룹 목록 조회
+  * 권한그룹 등록
   * @param {*} roleGrp 
   * @returns 
   */
@@ -31,9 +31,6 @@ const roleGrp = {
         const promise = getPromise({
             url: `roleGrp`,
             method: 'POST',
-            header: {
-                "Content-Type": 'application/json'
-            },
             body: JSON.stringify(roleGrp)
         });
         return promise.then((responseJson) => responseJson);
@@ -48,9 +45,6 @@ const roleGrp = {
         const promise = getPromise({
             url: `roleGrp/useYn`,
             method: 'put',
-            header: {
-                "Content-Type": 'application/json'
-            },
             body: JSON.stringify(roleGrpDto)
         });
         return promise.then((responseJson) => responseJson);
@@ -64,10 +58,7 @@ const roleGrp = {
     deleteRoleGrp : (roleGrpList)=> {
         const promise = getPromise({
             url: `roleGrp/delYn`,
-            method: 'put',
-            header: {
-                "Content-Type": 'application/json'
-            },
+            method: 'PUT',
             body: JSON.stringify(roleGrpList)
         });
         return promise.then((responseJson) => responseJson);

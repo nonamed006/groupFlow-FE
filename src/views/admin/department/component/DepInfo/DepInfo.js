@@ -190,6 +190,7 @@ const DepInfo = ({
                   depDto={depDto}
                   editState={editState}
                   change={change}
+                  setAlertInfo={setAlertInfo}
                 />
               </Box>
             </TabPanel>

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
 function DepUpperCd(props) {
   const realgridElement = useRef(null);
@@ -13,7 +12,7 @@ function DepUpperCd(props) {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 150, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 300, header: { text: "명칭" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
@@ -47,10 +46,10 @@ function DepUpperCd(props) {
     //해당컬럼 표시X
     treeView.columnByName("path").visible = false;
     treeView.columnByName("depth").visible = false;
+    treeView.columnByName("code").visible = false;
 
     //해당컬럼 tn
     treeView.columnByName("name").editable = false;
-    treeView.columnByName("code").editable = false;
 
     treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
     treeView.treeOptions.iconImages = [
@@ -75,6 +74,12 @@ function DepUpperCd(props) {
       if (props.data.depDto.dpCd == "") {
       } else {
         if (dataArray.includes(props.data.depDto.dpCd)) {
+          //setAlertInfo({
+          //  isOpen: true,
+          //  title: response.resultMsg,
+          //  status: "success",
+          //  width: "fit-content",
+          //});
           alert("하위부서는 선택할 수 없습니다.");
           return 0;
         }

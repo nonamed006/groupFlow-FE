@@ -4,7 +4,6 @@ import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
 
 const RealGrid = ({ org, type, setCheckedMenuCd }) => {
-
   const realgridElement = useRef(null);
 
   var fields = [

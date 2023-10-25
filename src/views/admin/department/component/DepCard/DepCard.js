@@ -4,6 +4,7 @@ import {
   Text,
   useColorModeValue,
   Button,
+  Spacer,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import { useEffect } from "react";
@@ -15,24 +16,18 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
   useEffect(() => {}, []);
 
   return (
-    <div>
-      <Box borderRadius="lg" bg="white" h="700px" p="6">
-        <Flex
-          align={{ sm: "flex-start", lg: "center" }}
-          justify="space-between"
-          w="100%"
-          px="22px"
-          pb="20px"
-          mb="10px"
-        >
+    <>
+      <Box borderRadius="lg" bg="white" h="700px" p="6" w={"450px"}>
+        <Box display="flex" bg="white" mb={4}>
           <Text
             color={textColor}
             fontSize="22px"
             fontWeight="700"
-            lineHeight="100%"
+            lineHeight="40px"
           >
             조직도
           </Text>
+          <Spacer />
           <Button
             variant="action"
             onClick={() => {
@@ -43,15 +38,19 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
           >
             추가
           </Button>
-        </Flex>
-        <RealGrid
-          org={org}
-          setDpCd={setDpCd}
-          setTabStatus={setTabStatus}
-          setEditState={setEditState}
-        ></RealGrid>
+        </Box>
+        <Box w={"100%"} display={"inline-block"} height={"502px"}>
+          <Box w="518px" minH={"560px"} display={"flex"} px="6" h="fit-content">
+            <RealGrid
+              org={org}
+              setDpCd={setDpCd}
+              setTabStatus={setTabStatus}
+              setEditState={setEditState}
+            ></RealGrid>
+          </Box>
+        </Box>
       </Box>
-    </div>
+    </>
   );
 };
 
