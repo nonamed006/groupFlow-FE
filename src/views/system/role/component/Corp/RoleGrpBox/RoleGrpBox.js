@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useInView } from 'react-intersection-observer';
 
@@ -157,40 +157,58 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                 code={coCd}
             />
             {/* 목록 */}
-            {
-                isLoading ?
-                    <Loading />
-                    :
-                    <>
-                        {roleGrpList.length > 0 &&
-                            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
-                                <Box minH={'510px'}>
-                                    <GroupCardList
-                                        checkHandler={checkHandler}
-                                        checkedList={checkedList}
-                                        rgCd={rgCd}
-                                        roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
-                                        setRgCd={setRgCd}   // 권한그룹 선택
-                                        code={coCd}
-                                        total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
-                                    />
-                                </Box>
-                                <Box ref={infiniteScrollRef} h={'1px'} />
-                            </Box>
-                        }
-                        {isDrawer &&
-                            <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
-                        }
-                    </>
-            }
 
-            {alertInfo.isOpen &&
-                <CommonAlert
-                    alertInfo={alertInfo}
-                    setAlertInfo={setAlertInfo}
-                />
+
+
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
+                <Box minH={'510px'}>
+                    {
+                        roleGrpList.length > 0 ?
+
+                            <GroupCardList
+                                checkHandler={checkHandler}
+                                checkedList={checkedList}
+                                rgCd={rgCd}
+                                roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
+                                setRgCd={setRgCd}   // 권한그룹 선택
+                                code={coCd}
+                                total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
+                            />
+                            :
+                            <Text
+                                pt={200}
+                                align={'center'}
+                                fontWeight={600}
+                                color={'lightgray'}
+                                fontSize={'18px'}
+                            >
+                                검색된 데이터가 없습니다.
+                            </Text>
+                    }
+
+                </Box>
+                {
+                    isLoading ?
+                        <Loading />
+                        :
+                        <Box ref={infiniteScrollRef} h={'1px'} />
+                }
+            </Box>
+
+            {isDrawer &&
+                <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
             }
-        </Box>
+ 
+            
+
+{
+    alertInfo.isOpen &&
+    <CommonAlert
+        alertInfo={alertInfo}
+        setAlertInfo={setAlertInfo}
+    />
+}
+        </Box >
 
 
     );

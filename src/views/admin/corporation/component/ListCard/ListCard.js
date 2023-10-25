@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, Text } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import ListCardTable from "./ListCardTable";
 import { useState, useEffect } from "react";
@@ -72,16 +72,31 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
         buttonType={true}
         btnText={'추가'} />
       {/* 목록 테이블 */}
-      {isLoading ?
-        <Loading />
-        :
-        <Box w={'100%'} display={'inline-block'} overflowX={"hidden"} overflowY={"auto"} h={'550px'} >
-          <Box minH={'560px'}>
-            <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
-          </Box>
-          <Box ref={infiniteScrollRef} h={'1px'} />
+      <Box w={'100%'} display={'inline-block'} overflowX={"hidden"} overflowY={"auto"} h={'550px'} >
+        <Box minH={'560px'}>
+          {
+            corpList.length > 0 ? 
+              <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
+            :
+            <Text
+            pt={200}
+            align={'center'}
+            fontWeight={600}
+            color={'lightgray'}
+            fontSize={'18px'}
+        >
+            검색된 데이터가 없습니다.
+        </Text>
+          }
+          
         </Box>
-      }
+        {isLoading ?
+          <Loading />
+          :
+          <Box ref={infiniteScrollRef} h={'1px'} />
+        }
+      </Box>
+
 
 
     </Box>

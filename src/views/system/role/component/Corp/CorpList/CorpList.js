@@ -72,17 +72,19 @@ const CorpList = ({ setCoCd, coCd }) => {
 
 
       {/* 목록 테이블 */}
-      {
-        isLoading ?
-          <Loading />
-          :
-          <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
-            <Box minH={'560px'} w={'100%'}  >
-              <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
-            </Box>
+
+      <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
+        <Box minH={'560px'} w={'100%'}  >
+          <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
+        </Box>
+        {
+          isLoading ?
+            <Loading />
+            :
             <Box ref={infiniteScrollRef} h={'1px'} />
-          </Box>
-      }
+        }
+      </Box>
+
     </Box>
   );
 };

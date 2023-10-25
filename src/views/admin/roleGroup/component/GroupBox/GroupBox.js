@@ -55,7 +55,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
-        await setIsLoading(true);
+        setIsLoading(true);
         let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
         if (res.status === 200 && res.pageInfo) {
             let { list, total, isLastPage, hasNextPage } = res.pageInfo;
@@ -70,7 +70,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
             setTotalCount(0);
             setIsLastPage(true);
         }
-        await setIsLoading(false);
+        setIsLoading(false);
         setRgCd(undefined);
     };
 
@@ -214,27 +214,29 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
             <Box>
                 {/* 메뉴상단 */}
-                <CardMenuBar title={'권한그룹'} count={totalCount} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
+                <CardMenuBar title={'권한그룹'} count={totalCount?totalCount:0} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
                 {/* 검색바 */}
                 <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
                 {/* 목록 */}
-                {
-                    isLoading ?
+
+                <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
+                    <Box minH={'510px'}>
+                        <GroupCardList
+                            checkHandler={checkHandler}
+                            checkedList={checkedList}
+                            rgCd={rgCd}
+                            roleGrpList={roleGrpList}
+                            setRgCd={setRgCd}
+                        />
+                    </Box>
+                    {isLoading ?
                         <Loading />
                         :
-                        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
-                            <Box minH={'510px'}>
-                                <GroupCardList
-                                    checkHandler={checkHandler}
-                                    checkedList={checkedList}
-                                    rgCd={rgCd}
-                                    roleGrpList={roleGrpList}
-                                    setRgCd={setRgCd}
-                                />
-                            </Box>
-                            <Box ref={infiniteScrollRef} h={'1px'} />
-                        </Box>
-                }
+                        <Box ref={infiniteScrollRef} h={'1px'} />
+                    }
+
+                </Box>
+
                 {/* 권한그룹 추가 모달 */}
                 {isAddOpen &&
                     <ModalLayout title={'권한그룹추가'} buttonYn={true} onClose={changeIsOpen} size={'lg'} btnText={'등록'} handleCheck={handleAddBtn}>

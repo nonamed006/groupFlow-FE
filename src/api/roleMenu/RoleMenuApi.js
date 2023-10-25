@@ -89,12 +89,11 @@ const roleMenu = {
      * @returns 
      */
     putRoleMenu: (rgCd, menuCdList)=> {
+        console.log(menuCdList);
+        console.log(rgCd);
         const promise = getPromise({ 
             url: `roleMenu/${rgCd}`, 
             method: "PUT",
-            header: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify(menuCdList)
         });
         return promise.then((responseJson) => responseJson);

@@ -1,13 +1,13 @@
-import { Box } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Box, Text } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 
 import Loading from "common/Loading";
 import RealGrid from "../RealGrid";
 
-const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit,isLoading }) => {
-    useEffect( () => {
+const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit, isLoading }) => {
+    useEffect(() => {
         changeEdit ? setChangeEdit(false)
-        : (rgCd !== undefined && rgCd !== 'undefined') && fetchRoleMenu();
+            : (rgCd !== undefined && rgCd !== 'undefined') && fetchRoleMenu();
     }, [changeEdit]);
 
     return (
@@ -15,7 +15,17 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit,isL
             {isLoading ?
                 <Loading />
                 :
-                roleMenu && <RealGrid org={roleMenu} />
+                roleMenu ?
+                    <RealGrid org={roleMenu} />
+                    :
+                    <Text
+                        pt={200}
+                        align={'center'}
+                        fontWeight={600}
+                        color={'lightgray'}
+                        fontSize={'18px'}
+                    >
+                        검색된 데이터가 없습니다.</Text>
             }
         </Box>
     );

@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import CustomTable from "../tableList/CustomTable";
@@ -41,16 +41,16 @@ const UserBox = ({ rgCd }) => {
     }, [inView]);
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
-    const fetchRoleUserList = async() => {
+    const fetchRoleUserList = async () => {
         await setIsLoading(true);
         let res = await api.roleGrp.getRoleGrpUserList(rgCd, keyword, pageNum);
-        if (res.status === 200 && res.pageInfo ) {
-            let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+        if (res.status === 200 && res.pageInfo) {
+            let { list, total, isLastPage, hasNextPage } = res.pageInfo;
             setUserList(pageNum === 1 ? list : [...userList, ...list]);
             setTotalCount(total);
             setIsLastPage(isLastPage);
             if (hasNextPage)
-                setPageNum((prev)=>prev+1);
+                setPageNum((prev) => prev + 1);
         } else {
             setUserList([]);
             setTotalCount(0);
@@ -72,19 +72,31 @@ const UserBox = ({ rgCd }) => {
             {/* 검색바 */}
             <SearchBar init={rgCd} textLabel={'이름'} setKeyword={setKeyword} handleSearchBtn={initPageInfo} placeholder={'검색어를 입력하세요'} btnText={'검색'} />
             {/* 목록 */}
-            {
-                isLoading ? 
-                <Loading />
-                :
-                <Box overflowY={'auto'} mt={4} height={'550px'} w={'430px'} display={'block'} >
+            <Box overflowY={'auto'} mt={4} height={'550px'} w={'430px'} display={'block'} >
                 <Box minH={'560px'}  >
-                    <CustomTable groupHeader={groupHeader} dataList={userList} />
+                    {
+                        userList.length > 0 ?
+                            <CustomTable groupHeader={groupHeader} dataList={userList} />
+                            :
+                            <Text
+                                pt={200}
+                                align={'center'}
+                                fontWeight={600}
+                                color={'lightgray'}
+                                fontSize={'18px'}
+                            >
+                                검색된 데이터가 없습니다.
+                            </Text>
+                    }
+
                 </Box>
-                <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
+                {
+                    isLoading ?
+                        <Loading />
+                        :
+                        <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
+                }
             </Box>
-            }
-            
-            
         </Box>
 
     );
