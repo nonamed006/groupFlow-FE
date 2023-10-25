@@ -1,11 +1,8 @@
 import { Box, Grid, GridItem, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { React } from "react";
-import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
-import RoleList from "./component/Emp/RoleList";
-import EmpList from "./component/Emp/EmpList";
 import RoleCorp from "./RoleCorp";
 import DepRole from "./component/dep/DepRole";
-
+import RoleEmp from "./RoleEmp";
 
 const Role = () => {
 
@@ -38,24 +35,11 @@ const Role = () => {
                     </Flex>
                 </TabList>
                 <TabPanels>
+                    {/* 권한-사용자기준 */}
                     <TabPanel>
-                        <Grid
-                            h='500px'
-                            templateRows="repeat(11, 1fr)"
-                            templateColumns="repeat(7, 1fr)"
-                            gap={5}
-                        >
-                            <GridItem colSpan={2} rowSpan={5} >
-                                <EmpList/>
-                            </GridItem>
-                            <GridItem colSpan={2} rowSpan={5}>
-                                <RoleList/>
-                            </GridItem>
-                            <GridItem colSpan={3} rowSpan={5} >
-                                <MenuBox/>
-                            </GridItem>
-                        </Grid>
+                        <RoleEmp/>
                     </TabPanel>
+
                     {/* 권한-회사기준 */}
                     <TabPanel>
                        <RoleCorp />

@@ -5,6 +5,7 @@ import roleMenu from "./roleMenu/RoleMenuApi";
 import roleCorp from "./roleCorp/RoleCorpApi";
 import depGrp from "./depGrp/DepGrpApi";
 import { getCookie } from "common/common";
+import roleEmp from "./roleEmp/RoleEmpApi";
 
 const header = {
     'Content-Type': "application/json; charset=utf-8",
@@ -22,7 +23,8 @@ const api ={
     roleGrp,
     roleMenu,
     roleCorp,
-    depGrp
+    depGrp,
+    roleEmp,
 };
 
 export default api;
