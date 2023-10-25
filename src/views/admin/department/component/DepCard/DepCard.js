@@ -16,7 +16,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" h="700px" p="6">
+      <Box borderRadius="lg" bg="white" h="700px" p="5">
         <Flex
           align={{ sm: "flex-start", lg: "center" }}
           justify="space-between"
@@ -44,12 +44,20 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
             추가
           </Button>
         </Flex>
-        <RealGrid
-          org={org}
-          setDpCd={setDpCd}
-          setTabStatus={setTabStatus}
-          setEditState={setEditState}
-        ></RealGrid>
+        <Box
+          borderRadius="lg"
+          h="fit-content"
+          display={"flex"}
+          w={"100%"}
+          marginLeft={"50"}
+        >
+          <RealGrid
+            org={org}
+            setDpCd={setDpCd}
+            setTabStatus={setTabStatus}
+            setEditState={setEditState}
+          ></RealGrid>
+        </Box>
       </Box>
     </div>
   );

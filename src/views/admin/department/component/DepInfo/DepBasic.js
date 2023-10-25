@@ -87,7 +87,12 @@ const DepBasic = (props) => {
       >
         <GridItem colStart={1} colEnd={5} colSpan={5}>
           <FormControl display={"flex"} w={"100%"} isRequired={true}>
-            <FormLabel fontSize="md" fontWeight="600" w={"50%"}>
+            <FormLabel
+              fontSize="md"
+              fontWeight="600"
+              w={"50%"}
+              lineHeight={"40px"}
+            >
               상위부서
             </FormLabel>
             <Input
