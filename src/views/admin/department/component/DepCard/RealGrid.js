@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+import "../../../roleGroup/component/roleMenuRealgrid.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   const realgridElement = useRef(null);
@@ -9,6 +9,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     { fieldName: "name", dataType: "text" },
     { fieldName: "code", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
+    { fieldName: "iconField", dataType: "text" },
   ];
 
   var columns = [
@@ -16,6 +17,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var treeProvider, treeView;
@@ -28,14 +30,11 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setObjectRows({ rows: org }, "rows", "", "");
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "iconField");
     //treeProvider.setObjectRows(org, "path", false, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
-    treeView.header.height = 40;
-    treeView.footer.height = 40;
-    treeView.stateBar.width = 20;
 
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
 
@@ -46,25 +45,11 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     //해당 컬럼 표시X
     treeView.columnByName("path").visible = false;
     treeView.columnByName("depth").visible = false;
-    treeView.columnByName("depth").visible = false;
     treeView.columnByName("code").visible = false;
+    treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
-
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
+    treeView.treeOptions.iconImagesRoot = "/img/";
+    treeView.treeOptions.iconImages = ["corporation.png", "department.png"];
 
     //treeView.orderBy("path", "depth");
     treeView.onCellClicked = function (grid, clickData) {
