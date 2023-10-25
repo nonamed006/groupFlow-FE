@@ -40,19 +40,19 @@ const Test = () => {
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <Grid
-        h="1000px"
+        h={"500px"}
         templateRows="repeat(11, 1fr)"
-        templateColumns="repeat(6, 1fr)"
+        templateColumns="repeat(7, 1fr)"
         gap={5}
       >
-        <GridItem colSpan={6} rowSpan={1}>
+        <GridItem colSpan={7} rowSpan={1}>
           <SearchCardBar
             setSearchText={setSearchText}
             setSelectedCoCd={setSelectedCoCd}
             handleSearchBtn={handleSearchBtn}
           />
         </GridItem>
-        <GridItem colSpan={2} rowSpan={4}>
+        <GridItem colSpan={2} rowSpan={5}>
           <DepCard
             org={org}
             setDpCd={setDpCd}
