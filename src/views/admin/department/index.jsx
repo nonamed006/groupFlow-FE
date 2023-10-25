@@ -52,7 +52,7 @@ const Test = () => {
             handleSearchBtn={handleSearchBtn}
           />
         </GridItem>
-        <GridItem colSpan={2} rowSpan={5}>
+        <GridItem colSpan={2} rowSpan={4}>
           <DepCard
             org={org}
             setDpCd={setDpCd}

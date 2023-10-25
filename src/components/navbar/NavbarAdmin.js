@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
 import { NavLink } from "react-router-dom";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, CopyIcon } from "@chakra-ui/icons";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
@@ -55,7 +55,7 @@ export default function AdminNavbar(props) {
       props.setAlertInfo({
         isOpen: true,
         title: "현재 페이지는 삭제할 수 없습니다.",
-        status: "error",
+        status: "warning",
         width: "fit-content",
       });
       //alert("현재 페이지는 삭제할 수 없습니다.");
@@ -121,7 +121,7 @@ export default function AdminNavbar(props) {
         alignItems={{ xl: "center" }}
         mb={gap}
       >
-        <Box mb={{ sm: "8px", md: "0px" }}>
+        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
@@ -161,45 +161,74 @@ export default function AdminNavbar(props) {
             return (
               <Box
                 display="flex"
-                borderRadius="16px"
+                borderRadius="5px"
                 borderWidth="1.5px"
                 borderStyle="solid"
-                w={130}
+                marginRight={"5px"}
+                borderColor={
+                  props.location.pathname === item.location.pathname
+                    ? "navy.500"
+                    : "gray.500"
+                }
+                color={
+                  props.location.pathname === item.location.pathname
+                    ? "navy.300"
+                    : "gray.500"
+                }
+                backgroundColor={
+                  props.location.pathname === item.location.pathname
+                    ? "white"
+                    : "navy.30"
+                }
+                w={140}
+                height={"35px"}
               >
+                <div
+                  style={{
+                    height: "35px",
+                    lineHeight: "30px",
+                    marginLeft: "5px",
+                  }}
+                >
+                  <CopyIcon></CopyIcon>
+                </div>
+
                 <NavLink to={item?.location?.pathname}>
                   <div
                     style={{
-                      height: "50px",
-                      lineHeight: "40px",
-                      textAlign: "center",
+                      width: "95px",
+                      height: "35px",
+                      lineHeight: "35px",
                     }}
                   >
                     <Text
-                      color={
-                        props.location.pathname === item.location.pathname
-                          ? secondaryText2
-                          : secondaryText
-                      }
                       fontSize="sm"
                       mb="5px"
                       ml="10px"
-                      display={{ base: "none", md: "block" }}
+                      fontWeight={700}
+                      overflow={"hidden"}
+                      whiteSpace={"nowrap"}
+                      textOverflow={"ellipsis"}
                     >
-                      {item.brandText.length > 8
-                        ? item.brandText.slice(0, 8) + "..."
-                        : item.brandText}
+                      {item.brandText}
                     </Text>
                   </div>
                 </NavLink>
                 <Spacer />
                 <div
                   style={{
-                    height: "40px",
-                    lineHeight: "37px",
+                    height: "35px",
+                    lineHeight: "30px",
+                    marginRight: "8px",
                     textAlign: "center",
+                    cursor: "pointer",
                   }}
                 >
-                  <CloseIcon w={3} h={3} onClick={pageDelete(item, index)} />
+                  <CloseIcon
+                    width={"10px"}
+                    height={"10px"}
+                    onClick={pageDelete(item, index)}
+                  />
                 </div>
               </Box>
             );

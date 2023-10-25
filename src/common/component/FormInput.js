@@ -18,7 +18,7 @@ const FormInput = ({
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
       {title && (
-        <FormLabel fontSize="md" fontWeight="600" w={"50%"}>
+        <FormLabel fontSize="md" fontWeight="600" w={"50%"} lineHeight={"40px"}>
           {title}
         </FormLabel>
       )}
