@@ -31,7 +31,7 @@ const HomePage = () => {
              w={'100%'}
              />
              {/* <Box w={'10px'}>
-                 <Image 
+                 <Image  
              size={'3px'}
 
              src={searchIncon} />
