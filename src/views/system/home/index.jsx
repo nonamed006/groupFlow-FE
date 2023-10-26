@@ -31,7 +31,6 @@ const HomePage = () => {
                     opacity={'80%'}
                 ></Box>
             </Box>
-
             {/* 검색창 */}
             <Box
                 position={'absolute'}
