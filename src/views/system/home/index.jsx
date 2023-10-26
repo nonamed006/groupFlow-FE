@@ -41,7 +41,6 @@ const HomePage = () => {
                     opacity={'0.8'}
                 ></Box>
             </Box>
-
             {/* 검색창 */}
             <SearchBox />
         </Box>

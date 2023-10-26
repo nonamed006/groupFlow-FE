@@ -100,7 +100,7 @@ const EmpCard = (props) => {
                 }}
               >
                 <Td
-                  borderColor="gray.400"
+                  borderColor="gray.300"
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
                 >
@@ -114,7 +114,7 @@ const EmpCard = (props) => {
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.400"
+                  borderColor="gray.300"
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">
@@ -125,7 +125,7 @@ const EmpCard = (props) => {
                 <Td
                   fontSize={{ sm: "14px" }}
                   minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.400"
+                  borderColor="gray.300"
                 >
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="600">

@@ -1,9 +1,10 @@
-import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon, Flex, Button, useColorModeValue, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useNumberInput, Select } from '@chakra-ui/react';
+import { Grid, Input, GridItem, Text, RadioGroup, HStack, Stack, Radio, Box, Icon, InputGroup, InputLeftAddon, Flex, Button, useColorModeValue, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useNumberInput, Select, Modal, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, ModalContent, FormControl, FormLabel } from '@chakra-ui/react';
 import { React, useState, useEffect } from "react";
 import { MdHome } from 'react-icons/md';
-import { AttachmentIcon } from '@chakra-ui/icons';
+import { AttachmentIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { PORT } from 'set';
+import RealGrid from '../RealGrid';
 
 const InputGrid = ({title, menuInfo, setMenuInfo}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -81,13 +82,14 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
 
   const getCategory = (cd) => {
     const resultTag = null;
-    fetch(`${PORT}/menu/category-${cd}`, {method: 'GET'})
+    fetch(`${PORT}/menu/`, {method: 'GET'})//category-${cd}
       .then((response) => response.json())
       .then((responseJson) => {
         setCategory(responseJson.data);
       })
     return resultTag;
   }
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(()=> {
     setMenuInputData(menuInfo);
@@ -123,19 +125,64 @@ const InputGrid = ({title, menuInfo, setMenuInfo}) => {
         templateRows="repeat(4, 1fr)"
         gap={2}
       >
-        <GridItem colSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
-            상위메뉴
-          </Text>
-        </GridItem>
         <GridItem colSpan={3}>
-            <Select id='upperCd' name='upperCd' size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
+            {/* <Select id='upperCd' name='upperCd' size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
               {
                 category.map((ctgr, key) => {
                   return <option key={key} value={ctgr.menuCd}>{ctgr.menuNm}</option>
                 })
               }
-            </Select>
+            </Select> */}
+            <FormControl display={"flex"} w={"100%"} isRequired={true}>
+              <FormLabel
+                fontSize="md"
+                fontWeight="600"
+                w={"50%"}
+                lineHeight={"40px"}
+              >
+                상위부서
+              </FormLabel>
+              <Input
+                w={"100%"}
+                fontSize={"14px"}
+                borderRadius="5px"
+                name="upperCd"
+                value={menuInputData?.upperCd}
+                key={menuInputData?.upperCd}
+                readOnly
+              />
+            </FormControl>
+          </GridItem>
+          <GridItem colSpan={1}>
+            <Button
+              onClick={() => {
+                // if (props.editState === "update") {
+                //   getCategory();
+                //   onOpen();
+                // }
+                getCategory();
+                onOpen();
+              }}
+            >
+              <DragHandleIcon />
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>상위메뉴</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <RealGrid org={category} setMenuDetail={(cd) => setValue('upperCd', cd)}/>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} >
+                    선택
+                  </Button>
+                  <Button onClick={onClose}>취소</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
             {/* <Input id="upperCd" name="upperCd"  size="md" boarder="1" borderRadius="14px" />
             {/* <input list='data' type='text'/> 안되겠다
             <datalist id='data'>
