@@ -1,4 +1,4 @@
-import { Box, Button, Select, Input, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import React from "react";
 import SearchBar from "common/component/SearchBar";
 const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {

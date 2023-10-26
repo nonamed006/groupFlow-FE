@@ -26,9 +26,6 @@ const corp = {
         const promise = getPromise({
             url: `corp`,
             method: 'POST',
-            header: {
-                "Content-Type": 'application/json'
-            },
             body: JSON.stringify(corpDto)
         });
         return promise.then((responseJson) => responseJson);
@@ -43,9 +40,6 @@ const corp = {
         const promise = getPromise({
             url: `corp`,
             method: 'PUT',
-            header: {
-                "Content-Type": 'application/json'
-            },
             body: JSON.stringify(corpDto)
         });
         return promise.then((responseJson) => responseJson);

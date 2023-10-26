@@ -8,6 +8,8 @@ import GroupCard from "./GroupCard";
 const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, total, coCd }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
+
+    useEffect(()=>{},[roleGrpList])
     return (
         <Box
             overflowY={"auto"}

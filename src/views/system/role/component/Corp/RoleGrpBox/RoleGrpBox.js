@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useInView } from 'react-intersection-observer';
 
@@ -10,6 +10,7 @@ import BottomDrawer from "common/component/BottomDrawer";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import api from "api/Fetch";
 import CommonAlert from "common/component/CommonAlert";
+import Loading from "common/Loading";
 
 const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -27,10 +28,12 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
 
-    const [alertInfo, setAlertInfo] = useState({
-		isOpen: false
-	});
-    
+    // 공통 alert
+    const [alertInfo, setAlertInfo] = useState({ isOpen: false });
+
+    // 로딩
+    const [isLoading, setIsLoading] = useState();
+
     useEffect(() => {
         isDrawerClose();
         initPageInfo(); // 권한그룹 목록 조회
@@ -38,9 +41,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
 
     useEffect(async () => {
         if (inView && !isLastPage) {
-            // await setIsLoading(true);
             fetchRoleGroup();
-            // await setIsLoading(false);
         }
     }, [inView]);
 
@@ -50,14 +51,15 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
 
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
+        await setIsLoading(true);
         let res = await api.roleCorp.getRoleGrpList(coCd, keyword, pageNum);
-        if (res.status === 200 && res.pageInfo ) {
-            let { list, total, isLastPage, hasNextPage } =  res.pageInfo;
+        if (res.status === 200 && res.pageInfo) {
+            let { list, total, isLastPage, hasNextPage } = res.pageInfo;
             setRoleGrpList(pageNum === 1 ? list : [...roleGrpList, ...list]);
             setTotalCount(total);
             setIsLastPage(isLastPage);
             if (hasNextPage)
-                setPageNum((prev)=>prev+1);
+                setPageNum((prev) => prev + 1);
         } else {
             setRoleGrpList([]);
             setIsLastPage(true);
@@ -65,6 +67,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
         }
         setCheckedList([]);
         setRgCd(undefined);
+        await setIsLoading(false);
     };
 
     useEffect(async () => {
@@ -154,32 +157,58 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                 code={coCd}
             />
             {/* 목록 */}
-            {roleGrpList.length > 0 &&
-                <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
-                    <Box minH={'510px'}>
-                        <GroupCardList
-                            checkHandler={checkHandler}
-                            checkedList={checkedList}
-                            rgCd={rgCd}
-                            roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
-                            setRgCd={setRgCd}   // 권한그룹 선택
-                            code={coCd}
-                            total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
-                        />
-                    </Box>
-                    <Box ref={infiniteScrollRef} h={'1px'} />
+
+
+
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
+                <Box minH={'510px'}>
+                    {
+                        roleGrpList.length > 0 ?
+
+                            <GroupCardList
+                                checkHandler={checkHandler}
+                                checkedList={checkedList}
+                                rgCd={rgCd}
+                                roleGrpList={roleGrpList} // 해당 회사의 권한 그룹 목록
+                                setRgCd={setRgCd}   // 권한그룹 선택
+                                code={coCd}
+                                total={true}    // 내 권한그룹의 전체 메뉴 조회 여부
+                            />
+                            :
+                            <Text
+                                pt={200}
+                                align={'center'}
+                                fontWeight={600}
+                                color={'lightgray'}
+                                fontSize={'18px'}
+                            >
+                                검색된 데이터가 없습니다.
+                            </Text>
+                    }
+
                 </Box>
-            }
+                {
+                    isLoading ?
+                        <Loading />
+                        :
+                        <Box ref={infiniteScrollRef} h={'1px'} />
+                }
+            </Box>
+
             {isDrawer &&
                 <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
             }
-             {alertInfo.isOpen &&
-				<CommonAlert
-					alertInfo={alertInfo}
-					setAlertInfo={setAlertInfo}
-				/>
-			}
-        </Box>
+ 
+            
+
+{
+    alertInfo.isOpen &&
+    <CommonAlert
+        alertInfo={alertInfo}
+        setAlertInfo={setAlertInfo}
+    />
+}
+        </Box >
 
 
     );

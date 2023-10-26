@@ -7,6 +7,7 @@ import ListCardTable from "views/admin/corporation/component/ListCard/ListCardTa
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
 import api from "api/Fetch";
+import Loading from "common/Loading";
 
 const CorpList = ({ setCoCd, coCd }) => {
 
@@ -18,7 +19,7 @@ const CorpList = ({ setCoCd, coCd }) => {
   const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
   const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
- // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {
@@ -27,15 +28,14 @@ const CorpList = ({ setCoCd, coCd }) => {
 
   useEffect(async () => {
     if (inView && !isLastPage) {
-      // await setIsLoading(true);
       fetchCorpList();
-      //setIsLoading(false);
     }
   }, [inView]);
 
 
   // 회사 목록 조회 및 검색
   const fetchCorpList = async () => {
+    setIsLoading(true);
     let res = await api.corp.getCorpList(keyword, undefined, pageNum);
 
     if (res.status === 200 && res.pageInfo) {
@@ -50,6 +50,7 @@ const CorpList = ({ setCoCd, coCd }) => {
       setTotalCount(0);
       setIsLastPage(true);
     }
+    setIsLoading(false);
   };
 
   // 검색 버튼 클릭 시
@@ -68,16 +69,20 @@ const CorpList = ({ setCoCd, coCd }) => {
         buttonType={false}
       />
       <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
+
+
       {/* 목록 테이블 */}
+
       <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
         <Box minH={'560px'} w={'100%'}  >
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        <Box ref={infiniteScrollRef} h={'1px'} />
-        {/* {!isLoading ?
-            <Box ref={infiniteScrollRef}  h={'1px'} />
-          :<SyncLoader />
-        } */}
+        {
+          isLoading ?
+            <Loading />
+            :
+            <Box ref={infiniteScrollRef} h={'1px'} />
+        }
       </Box>
 
     </Box>

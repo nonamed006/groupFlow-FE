@@ -1,10 +1,8 @@
-import { Button, Input, Box, Select } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
+import { Button, Input, Box, Select, useColorModeValue } from "@chakra-ui/react";
+import React from "react";
 
 const SearchBar = ({ setKeyword, defaultValue, name, handleSearchBtn, textLabel, placeholder, btnText, isSelect, values }) => {
-	useEffect(() => {
-		console.log(values);
-	}, []);
+    const textColor = useColorModeValue("secondaryGray.900", "white");
 
     return (
 
@@ -15,7 +13,9 @@ const SearchBar = ({ setKeyword, defaultValue, name, handleSearchBtn, textLabel,
                     height: "40px",
                     lineHeight: "40px",
                     textAlign: "left",
-                }}>
+                }}
+                color={textColor}
+                >
                     {textLabel}
                 </Box>}
             <Box w={'100%'} marginRight={'2'}>

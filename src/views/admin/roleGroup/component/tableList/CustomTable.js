@@ -8,7 +8,7 @@ import TableHeader from "./TableHeader";
 const CustomTable = ({ groupHeader, dataList }) => {
     return (
 
-        <Table  variant="simple" w={'400px'}>
+        <Table  w={'100%'} variant="simple" colorScheme={'facebook'}>
             <TableHeader headerGroups={groupHeader} />
             <TableBody  dataList={dataList}/>
         </Table>

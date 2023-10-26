@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import React, { useState } from "react";
 import GroupBox from "./component/GroupBox/GroupBox";
 import MenuBox from "./component/MenuBox/MenuBox";
@@ -9,13 +9,13 @@ import CommonAlert from "common/component/CommonAlert";
 const RoleGroup = () => {
     const [rgCd, setRgCd] = useState();
     const [alertInfo, setAlertInfo] = useState({
-		isOpen: false
-	});
+        isOpen: false
+    });
 
 
     return (
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }} >
-            <Grid
+        <Box pt={{ base: "150px", md: "100px", xl: "100px" }} >
+            {/* <Grid
                 h="500px"
                 templateRows="repeat(11, 1fr)"
                 templateColumns="repeat(7, 1fr)"
@@ -23,26 +23,39 @@ const RoleGroup = () => {
 
             >
                 {/* 권한그룹 목록 */}
-                <GridItem colSpan={2} rowSpan={5}>
+            {/* <GridItem colSpan={2} rowSpan={5}>
                     <GroupBox rgCd={rgCd} setRgCd={setRgCd} setAlertInfo={setAlertInfo}/>
-                </GridItem>
-                {/* 메뉴 목록 */}
-                <GridItem colSpan={3} rowSpan={5}>
+                </GridItem> */}
+            {/* 메뉴 목록 */}
+            {/* <GridItem colSpan={3} rowSpan={5}>
                     <MenuBox rgCd={rgCd} modify={true}  setAlertInfo={setAlertInfo}/>
-                </GridItem>
-                {/* 사용자 목록 */}
-                <GridItem colSpan={2} rowSpan={5}>
+                </GridItem> */}
+            {/* 사용자 목록 */}
+            {/* <GridItem colSpan={2} rowSpan={5}>
                     <UserBox rgCd={rgCd} />
                 </GridItem>
-            </Grid>
+            </Grid>  */}
 
-            
-			{alertInfo.isOpen &&
-				<CommonAlert
-					alertInfo={alertInfo}
-					setAlertInfo={setAlertInfo}
-				/>
-			}
+            <Flex>
+                {/* 권한그룹 목록 */}
+                <Box w={'450px'} mr={5}>
+                    <GroupBox rgCd={rgCd} setRgCd={setRgCd} setAlertInfo={setAlertInfo} />
+                </Box>
+                {/* 메뉴 목록 */}
+                <Box w={'700px'} mr={5}>
+                    <MenuBox rgCd={rgCd} modify={true} setAlertInfo={setAlertInfo} />
+                </Box>
+                {/* 사용자 목록 */}
+                <Box w={'550px'} >
+                    <UserBox rgCd={rgCd} />
+                </Box>
+            </Flex>
+            {alertInfo.isOpen &&
+                <CommonAlert
+                    alertInfo={alertInfo}
+                    setAlertInfo={setAlertInfo}
+                />
+            }
         </Box>
     );
 };

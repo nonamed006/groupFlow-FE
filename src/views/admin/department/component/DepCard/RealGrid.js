@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "../../../roleGroup/component/roleMenuRealgrid.css"; // RealGrid CSS 추가
+//import "assets/css/depRealGrid.css"; // RealGrid CSS 추가
 
 const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
+
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "path", dataType: "text" },
@@ -66,9 +67,10 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
         }
       }
     };
-
+    console.log("clear22");
     treeView.expandAll();
     return () => {
+      console.log("clear");
       treeProvider.clearRows();
       treeView.destroy();
     };
