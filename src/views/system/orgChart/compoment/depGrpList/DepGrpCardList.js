@@ -1,4 +1,4 @@
-import {Box} from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
 import React, { useState, useEffect } from "react";
 import DepGrpCard from "./DepGrpCard";
 
@@ -25,8 +25,8 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
   }, [inView]);
 
   useEffect(() => {
-    if(changeYn !== undefined && changeYn !== 'undefined') {
-      changeYn === true ? setChangeYn(false):handleSearchBtn();
+    if (changeYn !== undefined && changeYn !== 'undefined') {
+      changeYn === true ? setChangeYn(false) : handleSearchBtn();
     }
   }, [changeYn]);
 
@@ -45,9 +45,9 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
   const fetchDepGrpList = async () => {
     console.log('fetchDepGrpList');
     setIsLoading(true);
-    
-    let corpDepCd = (corpDep !== undefined && corpDep !== 'undefined')? corpDep.code : undefined
-    let res = await api.depGrp.getDepGepList(corpDepCd , search, keyword, pageNum);
+
+    let corpDepCd = (corpDep !== undefined && corpDep !== 'undefined') ? corpDep.code : undefined
+    let res = await api.depGrp.getDepGepList(corpDepCd, search, keyword, pageNum);
     if (res.status === 200 && res.pageInfo) { // 성공일 때
       let { list, total, isLastPage, hasNextPage } = res.pageInfo;
       setDepGrpList(pageNum === 1 ? list : [...depGrpList, ...list]);
@@ -55,11 +55,11 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
       setIsLastPage(isLastPage);
       if (hasNextPage)
         setPageNum((prev) => prev + 1);
-      
+
     } else {
       setDepGrpList([]);
       setTotalCount(0);
-     // setIsLoading(false);
+      // setIsLoading(false);
     }
     await setIsLoading(false);
   };
@@ -67,23 +67,34 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
 
   return (
     <Box>
-      
-      <CardListTitle corpDepNm={corpDep && corpDep.name} totalCnt={totalCount?totalCount:0}/>
+
+      <CardListTitle corpDepNm={corpDep && corpDep.name} totalCnt={totalCount ? totalCount : 0} />
       {
         isLoading ?
-        <Loading />
-        :
-        <Box overflowY={totalCount>0?"auto":"hidden"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='lg' h={'590px'} p={2}>
-        <Box minH={'600px'}>
-          {depGrpList &&
-            depGrpList.map((depGrp) => {
-              return <DepGrpCard depGrp={depGrp} key={depGrp.dpGrpcd} setDepGrp={setDepGrp} />
-            })}
-        </Box>
-        <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
-      </Box>
+          <Loading />
+          :
+          <Box overflowY={totalCount > 0 ? "auto" : "hidden"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='lg' h={'590px'} p={2}>
+            <Box minH={'600px'}>
+              {depGrpList.length > 0 ?
+                depGrpList.map((depGrp) => {
+                  return <DepGrpCard depGrp={depGrp} key={depGrp.dpGrpcd} setDepGrp={setDepGrp} />
+                })
+                :
+                <Text
+                  pt={200}
+                  align={'center'}
+                  fontWeight={600}
+                  color={'lightgray'}
+                  fontSize={'18px'}
+                >
+                  검색된 데이터가 없습니다.
+                </Text>
+              }
+            </Box>
+            <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
+          </Box>
       }
-      
+
     </Box>
   );
 };
