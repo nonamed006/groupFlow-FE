@@ -1,44 +1,49 @@
-import { Box, Button, Image, Input, Text, useColorModeValue } from '@chakra-ui/react';
-import SearchBar from 'common/component/SearchBar';
-import React from 'react';
-import searchIncon from 'assets/img/auth/searchIcon.png';
+import { Box, Image, Input } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import douzoneImg from 'assets/img/auth/douzoneImg.png';
+import ResultCard from './compoent/ReultList/ResultCard';
+import SearchBox from './compoent/SearchBox/SearchBox';
+
 const HomePage = () => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
-    const textNumColor = useColorModeValue("brand.500", "white");
-
- 
     return (
-       <Box
-       position={'fixed'}
-       overflow={'hidden'}
-       w={'100%'}
-       h={'100%'}
-       zIndex={100}
-       top={0}
-       right={0}
-       bottom={0}
-       display={'flex'}
-       alignItems={'center'}
-       justifyContent={'center'}
-       >
-        {/* 검색창 */}
-        <Box position={'absolute'} w={'25%'}  >
-            <Input 
-             borderRadius="5px"
-             placeholder='통합 검색'
-             bg={'white'}
-             size='lg'
-             w={'100%'}
-             />
-             {/* <Box w={'10px'}>
-                 <Image 
-             size={'3px'}
+        <Box
+            position={'fixed'}
+            overflow={'hidden'}
+            w={'100%'}
+            h={'100%'}
+            // zIndex={-1}
+            top={0}
+            right={0}
+            bottom={0}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+        >
+            <Box
+                w={'100%'}
+                h={'100%'}
+                position={'absolute'}
+                zIndex={-100}
+            >
+                <Image
+                    fit={'fill'}
+                    src={douzoneImg}
+                    zIndex={-100}
+                    w={'100%'}
+                    h={'100%'}
+                    position={'absolute'}
+                />
+                <Box
+                    w={'100%'}
+                    h={'100%'}
+                    zIndex={-100}
+                    bg={'rgba(0,0,0,0.2)'}
+                    opacity={'0.8'}
+                ></Box>
+            </Box>
 
-             src={searchIncon} />
-             </Box>
-             */}
-        </Box>
-
+            {/* 검색창 */}
+            <SearchBox />
         </Box>
     );
 };
