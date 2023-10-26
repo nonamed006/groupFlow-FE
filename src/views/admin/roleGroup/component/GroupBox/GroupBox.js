@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
+import { Box, Text } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useEffect, useState } from "react";
 import { roleGrpSchema } from "common/Schema";
 
@@ -214,20 +214,32 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
 
             <Box>
                 {/* 메뉴상단 */}
-                <CardMenuBar title={'권한그룹'} count={totalCount?totalCount:0} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
+                <CardMenuBar title={'권한그룹'} count={totalCount ? totalCount : 0} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
                 {/* 검색바 */}
                 <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
                 {/* 목록 */}
 
                 <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
                     <Box minH={'510px'}>
-                        <GroupCardList
-                            checkHandler={checkHandler}
-                            checkedList={checkedList}
-                            rgCd={rgCd}
-                            roleGrpList={roleGrpList}
-                            setRgCd={setRgCd}
-                        />
+                        {
+                            roleGrpList.length > 0 ?
+                                <GroupCardList
+                                    checkHandler={checkHandler}
+                                    checkedList={checkedList}
+                                    rgCd={rgCd}
+                                    roleGrpList={roleGrpList}
+                                    setRgCd={setRgCd}
+                                />
+                                :
+                                <Text
+                                    pt={200}
+                                    align={'center'}
+                                    fontWeight={600}
+                                    color={'lightgray'}
+                                    fontSize={'18px'}
+                                >
+                                    검색된 데이터가 없습니다.</Text>
+                        }
                     </Box>
                     {isLoading ?
                         <Loading />

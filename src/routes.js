@@ -138,13 +138,13 @@ const routes = [
     component: LogInCentered,
   },
 
-  // {
-  //   name: "",
-  //   layout: "/system",
-  //   path: "/error",
-  //   icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  //   component: ErrorPage,
-  // },
+  {
+    name: "",
+    layout: "/system",
+    path: "/error",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: ErrorPage,
+  },
 
   
 ];
