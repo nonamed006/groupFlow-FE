@@ -1,4 +1,4 @@
-import { Box, Image, Input } from '@chakra-ui/react';
+import { Box, Flex, Image, Input, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
 
@@ -21,15 +21,15 @@ const SearchBox = () => {
         <Box
             position={'absolute'}
             w={'28%'}
-        // zIndex={2}
         >
             <Input
                 borderRadius="5px"
-                placeholder='통합검색'
+                placeholder='메뉴통합검색'
                 bg={'white'}
                 size='lg'
                 w={'100%'}
                 boxShadow={'lg'}
+                border={'5px'}
                 onChange={(e) => onChangeFilter(e.target.value)}
                 name={'keyword'}
             />
