@@ -11,7 +11,7 @@ const DepGrpInfo = ({ depGrp }) => {
   return (
 
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
-      {depGrp&&
+      {depGrp ?
      <>
       <Box align={"center"}>
         <Box m={3}>
@@ -104,6 +104,16 @@ const DepGrpInfo = ({ depGrp }) => {
 
         </Grid>
       </Box></>
+       :
+       <Text
+         pt={260}
+         align={'center'}
+         fontWeight={600}
+         color={'lightgray'}
+         fontSize={'18px'}
+       >
+         검색된 데이터가 없습니다.
+       </Text>
      }
     </Box>
   );

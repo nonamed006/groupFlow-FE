@@ -2,6 +2,7 @@
 import {
 	Avatar,
 	Button,
+	Checkbox,
 	Flex,
 	Icon,
 	Image,
@@ -11,7 +12,14 @@ import {
 	MenuItem,
 	MenuList,
 	Spacer,
+	Table,
+	TableContainer,
+	Tbody,
+	Td,
 	Text,
+	Th,
+	Thead,
+	Tr,
 	useColorModeValue,
 } from "@chakra-ui/react";
 import { RiOrganizationChart } from 'react-icons/ri'
@@ -168,7 +176,7 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px">
+				<MenuButton p="0px"  onClick={() => { setDpType(getCookie("Emp_Dp_Type")); }}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
@@ -186,10 +194,10 @@ export default function HeaderLinks(props) {
 								fontWeight="600"
 								color={textColor}
 							>
-								유저이름
+								{empDetail?.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								회사명 | 부서명
+							{empDetail?.coNm} | {empDetail?.dpNm}
 							</Text>
 						</Flex>
 						<ChevronDownIcon />
@@ -202,6 +210,7 @@ export default function HeaderLinks(props) {
 					borderRadius="20px"
 					bg={menuBg}
 					border="none"
+					minW="300px"
 				>
 					<Flex w="100%" mb="0px">
 						<Text
@@ -215,35 +224,52 @@ export default function HeaderLinks(props) {
 							fontWeight="700"
 							color={textColor}
 						>
-							👋&nbsp; Hey, Adela
+							회사정보
 						</Text>
+						<Spacer />
+						<Text
+							ps="20px"
+							pt="16px"
+							pb="10px"
+							w="30%"
+							borderBottom="1px solid"
+							borderColor={borderColor}
+							fontSize="sm"
+							color="red"
+							_hover={{ cursor: 'pointer' }}
+							onClick={() => { logoutemp() }}
+						>LogOut</Text>
 					</Flex>
-					<Flex flexDirection="column" p="10px">
-						<MenuItem
-							_hover={{ bg: "none" }}
-							_focus={{ bg: "none" }}
-							borderRadius="8px"
-							px="14px"
-						>
-							<Text fontSize="sm">Profile Settings</Text>
-						</MenuItem>
-						<MenuItem
-							_hover={{ bg: "none" }}
-							_focus={{ bg: "none" }}
-							borderRadius="8px"
-							px="14px"
-						>
-							<Text fontSize="sm">Newsletter Settings</Text>
-						</MenuItem>
-						<MenuItem
-							_hover={{ bg: "none" }}
-							_focus={{ bg: "none" }}
-							color="red.400"
-							borderRadius="8px"
-							px="14px"
-						>
-							<Text fontSize="sm">Log out</Text>
-						</MenuItem>
+					<Flex flexDirection="column" p="5px">
+						<TableContainer>
+							<Table variant='simple' >
+								<Thead>
+									<Tr>
+										<Th>회사명</Th>
+										<Th>부서명</Th>
+										<Th>상태</Th>
+									</Tr>
+								</Thead>
+								<Tbody>
+									{empInfo?.map((column, index) => (
+										<Tr>
+											<Td>{column.coNm}</Td>
+											<Td>{column.dpNm}</Td>
+											<Td><Checkbox 
+													me='16px' 
+													colorScheme='brandScheme' 
+													value={column.dpGrpCd} 
+													isChecked={column.dpGrpCd == dpType ? true : false} 
+													onChange={(e) => handleChange(e, column)} 
+												/></Td>
+										</Tr>
+									))}
+								</Tbody>
+							</Table>
+						</TableContainer>
+					</Flex>
+					<Flex p="5px" justifyContent="center">
+						<Button variant="brand" w="80px" size='sm' onClick={clickHandle}>확인</Button>
 					</Flex>
 				</MenuList>
 			</Menu>
