@@ -6,29 +6,20 @@ import SearchBox from './compoent/SearchBox/SearchBox';
 
 const HomePage = () => {
     return (
-        <Box
-            position={'fixed'}
-            overflow={'hidden'}
-            w={'100%'}
-            h={'100%'}
-            // zIndex={-1}
-            top={0}
-            right={0}
-            bottom={0}
-            display={'flex'}
-            alignItems={'center'}
-            justifyContent={'center'}
-        >
+        <>
             <Box
+                position={'fixed'}
+                overflow={'hidden'}
                 w={'100%'}
                 h={'100%'}
-                position={'absolute'}
-                zIndex={-100}
+                top={0}
+                right={0}
+                bottom={0}
+                zIndex={-1}
             >
                 <Image
                     fit={'fill'}
                     src={douzoneImg}
-                    zIndex={-100}
                     w={'100%'}
                     h={'100%'}
                     position={'absolute'}
@@ -36,14 +27,25 @@ const HomePage = () => {
                 <Box
                     w={'100%'}
                     h={'100%'}
-                    zIndex={-100}
                     bg={'rgba(0,0,0,0.2)'}
-                    opacity={'0.8'}
+                    opacity={'80%'}
                 ></Box>
             </Box>
             {/* 검색창 */}
-            <SearchBox />
-        </Box>
+            <Box
+                position={'absolute'}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                top={0}
+                right={0}
+                bottom={0}
+                w={'100%'}
+            >
+                <SearchBox />
+            </Box>
+
+        </>
     );
 };
 export default HomePage;
