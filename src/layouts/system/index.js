@@ -17,6 +17,7 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+ // const navigate = useNavigate();
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -57,8 +58,12 @@ export default function Dashboard(props) {
           return categoryActiveRoute;
         }
       } else {
-        //찾은 PATH값의 NAME을 반환
-        activeRoute = findPath(routes, props.location.pathname).name;
+        // if(findPath(routes, props.location.pathname).name === null){
+        //   navigate(`/err/NotFound`);
+        // }else{
+           //찾은 PATH값의 NAME을 반환
+          activeRoute = findPath(routes, props.location.pathname).name;
+       // }
         if (
           window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
         ) {

@@ -2,10 +2,14 @@ import { Box, Button, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import errorIcon from 'assets/img/errorIcon/errorIcon.png';
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink } from "react-router-dom";
 
 const ErrorPage = () => {
-    let type = 'NoAccess';
+    // let { type } = useParams() ;
+    let params = useParams();
+    // 잘못된 타입일 경우 NotFound로 빠지게 하기 위해 추가
+    let type = (params.type !== 'NotWorking' && params.type !== 'NoAccess') ? 'NotFound' : params.type;
+
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
 
@@ -25,6 +29,7 @@ const ErrorPage = () => {
             detail: '요청하신 페이지를 불러올 수 없습니다.\n잠시후 다시 시도해주세요.',
         },
     };
+
     return (
         <Box
             position={'fixed'}
@@ -63,7 +68,7 @@ const ErrorPage = () => {
                             />
                         </Box>
                         {
-                            type !== 'NotWork' ?
+                            type !== 'NotWorking' ?
                                 <Box
                                     display={'flex'}
                                     mb={5}
@@ -100,16 +105,20 @@ const ErrorPage = () => {
                         >
                             {errorMsgs[type].detail}
                         </Text>
-                        <Button
-                            variant='outline'
-                            borderColor={textNumColor}
-                            color={textNumColor}
-                            borderRadius="10px"
-                            fontWeight={600}
-                            size='md'
-                        >
-                            HOME
-                        </Button>
+                        <NavLink
+                            to='/system/home'
+                            w={'fit-content'}>
+                            <Button
+                                variant='outline'
+                                borderColor={textNumColor}
+                                color={textNumColor}
+                                borderRadius="10px"
+                                fontWeight={600}
+                                size='md'
+                            >
+                                HOME
+                            </Button>
+                        </NavLink>
                     </Box>
                 }
 
