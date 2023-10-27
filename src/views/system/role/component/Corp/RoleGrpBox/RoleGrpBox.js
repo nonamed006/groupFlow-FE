@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useInView } from 'react-intersection-observer';
 
 import CardMenuBar from "common/component/CardMenuBar";
-import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardList";
+import GroupCardList from "views/system/roleGroup/component/GroupBox/GroupCardList";
 import RoleGrpSearchBar from "./RoleGrpSearchBar";
 
 import BottomDrawer from "common/component/BottomDrawer";

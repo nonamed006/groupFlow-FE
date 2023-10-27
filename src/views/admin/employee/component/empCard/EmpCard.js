@@ -19,7 +19,7 @@ import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React from "react";
 import { useState } from "react";
-import ListCardTableHeader from "views/admin/roleGroup/component/tableList/TableHeader";
+import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 
 const EmpCard = (props) => {
 

@@ -21,7 +21,7 @@ import Employee from "views/admin/employee";
 // Auth Imports
 import LogInCentered from "views/auth/login";
 import Menu from "views/system/menu";
-import RoleGroup from "views/admin/roleGroup";
+import RoleGroup from "views/system/roleGroup";
 import RoleSet from "views/system/role";
 import HomePage from "views/system/home";
 

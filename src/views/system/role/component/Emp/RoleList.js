@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { React, useState, useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
-import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardList";
+import GroupCardList from "views/system/roleGroup/component/GroupBox/GroupCardList";
 import api from "api/Fetch";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import BottomDrawer from "common/component/BottomDrawer";
