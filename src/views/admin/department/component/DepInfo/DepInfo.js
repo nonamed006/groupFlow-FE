@@ -32,6 +32,8 @@ const DepInfo = ({
   setTabStatus,
   tabStatus,
   setAlertInfo,
+  setIsLoading,
+  isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
@@ -40,14 +42,18 @@ const DepInfo = ({
 
   //부서 상세조회
   const getDepDto = async () => {
+    setIsLoading(true);
     const response = await getDepDtoApi(dpCd);
     setDepDto(response.voData);
+    setIsLoading(false);
   };
 
   //부서원 조회
   const getDepGroup = async () => {
+    setIsLoading(true);
     const response = await getDepGroupApi(dpCd);
     setDg(response.data);
+    setIsLoading(false);
   };
 
   //부서 등록
@@ -81,7 +87,7 @@ const DepInfo = ({
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "error",
+        status: "warning",
         width: "fit-content",
       });
     } else {
@@ -110,8 +116,15 @@ const DepInfo = ({
         console.log("유효성 검사 통과");
       })
       .catch((errors) => {
+        console.log(errors);
         // 유효성 검사 실패한 경우 에러 메세지
-        alert(errors.message);
+        setAlertInfo({
+          isOpen: true,
+          title: "필수값 미입력",
+          detail: errors.message,
+          status: "warning",
+          width: "fit-content",
+        });
       });
   };
 
@@ -191,11 +204,13 @@ const DepInfo = ({
                   editState={editState}
                   change={change}
                   setAlertInfo={setAlertInfo}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
                 />
               </Box>
             </TabPanel>
             <TabPanel>
-              <DepGroup value={dg} />
+              <DepGroup value={dg} isLoading={isLoading} />
             </TabPanel>
           </TabPanels>
         </Tabs>
