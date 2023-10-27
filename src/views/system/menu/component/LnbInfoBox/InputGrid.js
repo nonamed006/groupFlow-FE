@@ -1,3 +1,4 @@
+
 import {
   Grid,
   Input,
@@ -121,7 +122,7 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
 
   const getCategory = (cd) => {
     const resultTag = null;
-    fetch(`${PORT}/menu/`, { method: "GET" })
+    fetch(`${PORT}/menu/`, {method: 'GET'})//category-${cd}
       .then((response) => response.json())
       .then((responseJson) => {
         setCategory(responseJson.data);
@@ -139,6 +140,8 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
     setMenuInputData(clickData);
     onClose();
   };
+  }
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     setMenuInputData(menuInfo);
@@ -176,6 +179,8 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
       >
         <GridItem colSpan={3}>
           {/* <Select id='upperCd' name='upperCd' size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
+
+       
               {
                 category.map((ctgr, key) => {
                   return <option key={key} value={ctgr.menuCd}>{ctgr.menuNm}</option>
@@ -233,6 +238,7 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
             </ModalContent>
           </Modal>
           {/* <Input id="upperCd" name="upperCd"  size="md" boarder="1" borderRadius="14px" />
+
             {/* <input list='data' type='text'/> 안되겠다
             <datalist id='data'>
               {

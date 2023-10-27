@@ -21,9 +21,10 @@ import Employee from "views/admin/employee";
 // Auth Imports
 import LogInCentered from "views/auth/login";
 import Menu from "views/system/menu";
-import RoleGroup from "views/admin/roleGroup";
+import RoleGroup from "views/system/roleGroup";
 import RoleSet from "views/system/role";
- import ErrorPage from "views/system/error";
+import HomePage from "views/system/home";
+
 // 원본 horizon-ui
 // https://horizon-ui.com/
 // 참고문서
@@ -137,16 +138,14 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: LogInCentered,
   },
+  {
+    name: "HOME",
+    layout: "/system",
+    path: "/home",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: HomePage,
+  },
 
-  // {
-  //   name: "",
-  //   layout: "/system",
-  //   path: "/error",
-  //   icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  //   component: ErrorPage,
-  // },
-
-  
 ];
 
 export default routes;

@@ -88,7 +88,7 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
                 isLoading={isLoading}
             />
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
-            <TotalMenuModal setAlertInfo={setAlertInfo} isOpen={isOpen} setIsOpen={setIsOpen} setChangeEdit={setChangeEdit} rgCd={rgCd} />
+            <TotalMenuModal setAlertInfo={setAlertInfo} isOpen={isOpen} setIsOpen={setIsOpen} typeCd={typeCd} setChangeEdit={setChangeEdit} rgCd={rgCd} />
         </Box>
 
     );
