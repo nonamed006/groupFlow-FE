@@ -9,6 +9,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
 import CommonAlert from "common/component/CommonAlert";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 /*
 layouts/admin/index.js
@@ -17,7 +18,7 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
- // const navigate = useNavigate();
+  const history  = useHistory();
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -58,12 +59,12 @@ export default function Dashboard(props) {
           return categoryActiveRoute;
         }
       } else {
-        // if(findPath(routes, props.location.pathname).name === null){
-        //   navigate(`/err/NotFound`);
-        // }else{
+        if(findPath(routes, props.location.pathname) === null){
+          return ;
+        }else{
            //찾은 PATH값의 NAME을 반환
           activeRoute = findPath(routes, props.location.pathname).name;
-       // }
+        }
         if (
           window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
         ) {
@@ -208,7 +209,7 @@ export default function Dashboard(props) {
         >
           <Switch>
             {getRoutes(routes)}
-            <Redirect from="/" to="/system/corporation" />
+            <Redirect from="/" to="/err/NotFound" />
           </Switch>
           {alertInfo.isOpen && (
             <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />

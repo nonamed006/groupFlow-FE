@@ -1,10 +1,10 @@
 import { Box, Button, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import errorIcon from 'assets/img/errorIcon/errorIcon.png';
-import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import { NavLink } from "react-router-dom";
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom';
 
 const ErrorPage = () => {
+    const history = useHistory();
     // let { type } = useParams() ;
     let params = useParams();
     // 잘못된 타입일 경우 NotFound로 빠지게 하기 위해 추가
@@ -105,20 +105,19 @@ const ErrorPage = () => {
                         >
                             {errorMsgs[type].detail}
                         </Text>
-                        <NavLink
-                            to='/system/home'
-                            w={'fit-content'}>
-                            <Button
-                                variant='outline'
-                                borderColor={textNumColor}
-                                color={textNumColor}
-                                borderRadius="10px"
-                                fontWeight={600}
-                                size='md'
-                            >
-                                HOME
-                            </Button>
-                        </NavLink>
+                        
+                        <Button
+                            variant='outline'
+                            borderColor={textNumColor}
+                            color={textNumColor}
+                            borderRadius="10px"
+                            fontWeight={600}
+                            size='md'
+                            onClick={() => {
+                                history.goBack();
+                            }}
+                        >돌아가기
+                        </Button>
                     </Box>
                 }
 
