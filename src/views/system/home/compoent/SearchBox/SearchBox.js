@@ -1,20 +1,25 @@
-import { Box, Flex, Image, Input, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Box, Input } from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
+import { debounce } from 'lodash';
 
 
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
-    const [menuList, setMenuList] = useState(['회사관리', '사원관리', '부서관리', '메뉴관리', '권한그룹 설정', '권한설정']);
-    const [recommendList, setRecommendList] = useState();
+    const [resultMenuList, setResultMenuList] = useState([]);
 
-    const onChangeFilter = (keyword) => {
-        setKeyword(keyword);
-        let list = [];
-        menuList.filter((item) => {
-            item.includes(keyword) && list.push(item);
-        });
-        setRecommendList(list);
+    const handleChange = (e) => {
+        setKeyword(e.target.value);
+        delayedSearch(e.target.value);
+    };
+
+    const delayedSearch = useCallback(
+        debounce(()=>fetchMenuList(), 400),
+        []
+    );
+
+    const fetchMenuList = () => {
+        setResultMenuList(['회사관리', '부서관리']);
     };
 
     return (
@@ -30,7 +35,7 @@ const SearchBox = () => {
                 w={'100%'}
                 boxShadow={'lg'}
                 border={'5px'}
-                onChange={(e) => onChangeFilter(e.target.value)}
+                onChange={(e) => handleChange(e)}
                 name={'keyword'}
             />
             {
@@ -43,8 +48,8 @@ const SearchBox = () => {
                     borderRadius="5px"
                 >
                     {
-                        recommendList.length > 0 ?
-                            recommendList.map((menu, index) => {
+                        resultMenuList.length > 0 ?
+                        resultMenuList.map((menu, index) => {
                                 return <ResultCard content={menu} index={index} />
                             })
                             :

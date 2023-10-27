@@ -27,8 +27,8 @@ const HomePage = () => {
                 <Box
                     w={'100%'}
                     h={'100%'}
-                    bg={'rgba(0,0,0,0.2)'}
-                    opacity={'80%'}
+                   bg={'rgba(0,0,0,0.3)'}
+                   opacity={'80%'}
                 ></Box>
             </Box>
             {/* 검색창 */}
