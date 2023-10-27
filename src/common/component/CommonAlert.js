@@ -20,7 +20,7 @@ const CommonAlert = ({ alertInfo, setAlertInfo }) => {
   }, []);
 
   return (
-    <Box display={"flex"} justifyContent={"center"} zIndex={10}>
+    <Box display={"flex"} justifyContent={"center"}>
       <Alert
         status={status}
         minW={"250px"}
@@ -30,6 +30,7 @@ const CommonAlert = ({ alertInfo, setAlertInfo }) => {
         borderRadius={"10px"}
         minH={"50px"}
         boxShadow={"sm"}
+        zIndex={111111}
       >
         <AlertIcon />
         <Box w={"fit-content"} minW={"250px"}>

@@ -11,7 +11,7 @@ const ChangeTable = ({ chHistory, handelChangeHistoryBtn }) => {
     <div>
       <Text>전체 데이터 : {chHistory.total}건</Text>
       <Box minHeight={450}>
-        <Table variant="simple" w={"100%"}>
+        <Table variant="simple" w={"100%"} colorScheme={"facebook"}>
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups} />
           {/* Tbody */}

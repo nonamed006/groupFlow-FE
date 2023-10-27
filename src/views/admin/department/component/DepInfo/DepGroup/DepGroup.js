@@ -7,7 +7,6 @@ import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
 
 const DepGroup = (props) => {
-  console.log(props.value);
   const headerGroups = ["부서", "직급", "직책", "사용자명"];
   const [infiniteScrollRef, inView] = useInView();
   useEffect(() => {}, [props]);
