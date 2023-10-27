@@ -19,7 +19,7 @@ const FormRadio = ({
 
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
-      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"}>
+      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"32%"}>
         {title}
       </FormLabel>
       <RadioGroup name={name} defaultValue={defaultValue} key={pk}>

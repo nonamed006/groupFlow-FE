@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,15 +10,21 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import SelectCommon from "common/component/SelectCommon";
+import { getCorpNmListApi } from "api/dep/DepApi";
 
 const SearchCardBar = (props) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
-  const [selected, setSelected] = useState("");
+  const [corpNm, setCorpNm] = useState([]);
 
-  const handleSelect = (e) => {
-    setSelected(e.target.value);
+  const getCorpNmList = async () => {
+    const response = await getCorpNmListApi();
+    setCorpNm(response.data);
   };
+
+  useEffect(() => {
+    getCorpNmList();
+  }, []);
 
   return (
     <div>
@@ -39,10 +45,17 @@ const SearchCardBar = (props) => {
             </div>
           </GridItem>
           <GridItem colSpan={2}>
-            <Select placeholder="전체" onChange={handleSelect}>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+          <Select
+              placeholder="전체"
+              onChange={(e) => {
+                props.setSearchCorp(e.target.value);
+              }}
+            >
+              {corpNm.map((item, index) => (
+                <option key={index} name="coCd" value={item.coCd}>
+                  {item.coNm}
+                </option>
+              ))}
             </Select>
           </GridItem>
           <GridItem colStart={5} colEnd={6}>

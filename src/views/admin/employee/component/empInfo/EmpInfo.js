@@ -47,6 +47,7 @@ const EmpInfo = (props) => {
   //empDept input 값 받기
   const empDeptHandleChange = (e) => {
     props.setEmpDept({...props.empDept, [e.target.name]: e.target.value});
+    //props.setEmpDept(props.empDept[0].e.target.name);
   }
 
   //사원 ID 변경
@@ -111,7 +112,6 @@ const EmpInfo = (props) => {
         }
       });
   }
-
   return (
     <div>
       <Box borderRadius="lg" bg="white" h="700px" p="6">
@@ -284,7 +284,7 @@ const EmpInfo = (props) => {
               />
             </TabPanel>
             <TabPanel>
-              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange} infoEditState={props.infoEditState} />
+              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange}  editState={props.editState}/>
             </TabPanel>
           </TabPanels>
         </Tabs>
