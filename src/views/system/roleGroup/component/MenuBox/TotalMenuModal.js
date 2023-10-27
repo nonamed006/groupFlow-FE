@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import TotalMenuBox from "./TotalMenuBox";
 import api from "api/Fetch";
 
-const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo }) => {
+const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo, typeCd }) => {
     const [checkedMenuCd, setCheckedMenuCd] = useState([]); // 선택된 메뉴 코드 리스트
 
     const modifyBtnHandeler = () => {
@@ -42,7 +42,7 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo }
             {isOpen && (
                 (rgCd !== undefined && rgCd !== 'undefined') ?
                     <ModalLayout title={'권한 메뉴 수정'} buttonYn={true} onClose={() => setIsOpen(false)} size={'2xl'} btnText={'수정'} handleCheck={modifyBtnHandeler}>
-                        <TotalMenuBox rgCd={rgCd} setCheckedMenuCd={setCheckedMenuCd} />
+                        <TotalMenuBox typeCd={typeCd} rgCd={rgCd} setCheckedMenuCd={setCheckedMenuCd} />
                     </ModalLayout>
                     :
                     <ModalLayout title={'알림'} onClose={() => setIsOpen(false)} size={'md'} >

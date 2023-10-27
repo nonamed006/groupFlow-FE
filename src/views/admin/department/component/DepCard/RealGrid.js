@@ -67,10 +67,8 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
         }
       }
     };
-    console.log("clear22");
     treeView.expandAll();
     return () => {
-      console.log("clear");
       treeProvider.clearRows();
       treeView.destroy();
     };

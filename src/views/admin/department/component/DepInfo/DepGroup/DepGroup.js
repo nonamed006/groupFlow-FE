@@ -1,7 +1,7 @@
 import { Table, Box, Text } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 
 import React, { useEffect } from "react";
-import ListCardTableHeader from "views/admin/roleGroup/component/tableList/TableHeader";
+import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 import DepGroupTbody from "./DepGroupTbody";
 import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
@@ -15,7 +15,7 @@ const DepGroup = (props) => {
     <div>
       <Box minHeight={450}>
         {props.value.length > 0 ? (
-          <Table variant="simple" w={"100%"}>
+          <Table variant="simple" w={"100%"} colorScheme="facebook">
             {/* Thead */}
             <ListCardTableHeader headerGroups={headerGroups} />
             {/* Tbody */}

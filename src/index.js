@@ -28,7 +28,11 @@ ReactDOM.render(
 						<Route path={`/auth`} component={AuthLayout} />
 						<Route path={`/admin`} component={AdminLayout} />
 						<Route path={`/rtl`} component={RtlLayout} />
-						<Route path={`/err:params`} component={ErrorPage} />
+						{/* 타입에 따른 에러페이지 (NotFound/NoAccess/NotWorking) */}
+						<Route path={`/err/:type`} component={ErrorPage} />
+						{/*없는 url 입력시 에러 페이지로(NotFound) */}
+						<Route component={ErrorPage} />
+
 						{/* 로그인 안했을때 */}
 						<Redirect from='/' to='/auth/login' />
 					</Switch>
