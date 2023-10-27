@@ -7,11 +7,14 @@ import {
   Spacer,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
+import Loading from "common/Loading";
+import { useInView } from "react-intersection-observer";
 
-const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
+const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {}, []);
 
@@ -49,6 +52,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
             ></RealGrid>
           </Box>
         </Box>
+        {isLoading ? <Loading /> : <Box ref={infiniteScrollRef} h={"1px"} />}
       </Box>
     </>
   );
