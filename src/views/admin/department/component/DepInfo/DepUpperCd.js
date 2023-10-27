@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import {} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 
 function DepUpperCd(props) {
@@ -69,21 +70,6 @@ function DepUpperCd(props) {
 
     treeView.onCellClicked = function (grid, clickData) {
       let dpData = grid._dataProvider._rowMap[clickData.dataRow];
-
-      let dataArray = dpData._values[0].split("/");
-      if (props.data.depDto.dpCd == "") {
-      } else {
-        if (dataArray.includes(props.data.depDto.dpCd)) {
-          //setAlertInfo({
-          //  isOpen: true,
-          //  title: response.resultMsg,
-          //  status: "success",
-          //  width: "fit-content",
-          //});
-          alert("하위부서는 선택할 수 없습니다.");
-          return 0;
-        }
-      }
       props.getValue(dpData);
     };
 

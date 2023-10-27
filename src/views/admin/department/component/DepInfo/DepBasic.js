@@ -55,11 +55,26 @@ const DepBasic = (props) => {
 
   let updatedDepDto;
   const getValue = (text) => {
+    console.log(text);
     //setUpdatedDepDto(text);
     updatedDepDto = text;
   };
 
   const click = () => {
+    let dataArray = updatedDepDto._values[0].split("/");
+    if (props.depDto.dpCd == "") {
+    } else {
+      if (dataArray.includes(props.depDto.dpCd)) {
+        props.setAlertInfo({
+          isOpen: true,
+          title: "하위부서는 선택할 수 없습니다.",
+          status: "warning",
+          width: "fit-content",
+        });
+        return 0;
+      }
+    }
+
     onChange2({
       target: {
         name: ["upperCd", "upperName"], // 여러 값을 배열에 넣음

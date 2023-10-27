@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
-import { getDepOrganizationApi } from "api/dep/DepApi";
+import api from "api/Fetch";
 import CommonAlert from "common/component/CommonAlert";
 
 const Test = () => {
@@ -27,7 +27,10 @@ const Test = () => {
   //조직도 조회
   const onClickSearchText = async () => {
     setIsLoading(true);
-    const response = await getDepOrganizationApi(selectedCoCd, searchText);
+    const response = await api.dep.getDepOrganizationApi(
+      selectedCoCd,
+      searchText
+    );
     setOrg(response.data);
     setIsLoading(false);
   };

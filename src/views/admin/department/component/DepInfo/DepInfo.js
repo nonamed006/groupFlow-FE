@@ -16,13 +16,7 @@ import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup/DepGroup";
 import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
-import {
-  getDepDtoApi,
-  getDepGroupApi,
-  fetchSaveDepApi,
-  fetchUpdateDepApi,
-  deleteBtnApi,
-} from "api/dep/DepApi";
+import api from "api/Fetch";
 
 const DepInfo = ({
   setTest,
@@ -43,7 +37,7 @@ const DepInfo = ({
   //부서 상세조회
   const getDepDto = async () => {
     setIsLoading(true);
-    const response = await getDepDtoApi(dpCd);
+    const response = await api.dep.getDepDtoApi(dpCd);
     setDepDto(response.voData);
     setIsLoading(false);
   };
@@ -51,14 +45,14 @@ const DepInfo = ({
   //부서원 조회
   const getDepGroup = async () => {
     setIsLoading(true);
-    const response = await getDepGroupApi(dpCd);
+    const response = await api.dep.getDepGroupApi(dpCd);
     setDg(response.data);
     setIsLoading(false);
   };
 
   //부서 등록
   const fetchSaveDep = async () => {
-    const response = await fetchSaveDepApi(depDto);
+    const response = await api.dep.fetchSaveDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -82,12 +76,12 @@ const DepInfo = ({
 
   //부서 수정
   const fetchUpdateDep = async () => {
-    const response = await fetchUpdateDepApi(depDto);
+    const response = await api.dep.fetchUpdateDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "warning",
+        status: "warning  ",
         width: "fit-content",
       });
     } else {
@@ -107,7 +101,6 @@ const DepInfo = ({
     setDepDto(depDto);
   };
   const updateBtn = () => {
-    console.log(depDto);
     depSchema
       .validate(depDto)
       .then(() => {
@@ -130,7 +123,7 @@ const DepInfo = ({
 
   //부서 삭제
   const deleteBtn = async () => {
-    const response = await deleteBtnApi(dpCd);
+    const response = await api.dep.deleteBtnApi(dpCd);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,

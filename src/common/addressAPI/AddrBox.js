@@ -26,22 +26,21 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
   };
   return (
     <>
-
       <GridItem colStart={1} colEnd={5} colSpan={5}>
         <FormInput
-          title={'우편번호'}
-          name={'postNum'}
-          value={data.postNum?data.postNum:''}
+          title={"우편번호"}
+          name={"postNum"}
+          value={data.postNum ? data.postNum : ""}
           readOnly={true}
           isRequired={isRequired}
           placeholder="주소를 선택하세요"
         />
       </GridItem>
-      <GridItem colStart={5} colEnd={10} >
+      <GridItem colStart={5} colEnd={10}>
         {/* 우편번호 찾기 부분 ! */}
         <Button
-          bg={'#E2E8F0'}
-          borderRadius={'10px'}
+          bg={"#E2E8F0"}
+          borderRadius={"10px"}
           fontWeight={600}
           id="postNumBtn"
           onClick={() => {
@@ -58,9 +57,9 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       {/* 주소 */}
       <GridItem colStart={1} colEnd={5} colSpan={5}>
         <FormInput
-          title={'주소'}
-          name={'addr'}
-          value={data.addr?data.addr:''}
+          title={"주소"}
+          name={"addr"}
+          value={data.addr ? data.addr : ""}
           readOnly={true}
           isRequired={isRequired}
           placeholder="주소를 선택하세요"
@@ -70,8 +69,8 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       {/* 상세주소 */}
       <GridItem colStart={5} colEnd={10} colSpan={5}>
         <FormInput
-          name={'addrDetail'}
-          value={data.addrDetail?data.addrDetail:''}
+          name={"addrDetail"}
+          value={data.addrDetail ? data.addrDetail : ""}
           readOnly={editState === "update" ? false : true}
           isRequired={isRequired}
           placeholder="상세주소를 입력하세요"
@@ -79,7 +78,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
           pk={dataPk}
         />
       </GridItem>
-      
+
       {/* 주소찾기 모달 */}
       {isOpen ? (
         <AddrModal
