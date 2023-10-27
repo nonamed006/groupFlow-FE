@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-import "./roleMenuRealgrid.css"; // RealGrid CSS 추가
+import "assets/css//roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
-
 const RealGrid = ({ org, type, setCheckedMenuCd }) => {
   const realgridElement = useRef(null);
-
+  console.log(org);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
     { fieldName: "menuNm", dataType: "text" },
@@ -13,6 +12,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     { fieldName: "depth", dataType: "text" },
     { fieldName: "state", dataType: "boolean" },
     { fieldName: "type", dataType: "text" },
+    { fieldName: "iconField", dataType: "text" },
   ];
 
   var columns = [
@@ -27,6 +27,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "state", name: "state", header: { text: "Boolean" } },
     { fieldName: "type", name: "type", header: { text: "type" } },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var treeProvider, treeView;
@@ -40,7 +41,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
 
-    treeProvider.setRows(org, "menuPath", false, null, "depth");
+    treeProvider.setRows(org, "menuPath", false, null, 'iconField');
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 42;
@@ -58,26 +59,13 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("menuCd").visible = false;
     treeView.columnByName("state").visible = false;
-    treeView.columnByName("menuNm").editable = false;
+    treeView.columnByName("state").visible = false;
+    treeView.columnByName("iconField").visible = false;
+    treeView.treeOptions.iconImagesRoot = "/img/";
+    treeView.treeOptions.iconImages = [ "department.png"];
 
     // //옵션설정
     treeView.checkBar.fieldName = "state"; //state 필드와 체크박스 체크 여부 연결
-
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
