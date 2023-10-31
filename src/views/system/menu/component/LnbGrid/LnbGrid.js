@@ -19,7 +19,7 @@ const LnbGrid = ({
   // searchMenuNm,
   // onSearchClick
 }) => {
-  const [ list, setList ] = useState([]);
+  const [list, setList] = useState([]);
 
   /* 메뉴 목록 조회 */
   const lnbMenuList = async () => {
@@ -29,43 +29,46 @@ const LnbGrid = ({
     //   searchMenuNm: searchMenuNm
     // }
     const queryString = new URLSearchParams(search).toString();
-    const menuCd = search.searchGnbMenuCd ? search.searchGnbMenuCd : (selectGnbMenuCd ? selectGnbMenuCd : '');
-    await fetch(`${PORT}/menu/list-${menuCd}?${queryString}`, { method: 'GET', })
+    const menuCd = search.searchGnbMenuCd
+      ? search.searchGnbMenuCd
+      : selectGnbMenuCd
+      ? selectGnbMenuCd
+      : "";
+    await fetch(`${PORT}/menu/list-${menuCd}?${queryString}`, { method: "GET" })
       .then((response) => response.json())
       .then((responseJson) => {
-        if(responseJson.result.toUpperCase() === 'SUCCESS') {
+        if (responseJson.result.toUpperCase() === "SUCCESS") {
           setList(responseJson.data);
         } else {
           setList([]);
         }
       });
-  }
+  };
 
   /* 선택한 메뉴 정보 조회 */
   const setMenuDetail = async (menuCd) => {
-    await fetch(`${PORT}/menu/find-${menuCd}`, {method: 'GET'})
+    await fetch(`${PORT}/menu/find-${menuCd}`, { method: "GET" })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-          if(responseJson.result.toUpperCase() === 'SUCCESS') {
-            setMenuInfo(responseJson.voData);
-          } else {
-            alert(responseJson.resultMsg);
-          }
+        if (responseJson.result.toUpperCase() === "SUCCESS") {
+          setMenuInfo(responseJson.voData);
+        } else {
+          alert(responseJson.resultMsg);
         }
-      );
-  }
+      });
+  };
 
   useEffect(() => {
     lnbMenuList();
   }, [selectGnbMenuCd, search.onSearchClick]);
 
-  return(
-      <Box borderRadius="lg" bg="white" h="fit-content"  p="6">
-        <LnbGridBar title={title} count={list&&list.length}/>
-        <LnbGridList list={list} setMenuDetail={setMenuDetail}/>
-      </Box>
+  return (
+    <Box borderRadius="lg" bg="white" h="fit-content" p="6">
+      <LnbGridBar title={title} count={list && list.length} />
+      <LnbGridList list={list} setMenuDetail={setMenuDetail} />
+    </Box>
   );
-}
+};
 
 export default LnbGrid;

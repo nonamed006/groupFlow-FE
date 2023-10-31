@@ -1,17 +1,19 @@
-import { number, object, string, date } from "yup";
+import { number, object, string, date, ref } from "yup";
 
 export const corpSchema = object().shape({
-  coCd: string().nullable(),
   useYn: string().default("false").required("사용여부를 체크해주세요."),
   coNm: string().required("회사명을 입력해주세요."),
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),
   addr: string().required("주소를 선택해주세요."),
-  sort: number().required("정렬값을 입력해주세요.").positive().integer(),
-  chCd: string().nullable(),
+  sort: number("숫자를 입력해주세요.").required("정렬값을 입력해주세요.").positive("1 이상의 숫자를 입력해주세요."),
   estDt: date().required("설립일을 입력해주세요."),
-  opDt: date().required("개업일을 입력해주세요."),
-  clsDt: date().nullable(),
+  opDt: date()
+    .required("개업일을 입력해주세요.")
+    .min(ref('estDt'), `개업일은 설립일 이후의 날짜를 선택해주세요.`),
+  clsDt: date()
+    .nullable()
+    .min(ref('opDt'),`폐업일은 개업일 이후의 날짜를 선택해주세요.`),
 });
 
 export const depSchema = object().shape({
@@ -76,8 +78,6 @@ export const depGrpSchema = object().shape({
 });
 
 export const menuSchema = object().shape({
-  menuCd: string().nullable(),
-  typeCd: string().nullable(),
   upperCd: string().required("상위메뉴를 선택하세요"),
   fileCd: string().when("upperCd", {
     is: "",
@@ -90,7 +90,6 @@ export const menuSchema = object().shape({
 });
 
 export const roleGrpSchema = object().shape({
-  rgCd: string().nullable(),
   grpNm: string().required("그룹명을 입력해주세요."),
   useYn: string().required("사용여부를 선택해주세요."),
   coCd: string().required("회사를 선택해주세요."),

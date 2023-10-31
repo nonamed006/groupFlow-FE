@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import CardMenuBar from 'common/component/CardMenuBar';
 import React, { useEffect, useState } from 'react';
 import RoleGrpSearchBar from '../../Corp/RoleGrpBox/RoleGrpSearchBar';
-import GroupCardList from 'views/admin/roleGroup/component/GroupBox/GroupCardList';
+import GroupCardList from 'views/system/roleGroup/component/GroupBox/GroupCardList';
 import { useInView } from 'react-intersection-observer';
 import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';

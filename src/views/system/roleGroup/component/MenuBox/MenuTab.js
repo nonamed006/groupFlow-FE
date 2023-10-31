@@ -39,6 +39,7 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, modify }) => {
                                 <Button
                                     key={index}
                                     bg={'white'}
+                                    borderRadius={'10px'} 
                                     onClick={() => changeTypeTab(menuType.typeCd)}
                                 >
                                     <Text
@@ -54,7 +55,10 @@ const MenuTab = ({ typeCd, setIsOpen, changeTypeTab, modify }) => {
                     }
                 </Flex>
                 {modify &&
-                    <Button variant="action"
+                    <Button 
+                        variant="action"
+                        borderRadius={'10px'} 
+                        fontWeight={600}
                         onClick={() => setIsOpen(true)}
                     >수정</Button>
                 }

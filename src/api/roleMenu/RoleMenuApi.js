@@ -74,10 +74,18 @@ const roleMenu = {
     /**
      * 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
      * @param {*} rgCd 권한그룹 코드
+     * @param {*} typeCd 전체/관리자/사용자
      * @returns 
      */
-    getMenuListWithRole: (rgCd) => {
-        const promise = getPromise({ url: `roleMenu/menu/${rgCd}`, method: 'GET' });
+    getMenuListWithRole: (rgCd, typeCd) => {
+        let url = `roleMenu/menu/${rgCd}`;
+        const params = new URLSearchParams();
+        if (typeCd !== undefined && typeCd !== 'undefined')
+            params.append("menuType", typeCd);
+        const paramString = params.toString();
+        if (paramString)  url += "?" + paramString;
+        
+        const promise = getPromise({ url: url, method: 'GET' });
         return promise.then((responseJson) => responseJson);
     },
 
@@ -89,8 +97,6 @@ const roleMenu = {
      * @returns 
      */
     putRoleMenu: (rgCd, menuCdList)=> {
-        console.log(menuCdList);
-        console.log(rgCd);
         const promise = getPromise({ 
             url: `roleMenu/${rgCd}`, 
             method: "PUT",

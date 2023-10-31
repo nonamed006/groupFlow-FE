@@ -14,6 +14,7 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
+  Box,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -24,12 +25,15 @@ import AddrBox from "common/addressAPI/AddrBox";
 import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
+import Loading from "common/Loading";
+import { useInView } from "react-intersection-observer";
 const DepBasic = (props) => {
   const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
   const recYN = new Boolean(depDto?.recYN);
   const useYN = new Boolean(depDto?.useYN);
+  const [infiniteScrollRef, inView] = useInView();
   const onChange = (e) => {
     const { value, name } = e.target;
     const updateData = {
@@ -51,11 +55,26 @@ const DepBasic = (props) => {
 
   let updatedDepDto;
   const getValue = (text) => {
+    console.log(text);
     //setUpdatedDepDto(text);
     updatedDepDto = text;
   };
 
   const click = () => {
+    let dataArray = updatedDepDto._values[0].split("/");
+    if (props.depDto.dpCd == "") {
+    } else {
+      if (dataArray.includes(props.depDto.dpCd)) {
+        props.setAlertInfo({
+          isOpen: true,
+          title: "하위부서는 선택할 수 없습니다.",
+          status: "warning",
+          width: "fit-content",
+        });
+        return 0;
+      }
+    }
+
     onChange2({
       target: {
         name: ["upperCd", "upperName"], // 여러 값을 배열에 넣음
@@ -64,13 +83,15 @@ const DepBasic = (props) => {
     });
     onClose();
   };
-  const getOrg = () => {
+  const getOrg = async () => {
+    props.setIsLoading(true);
     let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=&keyword=&search=dep`;
-    fetch(url, { method: "GET" })
+    await fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
         setOrg(res.data);
       });
+    props.setIsLoading(false);
   };
   useEffect(() => {
     setDepDto(props.depDto);
@@ -128,7 +149,13 @@ const DepBasic = (props) => {
                   data={props}
                   getValue={getValue}
                   setAlertInfo={props.setAlertInfo}
+                  setIsLoading={props.setIsLoading}
                 />
+                {props.isLoading ? (
+                  <Loading />
+                ) : (
+                  <Box ref={infiniteScrollRef} h={"1px"} />
+                )}
               </ModalBody>
 
               <ModalFooter>
@@ -287,6 +314,11 @@ const DepBasic = (props) => {
           />
         </GridItem>
       </Grid>
+      {props.isLoading ? (
+        <Loading />
+      ) : (
+        <Box ref={infiniteScrollRef} h={"1px"} />
+      )}
     </>
   );
 };

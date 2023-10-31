@@ -70,27 +70,22 @@ export default function HeaderLinks(props) {
 	const [isOpen, setIsOpen] = useState(false);
 	//사원 정보 조회, 리덕스에 저장
 	const getEmpInfo = () => {
-		let cookie = getCookie("Authorization");
-		if (cookie != undefined) {
-			fetch(
-				`${PORT}/emp/getEmpInfo`,
-				{
-					method: "post",
-					headers: {
-						'Content-Type': "application/json; charset=utf-8",
-						//'Authorization': localStorage.getItem("Authorization")
-						'Authorization': cookie
-					},
-          credentials: 'include'
-					// res에 결과가 들어옴
-				}
-			).then((res) => res.json())
-				.then((res) => {
-					setDpType(getCookie("Emp_Dp_Type"));
-					dispatch(setEmpData(res.data));
-					setEmpDetail(res.data[0]);
-				});
-		}
+		fetch(
+			`${PORT}/emp/getEmpInfo`,
+			{
+				method: "post",
+				headers: {
+					'Content-Type': "application/json; charset=utf-8",
+				},
+				credentials: 'include'
+				// res에 결과가 들어옴
+			}
+		).then((res) => res.json())
+			.then((res) => {
+				setDpType(getCookie("Emp_Dp_Type"));
+				dispatch(setEmpData(res?.data));
+				//setEmpDetail(res?.data[0]);
+			});
 	}
 
   //사원 로그아웃

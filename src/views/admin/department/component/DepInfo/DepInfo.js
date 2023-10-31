@@ -16,13 +16,7 @@ import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup/DepGroup";
 import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
-import {
-  getDepDtoApi,
-  getDepGroupApi,
-  fetchSaveDepApi,
-  fetchUpdateDepApi,
-  deleteBtnApi,
-} from "api/dep/DepApi";
+import api from "api/Fetch";
 
 const DepInfo = ({
   setTest,
@@ -32,6 +26,8 @@ const DepInfo = ({
   setTabStatus,
   tabStatus,
   setAlertInfo,
+  setIsLoading,
+  isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
@@ -40,19 +36,23 @@ const DepInfo = ({
 
   //부서 상세조회
   const getDepDto = async () => {
-    const response = await getDepDtoApi(dpCd);
+    setIsLoading(true);
+    const response = await api.dep.getDepDtoApi(dpCd);
     setDepDto(response.voData);
+    setIsLoading(false);
   };
 
   //부서원 조회
   const getDepGroup = async () => {
-    const response = await getDepGroupApi(dpCd);
+    setIsLoading(true);
+    const response = await api.dep.getDepGroupApi(dpCd);
     setDg(response.data);
+    setIsLoading(false);
   };
 
   //부서 등록
   const fetchSaveDep = async () => {
-    const response = await fetchSaveDepApi(depDto);
+    const response = await api.dep.fetchSaveDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -76,12 +76,12 @@ const DepInfo = ({
 
   //부서 수정
   const fetchUpdateDep = async () => {
-    const response = await fetchUpdateDepApi(depDto);
+    const response = await api.dep.fetchUpdateDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "error",
+        status: "warning  ",
         width: "fit-content",
       });
     } else {
@@ -101,7 +101,6 @@ const DepInfo = ({
     setDepDto(depDto);
   };
   const updateBtn = () => {
-    console.log(depDto);
     depSchema
       .validate(depDto)
       .then(() => {
@@ -110,14 +109,21 @@ const DepInfo = ({
         console.log("유효성 검사 통과");
       })
       .catch((errors) => {
+        console.log(errors);
         // 유효성 검사 실패한 경우 에러 메세지
-        alert(errors.message);
+        setAlertInfo({
+          isOpen: true,
+          title: "필수값 미입력",
+          detail: errors.message,
+          status: "warning",
+          width: "fit-content",
+        });
       });
   };
 
   //부서 삭제
   const deleteBtn = async () => {
-    const response = await deleteBtnApi(dpCd);
+    const response = await api.dep.deleteBtnApi(dpCd);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -191,11 +197,13 @@ const DepInfo = ({
                   editState={editState}
                   change={change}
                   setAlertInfo={setAlertInfo}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
                 />
               </Box>
             </TabPanel>
             <TabPanel>
-              <DepGroup value={dg} />
+              <DepGroup value={dg} isLoading={isLoading} />
             </TabPanel>
           </TabPanels>
         </Tabs>

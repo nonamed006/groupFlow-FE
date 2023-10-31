@@ -28,7 +28,7 @@ const InfoBox = ({
             variant="action"
             textColor={textColor}
             background={"#E2E8F0"}
-            borderRadius={"10"}
+            borderRadius="5px"
             fontWeight="600"
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
@@ -47,6 +47,7 @@ const InfoBox = ({
             수정
           </Button>
           <Button
+            borderRadius="5px"
             variant="action"
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
@@ -67,6 +68,7 @@ const InfoBox = ({
       ) : (
         <Stack direction="row" spacing={4}>
           <Button
+            borderRadius="5px"
             variant="action"
             onClick={() => {
               updateBtn();
@@ -75,6 +77,7 @@ const InfoBox = ({
             저장
           </Button>
           <Button
+            borderRadius="5px"
             variant="action"
             onClick={() => {
               setDepDto([]);

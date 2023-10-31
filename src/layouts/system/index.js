@@ -19,6 +19,7 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const history  = useHistory();
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -59,8 +60,12 @@ export default function Dashboard(props) {
           return categoryActiveRoute;
         }
       } else {
-        //찾은 PATH값의 NAME을 반환
-        activeRoute = findPath(routes, props.location.pathname).name;
+        if(findPath(routes, props.location.pathname) === null){
+          return ;
+        }else{
+           //찾은 PATH값의 NAME을 반환
+          activeRoute = findPath(routes, props.location.pathname).name;
+        }
         if (
           window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
         ) {
@@ -192,7 +197,7 @@ export default function Dashboard(props) {
             >
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from="/" to="/system/corporation" />
+              <Redirect from="/" to="/err/NotFound" />
               </Switch>
               {alertInfo.isOpen && (
                 <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
