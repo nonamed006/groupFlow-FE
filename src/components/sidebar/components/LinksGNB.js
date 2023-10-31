@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import { SidebarContext } from "contexts/SidebarContext";
 
 /**
  * sidebar/components/Links.js
@@ -16,18 +17,15 @@ export function SidebarLinks(props) {
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
-  let inactiveColor = useColorModeValue(
-    "secondaryGray.600",
-    "secondaryGray.600"
-  );
   let activeIcon = useColorModeValue("brand.500", "white");
   let textColor = useColorModeValue("secondaryGray.500", "white");
   let brandColor = useColorModeValue("brand.500", "brand.400");
 
   const { routes } = props;
-  const { collapse } = props;
   const { LNBroute } = props;
   const [ routeStat, setRouteStat ] = useState(location.pathname);
+
+  const context = useContext(SidebarContext);
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return routeStat.indexOf(routeName) > -1;
@@ -40,6 +38,7 @@ export function SidebarLinks(props) {
           route.path || !route.items ? //path가 있을때(하위메뉴가 없는 대메뉴)
           (<NavLink key={index} to={route.layout + route.path}>
               <Box
+                h={'50px'}
                 onClick={() => {
                   setRouteStat(route.layout.toLowerCase() + route.path.toLowerCase());
                   LNBroute(route);
@@ -62,7 +61,7 @@ export function SidebarLinks(props) {
                       {route.icon}
                     </Box>
                     {
-                      collapse &&
+                      context.collapse &&
                         <>
                           <Text
                             me='auto'
@@ -104,6 +103,7 @@ export function SidebarLinks(props) {
                 }}
                 cursor={'pointer'}
                 key={index}
+                h={'50px'}
               >
                 <HStack
                   spacing={
@@ -122,7 +122,7 @@ export function SidebarLinks(props) {
                       {route.icon}
                     </Box>
                     {
-                      collapse &&
+                      context.collapse &&
                         <>
                           <Text
                             me='auto'

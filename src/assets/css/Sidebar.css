@@ -1,0 +1,16 @@
+.box .non_active, .box_GNB .non_active, .box_LNB .non_active {
+    width: 70px;
+    /* transition: ease-in-out .1s; */
+}
+
+/* .box:hover, .box_GNB:hover {
+    width: 300px;
+} */
+.box .active, .box_GNB .active, .box_LNB .active {
+    width: 300px;
+    transition: ease-in-out 0.1s;
+}
+
+/* .box:hover:not(.box), .box_GNB:hover:not(.box_GNB), .scrollbar:visited {
+    width: 70px;
+} */
