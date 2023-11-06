@@ -1,4 +1,4 @@
-import { VStack, StackDivider, Box, Heading, Text, Icon, Image, Flex  } from '@chakra-ui/react';
+import { VStack, StackDivider, Box, Heading, Text, Icon, Image, Flex, createIcon  } from '@chakra-ui/react';
 import { React, useEffect, useState } from 'react';
 import { MdHome } from 'react-icons/md';
 
@@ -8,6 +8,7 @@ const GnbCardList = ({list, menuInfo, setGnbMenuDetail, selectGnbMenuCd}) => {
     <VStack
       spacing={4}
       align='stretch'
+      overflowY={"auto"} h={'550px'}
     >
       {
         list.length > 0 && (
@@ -25,7 +26,8 @@ const GnbCardList = ({list, menuInfo, setGnbMenuDetail, selectGnbMenuCd}) => {
                 backgroundColor={gnb.useYn === 1 ? 'white' : 'gray.200'}
                 cursor={'pointer'}>
                 <Flex>
-                  <Icon as={MdHome} width='20px' height='20px' color='inherit' mr={3}/>
+                  {/* <Icon as={MdHome} width='20px' height='20px' color='inherit' mr={3}/> */}
+                  <Image src={gnb.filePath} alt={gnb.menuNm} w='20px' h='20px' mr={3}/>
                   <Heading flex={1} fontSize='xl'>{gnb.menuNm}</Heading>
                   <Text textAlign={'right'} color={'gray.400'} w={'45px'}>{gnb.useYn === 1 ? '사용' : '미사용'}</Text>
                 </Flex>

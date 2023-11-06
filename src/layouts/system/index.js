@@ -19,7 +19,6 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
-  const history  = useHistory();
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -140,7 +139,7 @@ export default function Dashboard(props) {
   const [collapse, setCollapse] = useState(false);
 
   return (
-    <Box>
+    <Box h={'1000px'}>
 			<Box>
 				<SidebarContext.Provider
 					value={{
@@ -151,9 +150,9 @@ export default function Dashboard(props) {
             className="box non_active"
             w={'70px'}
             h="full"
-            bg="black"
             position={'absolute'}
             zIndex={1}
+            overflowX={'hidden'}
           >
             <Sidebar
               routes={routes}
@@ -162,19 +161,15 @@ export default function Dashboard(props) {
           </Box>
 					<Box
 						float='right'
-						minHeight='100vh'
-						height='100%'
+						w={'calc( 100% - 70px )' }
+						h={'1000px'}
 						overflow='auto'
 						position='relative'
 						maxHeight='100%'
 						as="main"
-						w={{ base: '100%', xl: 'calc( 100% - 70px )' }}
-						transition='all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)'
-						transitionDuration='.2s, .2s, .35s'
-						transitionProperty='top, bottom, width'
-						transitionTimingFunction='linear, linear, ease'>
-						<Portal>
-							<Box>
+            p={'30px'}
+          >
+							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
                 <Navbar
                   onOpen={onOpen}
                   logoText={"Horizon UI Dashboard PRO"}
@@ -182,18 +177,12 @@ export default function Dashboard(props) {
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
                   setAlertInfo={setAlertInfo}
-                  fixed={fixed}
                   routes={routes}
                   {...rest}
                 />
 							</Box>
-						</Portal>
 						<Box
-              mx="auto"
-              p={{ base: "20px", md: "30px" }}
-              pe="20px"
-              minH="100vh"
-              pt="30px"
+              h={'800px'}
             >
               <Switch>
                 {getRoutes(routes)}
@@ -203,9 +192,6 @@ export default function Dashboard(props) {
                 <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
               )}
             </Box>
-						<Box>
-							<Footer />
-						</Box>
 					</Box>
 				</SidebarContext.Provider>
 			</Box>

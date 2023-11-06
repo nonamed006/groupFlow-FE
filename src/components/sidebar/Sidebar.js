@@ -103,7 +103,7 @@ function Sidebar(props) {
 				    w={'300px'}
             // maxW={LNBcollapse ? 300 : 70}
             className="box_LNB non_active"
-            h='100vh'
+            h='full'
             m={sidebarMargins}
             minH='100%'
             overflowX='hidden'
@@ -139,7 +139,7 @@ function Sidebar(props) {
           <Box
             bg={sidebarBg}
             className="box_GNB non_active"
-            h='100vh'
+            h='full'
             m={sidebarMargins}
             minH='100%'
             overflowX='hidden'
