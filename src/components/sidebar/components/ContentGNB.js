@@ -3,8 +3,9 @@ import { Box, Center, Flex, Stack, IconButton, Icon } from "@chakra-ui/react";
 //   Custom components
 import Brand from "components/sidebar/components/Brand";
 import LinksGNB from "components/sidebar/components/LinksGNB";
-import React from "react";
+import React, { useContext } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { SidebarContext } from "contexts/SidebarContext";
 
 /*
 sidebar/components/ContentGNB.js
@@ -15,8 +16,9 @@ sidebar/components/ContentGNB.js
 // FUNCTIONS
 function SidebarContentGNB(props) {
   const { routes } = props;
-  const { collapse } = props;
   const { LNBroute } = props;
+
+  const context = useContext(SidebarContext);
   // SIDEBAR
   return (
     <Flex direction='column' height='100%' pt='25px' px="16px">
@@ -25,7 +27,7 @@ function SidebarContentGNB(props) {
             <HamburgerIcon w={10}/>
         </Center>
         {
-          collapse &&
+          context.collapse &&
             <Center flex={1}>
               <Brand/>
             </Center>
@@ -33,7 +35,7 @@ function SidebarContentGNB(props) {
       </Flex>
       <Stack direction='column' mb='auto' mt='8px'>
         <Box ps='20px' pe={{ md: "16px", "2xl": "1px" }}>
-            <LinksGNB routes={routes} collapse={collapse} LNBroute={LNBroute}/>
+            <LinksGNB routes={routes} LNBroute={LNBroute}/>
         </Box>
       </Stack>
     </Flex>

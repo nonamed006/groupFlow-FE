@@ -40,7 +40,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PORT } from "set";
 import RealGrid from "./UpperRealGrid";
 
-const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
+const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [category, setCategory] = useState([]);
@@ -140,13 +140,12 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
     setMenuInputData(clickData);
     onClose();
   };
-  }
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     setMenuInputData(menuInfo);
     getCategory(menuInfo.upperCd);
   }, [menuInfo]);
+
   return (
     <>
       <Flex
@@ -316,4 +315,4 @@ const InputGrid = ({ title, menuInfo, setMenuInfo }) => {
   );
 };
 
-export default InputGrid;
+export default LnbInputGrid;

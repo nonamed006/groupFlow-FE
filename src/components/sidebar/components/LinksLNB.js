@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import { SidebarContext } from "contexts/SidebarContext";
 
 /**
  * sidebar/components/Links.js
@@ -15,20 +16,12 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 export function SidebarLinks(props) {
   //   Chakra color mode
   let location = useLocation();
-  let activeColor = useColorModeValue("gray.700", "black");
-  let inactiveColor = useColorModeValue(
-    "secondaryGray.600",
-    "secondaryGray.600"
-  );
-  let activeIcon = useColorModeValue("brand.500", "black");
-  let textColor = useColorModeValue("secondaryGray.500", "black");
-  let brandColor = useColorModeValue("brand.500", "brand.400");
-
   const { routes } = props; //전체 라우터
   const { route } = props; //선택한 하나의 라우터
-  const { setCollapse } = props;
   const { LNBroute } = props; //function setRoute 클릭 시 하나의 라우터 세팅
   const [routeStat, setRouteStat] = useState(location.pathname);
+
+  const context = useContext(SidebarContext);
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -97,7 +90,7 @@ export function SidebarLinks(props) {
     } else {
       //하위메뉴 없는 메뉴
       LNBroute(null);
-      setCollapse(70);
+      context.setCollapse(false);
       return null;
     }
   } else {

@@ -39,7 +39,6 @@ const RealGrid = ({ org, getValue }) => {
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
     treeProvider.setRows(org, "menuPath", false, null, "depth");
-    console.log(org);
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -60,21 +59,11 @@ const RealGrid = ({ org, getValue }) => {
     treeView.columnByName("menuNm").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
+    treeView.treeOptions.iconImagesRoot = "/img/";
     treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
+      "department.png",
     ];
+    treeView.treeOptions.defaultIcon = 0;
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {

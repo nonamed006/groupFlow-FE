@@ -7,17 +7,26 @@ import roleCorp from "./roleCorp/RoleCorpApi";
 import depGrp from "./depGrp/DepGrpApi";
 import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
+import menu from "./menu/MenuApi";
 
-const header = {
-  "Content-Type": "application/json; charset=utf-8",
-  Authorization: getCookie("Authorization"),
-};
+// const header = {
+//   "Content-Type": "application/json; charset=utf-8",
+//   Authorization: getCookie("Authorization"),
+// };
 
 export const getPromise = async ({ url, method, headers, body }) => {
+
+  if(!headers) { // header 받아온거 없으면 기본 application/json
+    headers = {
+      'Content-Type': 'application/json; charset=utf-8'
+    }
+  }
+  headers['Authorization'] = getCookie("Authorization");
+
   return await fetch(`${PORT}/${url}`, {
     method: method,
     body: body && body,
-    headers: header,
+    headers: headers,
     credentials: "include",
   })
     .then((response) => response.json())
@@ -32,6 +41,7 @@ const api = {
   depGrp,
   roleEmp,
   dep,
+  menu,
 };
 
 export default api;

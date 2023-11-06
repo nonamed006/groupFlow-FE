@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import LnbGridBar from "./LnbGridBar";
 import LnbGridList from "./LnbGridList";
-import { PORT } from "set";
+import api from 'api/Fetch';
+import CardMenuBar from "common/component/CardMenuBar";
 
 const LnbGrid = ({
   title,
@@ -23,40 +23,30 @@ const LnbGrid = ({
 
   /* 메뉴 목록 조회 */
   const lnbMenuList = async () => {
-    // const params = {
-    //   // searchGnbMenuCd: searchGnbMenuCd,
-    //   searchLnbMenuCd: searchLnbMenuCd,
-    //   searchMenuNm: searchMenuNm
-    // }
-    const queryString = new URLSearchParams(search).toString();
     const menuCd = search.searchGnbMenuCd
       ? search.searchGnbMenuCd
       : selectGnbMenuCd
       ? selectGnbMenuCd
       : "";
-    await fetch(`${PORT}/menu/list-${menuCd}?${queryString}`, { method: "GET" })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.result.toUpperCase() === "SUCCESS") {
-          setList(responseJson.data);
-        } else {
-          setList([]);
-        }
-      });
-  };
+
+    const responseJson = await api.menu.getLnbMenuList(menuCd, search);
+
+    if (responseJson.result.toUpperCase() === "SUCCESS") {
+      setList(responseJson.data);
+    } else {
+      setList([]);
+    }
+  }
 
   /* 선택한 메뉴 정보 조회 */
   const setMenuDetail = async (menuCd) => {
-    await fetch(`${PORT}/menu/find-${menuCd}`, { method: "GET" })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        if (responseJson.result.toUpperCase() === "SUCCESS") {
-          setMenuInfo(responseJson.voData);
-        } else {
-          alert(responseJson.resultMsg);
-        }
-      });
+    const responseJson = await api.menu.getMenuDetail(menuCd);
+    
+    if (responseJson.result.toUpperCase() === "SUCCESS") {
+      setMenuInfo(responseJson.voData);
+    } else {
+      alert(responseJson.resultMsg);
+    }
   };
 
   useEffect(() => {
@@ -64,8 +54,12 @@ const LnbGrid = ({
   }, [selectGnbMenuCd, search.onSearchClick]);
 
   return (
-    <Box borderRadius="lg" bg="white" h="fit-content" p="6">
-      <LnbGridBar title={title} count={list && list.length} />
+    <Box borderRadius="lg" bg="white" h="700px" p="6">
+      <CardMenuBar
+        title={title}
+        count={list ? list.length : 0}
+        buttonType={false}
+      />
       <LnbGridList list={list} setMenuDetail={setMenuDetail} />
     </Box>
   );
