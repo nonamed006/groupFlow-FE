@@ -13,7 +13,7 @@ import React from "react";
 import EmpDeptInput from "./EmpDeptInput";
 
 const EmpTab2 = (props) => {
-  return (
+    return (
     <div>
       <Grid
         overflowY={'scroll'} overflowX={'hidden'}
@@ -21,7 +21,7 @@ const EmpTab2 = (props) => {
         p={3}
       >
         {props.empDept?.map((column, index) => (
-          <EmpDeptInput column={column} handleChange={props.handleChange} editState={props.editState}/>
+          <EmpDeptInput column={column} handleChange={props.handleChange} editState={props.editState} index={index}/>
         ))}
       </Grid>
     </div>

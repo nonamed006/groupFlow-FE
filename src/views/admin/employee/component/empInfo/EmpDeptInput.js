@@ -18,8 +18,7 @@ import FormRadio from "common/component/FormRadio";
 import SelectCommon from "common/component/SelectCommon";
 import React, { useEffect, useState } from "react";
 
-const EmpDeptInput = ({ column, handleChange, editState }) => {
-
+const EmpDeptInput = ({ column, handleChange, editState, index }) => {
   const [corpNm, setCorpNm] = useState([]);
   const [corpCd, setCorpCd] = useState([]);
 
@@ -54,7 +53,10 @@ const EmpDeptInput = ({ column, handleChange, editState }) => {
       <GridItem colStart={3} colEnd={6}>
       <Select
               placeholder="전체"
-              onChange={(e)=> {handleChange(e); setCorpCd(e.target.value);}}
+              onChange={(e)=> {
+                console.log('onchange', index);
+                //handleChange(e, index); 
+                setCorpCd(e.target.value);}}
             >
               {corpNm.map((item, index) => (
                 <option key={index} name="coCd" value={item.coCd}>
@@ -89,7 +91,7 @@ const EmpDeptInput = ({ column, handleChange, editState }) => {
           placeholder="사번"
           value={column?.dpGrpNum}
           readOnly={editState === "read"}
-          onChange={handleChange}
+          onChange={(e)=>handleChange(e, index)}
           isRequired={true}
           pk={column?.dpGrpcd}
         />

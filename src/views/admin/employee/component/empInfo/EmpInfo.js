@@ -45,8 +45,19 @@ const EmpInfo = (props) => {
   };
 
   //empDept input 값 받기
-  const empDeptHandleChange = (e) => {
-    props.setEmpDept({...props.empDept, [e.target.name]: e.target.value});
+  const empDeptHandleChange = (e, index) => {
+    props.setEmpDept(
+      [...props.empDept.map((emp, index_) => {
+        if (index_ === index) {
+          return {
+            ...emp,
+            ...{[e.target.name]: e.target.value}
+          }
+        } else {
+          return emp
+        }
+      }),
+      ]);
     //props.setEmpDept(props.empDept[0].e.target.name);
   }
 
@@ -103,11 +114,11 @@ const EmpInfo = (props) => {
       }
     }).then((res) => res.json())
       .then((res) => {
-        if(res.result === "success"){
+        if (res.result === "success") {
           alert("삭제되었습니다.");
           onClose();
           props.setIsReload(!props.isReload);
-        }else{
+        } else {
           alert("삭제 실패하였습니다.");
         }
       });
@@ -142,55 +153,55 @@ const EmpInfo = (props) => {
               <Flex>
                 {props.editState === "read" ? (
                   <Stack direction="row" spacing={4} align="center">
-                    {tabStatus == 1 ?(
-                    <Stack direction="row" spacing={4}>
+                    {tabStatus == 1 ? (
+                      <Stack direction="row" spacing={4}>
+                        <Button
+                          variant="action"
+                          onClick={() => {
+                            if (Object.keys(props.empDetail).length < 1) {
+                              alert("사원을 선택해주세요.");
+                              return;
+                            }
+                            setModalType(1);
+                            setModalTabStatus("type1");
+                            onOpen();
+                          }}
+                        >
+                          ID 변경
+                        </Button>
+                        <Button
+                          variant="action"
+                          onClick={() => {
+                            if (Object.keys(props.empDetail).length < 1) {
+                              alert("사원을 선택해주세요.");
+                              return;
+                            }
+                            setModalType(2);
+                            setModalTabStatus("type1");
+                            onOpen();
+                          }}
+                        >
+                          비밀번호 초기화
+                        </Button>
+                        <Button
+                          variant="action"
+                          onClick={() => {
+                            if (Object.keys(props.empDetail).length < 1) {
+                              alert("사원을 선택해주세요.");
+                              return;
+                            }
+                            setModalType(3);
+                            setModalTabStatus("type1");
+                            onOpen();
+                          }}
+                        >
+                          퇴사처리
+                        </Button>
+                      </Stack>) : <Stack direction="row" spacing={4}>
                       <Button
                         variant="action"
                         onClick={() => {
-                          if(Object.keys(props.empDetail).length< 1){
-                            alert("사원을 선택해주세요.");
-                            return;
-                          }
-                          setModalType(1);
-                          setModalTabStatus("type1");
-                          onOpen();
-                        }}
-                      >
-                        ID 변경
-                      </Button>
-                      <Button
-                        variant="action"
-                        onClick={() => {
-                          if(Object.keys(props.empDetail).length< 1){
-                            alert("사원을 선택해주세요.");
-                            return;
-                          }
-                          setModalType(2);
-                          setModalTabStatus("type1");
-                          onOpen();
-                        }}
-                      >
-                        비밀번호 초기화
-                      </Button>
-                      <Button
-                        variant="action"
-                        onClick={() => {
-                          if(Object.keys(props.empDetail).length< 1){
-                            alert("사원을 선택해주세요.");
-                            return;
-                          }
-                          setModalType(3);
-                          setModalTabStatus("type1");
-                          onOpen();
-                        }}
-                      >
-                        퇴사처리
-                      </Button>
-                    </Stack>) : <Stack direction="row" spacing={4}>
-                    <Button
-                        variant="action"
-                        onClick={() => {
-                          if(Object.keys(props.empDetail).length< 1){
+                          if (Object.keys(props.empDetail).length < 1) {
                             alert("사원을 선택해주세요.");
                             return;
                           }
@@ -206,13 +217,13 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        if(Object.keys(props.empDetail).length< 1){
+                        if (Object.keys(props.empDetail).length < 1) {
                           alert("사원을 선택해주세요.");
                           return;
                         }
-                        if(tabStatus === 1){
+                        if (tabStatus === 1) {
                           props.setEditState("update");
-                        }else if(tabStatus === 2){
+                        } else if (tabStatus === 2) {
                           props.setEditState("deptUpdate");
                         }
                       }}
@@ -222,15 +233,15 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        if(Object.keys(props.empDetail).length< 1){
+                        if (Object.keys(props.empDetail).length < 1) {
                           alert("사원을 선택해주세요.");
                           return;
                         }
-                         if(tabStatus === 1){
-                            setModalType(4);
-                            setModalTabStatus("type4");
-                            onOpen();
-                        }else if(tabStatus === 2){
+                        if (tabStatus === 1) {
+                          setModalType(4);
+                          setModalTabStatus("type4");
+                          onOpen();
+                        } else if (tabStatus === 2) {
                         }
                       }}
                     >
@@ -242,16 +253,16 @@ const EmpInfo = (props) => {
                     <Button
                       variant="brand"
                       onClick={() => {
-                        if(tabStatus === 1){
-                          if(props.editState === "insert"){
+                        if (tabStatus === 1) {
+                          if (props.editState === "insert") {
                             props.onSaveEmpDetail();
-                          }else if(props.editState === "update"){
+                          } else if (props.editState === "update") {
                             props.updateEmpInfo();
                           }
-                        }else if(tabStatus === 2){
-                          if(props.editState === "deptInsert"){
+                        } else if (tabStatus === 2) {
+                          if (props.editState === "deptInsert") {
 
-                          }else if(props.editState === "deptUpdate"){
+                          } else if (props.editState === "deptUpdate") {
 
                           }
                         }
@@ -284,51 +295,51 @@ const EmpInfo = (props) => {
               />
             </TabPanel>
             <TabPanel>
-              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange}  editState={props.editState}/>
+              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange} editState={props.editState} />
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
       {/* ID 변경 모달 */}
-      { isOpen ?
-      <ModalLayout
-        title={
-          modalType == 1
-            ? "ID변경"
-            : modalType == 2
-            ? "비밀번호 초기화"
-            : modalType == 3 
-            ? "퇴사처리"
-            : "사원삭제"
-        }
-        buttonYn="false"
-        isOpen={isOpen}
-        onClose={onClose}
-        btnText="확인"
-        handleCheck={
-          modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : empDelete
-        }
-        children={
-          modalType == 1 ? (
-            <EmpIdChg
-              empDetail={props.empDetail}
-              setEmpId={setEmpId}
-              empId={empId}
-              setModalTabStatus={setModalTabStatus}
-              modalTabStatus={modalTabStatus}
-            />
-          ) : modalType == 2 ? (
-            <EmpPwdChg 
-              setEmpPwd={setEmpPwd}
-              setModalTabStatus={setModalTabStatus}
-            />
-          ) : modalType == 3 ? (
-            <EmpWorkState />
-          ) : <EmpInfoDel />
-        }
-        size="2xl"
-      />
-    : ""}
+      {isOpen ?
+        <ModalLayout
+          title={
+            modalType == 1
+              ? "ID변경"
+              : modalType == 2
+                ? "비밀번호 초기화"
+                : modalType == 3
+                  ? "퇴사처리"
+                  : "사원삭제"
+          }
+          buttonYn="false"
+          isOpen={isOpen}
+          onClose={onClose}
+          btnText="확인"
+          handleCheck={
+            modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : empDelete
+          }
+          children={
+            modalType == 1 ? (
+              <EmpIdChg
+                empDetail={props.empDetail}
+                setEmpId={setEmpId}
+                empId={empId}
+                setModalTabStatus={setModalTabStatus}
+                modalTabStatus={modalTabStatus}
+              />
+            ) : modalType == 2 ? (
+              <EmpPwdChg
+                setEmpPwd={setEmpPwd}
+                setModalTabStatus={setModalTabStatus}
+              />
+            ) : modalType == 3 ? (
+              <EmpWorkState />
+            ) : <EmpInfoDel />
+          }
+          size="2xl"
+        />
+        : ""}
     </div>
   );
 };
