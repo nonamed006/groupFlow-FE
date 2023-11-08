@@ -95,22 +95,22 @@ export default function AdminNavbar(props) {
 
   return (
     <Box
-      position="absolute"
+      //position="absolute"
       display={secondary ? "block" : "flex"}
-      lineHeight="25.6px"
-      right={{ base: "250px" }} //상단 바 위치 수정
+      //lineHeight="25.6px"
+      //right={{ base: "250px" }} //상단 바 위치 수정
       ps={{
         xl: "12px",
       }}
       pt="8px"
       top={{ base: "0", md: "0", lg: "0", xl: "0" }}
-      w={{
-        base: "calc(100vw - 6%)",
-        md: "calc(100vw - 8%)",
-        lg: "calc(100vw - 6%)",
-        xl: "calc(100vw - 350px)",
-        "2xl": "calc(100vw - 365px)",
-      }}
+      // w={{
+      //   base: "calc(100vw - 6%)",
+      //   md: "calc(100vw - 8%)",
+      //   lg: "calc(100vw - 6%)",
+      //   xl: "calc(100vw - 350px)",
+      //   "2xl": "calc(100vw - 365px)",
+      // }}
     >
       <Flex
         w="100%"
@@ -121,7 +121,7 @@ export default function AdminNavbar(props) {
         alignItems={{ xl: "center" }}
         mb={gap}
       >
-        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }}>
+        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }} w={'230px'}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
@@ -156,6 +156,13 @@ export default function AdminNavbar(props) {
             {brandText}
           </Link>
         </Box>
+        <Flex
+          h={'full'}
+          // overflowX={'scroll'}
+          // css={{'&::-webkit-scrollbar':{'display':'none'}}}
+          pt={'20px'}
+          mx={'15px'}
+        >
         {history?.length > 0 &&
           history?.map((item, index) => {
             return (
@@ -182,6 +189,7 @@ export default function AdminNavbar(props) {
                 }
                 w={140}
                 height={"35px"}
+                key={index}
               >
                 <div
                   style={{
@@ -233,6 +241,7 @@ export default function AdminNavbar(props) {
               </Box>
             );
           })}
+        </Flex>
         <Box ms="auto" w="300px">
           <AdminNavbarLinks
             onOpen={props.onOpen}

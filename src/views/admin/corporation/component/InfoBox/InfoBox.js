@@ -184,7 +184,7 @@ const InfoBox = ({
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
-        w={"1100px"}
+        //w={"1100px"} 혜윤 수정
       >
         <InfoBoxBar
           title={"기본정보"}

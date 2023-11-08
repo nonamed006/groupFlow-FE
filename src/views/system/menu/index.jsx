@@ -5,6 +5,7 @@ import SearchCardBar from './component/SearchCardBar';
 import GnbCard from './component/GnbCard/GnbCard';
 import LnbGrid from './component/LnbGrid/LnbGrid';
 import InfoBox from './component/InfoBox/InfoBox';
+import CommonAlert from 'common/component/CommonAlert';
 
 /*
 남은 작업 : 
@@ -20,6 +21,10 @@ const Menu = () => {
 		searchMenuNm: '',
 		onSearchClick: false
 	});
+
+    const [ alertInfo, setAlertInfo ] = useState({
+        isOpen: false
+    })
 
 	const [ selectGnbMenuCd, setSelectGnbMenuCd ] = useState('');	// GNB 선택
 
@@ -71,10 +76,18 @@ const Menu = () => {
 					<InfoBox
 						title={menuInfo.upperCd ? '메뉴 정보' : '대메뉴 정보'}
 						menuInfo={menuInfo}
+						selectGnbMenuCd={selectGnbMenuCd}
 						setMenuInfo={setMenuInfo}
+						setAlertInfo={setAlertInfo}
 					/>
                 </GridItem>
 			</Grid>
+            {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
 		</Box>
 	);
 };
