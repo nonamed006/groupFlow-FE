@@ -82,7 +82,7 @@ const EmpCard = (props) => {
             추가
           </Button>
         </Flex>
-        <Table variant="simple" color="gray.500">
+        <Table variant="simple" w={'100%'} colorScheme={'facebook'}>
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups}/> 
           <Tbody>
@@ -100,35 +100,35 @@ const EmpCard = (props) => {
                 }}
               >
                 <Td
-                  borderColor="gray.300"
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
                     <Avatar src="" w="30px" h="30px" me="8px" />
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.empNm}
                     </Text>
                   </Flex>
                 </Td>
                 <Td
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.300"
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.loginId}
                     </Text>
                   </Flex>
                 </Td>
                 <Td
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.300"
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {minTimeDate(column.joinDt)}
                     </Text>
                   </Flex>

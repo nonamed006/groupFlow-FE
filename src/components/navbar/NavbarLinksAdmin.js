@@ -342,9 +342,6 @@ export default function HeaderLinks(props) {
 					</Flex>
 				</MenuList>
 			</Menu>
-			<Menu>
-				<ThemeEditor navbarIcon={navbarIcon} />
-			</Menu>
 			{/* 조직도 */}
 			{isOpen ? <OrgChartModal isOpen={isOpen} onClose={() => setIsOpen(false)} /> : null}
 		</Flex>

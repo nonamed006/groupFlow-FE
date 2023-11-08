@@ -5,6 +5,7 @@ import { PORT } from "set";
 import EmpCard from "./component/empCard/EmpCard";
 import EmpInfo from "./component/empInfo/EmpInfo";
 import { getCookie } from "common/common";
+import CommonAlert from "common/component/CommonAlert";
 
 const Employee = () => {
 
@@ -13,9 +14,16 @@ const Employee = () => {
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
+
   const [editState, setEditState] = useState("read");
-  const [infoEditState, setInfoEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
+
+  const [searchCorp, setSearchCorp] = useState("");
+
+  const [alertInfo, setAlertInfo] = useState({
+		isOpen: false
+	});
+
   const [empDept, setEmpDept] = useState([
     {
       addr: "",
@@ -101,7 +109,7 @@ const Employee = () => {
       loginId: "",
       loginPw: "",
       signPw: "",
-      psnMail: "",
+      empMail: "",
       payMail: "",
       empTel: "",
       postNum: "",
@@ -198,6 +206,12 @@ const Employee = () => {
       }
     ).then((res) => res.json())
       .then((res) => {
+        setAlertInfo({
+          isOpen : true,
+          status : 'success',
+          title : res.resultMsg,
+          width : 'fit-content'
+        });
         setEditState("read");
       });
   }
@@ -217,7 +231,7 @@ const Employee = () => {
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} />
+            <SearchCardBar getEmpList={getEmpList} setSearchCorp={setSearchCorp} />
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -242,12 +256,19 @@ const Employee = () => {
               onSaveEmpDetail={onSaveEmpDetail}
               setEditState={setEditState}
               editState={editState}
-              infoEditState={infoEditState}
-              setInfoEditState={setInfoEditState}
               updateEmpInfo={updateEmpInfo}
+              setAlertInfo={setAlertInfo}
             />
           </GridItem>
         </Grid>
+
+        {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
+
       </Box>
     </div>
   );
