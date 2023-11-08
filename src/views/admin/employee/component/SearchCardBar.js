@@ -10,15 +10,18 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import SelectCommon from "common/component/SelectCommon";
-import { getCorpNmListApi } from "api/dep/DepApi";
+import api from "api/Fetch";
 
 const SearchCardBar = (props) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   const [corpNm, setCorpNm] = useState([]);
+  const [srhCorp, setSrhCorp] = useState("");
+  const [srhWorkType, setSrhWorkType] = useState("");
+  const [srhNm, setSrhNm] = useState("");
 
   const getCorpNmList = async () => {
-    const response = await getCorpNmListApi();
+    const response = await api.dep.getCorpNmListApi();
     setCorpNm(response.data);
   };
 
@@ -94,10 +97,11 @@ const SearchCardBar = (props) => {
               placeholder="검색어를 입력하세요."
               size="md"
               borderRadius="14px"
+              onChange={(e)=>setSrhNm(e.target.value)}
             />
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
-            <Button variant="brand" onClick={()=>props.getEmpList("", "", "")}>검색</Button>
+            <Button variant="brand" onClick={()=>props.getEmpList(srhCorp, srhWorkType, srhNm)}>검색</Button>
           </GridItem>
         </Grid>
       </Box>

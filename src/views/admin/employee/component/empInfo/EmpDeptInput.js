@@ -1,43 +1,92 @@
 import {
+  Box,
   Button,
   Grid,
   GridItem,
-  HStack,
   Input,
-  Radio,
-  RadioGroup,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Select,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { getDepOrganizationApi } from "api/dep/DepApi";
-import { getCorpNmListApi } from "api/dep/DepApi";
+import getDepOrganizationApi from "api/dep/DepApi";
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
 import FormRadio from "common/component/FormRadio";
 import SelectCommon from "common/component/SelectCommon";
 import React, { useEffect, useState } from "react";
+import api from "api/Fetch";
+import { PORT } from "set";
+import DepUpperCd from "views/admin/department/component/DepInfo/DepUpperCd";
+import Loading from "common/Loading";
+import { useInView } from "react-intersection-observer";
 
-const EmpDeptInput = ({ column, handleChange, editState, index }) => {
+const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, isLoading, setAlertInfo }) => {
   const [corpNm, setCorpNm] = useState([]);
   const [corpCd, setCorpCd] = useState([]);
+  const [org, setOrg] = useState([]);
+  const [infiniteScrollRef, inView] = useInView();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   //회사 조회
   const getCorpNmList = async () => {
-    const response = await getCorpNmListApi();
+    const response = await api.dep.getCorpNmListApi();
     setCorpNm(response.data);
+  };
+
+  const getOrg = async () => {
+    setIsLoading(true);
+    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=${corpCd}&keyword=&search=dep`;
+    await fetch(url, { method: "GET" })
+      .then((res) => res.json())
+      .then((res) => {
+        setOrg(res.data);
+      });
+    setIsLoading(false);
+  };
+
+  let updatedDepDto;
+  const getValue = (text) => {
+    //setUpdatedDepDto(text);
+    updatedDepDto = text;
+  };
+
+  const click = () => {
+    console.log('11111');
+    handleChange({
+      target: {
+        name: "dpCd", // 여러 값을 배열에 넣음
+        value: updatedDepDto?._values[2], // 값을 배열에 넣음
+      }
+    }, index, {
+      target: {
+        name: "dpNm", // 여러 값을 배열에 넣음
+        value: updatedDepDto?._values[1], // 값을 배열에 넣음
+      }
+    });
+    // setTimeout(() => {
+    //   console.log('22222');
+    //   handleChange({
+    //     target: {
+    //       name: "dpNm", // 여러 값을 배열에 넣음
+    //       value: updatedDepDto?._values[1], // 값을 배열에 넣음
+    //     }
+    //   }, index);
+    //   onClose();
+    // }, 1);
+    onClose();
   };
 
   useEffect(() => {
     getCorpNmList();
   }, []);
-
-  //조직도 조회
-  const onClickSearchText = async () => {
-    const response = await getDepOrganizationApi(corpCd, "");
-    //setOrg(response.data);
-    console.log(response.data);
-  };
 
   return (
     <Grid
@@ -51,35 +100,58 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={6}>
-      <Select
-              placeholder="전체"
-              onChange={(e)=> {
-                console.log('onchange', index);
-                //handleChange(e, index); 
-                setCorpCd(e.target.value);}}
-            >
-              {corpNm.map((item, index) => (
-                <option key={index} name="coCd" value={item.coCd}>
-                  {item.coNm}
-                </option>
-              ))}
-            </Select>
+        <Select
+          placeholder="전체"
+          name="coCd"
+          onChange={(e) => {
+            handleChange(e, index);
+            setCorpCd(e.target.value)
+          }}
+        >
+          {corpNm.map((item, index) => (
+            <option key={index} name="coCd" value={item.coCd}>
+              {item.coNm}
+            </option>
+          ))}
+        </Select>
       </GridItem>
       <GridItem colStart={6} colEnd={13}>
         <Input
-          placeholder="이름"
+          name="dpNm"
+          id="dpNm"
+          value={column?.dpNm}
+          placeholder="부서명"
           size="md"
           borderRadius="14px"
-          isReadOnly={editState === "read"}
+          isReadOnly={true}
+        />
+        <Input
+          name="dpCd"
+          id="dpCd"
+          value={column?.dpCd}
+          placeholder="부서코드"
+          display="none"
         />
       </GridItem>
       <GridItem colStart={13} colEnd={14}>
-          <Button bg={'#E2E8F0'}
+        <Button bg={'#E2E8F0'}
           borderRadius={'10px'}
           fontWeight={600}
           id="postNumBtn"
           onClick={() => {
-            
+            if (editState === "deptInsert" || editState === "deptUpdate") {
+              if (corpCd.length > 0) {
+                getOrg();
+                onOpen();
+              } else {
+                setAlertInfo({
+                  isOpen: true,
+                  status: 'warning',
+                  title: "회사를 선택해주세요.",
+                  width: 'fit-content'
+                });
+              }
+            }
           }}>asd</Button>
       </GridItem>
 
@@ -91,7 +163,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
           placeholder="사번"
           value={column?.dpGrpNum}
           readOnly={editState === "read"}
-          onChange={(e)=>handleChange(e, index)}
+          onChange={(e) => handleChange(e, index)}
           isRequired={true}
           pk={column?.dpGrpcd}
         />
@@ -99,44 +171,44 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
 
       <GridItem colStart={1} colEnd={7}>
         <FormRadio
-              title={'회사구분'}
-              name={'coType'}
-              defaultValue={column?.coType}
-              pk={column?.dpGrpcd}
-              onChange={handleChange}
-              readOnly={editState === "read"}
-              isRequired={true}
-              values={[
-                {
-                  value: "DGA0001",
-                  name: '주회사'
-                },
-                {
-                  value: 'DGA0002',
-                  name: '부회사'
-                }]}
-            />
+          title={'회사구분'}
+          name={'coType'}
+          defaultValue={column?.coType}
+          pk={column?.dpGrpcd}
+          onChange={(e) => handleChange(e, index)}
+          readOnly={editState === "read"}
+          isRequired={true}
+          values={[
+            {
+              value: "DGA0001",
+              name: '주회사'
+            },
+            {
+              value: 'DGA0002',
+              name: '부회사'
+            }]}
+        />
       </GridItem>
 
       <GridItem colStart={8} colEnd={14}>
-      <FormRadio
-              title={'부서구분'}
-              name={'dpType'}
-              defaultValue={column?.dpType}
-              pk={column?.dpGrpcd}
-              onChange={handleChange}
-              readOnly={editState === "read"}
-              isRequired={true}
-              values={[
-                {
-                  value: "DGB0001",
-                  name: '주부서'
-                },
-                {
-                  value: "DGB0002",
-                  name: '부부서'
-                }]}
-            />
+        <FormRadio
+          title={'부서구분'}
+          name={'dpType'}
+          defaultValue={column?.dpType}
+          pk={column?.dpGrpcd}
+          onChange={(e) => handleChange(e, index)}
+          readOnly={editState === "read"}
+          isRequired={true}
+          values={[
+            {
+              value: "DGB0001",
+              name: '주부서'
+            },
+            {
+              value: "DGB0002",
+              name: '부부서'
+            }]}
+        />
       </GridItem>
 
       <GridItem>
@@ -145,7 +217,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={handleChange} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"} />
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -154,7 +226,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-        <SelectCommon handleChange={handleChange} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"} />
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -163,7 +235,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={handleChange} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"} />
       </GridItem>
 
       <GridItem colStart={8} colEnd={10}>
@@ -172,7 +244,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
-        <SelectCommon handleChange={handleChange} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"} />
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -181,7 +253,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={handleChange} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} />
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} />
       </GridItem>
 
       <GridItem colStart={8} colEnd={14}>
@@ -191,7 +263,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
           name="jobDetail"
           value={column?.payMail}
           readOnly={editState === "read"}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, index)}
           isRequired={false}
           pk={column?.dpGrpcd}
         />
@@ -212,7 +284,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
           style={{ color: "gray" }}
           value={minTimeDate(column?.joinDt)}
           isReadOnly={editState === "read"}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, index)}
         />
       </GridItem>
 
@@ -237,7 +309,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
           placeholder="팩스번호를 입력하세요."
           value={column?.faxNum}
           readOnly={editState === "read"}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, index)}
           isRequired={false}
           pk={column?.dpGrpcd}
 
@@ -252,20 +324,45 @@ const EmpDeptInput = ({ column, handleChange, editState, index }) => {
           placeholder="전화번호를 입력하세요."
           value={column?.empNm}
           readOnly={editState === "read"}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, index)}
           isRequired={false}
           pk={column?.dpGrpcd}
         />
       </GridItem>
 
       <AddrBox
-          title={'회사주소'}
-          data={column}
-          //setData={setCorp}
-          //dataPk={coCd}
-          editState={editState != "read" && 'update'}
-          isRequired={true}
-        />
+        title={'회사주소'}
+        data={column}
+        //setData={setCorp}
+        //dataPk={coCd}
+        editState={editState != "read" && 'update'}
+        isRequired={true}
+      />
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>상위부서</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <DepUpperCd
+              value={org}
+              getValue={getValue}
+            />
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <Box ref={infiniteScrollRef} h={"1px"} />
+            )}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={click}>
+              선택
+            </Button>
+            <Button onClick={onClose}>취소</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Grid>
   );
 };

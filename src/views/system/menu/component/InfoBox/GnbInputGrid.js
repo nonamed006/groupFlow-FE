@@ -7,7 +7,6 @@ import { AttachmentIcon } from '@chakra-ui/icons';
 import { PORT } from 'set';
 import FormInput from 'common/component/FormInput';
 import FormRadio from 'common/component/FormRadio';
-import FormSort from 'common/component/FormSort';
 import api from 'api/Fetch';
 import Upload from 'common/component/Upload';
 

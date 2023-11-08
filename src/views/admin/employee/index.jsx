@@ -14,11 +14,16 @@ const Employee = () => {
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
+  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
+  const [empCdTmp, setEmpCdTmp] = useState("");
 
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
 
   const [searchCorp, setSearchCorp] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [alertInfo, setAlertInfo] = useState({
 		isOpen: false
@@ -39,7 +44,7 @@ const Employee = () => {
       dpNm: "",
       dpType: "",
       dpTypeNm: "",
-      empCd: "",
+      empCd: empCdTmp,
       empTypeCd: "",
       empTypeNm: "",
       fax: "",
@@ -60,9 +65,9 @@ const Employee = () => {
   ]);
 
   //사원 목록 조회
-  const getEmpList = (searchCorp, searchWorkType, searchNm) => {
+  const getEmpList = (srhCorp, srhWorkType, srhNm) => {
     fetch(
-      `${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`,
+      `${PORT}/emp/getEmp?srhCorp=${srhCorp}&srhWorkType=${srhWorkType}&srhNm=${srhNm}`,
       {
         method: "GET",
         headers: {
@@ -96,6 +101,7 @@ const Employee = () => {
 
   // 사원 목록 클릭시
   const onClickRow = (empList) => {
+    setEmpCdTmp(empList.empCd);
     resetInput();
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
@@ -103,6 +109,8 @@ const Employee = () => {
 
   // input 값 초기화
   const resetInput = () => {
+    setImgBase64([]);
+
     setEmpDetail({
       empNm: "",
       mailId: "",
@@ -136,7 +144,7 @@ const Employee = () => {
         dpNm: "",
         dpType: "",
         dpTypeNm: "",
-        empCd: "",
+        empCd: empCdTmp, //수정필요
         empTypeCd: "",
         empTypeNm: "",
         fax: "",
@@ -186,7 +194,14 @@ const Employee = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
+          setAlertInfo({
+            isOpen : true,
+            status : 'success',
+            title : res.resultMsg,
+            width : 'fit-content'
+          });
           setEditState("read");
+          setIsReload(!isReload);
         } else {
         }
       });
@@ -218,6 +233,7 @@ const Employee = () => {
 
   useEffect(() => {
     resetInput();
+    setSelectedIndex(undefined);
     getEmpList("", "", "");
   }, [isReload]);
 
@@ -241,6 +257,8 @@ const Employee = () => {
               resetInput={resetInput}
               setEditState={setEditState}
               editState={editState}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>
@@ -258,6 +276,12 @@ const Employee = () => {
               editState={editState}
               updateEmpInfo={updateEmpInfo}
               setAlertInfo={setAlertInfo}
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
             />
           </GridItem>
         </Grid>

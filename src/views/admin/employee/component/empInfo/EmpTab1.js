@@ -22,7 +22,6 @@ import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 
 const EmpTab1 = (props) => {
-  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
@@ -31,7 +30,7 @@ const EmpTab1 = (props) => {
   // file 값 받기
   const handleChangeFile = (e) => {
     props.setImgFile(e.target.files);
-    setImgBase64([]);
+    props.setImgBase64([]);
     for (var i = 0; i < e.target.files.length; i++) {
       if (e.target.files[i]) {
         let reader = new FileReader();
@@ -43,7 +42,7 @@ const EmpTab1 = (props) => {
           if (base64) {
             var base64Sub = base64.toString();
 
-            setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
+            props.setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
           }
         };
       }
@@ -69,7 +68,7 @@ const EmpTab1 = (props) => {
                 w="150px"
                 h="200px"
                 fallbackSrc="https://via.placeholder.com/150"
-                src={imgBase64}
+                src={props.imgBase64}
                 alt="사원사진"
                 border="1px solid lightgray"
               />
@@ -296,11 +295,11 @@ const EmpTab1 = (props) => {
             isRequired={true}
             values={[
               {
-                value: 'true',
+                value: '1',
                 name: '사용'
               },
               {
-                value: 'false',
+                value: '0',
                 name: '미사용'
               }]}
 

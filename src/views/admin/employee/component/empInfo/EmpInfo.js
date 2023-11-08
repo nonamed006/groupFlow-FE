@@ -20,7 +20,6 @@ import { PORT } from "set";
 import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
 import EmpInfoDel from "../empDel/EmpInfoDel";
-import { getCookie } from "common/common";
 const EmpInfo = (props) => {
 
   const [tabStatus, setTabStatus] = useState(1);
@@ -32,8 +31,7 @@ const EmpInfo = (props) => {
 
   // empDetail input value값 받기 이벤트
   const handleChange = (e) => {
-    //setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
-    props.setEmpDetail({ ...props.empDetail, [e.target.id]: e.target.value });
+    props.setEmpDetail({ ...props.empDetail, [e.target.name]: e.target.value });
   };
 
   // empDetail radio 값 받기 이벤트
@@ -45,19 +43,36 @@ const EmpInfo = (props) => {
   };
 
   //empDept input 값 받기
-  const empDeptHandleChange = (e, index) => {
-    props.setEmpDept(
-      [...props.empDept.map((emp, index_) => {
-        if (index_ === index) {
-          return {
-            ...emp,
-            ...{[e.target.name]: e.target.value}
+  const empDeptHandleChange = (e, index, e2) => {
+    if (!e2) {
+      props.setEmpDept(
+        [...props.empDept.map((emp, index_) => {
+          if (index_ === index) {
+            return {
+              ...emp,
+              ...{ [e.target.name]: e.target.value }
+            }
+          } else {
+            return emp
           }
-        } else {
-          return emp
-        }
-      }),
-      ]);
+        }),
+        ]);
+    } else {
+      props.setEmpDept(
+        [...props.empDept.map((emp, index_) => {
+          if (index_ === index) {
+            return {
+              ...emp,
+              ...{ [e.target.name]: e.target.value },
+              ...{ [e2.target.name]: e2.target.value }
+            }
+          } else {
+            return emp
+          }
+        }),
+        ]);
+    }
+
     //props.setEmpDept(props.empDept[0].e.target.name);
   }
 
@@ -103,19 +118,46 @@ const EmpInfo = (props) => {
       });
   };
 
+  //사원 조직 정보 추가
+  const insertEmpDep = () => {
+    fetch(
+      `${PORT}/emp/insertEmpDep`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.empDept)
+        // res에 결과가 들어옴
+      }
+    ).then((res) => res.json())
+      .then((res) => {
+        props.setAlertInfo({
+          isOpen: true,
+          status: 'success',
+          title: res.resultMsg,
+          width: 'fit-content'
+        });
+        props.setEditState("read");
+      });
+  }
+
   //사원 삭제
   const empDelete = () => {
-    let cookie = getCookie("Authorization");
     fetch(`${PORT}/emp/deleteEmp/${props.empDetail.empCd}`, {
       method: "GET",
       headers: {
         'Content-Type': "application/json; charset=utf-8",
-        'Authorization': cookie
       }
     }).then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
-          alert("삭제되었습니다.");
+          props.setAlertInfo({
+            isOpen: true,
+            status: 'success',
+            title: "삭제되었습니다.",
+            width: 'fit-content'
+          });
           onClose();
           props.setIsReload(!props.isReload);
         } else {
@@ -134,6 +176,7 @@ const EmpInfo = (props) => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={() => {
+                  props.setEditState("read")
                   setTabStatus(1);
                 }}
               >
@@ -144,6 +187,7 @@ const EmpInfo = (props) => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={() => {
+                  props.setEditState("read")
                   setTabStatus(2);
                 }}
               >
@@ -158,8 +202,13 @@ const EmpInfo = (props) => {
                         <Button
                           variant="action"
                           onClick={() => {
-                            if (Object.keys(props.empDetail).length < 1) {
-                              alert("사원을 선택해주세요.");
+                            if (props.empDetail.empNm === "") {
+                              props.setAlertInfo({
+                                isOpen: true,
+                                status: 'error',
+                                title: "사원을 선택해주세요.",
+                                width: 'fit-content'
+                              });
                               return;
                             }
                             setModalType(1);
@@ -172,8 +221,13 @@ const EmpInfo = (props) => {
                         <Button
                           variant="action"
                           onClick={() => {
-                            if (Object.keys(props.empDetail).length < 1) {
-                              alert("사원을 선택해주세요.");
+                            if (props.empDetail.empNm === "") {
+                              props.setAlertInfo({
+                                isOpen: true,
+                                status: 'error',
+                                title: "사원을 선택해주세요.",
+                                width: 'fit-content'
+                              });
                               return;
                             }
                             setModalType(2);
@@ -186,8 +240,13 @@ const EmpInfo = (props) => {
                         <Button
                           variant="action"
                           onClick={() => {
-                            if (Object.keys(props.empDetail).length < 1) {
-                              alert("사원을 선택해주세요.");
+                            if (props.empDetail.empNm === "") {
+                              props.setAlertInfo({
+                                isOpen: true,
+                                status: 'error',
+                                title: "사원을 선택해주세요.",
+                                width: 'fit-content'
+                              });
                               return;
                             }
                             setModalType(3);
@@ -201,12 +260,17 @@ const EmpInfo = (props) => {
                       <Button
                         variant="action"
                         onClick={() => {
-                          if (Object.keys(props.empDetail).length < 1) {
-                            alert("사원을 선택해주세요.");
+                          if (props.empDetail.empNm === "") {
+                            props.setAlertInfo({
+                              isOpen: true,
+                              status: 'error',
+                              title: "사원을 선택해주세요.",
+                              width: 'fit-content'
+                            });
                             return;
                           }
                           props.resetInput();
-                          props.setEditState("deptUpdate");
+                          props.setEditState("deptInsert");
                           props.setEmpDept([...props.empDept]);
                         }}
                       >
@@ -217,8 +281,13 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        if (Object.keys(props.empDetail).length < 1) {
-                          alert("사원을 선택해주세요.");
+                        if (props.empDetail.empNm === "") {
+                          props.setAlertInfo({
+                            isOpen: true,
+                            status: 'error',
+                            title: "사원을 선택해주세요.",
+                            width: 'fit-content'
+                          });
                           return;
                         }
                         if (tabStatus === 1) {
@@ -233,8 +302,13 @@ const EmpInfo = (props) => {
                     <Button
                       variant="action"
                       onClick={() => {
-                        if (Object.keys(props.empDetail).length < 1) {
-                          alert("사원을 선택해주세요.");
+                        if (props.empDetail.empNm === "") {
+                          props.setAlertInfo({
+                            isOpen: true,
+                            status: 'error',
+                            title: "사원을 선택해주세요.",
+                            width: 'fit-content'
+                          });
                           return;
                         }
                         if (tabStatus === 1) {
@@ -261,7 +335,7 @@ const EmpInfo = (props) => {
                           }
                         } else if (tabStatus === 2) {
                           if (props.editState === "deptInsert") {
-
+                            insertEmpDep();
                           } else if (props.editState === "deptUpdate") {
 
                           }
@@ -275,6 +349,7 @@ const EmpInfo = (props) => {
                       onClick={() => {
                         props.setEditState("read");
                         props.resetInput();
+                        props.setSelectedIndex(undefined);
                       }}
                     >
                       취소
@@ -288,6 +363,8 @@ const EmpInfo = (props) => {
             <TabPanel>
               <EmpTab1
                 empDetail={props.empDetail}
+                imgBase64={props.imgBase64}
+                setImgBase64={props.setImgBase64}
                 setImgFile={props.setImgFile}
                 handleChange={handleChange}
                 handleRadioChange={handleRadioChange}
@@ -295,7 +372,7 @@ const EmpInfo = (props) => {
               />
             </TabPanel>
             <TabPanel>
-              <EmpTab2 empDept={props.empDept} handleChange={empDeptHandleChange} editState={props.editState} />
+              <EmpTab2 empDept={props.empDept} setEmpDept={props.setEmpDept} setAlertInfo={props.setAlertInfo} handleChange={empDeptHandleChange} editState={props.editState} isLoading={props.isLoading} setIsLoading={props.setIsLoading} />
             </TabPanel>
           </TabPanels>
         </Tabs>

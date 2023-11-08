@@ -30,8 +30,6 @@ const EmpCard = (props) => {
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
 	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-	const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
-  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   return (
     <div>
@@ -69,9 +67,6 @@ const EmpCard = (props) => {
             명
           </Text>
           <Spacer />
-          <Button variant="outline" onClick={() => {isDrawerOpen()}}>
-            test
-          </Button>
           <Button
             variant="action"
             onClick={() => {
@@ -88,7 +83,7 @@ const EmpCard = (props) => {
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
-                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
+                backgroundColor={props.selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);
@@ -96,7 +91,7 @@ const EmpCard = (props) => {
                 onClick={() => {
                   props.resetInput();
                   props.onClickRow(column);
-                  setSelectedIndex(index);
+                  props.setSelectedIndex(index);
                 }}
               >
                 <Td
@@ -138,10 +133,6 @@ const EmpCard = (props) => {
           </Tbody>
         </Table>
       </Box>
-      {isDrawer ?
-      <BottomDrawer cnt={drawerCnt} isDrawerClose={isDrawerClose}/>
-      : ""
-    }
     </div>
   );
 };

@@ -131,7 +131,7 @@ const DepBasic = (props) => {
           <Button
             onClick={() => {
               if (props.editState === "update") {
-                getOrg();
+                getOrg(); 
                 onOpen();
               }
             }}
