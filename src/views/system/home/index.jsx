@@ -32,14 +32,11 @@ const HomePage = () => {
             </Box>
             {/* 검색창 */}
             <Box
-                position={'absolute'}
                 display={'flex'}
                 alignItems={'center'}
                 justifyContent={'center'}
-                top={0}
-                right={0}
-                bottom={0}
                 w={'100%'}
+                h={'100%'}
             >
                 <SearchBox />
             </Box>

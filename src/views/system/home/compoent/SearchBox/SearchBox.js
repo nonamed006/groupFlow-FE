@@ -28,14 +28,13 @@ const SearchBox = () => {
         } else {
             setResultMenuList([]);
         }
-
     };
 
     return (
         <Box
-            position={'absolute'}
             w={'30%'}
             mb={'10%'}
+            position={'absolute'}
         >
             <Input
                 borderRadius="5px"

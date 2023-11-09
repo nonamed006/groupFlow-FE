@@ -15,7 +15,7 @@ const ResultCard = ({ menuInfo, index, type, content }) => {
                 onMouseOut={onMouseOut}
                 onMouseOver={() => { type !== 'none' && onMouseOver(index) }}
                 rounded='lg'
-                h={'80%'}
+                h={'50px'}
                 display={'inline-block'}
                 p='3'
                 onClick={() => { }}
@@ -33,7 +33,7 @@ const ResultCard = ({ menuInfo, index, type, content }) => {
                             />
                             <Text
                                 w={'93%'}
-                                fontSize="18px"
+                                fontSize="17px"
                                 fontWeight="500"
                                 lineHeight="100%"
                                 color={textColor}
