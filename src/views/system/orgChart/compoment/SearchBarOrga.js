@@ -52,7 +52,11 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
                 />
             </Box>
             <Box w={'10%'}>
-                <Button variant="brand" onClick={() => handleSearchBtn()}>{'검색'}</Button>
+                <Button 
+                    variant="brand" 
+              		borderRadius={"10px"}
+              		fontWeight={"600"} 
+                    onClick={() => handleSearchBtn()}>{'검색'}</Button>
             </Box>
 
         </Flex>
