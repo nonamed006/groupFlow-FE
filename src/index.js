@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
+import LoginPage from "views/auth/login";
 
 const store = createStore(rootReducer);
 
@@ -32,7 +33,6 @@ ReactDOM.render(
 						<Route path={`/err/:type`} component={ErrorPage} />
 						{/*없는 url 입력시 에러 페이지로(NotFound) */}
 						<Route component={ErrorPage} />
-
 						{/* 로그인 안했을때 */}
 						<Redirect from='/' to='/auth/login' />
 					</Switch>

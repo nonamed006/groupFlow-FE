@@ -1,55 +1,75 @@
-import { Box, Flex, Image, Input, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Box, Input } from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
+import { debounce } from 'lodash';
+import api from 'api/Fetch';
 
 
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
-    const [menuList, setMenuList] = useState(['회사관리', '사원관리', '부서관리', '메뉴관리', '권한그룹 설정', '권한설정']);
-    const [recommendList, setRecommendList] = useState();
+    const [resultMenuList, setResultMenuList] = useState([]);
 
-    const onChangeFilter = (keyword) => {
-        setKeyword(keyword);
-        let list = [];
-        menuList.filter((item) => {
-            item.includes(keyword) && list.push(item);
-        });
-        setRecommendList(list);
+    const dpGrpCd = 'DG230006';
+
+    const handleChange = (e) => {
+        setKeyword(e.target.value);
+        delayedSearch(e.target.value);
+    };
+
+    const delayedSearch = useCallback(
+        debounce(async (keyword) => fetchMenuList(keyword), 600),
+        []
+    );
+
+    const fetchMenuList = async (keyword) => {
+        if (keyword === undefined || keyword === 'undefined' || keyword === '') return setResultMenuList([]);
+        let res = await api.roleMenu.getRoleMenuBySearch(dpGrpCd, keyword);
+        if (res.status === 200) {
+            setResultMenuList(res.data);
+        } else {
+            setResultMenuList([]);
+        }
     };
 
     return (
         <Box
             position={'absolute'}
-            w={'28%'}
+            w={'30%'}
+            mb={'10%'}
         >
             <Input
                 borderRadius="5px"
                 placeholder='메뉴통합검색'
                 bg={'white'}
+                h={'50px'}
+                fontWeight={500}
+                fontSize={'xl'}
                 size='lg'
                 w={'100%'}
                 boxShadow={'lg'}
                 border={'5px'}
-                onChange={(e) => onChangeFilter(e.target.value)}
+                onChange={(e) => handleChange(e)}
                 name={'keyword'}
             />
             {
                 keyword &&
                 <Box
                     position={'absolute'}
-                    maxH={'150px'}
+                    maxH={'350px'}
                     bg={'white'}
                     w={'100%'}
                     borderRadius="5px"
+                    opacity={'95%'}
+                    overflowY={'auto'}
                 >
                     {
-                        recommendList.length > 0 ?
-                            recommendList.map((menu, index) => {
-                                return <ResultCard content={menu} index={index} />
+                        resultMenuList.length > 0 ?
+                            resultMenuList.map((menuInfo, index) => {
+                                return <ResultCard menuInfo={menuInfo} index={index} />
                             })
-                            :
+                            : 
                             <ResultCard content={'검색 결과가 없거나, 해당 메뉴에 대한 접근 권한이 없습니다.'} type={'none'} />
-                    }
+                      }
                 </Box>
             }
         </Box>
