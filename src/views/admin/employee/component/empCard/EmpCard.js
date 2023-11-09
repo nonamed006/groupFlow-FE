@@ -30,8 +30,6 @@ const EmpCard = (props) => {
   //테이블 헤더
   const headerGroups = ["이름", "ID", "최초입사일"];
 	const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
-	const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
-  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   return (
     <div>
@@ -69,9 +67,6 @@ const EmpCard = (props) => {
             명
           </Text>
           <Spacer />
-          <Button variant="outline" onClick={() => {isDrawerOpen()}}>
-            test
-          </Button>
           <Button
             variant="action"
             onClick={() => {
@@ -82,13 +77,13 @@ const EmpCard = (props) => {
             추가
           </Button>
         </Flex>
-        <Table variant="simple" color="gray.500">
+        <Table variant="simple" w={'100%'} colorScheme={'facebook'}>
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups}/> 
           <Tbody>
             {props.empList?.map((column, index) => (
               <Tr
-                backgroundColor={selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
+                backgroundColor={props.selectedIndex===index ? "navy.50" : mouseOverIndex === index ? 'gray.200': "white"}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => {
                   onMouseOver(index);
@@ -96,39 +91,39 @@ const EmpCard = (props) => {
                 onClick={() => {
                   props.resetInput();
                   props.onClickRow(column);
-                  setSelectedIndex(index);
+                  props.setSelectedIndex(index);
                 }}
               >
                 <Td
-                  borderColor="gray.300"
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
                     <Avatar src="" w="30px" h="30px" me="8px" />
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.empNm}
                     </Text>
                   </Flex>
                 </Td>
                 <Td
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.300"
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.loginId}
                     </Text>
                   </Flex>
                 </Td>
                 <Td
-                  fontSize={{ sm: "14px" }}
-                  minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                  borderColor="gray.300"
+                  fontWeight="500"
+                  fontSize={'sm'}
+                  textAlign="center"
                 >
                   <Flex align="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="600">
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {minTimeDate(column.joinDt)}
                     </Text>
                   </Flex>
@@ -138,10 +133,6 @@ const EmpCard = (props) => {
           </Tbody>
         </Table>
       </Box>
-      {isDrawer ?
-      <BottomDrawer cnt={drawerCnt} isDrawerClose={isDrawerClose}/>
-      : ""
-    }
     </div>
   );
 };

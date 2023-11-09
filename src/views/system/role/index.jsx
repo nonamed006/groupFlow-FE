@@ -7,7 +7,7 @@ import RoleEmp from "./RoleEmp";
 const Role = () => {
 
 	return (
-        <Box borderRadius="lg" h="500px" mt={{ base: '130px', md: '130px', xl: '120px' }} px={'20px'} pt={'20px'}>
+        <Box borderRadius="lg" h="full">
             <Tabs colorScheme="brandScheme">
                 <TabList>
                     <Flex align={{ sm: "flex-start", lg: "center" }} w="100%">

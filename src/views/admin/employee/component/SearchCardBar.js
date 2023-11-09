@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,15 +10,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import SelectCommon from "common/component/SelectCommon";
+import api from "api/Fetch";
 
 const SearchCardBar = (props) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
-  const [selected, setSelected] = useState("");
+  const [corpNm, setCorpNm] = useState([]);
+  const [srhCorp, setSrhCorp] = useState("");
+  const [srhWorkType, setSrhWorkType] = useState("");
+  const [srhNm, setSrhNm] = useState("");
 
-  const handleSelect = (e) => {
-    setSelected(e.target.value);
+  const getCorpNmList = async () => {
+    const response = await api.dep.getCorpNmListApi();
+    setCorpNm(response.data);
   };
+
+  useEffect(() => {
+    getCorpNmList();
+  }, []);
 
   return (
     <div>
@@ -39,10 +48,17 @@ const SearchCardBar = (props) => {
             </div>
           </GridItem>
           <GridItem colSpan={2}>
-            <Select placeholder="전체" onChange={handleSelect}>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+          <Select
+              placeholder="전체"
+              onChange={(e) => {
+                props.setSearchCorp(e.target.value);
+              }}
+            >
+              {corpNm.map((item, index) => (
+                <option key={index} name="coCd" value={item.coCd}>
+                  {item.coNm}
+                </option>
+              ))}
             </Select>
           </GridItem>
           <GridItem colStart={5} colEnd={6}>
@@ -81,10 +97,11 @@ const SearchCardBar = (props) => {
               placeholder="검색어를 입력하세요."
               size="md"
               borderRadius="14px"
+              onChange={(e)=>setSrhNm(e.target.value)}
             />
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
-            <Button variant="brand" onClick={()=>props.getEmpList("", "", "")}>검색</Button>
+            <Button variant="brand" onClick={()=>props.getEmpList(srhCorp, srhWorkType, srhNm)}>검색</Button>
           </GridItem>
         </Grid>
       </Box>

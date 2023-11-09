@@ -16,11 +16,12 @@ import {
   color,
 } from "@chakra-ui/react";
 import { minTimeDate } from "common/common";
+import FormInput from "common/component/FormInput";
+import FormRadio from "common/component/FormRadio";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 
 const EmpTab1 = (props) => {
-  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
@@ -29,7 +30,7 @@ const EmpTab1 = (props) => {
   // file 값 받기
   const handleChangeFile = (e) => {
     props.setImgFile(e.target.files);
-    setImgBase64([]);
+    props.setImgBase64([]);
     for (var i = 0; i < e.target.files.length; i++) {
       if (e.target.files[i]) {
         let reader = new FileReader();
@@ -41,7 +42,7 @@ const EmpTab1 = (props) => {
           if (base64) {
             var base64Sub = base64.toString();
 
-            setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
+            props.setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
           }
         };
       }
@@ -67,7 +68,7 @@ const EmpTab1 = (props) => {
                 w="150px"
                 h="200px"
                 fallbackSrc="https://via.placeholder.com/150"
-                src={imgBase64}
+                src={props.imgBase64}
                 alt="사원사진"
                 border="1px solid lightgray"
               />
@@ -78,6 +79,7 @@ const EmpTab1 = (props) => {
                 borderRadius="5px"
                 aria-label="Call Fred"
                 fontSize="20px"
+                visibility={props.editState === "read" ? "hidden" : "show"}
                 icon={<MdAttachFile />}
                 onClick={() => fileUploadBtn()}
               />
@@ -92,275 +94,216 @@ const EmpTab1 = (props) => {
           </Box>
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            개인메일
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
+        <GridItem colStart={8} colEnd={14}>
+          <FormInput
+            title={'개인메일'}
+            name="psnMail"
             id="psnMail"
-            fontSize="14px"
             placeholder="example@mail.com"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.psnMail}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
             onChange={props.handleChange}
+            isRequired={false}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            급여메일
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
+        <GridItem colStart={8} colEnd={14}>
+          <FormInput
+            title={"급여메일"}
+            name="payMail"
             id="payMail"
-            fontSize="14px"
             placeholder="example@mail.com"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.payMail}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
             onChange={props.handleChange}
+            isRequired={false}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600" >
-            최초입사일
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
+        <GridItem colStart={8} colEnd={14}>
+          <FormInput
+            title={"최초입사일"}
+            name="joinDt"
             id="joinDt"
-            fontSize="14px"
+            inputType="date"
             placeholder="Select Date and Time"
-            size="md"
-            type="date"
             style={{ color: "gray" }}
             value={minTimeDate(props.empDetail?.joinDt)}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
-
-        <GridItem colStart={8} colEnd={10} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            최종퇴사일
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14}>
-          <Input
+        
+        <GridItem colStart={8} colEnd={14}>
+          <FormInput
+            title={"최종퇴사일"}
             id="reDt"
-            fontSize="14px"
             placeholder="Select Date and Time"
-            size="md"
-            type="date"
+            inputType="date"
             style={{ color: "gray" }}
             value={minTimeDate(props.empDetail?.reDt)}
-            isReadOnly={true}
+            readOnly={true}
+            isRequired={false}
             onChange={props.handleChange}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colStart={1} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            이름
-            <span style={{color:'red', paddingLeft:'5px'}}>*</span>
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-          fontSize="14px"
+        <GridItem colStart={1} colEnd={7}>
+          <FormInput
+            title={"이름"}
+            name="empNm"
             id="empNm"
             placeholder="이름"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.empNm}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={10} rowSpan={8} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            주소
-          </Text>
-        </GridItem>
-        <GridItem colStart={10} colEnd={14} rowSpan={8}>
-          <Input
+        <GridItem colStart={8} colEnd={14} rowSpan={8}>
+          <FormInput
+            title={"주소"}
+            name="addr"
             id="addr"
-            fontSize="14px"
             placeholder="주소를 입력하세요"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.addr}
-            isReadOnly={props.editState === "read"}
             onChange={props.handleChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            성별
-          </Text>
-        </GridItem>
-        <GridItem colSpan={4} lineHeight="40px">
-          <RadioGroup value={props.empDetail.gender}>
-            <HStack spacing="24px">
-              <Radio
-                value="M"
-                id="M"
-                name="gender"
-                onChange={props.handleRadioChange}
-                isReadOnly={props.editState === "read"}
-              >
-                남성
-              </Radio>
-              <Radio
-                value="F"
-                id="F"
-                name="gender"
-                onChange={props.handleRadioChange}
-                isReadOnly={props.editState === "read"}
-              >
-                여성
-              </Radio>
-            </HStack>
-          </RadioGroup>
+        <GridItem colStart={1} colEnd={7} lineHeight="40px">
+        <FormRadio 
+            title={"성별"}
+            name="gender"
+            defaultValue={props.empDetail.gender}
+            pk={props.empDetail?.empCd}
+            onChange={props.handleRadioChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: 'M',
+                name: '남성'
+              },
+              {
+                value: 'F',
+                name: '여성'
+              }]}
+
+          />
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            메일ID
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-          fontSize="14px"
+        <GridItem colStart={1} colEnd={7}>
+          <FormInput
+            title={"메일ID"}
+            name="mailId"
             id="mailId"
             placeholder="메일ID"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.mailId}
-            isReadOnly={
+            readOnly={
               props.editState === "read" || props.editState === "update"
             }
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            로그인ID
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-          fontSize="14px"
+        <GridItem colStart={1} colEnd={7}>
+          <FormInput
+            title={"로그인ID"}
+            name="loginId"
             id="loginId"
             placeholder="로그인ID"
-            size="md"
-            borderRadius="5px"
             value={props.empDetail?.loginId}
-            isReadOnly={
+            readOnly={
               props.editState === "read" || props.editState === "update"
             }
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            로그인 비밀번호
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
+        <GridItem colStart={1} colEnd={7}>
           <InputGroup>
             <InputRightElement pointerEvents='none'>
               <LockIcon color='gray.300' />
             </InputRightElement>
-            <Input id="loginPw"
-              size="md"
-              borderRadius="5px"
+            <FormInput 
+              title={"로그인 비밀번호"}
+              id="loginPw"
               name="loginPw"
-              type="password"
-              //value={props.empDetail?.loginPw}
-              isReadOnly={props.editState === "read" || props.editState === "update"}
-              onChange={props.handleChange} />
+              inputType="password"
+              readOnly={props.editState === "read" || props.editState === "update"}
+              onChange={props.handleChange} 
+              isRequired={true}
+              pk={props.empDetail?.empCd}
+            />
           </InputGroup>
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            결재 비밀번호
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
+        <GridItem colStart={1} colEnd={7}>
           <InputGroup>
             <InputRightElement pointerEvents='none'>
               <LockIcon color='gray.300' />
             </InputRightElement>
-            <Input
+            <FormInput
+            title={"결재 비밀번호"}
             id="signPw"
-            size="md"
-            borderRadius="5px"
-            type="password"
-            //value={props.empDetail?.signPw}
-            isReadOnly={props.editState === "read" || props.editState === "update"}
+            inputType="password"
+            readOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
           </InputGroup>
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            휴대전화
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7}>
-          <Input
-          fontSize="14px"
+        <GridItem colStart={1} colEnd={7}>
+          <FormInput
+            title={"휴대전화"}
             id="empTel"
-            placeholder="000-0000-0000"
-            size="md"
-            borderRadius="5px"
             name="empTel"
+            placeholder="000-0000-0000"
             value={props.empDetail?.empTel}
-            isReadOnly={props.editState === "read"}
+            readOnly={props.editState === "read"}
             onChange={props.handleChange}
+            isRequired={true}
+            pk={props.empDetail?.empCd}
           />
         </GridItem>
 
-        <GridItem colSpan={2} lineHeight="40px">
-          <Text fontSize="sm" fontWeight="600">
-            계정사용
-          </Text>
-        </GridItem>
-        <GridItem colStart={3} colEnd={7} lineHeight="40px">
-          <RadioGroup value={props.empDetail?.useYn?.toString()}>
-            <HStack spacing="24px">
-              <Radio
-                value="1"
-                name="useYn"
-                onChange={props.handleRadioChange}
-                isReadOnly={props.editState === "read"}
-              >
-                사용
-              </Radio>
-              <Radio
-                value="0"
-                name="useYn"
-                onChange={props.handleRadioChange}
-                isReadOnly={props.editState === "read"}
-              >
-                미사용
-              </Radio>
-            </HStack>
-          </RadioGroup>
+        <GridItem colStart={1} colEnd={7} lineHeight="40px">
+          <FormRadio 
+            title={"계정사용"}
+            name="useYn"
+            defaultValue={props.empDetail?.useYn?.toString()}
+            pk={props.empDetail?.empCd}
+            onChange={props.handleRadioChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: '1',
+                name: '사용'
+              },
+              {
+                value: '0',
+                name: '미사용'
+              }]}
+
+          />
         </GridItem>
       </Grid>
     </div>

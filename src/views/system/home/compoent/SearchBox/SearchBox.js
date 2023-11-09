@@ -4,7 +4,6 @@ import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
 
-
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
@@ -29,6 +28,7 @@ const SearchBox = () => {
         } else {
             setResultMenuList([]);
         }
+
     };
 
     return (

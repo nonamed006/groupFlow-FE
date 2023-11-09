@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
-import { getDepOrganizationApi } from "api/dep/DepApi";
+import api from "api/Fetch";
 import CommonAlert from "common/component/CommonAlert";
 
 const Test = () => {
@@ -27,7 +27,10 @@ const Test = () => {
   //조직도 조회
   const onClickSearchText = async () => {
     setIsLoading(true);
-    const response = await getDepOrganizationApi(selectedCoCd, searchText);
+    const response = await api.dep.getDepOrganizationApi(
+      selectedCoCd,
+      searchText
+    );
     setOrg(response.data);
     setIsLoading(false);
   };
@@ -41,9 +44,10 @@ const Test = () => {
   }, [test]);
 
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+    <Box h={'full'}>{/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
       <Grid
-        h={"500px"}
+        // h={"500px"}
+        h={'full'} // 혜윤 수정
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
         gap={5}
@@ -64,7 +68,7 @@ const Test = () => {
             isLoading={isLoading}
           />
         </GridItem>
-        <GridItem colSpan={4} rowSpan={5}>
+        <GridItem colSpan={5} rowSpan={5}>
           <DepInfo
             setIsLoading={setIsLoading}
             isLoading={isLoading}

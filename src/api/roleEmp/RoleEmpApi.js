@@ -1,10 +1,10 @@
 import { getPromise } from "api/Fetch";
 
-// const getPromise = async (urlParam, methodParam) => {
-//     return await fetch(`${PORT}/${urlParam}`, { method: methodParam })
-//     .then((response) => response.json())
-//     .then((responseJson) => responseJson);
-// }
+/**
+ * 작업명 : 권한 설정 - 사용자 Api
+ * 작업자 : 이혜윤
+ */
+
 const roleEmp = {
     /**
      * 작업명 : 회사 + 부서 + 사원 목록 조회(Object형)

@@ -1,6 +1,5 @@
 import { Box } from "@chakra-ui/react";
 import RealGrid from "../RealGrid";
-import { useState } from "react";
 
 const LnbGridList = ({list, setMenuDetail}) => {
     return(

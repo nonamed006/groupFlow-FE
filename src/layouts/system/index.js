@@ -9,7 +9,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
 import CommonAlert from "common/component/CommonAlert";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { SidebarContext } from "contexts/SidebarContext";
+import "../../assets/css/Sidebar.css"
 
 /*
 layouts/admin/index.js
@@ -18,7 +19,6 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
-  const history  = useHistory();
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -137,88 +137,64 @@ export default function Dashboard(props) {
   document.documentElement.dir = "ltr";
   const { onOpen } = useDisclosure();
   const [collapse, setCollapse] = useState(false);
-  const [click, setClick] = useState(70);
-
-  // useEffect(() => {
-  // 	return setClick(collapse ? 300 : 70);
-  // }, [collapse]);
-
-  const tt = (coll, cl) => {
-    setClick(coll ? 300 : 70);
-    setCollapse(coll);
-  };
-
-  const test = useMemo(() => {
-    return tt(collapse);
-  }, [collapse, click]);
 
   return (
-    <HStack w="full" h="100vh">
-      <Flex
-        w={{ base: "100%", xl: "calc( 100% - 290px )" }}
-        h="full"
-        maxW={click}
-        bg="brand"
-        alignItems="start"
-        flexDirection="column"
-        justifyContent="space-between"
-        transition="ease-in-out .1s"
-        onMouseOver={() => setCollapse(true)}
-        onMouseLeave={() => setCollapse(false)}
-      >
-        <Sidebar
-          collapse={collapse}
-          routes={routes}
-          setCollapse={setClick}
-          {...rest}
-        />
-      </Flex>
-      <Flex
-        as="main"
-        w="full"
-        minHeight="100vh"
-        height="100%"
-        overflow="auto"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        position="relative"
-        borderRadius="3xl"
-      >
-        <Portal>
-          <Box>
-            <Navbar
-              onOpen={onOpen}
-              logoText={"Horizon UI Dashboard PRO"}
-              brandText={getActiveRoute(routes)}
-              secondary={getActiveNavbar(routes)}
-              message={getActiveNavbarText(routes)}
-              setAlertInfo={setAlertInfo}
-              fixed={fixed}
+    <Box h={'1000px'}>
+			<Box>
+				<SidebarContext.Provider
+					value={{
+						collapse,
+						setCollapse
+					}}>
+          <Box
+            className="box non_active"
+            w={'70px'}
+            h="full"
+            position={'absolute'}
+            zIndex={1}
+            overflowX={'hidden'}
+          >
+            <Sidebar
               routes={routes}
-              {...rest}
-            />
+              display='none'
+              {...rest} />
           </Box>
-        </Portal>
-        <Box
-          mx="auto"
-          p={{ base: "20px", md: "30px" }}
-          pe="20px"
-          minH="100vh"
-          pt="30px"
-        >
-          <Switch>
-            {getRoutes(routes)}
-            <Redirect from="/" to="/err/NotFound" />
-          </Switch>
-          {alertInfo.isOpen && (
-            <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
-          )}
-        </Box>
-        <Box>
-          <Footer />
-        </Box>
-      </Flex>
-    </HStack>
+					<Box
+						float='right'
+						w={'calc( 100% - 70px )' }
+						h={'1000px'}
+						overflow='auto'
+						position='relative'
+						maxHeight='100%'
+						as="main"
+            p={'30px'}
+          >
+							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
+                <Navbar
+                  onOpen={onOpen}
+                  logoText={"Horizon UI Dashboard PRO"}
+                  brandText={getActiveRoute(routes)}
+                  secondary={getActiveNavbar(routes)}
+                  message={getActiveNavbarText(routes)}
+                  setAlertInfo={setAlertInfo}
+                  routes={routes}
+                  {...rest}
+                />
+							</Box>
+						<Box
+              h={'800px'}
+            >
+              <Switch>
+                {getRoutes(routes)}
+              <Redirect from="/" to="/err/NotFound" />
+              </Switch>
+              {alertInfo.isOpen && (
+                <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+              )}
+            </Box>
+					</Box>
+				</SidebarContext.Provider>
+			</Box>
+		</Box>
   );
 }

@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
-const RealGrid = ({ org, setMenuDetail }) => {
+const RealGrid = ({ org, getValue }) => {
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
     { fieldName: "menuNm", dataType: "text" },
     { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
-    { fieldName: "iconField", name: "iconField" },
   ];
 
   var columns = [
@@ -39,7 +38,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "menuPath", false, null, null);
+    treeProvider.setRows(org, "menuPath", false, null, "depth");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -60,15 +59,16 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.columnByName("menuNm").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
- 
     treeView.treeOptions.iconImagesRoot = "/img/";
-    treeView.treeOptions.iconImages = ["department.png"];
+    treeView.treeOptions.iconImages = [
+      "department.png",
+    ];
     treeView.treeOptions.defaultIcon = 0;
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
-        let menuCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
-        setMenuDetail(menuCd);
+        let menuCd = grid._dataProvider._rowMap[clickData.dataRow];
+        getValue(menuCd);
         // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
         // if (depth !== "0") {
         //   let dpCdData =

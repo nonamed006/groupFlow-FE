@@ -11,7 +11,7 @@ import React from 'react';
 //onDelete: 삭제 함수 => onclick에 올 함수
 const BottomDrawer = ({ cnt, type, handler1, handler2, onDelete, isDrawerClose }) => {
     return (
-        <div className='drawerBody' style={{ diplay: cnt != null ? "hide" : "show" }}>
+        <div className='drawerBody' style={{ diplay: cnt != null ? "hide" : "show", zIndex: 1 }}>
             <Flex style={{ marginTop: "18px" }}>
                 <Text
                     color="#B9A2FF"
