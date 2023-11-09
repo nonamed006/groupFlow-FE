@@ -11,7 +11,7 @@ import React from "react";
 import Dropzone from "./Dropzone";
 
 export default function Upload(props) {
-  const { used, total, setOnDrag, upload, ...rest } = props;
+  const { used, total, setOnDrag, handleEvent, ...rest } = props;
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   
@@ -21,7 +21,7 @@ export default function Upload(props) {
           w={'100%'}
           h={'100%'}
           setOnDrag={setOnDrag}
-          upload={upload}
+          handleEvent={handleEvent}
           content={
             <Box>
               {/* <Icon as={MdUpload} w='80px' h='80px' color={brandColor} /> */}

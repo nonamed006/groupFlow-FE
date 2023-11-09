@@ -70,6 +70,26 @@ const menu = {
         return promise.then((responseJson) => responseJson);
 	},
 
+    modifyGnb: (data) => {
+        const promise = getPromise({
+            url: `menu/gnb-${data.menuCd}`,
+            method: 'PUT', 
+            body: JSON.stringify(data),
+        });
+
+        return promise.then((responseJson) => responseJson);
+    },
+
+    modifyLnb: (data) => {
+        const promise = getPromise({
+            url: `menu/lnb-${data.menuCd}`,
+            method: 'PUT', 
+            body: JSON.stringify(data),
+        });
+
+        return promise.then((responseJson) => responseJson);
+    },
+
     /**
      * 작업명 : 아이콘 목록 조회
      * 작업자 : 이혜윤
@@ -81,9 +101,15 @@ const menu = {
         return promise.then((responseJson) => responseJson);
     },
 
-    registIcon: (file) => {
+    /**
+     * 작업명 : 아이콘 등록
+     * 작업자 : 이혜윤
+     * @param {List<MultipartFile>} files 
+     * @returns Promise
+     */
+    registIcon: (files) => {
         const form = new FormData();
-        form.append('file', file);
+        files.map((file) => form.append('files', file));
 
         const promise = getPromise({
             url: `menu/icons`,
@@ -94,15 +120,6 @@ const menu = {
 
         return promise.then((responseJson) => responseJson);
     },
-
-    findIcon: (fileCd) => {
-        const promise = getPromise({
-            url: `menu/icon-${fileCd}`,
-            method: 'GET'
-        });
-
-        return promise.then(responseJson => responseJson);
-    }
 }
 
 export default menu;

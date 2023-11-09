@@ -4,10 +4,7 @@ import GnbInputGrid from "./GnbInputGrid";
 import LnbInputGrid from "./LnbInputGrid";
 import CommonAlert from "common/component/CommonAlert";
 
-const InfoBox = ({title, menuInfo, setMenuInfo}) => {
-    const [ alertInfo, setAlertInfo ] = useState({
-        isOpen: false
-    })
+const InfoBox = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) => {
 
     return (
         <Box
@@ -33,15 +30,10 @@ const InfoBox = ({title, menuInfo, setMenuInfo}) => {
                         menuInfo={menuInfo}
                         setMenuInfo={setMenuInfo}
                         setAlertInfo={setAlertInfo}
+                        selectGnbMenuCd={selectGnbMenuCd}
                     />
                 }
             </Box>
-            {alertInfo.isOpen &&
-				<CommonAlert
-					alertInfo={alertInfo}
-					setAlertInfo={setAlertInfo}
-				/>
-			}
         </Box>
     );
 };

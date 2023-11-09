@@ -6,21 +6,10 @@ import {
   Text,
   RadioGroup,
   HStack,
-  Stack,
   Radio,
-  Box,
-  Icon,
-  InputGroup,
-  InputLeftAddon,
   Flex,
   Button,
   useColorModeValue,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  useNumberInput,
   Modal,
   ModalOverlay,
   ModalHeader,
@@ -39,13 +28,15 @@ import { AttachmentIcon, DragHandleIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { PORT } from "set";
 import RealGrid from "./UpperRealGrid";
+import api from "api/Fetch";
+import FormInput from "common/component/FormInput";
+import FormRadio from "common/component/FormRadio";
 
-const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
+const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [category, setCategory] = useState([]);
-  //const dispatch = useDispatch();
-  //const { menu } = useSelector(state => state.menu);
+  const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
   const [menuInputData, setMenuInputData] = useState({
     menuCd: "",
     upperCd: "",
@@ -58,14 +49,14 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
     menuPath: "",
     delYn: 0,
   });
-  const useYn = new Boolean(menuInputData.useYn);
+  const useYn = new Boolean(menuInfo.useYn);
   const reset = () => {
     setMenuInfo({
       menuCd: "",
       upperCd: "",
       fileCd: "",
       menuNm: "",
-      useYn: 1,
+      useYn: "true",
       sort: "",
       depth: "",
       typeCd: "",
@@ -93,31 +84,37 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
     updateData = data;
   };
 
-  const modifyGnb = () => {
+  const modifyGnb = async () => {
     if (!menuInputData.menuCd) {
-      alert("수정할 메뉴를 선택해주세요.");
+      setAlertInfo({
+        isOpen: true,
+        status: 'warning',
+        title: '수정할 메뉴를 선택해주세요.',
+        width: 'fit-content',
+      })
 
       return false;
     }
 
     menuInputData.useYn = menuInputData.useYn === "true" ? 1 : 0;
+    const responseJson = await api.menu.modifyLnb(menuInputData);
 
-    fetch(`${PORT}/menu/lnb-${menuInputData.menuCd}`, {
-      method: "PUT",
-      body: JSON.stringify(menuInputData),
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.result.toUpperCase() === "SUCCESS") {
-          alert(responseJson.resultMsg);
-          reset();
-        } else if (responseJson.result.toUpperCase() === "FAIL") {
-          alert(responseJson.resultMsg);
-        }
+    if(responseJson.status === 200) {
+      setAlertInfo({
+        isOpen: true,
+        status: 'success',
+        title: responseJson.resultMsg,
+        width: 'fit-content',
       });
+      setMenuInfo(responseJson.voData);
+    } else {
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: responseJson.resultMsg,
+        width: 'fit-content',
+      });
+    }
   };
 
   const getCategory = (cd) => {
@@ -131,7 +128,6 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
   };
 
   const click = () => {
-    console.log(updateData);
     const clickData = {
       ...menuInputData,
       upperCd: updateData._values[2],
@@ -144,6 +140,7 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
   useEffect(() => {
     setMenuInputData(menuInfo);
     getCategory(menuInfo.upperCd);
+    setIsEditing(false);
   }, [menuInfo]);
 
   return (
@@ -166,9 +163,23 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
         </Text>
 
         <Flex>
-          <Button variant="action" onClick={modifyGnb}>
-            저장
-          </Button>
+          {
+            isEditing ? 
+              <Button variant="action" onClick={modifyGnb}>저장 {isEditing.current}</Button>
+            :
+            <Button variant="action" onClick={() => {
+              if(menuInfo.menuCd) {
+                setIsEditing(true)
+              } else {
+                setAlertInfo({
+                  isOpen: true,
+                  status: 'warning',
+                  title: '수정할 메뉴를 선택해주세요.',
+                  width: 'fit-content',
+                });
+              }
+            }}>수정</Button>
+          }
         </Flex>
       </Flex>
       <Grid
@@ -176,16 +187,7 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
         templateRows="repeat(4, 1fr)"
         gap={2}
       >
-        <GridItem colSpan={3}>
-          {/* <Select id='upperCd' name='upperCd' size="md" boarder="1" borderRadius="14px" defaultValue={menuInputData.upperCd}>
-
-       
-              {
-                category.map((ctgr, key) => {
-                  return <option key={key} value={ctgr.menuCd}>{ctgr.menuNm}</option>
-                })
-              }
-            </Select> */}
+        <GridItem colSpan={4}>
           <FormControl display={"flex"} w={"100%"} isRequired={true}>
             <FormLabel
               fontSize="md"
@@ -193,7 +195,7 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
               w={"50%"}
               lineHeight={"40px"}
             >
-              상위부서
+              상위메뉴
             </FormLabel>
             <Input
               w={"100%"}
@@ -204,15 +206,38 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
               key={menuInputData?.upperCd}
               readOnly
             />
+            <Button
+              onClick={() => {
+                if(isEditing) {
+                  getCategory();
+                  onOpen();
+                }
+              }}
+            >
+              <DragHandleIcon />
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>상위메뉴</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <RealGrid org={category} getValue={getValue} />
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={click}>
+                    선택
+                  </Button>
+                  <Button onClick={onClose}>취소</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </FormControl>
         </GridItem>
-        <GridItem colSpan={1}>
+        {/* <GridItem colSpan={1}>
           <Button
             onClick={() => {
-              // if (props.editState === "update") {
-              //   getCategory();
-              //   onOpen();
-              // }
               getCategory();
               onOpen();
             }}
@@ -236,79 +261,53 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo }) => {
               </ModalFooter>
             </ModalContent>
           </Modal>
-          {/* <Input id="upperCd" name="upperCd"  size="md" boarder="1" borderRadius="14px" />
+        </GridItem> */}
 
-            {/* <input list='data' type='text'/> 안되겠다
-            <datalist id='data'>
-              {
-                category.map((ctgr) => {
-                  return <option key={ctgr.menuCd} value={ctgr.menuCd}>{ctgr.menuNm}</option>
-                })
-              }
-            </datalist> */}
-        </GridItem>
-
-        <GridItem colSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
-            메뉴명
-          </Text>
-        </GridItem>
-        <GridItem colSpan={3}>
-          <Input
-            id="menuNm"
-            name="menuNm"
-            size="md"
-            boarder="1"
-            borderRadius="14px"
-            defaultValue={menuInputData.menuNm}
+        <GridItem colSpan={4}>
+          <FormInput
+            title='메뉴명'
+            name='menuNm'
+            value={menuInputData.menuNm}
+            pk={menuInfo.menuCd}
             onChange={onChange}
+            readOnly={!isEditing}
+            isRequired={true}
           />
         </GridItem>
 
-        <GridItem colSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
-            사용여부
-          </Text>
-        </GridItem>
-        <GridItem colSpan={3}>
-          <RadioGroup
-            name="useYn"
+        <GridItem colSpan={4}>
+          <FormRadio
+            title='사용여부'
+            name='useYn'
             defaultValue={useYn.toString()}
-            onChange={(value) => {
-              setValue("useYn", value);
-            }}
-            key={menuInputData.menuCd}
-          >
-            <HStack spacing="24px">
-              <Radio name="useYn" value="true">
-                사용
-              </Radio>
-              <Radio name="useYn" value="false">
-                미사용
-              </Radio>
-            </HStack>
-          </RadioGroup>
+            pk={menuInfo.menuCd}
+            onChange={onChange}
+            readOnly={!isEditing}
+            isRequired={true}
+            values={[
+              {
+                value: 'true',
+                name: '사용',
+              },
+              {
+                value: 'false',
+                name: '미사용',
+              },
+            ]}
+          />
         </GridItem>
 
-        <GridItem colSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
-            정렬
-          </Text>
-        </GridItem>
-        <GridItem colSpan={3}>
-          <HStack>
-            <Input
-              id="sort"
-              name="sort"
-              size="md"
-              boarder="1"
-              borderRadius="14px"
-              defaultValue={menuInputData.sort}
-              onChange={onChange}
-              min={0}
-              type="number"
-            />
-          </HStack>
+        <GridItem colSpan={4}>
+          <FormInput
+            title='정렬'
+            name='sort'
+            value={menuInputData.sort}
+            pk={menuInfo.menuCd}
+            readOnly={!isEditing}
+            isRequired={true}
+            inputType='number'
+            onChange={(e) => onChange(e)}
+          />
         </GridItem>
       </Grid>
     </>

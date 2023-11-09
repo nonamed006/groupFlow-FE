@@ -14,7 +14,7 @@ const RoleGroup = () => {
 
 
     return (
-        <Box pt={{ base: "150px", md: "100px", xl: "100px" }} >
+        <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
             {/* <Grid
                 h="500px"
                 templateRows="repeat(11, 1fr)"

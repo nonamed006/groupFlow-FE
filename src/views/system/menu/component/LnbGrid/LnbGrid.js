@@ -8,7 +8,7 @@ const LnbGrid = ({
   title,
   //gnbMenuInfo,
   //lnbMenuInfo,
-  // menuInfo,
+  menuInfo,
   setMenuInfo,
   //setLnbMenuInfo,
   //setLnbMenuList,
@@ -51,7 +51,7 @@ const LnbGrid = ({
 
   useEffect(() => {
     lnbMenuList();
-  }, [selectGnbMenuCd, search.onSearchClick]);
+  }, [selectGnbMenuCd, search.onSearchClick, menuInfo]);
 
   return (
     <Box borderRadius="lg" bg="white" h="700px" p="6">
