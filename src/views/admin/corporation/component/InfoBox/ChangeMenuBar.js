@@ -4,13 +4,16 @@ import {
   Grid,
   GridItem,
   Select,
-  Button
+  Button,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 
 const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
   const onChange = (e) => {
+    console.log(chSearch);
     const { value, name } = e.target;
+    console.log(value);
+    console.log(name);
     setChSearch({
       ...chSearch,
       [name]: value, // name 키를 가진 값을 value 로

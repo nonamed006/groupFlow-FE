@@ -77,6 +77,7 @@ const DepInfo = ({
   //부서 수정
   const fetchUpdateDep = async () => {
     const response = await api.dep.fetchUpdateDepApi(depDto);
+    console.log(response);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
