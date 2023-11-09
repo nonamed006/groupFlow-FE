@@ -92,7 +92,7 @@ function SignIn() {
         }
       });
     }).then(()=>{
-      window.location.replace("/admin/default");
+      window.location.replace("/system/home");
     });;
   }
 
