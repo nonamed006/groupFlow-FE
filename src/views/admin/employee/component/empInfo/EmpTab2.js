@@ -18,7 +18,6 @@ const EmpTab2 = (props) => {
             return <EmpDeptInput
               column={column}
               setAlertInfo={props.setAlertInfo}
-              setEmpDept={props.setEmpDept}
               empDept={props.empDept}
               handleChange={props.handleChange}
               editState={props.editState}

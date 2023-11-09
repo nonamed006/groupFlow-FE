@@ -167,6 +167,22 @@ const EmpInfo = (props) => {
       });
   }
 
+  // 사원의 조직 정보
+  const getDeptInfo = () => {
+    console.log("Aaaaa", props.empDetail.empCd)
+    fetch(`${PORT}/emp/selectEmpDeptList/${props.empDetail.empCd}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': "application/json; charset=utf-8",
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+        if(res.data.length > 0){
+          props.setEmpDept(res.data);
+        }
+      });
+  };
+
   //사원 삭제
   const empDelete = () => {
     fetch(`${PORT}/emp/deleteEmp/${props.empDetail.empCd}`, {
@@ -210,6 +226,8 @@ const deleteChkEmpDep = () => {
         title: res.resultMsg,
         width: 'fit-content'
       });
+      onClose();
+      getDeptInfo();
       props.setEditState("read");
     });
   }

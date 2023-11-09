@@ -58,7 +58,6 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
   };
 
   const click = () => {
-    console.log('11111');
     handleChange({
       target: {
         name: "dpCd", // 여러 값을 배열에 넣음
@@ -85,9 +84,21 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
 
   // 체크된 조직정보 삭제
   const handleChangeChk = (e) => {
-    setDelEmpDep({...delEmpDep, ...{[e.target.name]: e.target.value}});
+    if (e.target.checked) {
+      const result = [...delEmpDep, { [e.target.name]: e.target.value }];
+
+      const uniqueArray = result.filter(
+        (obj, index, self) =>
+          index === self.findIndex((o) => o.dpGrpCd === obj.dpGrpCd)
+      );
+      setDelEmpDep(uniqueArray);
+    } else {
+      const result = delEmpDep.filter((obj, index) => {
+        return obj.dpGrpCd !== e.target.value;
+      });
+      setDelEmpDep(result);
+    }
   };
-  console.log("asdasfp", delEmpDep);
 
   useEffect(() => {
     getCorpNmList();
@@ -99,17 +110,15 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       templateRows="repeat(10, 1fr)"
       gap={2}
     >
-      <Checkbox 
-        me='16px' 
+      <Checkbox
+        me='16px'
         size="lg"
-        colorScheme='brandScheme' 
-        name="dpCrpCd"
-        value={column.dpGrpCd} 
+        colorScheme='brandScheme'
+        name="dpGrpCd"
+        value={column.dpGrpCd}
         onChange={(e) => {
-        if(e.target.checked){
           handleChangeChk(e);
-        }
-        }} 
+        }}
       />
       <GridItem colStart={0} colEnd={2}>
         <Text fontSize="sm" fontWeight="600">
@@ -117,7 +126,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={6}>
-        <Select 
+        <Select
           isDisabled={editState === "read"}
           value={column?.coCd}
           placeholder="전체"
