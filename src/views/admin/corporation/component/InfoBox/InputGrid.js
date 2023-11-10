@@ -10,7 +10,7 @@ import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
 import _ from "lodash"; // Lodash 라이브러리를 가져옴
 
-const InputGrid = ({ corp, setCorp, isEditing, temp }) => {
+const InputGrid = ({ corp, setCorp, isEditing }) => {
   const {
     coCd,
     coNm,
@@ -39,9 +39,7 @@ const InputGrid = ({ corp, setCorp, isEditing, temp }) => {
       [name]: value, // name 키를 가진 값을 value 로
     });
   };
-  console.log("===");
-  console.log(corp);
-  console.log(temp);
+
   return (
     <>
       <Grid
@@ -205,6 +203,7 @@ const InputGrid = ({ corp, setCorp, isEditing, temp }) => {
             onChange={onChange}
             readOnly={!isEditing}
             placeholder={"회사구분"}
+            isRequired={true}
             values={[
               {
                 value: "COA0001",

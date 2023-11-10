@@ -50,7 +50,6 @@ const InfoBox = ({
 
   // 회사 저장
   const fetchCorpSave = async () => {
-    console.log("===");
     let res = await api.corp.postCorpInfo(corp);
     if (res.status === 200) {
       setAlertInfo({
@@ -184,7 +183,6 @@ const InfoBox = ({
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
-        //w={"1100px"} 혜윤 수정
       >
         <InfoBoxBar
           title={"기본정보"}
@@ -198,7 +196,6 @@ const InfoBox = ({
           <InputGrid
             corp={corp !== undefined && corp !== "undefined" && corp}
             setCorp={setCorp}
-            temp={temp}
             isEditing={isEditing}
           />
         </Box>
