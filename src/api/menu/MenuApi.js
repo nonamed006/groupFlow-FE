@@ -24,13 +24,13 @@ const menu = {
     /**
      * 작업명 : 하위메뉴 목록
      * 작업자 : 이혜윤
-     * @param {String} menuCd 
      * @param {*} search 
      * @returns 
      */
-    getLnbMenuList: (menuCd, search) => {
+    getLnbMenuList: (search) => {
         const queryString = new URLSearchParams(search).toString();
-        const promise = getPromise({url: `menu/list-${menuCd}?${queryString}`, method: 'GET'});
+        //const promise = getPromise({url: `menu/list-${menuCd}?${queryString}`, method: 'GET'});
+        const promise = getPromise({url: `menu/?${queryString}`, method: 'GET'});
 
         return promise.then((responseJson) => responseJson);
     },

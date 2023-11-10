@@ -20,19 +20,15 @@ const LnbGrid = ({
   // onSearchClick
 }) => {
   const [list, setList] = useState([]);
+  const [count, setCount] = useState(0);
 
   /* 메뉴 목록 조회 */
   const lnbMenuList = async () => {
-    const menuCd = search.searchGnbMenuCd
-      ? search.searchGnbMenuCd
-      : selectGnbMenuCd
-      ? selectGnbMenuCd
-      : "";
+    const responseJson = await api.menu.getLnbMenuList(search);
 
-    const responseJson = await api.menu.getLnbMenuList(menuCd, search);
-
-    if (responseJson.result.toUpperCase() === "SUCCESS") {
+    if (responseJson.status === 200) {
       setList(responseJson.data);
+      setCount(responseJson.voData.count);
     } else {
       setList([]);
     }
@@ -57,7 +53,7 @@ const LnbGrid = ({
     <Box borderRadius="lg" bg="white" h="700px" p="6">
       <CardMenuBar
         title={title}
-        count={list ? list.length : 0}
+        count={count}
         buttonType={false}
       />
       <LnbGridList list={list} setMenuDetail={setMenuDetail} />

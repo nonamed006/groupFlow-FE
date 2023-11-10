@@ -84,7 +84,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
       setAlertInfo({
         isOpen: true,
         status: 'error',
-        title: responseJson.resultMsg,
+        title: responseJson.resultMsg ? responseJson.resultMsg : '에러가 발생했습니다.',
         width: 'fit-content',
       });
     }
