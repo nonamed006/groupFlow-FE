@@ -1,12 +1,11 @@
-import { Box, Input, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Input } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
+import ResultList from '../ReultList/ResultList';
 
 const SearchBox = () => {
-
-    const textColor = useColorModeValue("secondaryGray.900", "white");
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
     const [gnbNmList, setGnbNmList] = useState([]);
@@ -31,7 +30,7 @@ const SearchBox = () => {
         if (res.status === 200) {
             setResultMenuList(res.data);
             let temp = [];
-            res.data.map((element, key) => {
+            res.data.map((element) => {
                 if (!temp.includes(element.gnbNm)) temp.push(element.gnbNm);
             });
             setGnbNmList(temp);
@@ -66,32 +65,19 @@ const SearchBox = () => {
                 <Box
                     position={'absolute'}
                     maxH={'350px'}
+                    minH={'50px'}
                     bg={'white'}
                     w={'100%'}
                     borderRadius="5px"
-                    opacity={'95%'}
+                    opacity={'90%'}
                     overflowY={'auto'}
+                    boxShadow={'lg'}
+                    mt={1}
                 >
                     {
                         resultMenuList.length > 0 ?
                             gnbNmList.map((gnbNm, index) => {
-                                return <>
-                                    <Text
-                                        key={index}
-                                        w={'93%'}
-                                        fontSize="19px"
-                                        fontWeight="600"
-                                        lineHeight="100%"
-                                        color={textColor}
-                                        p='3'
-                                    >{gnbNm}
-                                    </Text>
-                                    {
-                                        resultMenuList.map((menuInfo, index) => {
-                                            return menuInfo.gnbNm === gnbNm && <ResultCard key={index} menuInfo={menuInfo} index={index} />
-                                        })
-                                    }
-                                </>
+                                return <ResultList  index={index} gnbNm={gnbNm} resultMenuList={resultMenuList} keyword={keyword} />
                             })
                             :
                             <ResultCard content={'검색 결과가 없거나, 해당 메뉴에 대한 접근 권한이 없습니다.'} type={'none'} />

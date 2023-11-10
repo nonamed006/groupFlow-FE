@@ -18,17 +18,17 @@ const HomePage = () => {
             >
                 <Image
                     fit={'fill'}
-                    src={douzoneImg}
+                    src={test}
                     w={'100%'}
                     h={'100%'}
                     position={'absolute'}
                 />
-                <Box
+                {/* <Box
                     w={'100%'}
                     h={'100%'}
                    bg={'rgba(0,0,0,0.3)'}
                    opacity={'90%'}
-                ></Box>
+                ></Box> */}
             </Box>
             {/* 검색창 */}
             <Box
