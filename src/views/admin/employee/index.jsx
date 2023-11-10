@@ -72,8 +72,8 @@ const Employee = () => {
         method: "GET",
         headers: {
           'Content-Type': "application/json; charset=utf-8",
-          'Authorization': getCookie("Authorization")
-        }
+        },
+        credentials: 'include'
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())

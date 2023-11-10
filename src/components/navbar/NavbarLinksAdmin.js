@@ -82,9 +82,8 @@ export default function HeaderLinks(props) {
 			}
 		).then((res) => res.json())
 			.then((res) => {
-				setDpType(getCookie("Emp_Dp_Type"));
+				setDpType(res?.data[0]?.dpType);
 				dispatch(setEmpData(res?.data));
-				//setEmpDetail(res?.data[0]);
 			});
 	}
 
