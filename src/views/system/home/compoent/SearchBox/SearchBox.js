@@ -31,7 +31,9 @@ const SearchBox = () => {
         if (res.status === 200) {
             setResultMenuList(res.data);
             let temp = [];
-            res.data.map((element) => { temp.includes(element.gnbNm) && temp.push(element.gnbNm) });
+            res.data.map((element, key) => {
+                if (!temp.includes(element.gnbNm)) temp.push(element.gnbNm);
+            });
             setGnbNmList(temp);
         } else {
             setResultMenuList([]);
@@ -72,38 +74,24 @@ const SearchBox = () => {
                 >
                     {
                         resultMenuList.length > 0 ?
-                            // gnbNmList.map((gnbNm) => {
-                            //     return <>   
-                            //     <Text
-                            //         w={'93%'}
-                            //         fontSize="19px"
-                            //         fontWeight="600"
-                            //         lineHeight="100%"
-                            //         color={textColor}
-                            //         p='5'
-                            //     >{gnbNm}
-                            //     </Text>
-                            //         {
-                            //             resultMenuList.map((menuInfo, index) => {
-                            //                 return menuInfo.gnbNm === gnbNm ?  <ResultCard menuInfo={menuInfo} index={index} /> : ''
-                            //             })
-                            //         }
-                            //     </>
-                            // })
-                            // :
-                            resultMenuList.map((menuInfo, index) => {
+                            gnbNmList.map((gnbNm, index) => {
                                 return <>
-                                <Text
-                                    w={'93%'}
-                                    fontSize="19px"
-                                    fontWeight="600"
-                                    lineHeight="100%"
-                                    color={textColor}
-                                    p='5'
-                                >{menuInfo.gnbNm}
-                                </Text>
-                                <ResultCard menuInfo={menuInfo} index={index} /> 
-                            </> 
+                                    <Text
+                                        key={index}
+                                        w={'93%'}
+                                        fontSize="19px"
+                                        fontWeight="600"
+                                        lineHeight="100%"
+                                        color={textColor}
+                                        p='3'
+                                    >{gnbNm}
+                                    </Text>
+                                    {
+                                        resultMenuList.map((menuInfo, index) => {
+                                            return menuInfo.gnbNm === gnbNm && <ResultCard key={index} menuInfo={menuInfo} index={index} />
+                                        })
+                                    }
+                                </>
                             })
                             :
                             <ResultCard content={'검색 결과가 없거나, 해당 메뉴에 대한 접근 권한이 없습니다.'} type={'none'} />
