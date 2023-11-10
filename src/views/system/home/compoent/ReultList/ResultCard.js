@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'components/card/Card';
-import { Flex, Image, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Image, Spacer, Text, useColorModeValue } from '@chakra-ui/react';
 import searchIncon from 'assets/img/auth/searchIcon.png';
 import { UseMouseOver } from "hook/UseMouseOver";
 
@@ -15,7 +15,7 @@ const ResultCard = ({ menuInfo, index, type, content }) => {
                 onMouseOut={onMouseOut}
                 onMouseOver={() => { type !== 'none' && onMouseOver(index) }}
                 rounded='lg'
-                h={'50px'}
+                minH={'50px'}
                 display={'inline-block'}
                 p='3'
                 onClick={() => { }}
