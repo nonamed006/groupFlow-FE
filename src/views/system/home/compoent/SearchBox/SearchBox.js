@@ -1,13 +1,15 @@
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Input, Text, useColorModeValue } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
 
 const SearchBox = () => {
+
+    const textColor = useColorModeValue("secondaryGray.900", "white");
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
-
+    const [gnbNmList, setGnbNmList] = useState([]);
     const dpGrpCd = 'DG230006';
 
     const handleChange = (e) => {
@@ -21,12 +23,19 @@ const SearchBox = () => {
     );
 
     const fetchMenuList = async (keyword) => {
-        if (keyword === undefined || keyword === 'undefined' || keyword === '') return setResultMenuList([]);
+        if (keyword === undefined || keyword === 'undefined' || keyword === '') {
+            setGnbNmList([]);
+            return setResultMenuList([]);
+        }
         let res = await api.roleMenu.getRoleMenuBySearch(dpGrpCd, keyword);
         if (res.status === 200) {
             setResultMenuList(res.data);
+            let temp = [];
+            res.data.map((element) => { temp.includes(element.gnbNm) && temp.push(element.gnbNm) });
+            setGnbNmList(temp);
         } else {
             setResultMenuList([]);
+            setGnbNmList([]);
         }
     };
 
@@ -63,12 +72,42 @@ const SearchBox = () => {
                 >
                     {
                         resultMenuList.length > 0 ?
+                            // gnbNmList.map((gnbNm) => {
+                            //     return <>   
+                            //     <Text
+                            //         w={'93%'}
+                            //         fontSize="19px"
+                            //         fontWeight="600"
+                            //         lineHeight="100%"
+                            //         color={textColor}
+                            //         p='5'
+                            //     >{gnbNm}
+                            //     </Text>
+                            //         {
+                            //             resultMenuList.map((menuInfo, index) => {
+                            //                 return menuInfo.gnbNm === gnbNm ?  <ResultCard menuInfo={menuInfo} index={index} /> : ''
+                            //             })
+                            //         }
+                            //     </>
+                            // })
+                            // :
                             resultMenuList.map((menuInfo, index) => {
-                                return <ResultCard menuInfo={menuInfo} index={index} />
+                                return <>
+                                <Text
+                                    w={'93%'}
+                                    fontSize="19px"
+                                    fontWeight="600"
+                                    lineHeight="100%"
+                                    color={textColor}
+                                    p='5'
+                                >{menuInfo.gnbNm}
+                                </Text>
+                                <ResultCard menuInfo={menuInfo} index={index} /> 
+                            </> 
                             })
-                            : 
+                            :
                             <ResultCard content={'검색 결과가 없거나, 해당 메뉴에 대한 접근 권한이 없습니다.'} type={'none'} />
-                      }
+                    }
                 </Box>
             }
         </Box>
