@@ -131,7 +131,7 @@ const DepBasic = (props) => {
           <Button
             onClick={() => {
               if (props.editState === "update") {
-                getOrg(); 
+                getOrg();
                 onOpen();
               }
             }}
@@ -228,10 +228,11 @@ const DepBasic = (props) => {
           <FormSelect
             title={"부서유형"}
             name={"typeCd"}
-            value={depDto?.typeCd}
+            defaultValue={depDto?.typeCd}
             pk={depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
+            placeholder={"부서유형"}
             isRequired={true}
             values={[
               {

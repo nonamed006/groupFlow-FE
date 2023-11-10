@@ -1,9 +1,8 @@
-import { Box, Image, Input } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Box, Image } from '@chakra-ui/react';
+import React from 'react';
 import douzoneImg from 'assets/img/auth/douzoneImg.png';
-import ResultCard from './compoent/ReultList/ResultCard';
 import SearchBox from './compoent/SearchBox/SearchBox';
-
+import test from "assets/img/auth/test.jpg";
 const HomePage = () => {
     return (
         <>
@@ -28,19 +27,16 @@ const HomePage = () => {
                     w={'100%'}
                     h={'100%'}
                    bg={'rgba(0,0,0,0.3)'}
-                   opacity={'80%'}
+                   opacity={'90%'}
                 ></Box>
             </Box>
             {/* 검색창 */}
             <Box
-                position={'absolute'}
                 display={'flex'}
                 alignItems={'center'}
                 justifyContent={'center'}
-                top={0}
-                right={0}
-                bottom={0}
                 w={'100%'}
+                h={'100%'}
             >
                 <SearchBox />
             </Box>

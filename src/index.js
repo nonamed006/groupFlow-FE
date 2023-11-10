@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
+import LoginPage from "views/auth/login";
 
 const store = createStore(rootReducer);
 

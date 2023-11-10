@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Grid,
   GridItem,
   Input,
@@ -15,7 +16,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import getDepOrganizationApi from "api/dep/DepApi";
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
@@ -28,9 +28,8 @@ import DepUpperCd from "views/admin/department/component/DepInfo/DepUpperCd";
 import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
 
-const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, isLoading, setAlertInfo }) => {
+const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, isLoading, setAlertInfo, setDelEmpDep, delEmpDep }) => {
   const [corpNm, setCorpNm] = useState([]);
-  const [corpCd, setCorpCd] = useState([]);
   const [org, setOrg] = useState([]);
   const [infiniteScrollRef, inView] = useInView();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,7 +42,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
 
   const getOrg = async () => {
     setIsLoading(true);
-    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=${corpCd}&keyword=&search=dep`;
+    let url = `${PORT}/roleEmp/list?empYn=N&searchCoCd=${column?.coCd}&keyword=&search=dep`;
     await fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
@@ -59,7 +58,6 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
   };
 
   const click = () => {
-    console.log('11111');
     handleChange({
       target: {
         name: "dpCd", // 여러 값을 배열에 넣음
@@ -84,6 +82,24 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
     onClose();
   };
 
+  // 체크된 조직정보 삭제
+  const handleChangeChk = (e) => {
+    if (e.target.checked) {
+      const result = [...delEmpDep, { [e.target.name]: e.target.value }];
+
+      const uniqueArray = result.filter(
+        (obj, index, self) =>
+          index === self.findIndex((o) => o.dpGrpCd === obj.dpGrpCd)
+      );
+      setDelEmpDep(uniqueArray);
+    } else {
+      const result = delEmpDep.filter((obj, index) => {
+        return obj.dpGrpCd !== e.target.value;
+      });
+      setDelEmpDep(result);
+    }
+  };
+
   useEffect(() => {
     getCorpNmList();
   }, []);
@@ -91,9 +107,19 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
   return (
     <Grid
       templateColumns="repeat(13, 1fr)"
-      templateRows="repeat(12, 1fr)"
+      templateRows="repeat(10, 1fr)"
       gap={2}
     >
+      <Checkbox
+        me='16px'
+        size="lg"
+        colorScheme='brandScheme'
+        name="dpGrpCd"
+        value={column.dpGrpCd}
+        onChange={(e) => {
+          handleChangeChk(e);
+        }}
+      />
       <GridItem colStart={0} colEnd={2}>
         <Text fontSize="sm" fontWeight="600">
           회사/부서
@@ -101,11 +127,12 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       </GridItem>
       <GridItem colStart={3} colEnd={6}>
         <Select
+          isDisabled={editState === "read"}
+          value={column?.coCd}
           placeholder="전체"
           name="coCd"
           onChange={(e) => {
             handleChange(e, index);
-            setCorpCd(e.target.value)
           }}
         >
           {corpNm.map((item, index) => (
@@ -140,7 +167,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           id="postNumBtn"
           onClick={() => {
             if (editState === "deptInsert" || editState === "deptUpdate") {
-              if (corpCd.length > 0) {
+              if (column.coCd != "") {
                 getOrg();
                 onOpen();
               } else {
@@ -152,7 +179,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
                 });
               }
             }
-          }}>asd</Button>
+          }}>부서 조회</Button>
       </GridItem>
 
       <GridItem colStart={1} colEnd={7}>
@@ -330,14 +357,14 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <AddrBox
+      {/* <AddrBox
         title={'회사주소'}
         data={column}
         //setData={setCorp}
         //dataPk={coCd}
         editState={editState != "read" && 'update'}
         isRequired={true}
-      />
+      /> */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

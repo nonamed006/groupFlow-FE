@@ -103,9 +103,17 @@ const roleMenu = {
             body: JSON.stringify(menuCdList)
         });
         return promise.then((responseJson) => responseJson);
-    }
+    },
 
-
+    /**
+     * 부서그룹코드 + 메뉴 검색어로 권한 메뉴 조회'
+     * 안은비
+     * 
+    */
+   getRoleMenuBySearch: (dpGrpCd, keyword) => {
+    const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
+        return promise.then((responseJson) => responseJson);
+   }
 };
 
 export default roleMenu;

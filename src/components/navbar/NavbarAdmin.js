@@ -41,11 +41,11 @@ export default function AdminNavbar(props) {
       const newProps = { ...props };
       // 최대 5개까지만 저장
       if (history.length < 5) {
-        setHistory([...history, newProps]);
+        setHistory([newProps, ...history]);
       } else {
         // 5개가 넘으면 가장 오래된 것 삭제
-        history.shift();
-        setHistory([...history, newProps]);
+        history.pop();
+        setHistory([newProps, ...history]);
       }
     }
   };
@@ -121,7 +121,7 @@ export default function AdminNavbar(props) {
         alignItems={{ xl: "center" }}
         mb={gap}
       >
-        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }} w={'230px'}>
+        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }} w={"230px"}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
@@ -157,90 +157,90 @@ export default function AdminNavbar(props) {
           </Link>
         </Box>
         <Flex
-          h={'full'}
+          h={"full"}
           // overflowX={'scroll'}
           // css={{'&::-webkit-scrollbar':{'display':'none'}}}
-          pt={'20px'}
-          mx={'15px'}
+          pt={"20px"}
+          mx={"15px"}
         >
-        {history?.length > 0 &&
-          history?.map((item, index) => {
-            return (
-              <Box
-                display="flex"
-                borderRadius="5px"
-                borderWidth="1.5px"
-                borderStyle="solid"
-                marginRight={"5px"}
-                borderColor={
-                  props.location.pathname === item.location.pathname
-                    ? "navy.500"
-                    : "gray.500"
-                }
-                color={
-                  props.location.pathname === item.location.pathname
-                    ? "navy.300"
-                    : "gray.500"
-                }
-                backgroundColor={
-                  props.location.pathname === item.location.pathname
-                    ? "white"
-                    : "navy.30"
-                }
-                w={140}
-                height={"35px"}
-                key={index}
-              >
-                <div
-                  style={{
-                    height: "35px",
-                    lineHeight: "30px",
-                    marginLeft: "5px",
-                  }}
+          {history?.length > 0 &&
+            history?.map((item, index) => {
+              return (
+                <Box
+                  display="flex"
+                  borderRadius="5px"
+                  borderWidth="1.5px"
+                  borderStyle="solid"
+                  marginRight={"5px"}
+                  borderColor={
+                    props.location.pathname === item.location.pathname
+                      ? "navy.500"
+                      : "gray.500"
+                  }
+                  color={
+                    props.location.pathname === item.location.pathname
+                      ? "navy.300"
+                      : "gray.500"
+                  }
+                  backgroundColor={
+                    props.location.pathname === item.location.pathname
+                      ? "white"
+                      : "navy.30"
+                  }
+                  w={140}
+                  height={"35px"}
+                  key={index}
                 >
-                  <CopyIcon></CopyIcon>
-                </div>
-
-                <NavLink to={item?.location?.pathname}>
                   <div
                     style={{
-                      width: "95px",
                       height: "35px",
-                      lineHeight: "35px",
+                      lineHeight: "30px",
+                      marginLeft: "5px",
                     }}
                   >
-                    <Text
-                      fontSize="sm"
-                      mb="5px"
-                      ml="10px"
-                      fontWeight={700}
-                      overflow={"hidden"}
-                      whiteSpace={"nowrap"}
-                      textOverflow={"ellipsis"}
-                    >
-                      {item.brandText}
-                    </Text>
+                    <CopyIcon></CopyIcon>
                   </div>
-                </NavLink>
-                <Spacer />
-                <div
-                  style={{
-                    height: "35px",
-                    lineHeight: "30px",
-                    marginRight: "8px",
-                    textAlign: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  <CloseIcon
-                    width={"10px"}
-                    height={"10px"}
-                    onClick={pageDelete(item, index)}
-                  />
-                </div>
-              </Box>
-            );
-          })}
+
+                  <NavLink to={item?.location?.pathname}>
+                    <div
+                      style={{
+                        width: "95px",
+                        height: "35px",
+                        lineHeight: "35px",
+                      }}
+                    >
+                      <Text
+                        fontSize="sm"
+                        mb="5px"
+                        ml="10px"
+                        fontWeight={700}
+                        overflow={"hidden"}
+                        whiteSpace={"nowrap"}
+                        textOverflow={"ellipsis"}
+                      >
+                        {item.brandText}
+                      </Text>
+                    </div>
+                  </NavLink>
+                  <Spacer />
+                  <div
+                    style={{
+                      height: "35px",
+                      lineHeight: "30px",
+                      marginRight: "8px",
+                      textAlign: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <CloseIcon
+                      width={"10px"}
+                      height={"10px"}
+                      onClick={pageDelete(item, index)}
+                    />
+                  </div>
+                </Box>
+              );
+            })}
         </Flex>
         <Box ms="auto" w="300px">
           <AdminNavbarLinks
