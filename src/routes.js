@@ -6,7 +6,11 @@ import {
   MdPerson,
   MdHome,
   MdLock,
+  MdCreate,
   MdOutlineShoppingCart,
+  MdPhonelinkSetup,
+  MdOutlinePersonOutline,
+  MdDvr,
 } from "react-icons/md";
 
 // Admin Imports
@@ -24,6 +28,10 @@ import Menu from "views/system/menu";
 import RoleGroup from "views/system/roleGroup";
 import RoleSet from "views/system/role";
 import HomePage from "views/system/home";
+import Approval from "views/system/approval";
+import Hr from "views/system/humanResources";
+import Accounting from "views/system/accounting";
+import Executives from "views/system/executives";
 
 // 원본 horizon-ui
 // https://horizon-ui.com/
@@ -47,7 +55,9 @@ const routes = [
     code: "MU230001",
     name: "시스템 설정",
     layout: "/system",
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    icon: (
+      <Icon as={MdPhonelinkSetup} width="20px" height="20px" color="inherit" />
+    ),
     items: [
       {
         code: "MU230002",
@@ -123,13 +133,6 @@ const routes = [
       },
     ],
   },
-  {
-    name: "Main Dashboard",
-    layout: "/admin",
-    path: "/default",
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: MainDashboard,
-  },
 
   {
     name: "로그인",
@@ -142,10 +145,51 @@ const routes = [
     name: "HOME",
     layout: "/system",
     path: "/home",
-    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: HomePage,
   },
-
+  {
+    name: "전자결재",
+    layout: "/system",
+    path: "/approval",
+    icon: <Icon as={MdCreate} width="20px" height="20px" color="inherit" />,
+    component: Approval,
+  },
+  {
+    name: "인사관리",
+    layout: "/system",
+    path: "/hr",
+    icon: (
+      <Icon
+        as={MdOutlinePersonOutline}
+        width="20px"
+        height="20px"
+        color="inherit"
+      />
+    ),
+    component: Hr,
+  },
+  {
+    name: "회계관리",
+    layout: "/system",
+    path: "/accounting",
+    icon: <Icon as={MdDvr} width="20px" height="20px" color="inherit" />,
+    component: Accounting,
+  },
+  {
+    name: "임직원업무관리",
+    layout: "/system",
+    path: "/executives",
+    icon: (
+      <Icon
+        as={MdOutlineShoppingCart}
+        width="20px"
+        height="20px"
+        color="inherit"
+      />
+    ),
+    component: Executives,
+  },
 ];
 
 export default routes;

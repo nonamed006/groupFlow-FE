@@ -1,0 +1,20 @@
+import React from "react";
+import { Box, Button, Select, Grid, Text, GridItem } from "@chakra-ui/react";
+import SearchBar from "common/component/SearchBar";
+
+const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
+  return (
+    <Box borderRadius="lg" bg="white" p="6">
+      {/*  w={"93%"} 혜윤 수정 */}
+      <Grid templateColumns="repeat(14, 1fr)" gap={2}>
+        <GridItem colSpan={14}>
+          <Text align={"center"} fontWeight={600} fontSize={"18px"}>
+            임직원업무관리 페이지 입니다.
+          </Text>
+        </GridItem>
+      </Grid>
+    </Box>
+  );
+};
+
+export default SearchCardBar;

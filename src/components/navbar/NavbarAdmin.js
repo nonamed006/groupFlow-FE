@@ -185,7 +185,8 @@ export default function AdminNavbar(props) {
                   backgroundColor={
                     props.location.pathname === item.location.pathname
                       ? "white"
-                      : "navy.30"
+                      : //: "navy.30"
+                        "#F4F7FE"
                   }
                   w={140}
                   height={"35px"}

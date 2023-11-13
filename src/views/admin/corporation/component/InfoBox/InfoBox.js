@@ -184,7 +184,7 @@ const InfoBox = ({
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
-        //w={"1100px"} 혜윤 수정
+        w={"1100px"}
       >
         <InfoBoxBar
           title={"기본정보"}
@@ -193,6 +193,7 @@ const InfoBox = ({
           isEditing={isEditing}
           handleCancle={handleCancle}
           handleModify={handleModify}
+          setAlertInfo={setAlertInfo}
         />
         <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
           <InputGrid
