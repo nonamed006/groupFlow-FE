@@ -95,7 +95,7 @@ function Sidebar(props) {
 
   // SIDEBAR
   return (
-    <Box display={{ sm: "none", xl: "block" }} w="fit-content" position='fixed' minH='100%'>
+    <Box display={{ sm: "none", xl: "block" }} w="fit-content" position='fixed' minH='100%' >
           <Box
             bg={sidebarBg}
             // borderRight='1px'
