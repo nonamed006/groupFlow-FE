@@ -6,8 +6,9 @@ export const corpSchema = object().shape({
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),
   addr: string().required("주소를 선택해주세요."),
-  sort: number("숫자를 입력해주세요.").required("정렬값을 입력해주세요.").positive("1 이상의 숫자를 입력해주세요."),
+  sort: number("정렬값은 숫자를 입력해주세요.").required("정렬값을 입력해주세요.").positive("정렬값은 1 이상의 숫자를 입력해주세요."),
   estDt: date().required("설립일을 입력해주세요."),
+  bsCd : string().required("회사구분을 선택해주세요."),
   opDt: date()
     .required("개업일을 입력해주세요.")
     .min(ref('estDt'), `개업일은 설립일 이후의 날짜를 선택해주세요.`),
