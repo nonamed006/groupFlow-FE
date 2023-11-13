@@ -59,14 +59,14 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
     treeView.treeOptions.iconImages = [corpIcon, depIcon, empIcon];
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
       var iconField = grid.getValue(item.index, "iconField");
       if (iconField === "0") {
-        return "";
-      } else if (iconField === "2") {
+        return "gnb-column";
+      } else if (depth === "2") {
         return "bottom-gnb-column";
       }
     });
-
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
