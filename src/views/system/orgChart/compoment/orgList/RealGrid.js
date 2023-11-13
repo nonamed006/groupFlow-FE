@@ -54,7 +54,9 @@ const RealGrid = ({ org, handleGrid }) => {
     treeView.columnByName("code").visible = false;
     treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
+    
     treeView.treeOptions.iconImages = [corpIcon, depIcon];
+
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
       if (depth === "0") {
