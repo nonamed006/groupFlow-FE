@@ -3,11 +3,12 @@ import React, { useCallback, useState } from 'react';
 import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
+import ResultList from '../ReultList/ResultList';
 
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
-
+    const [gnbNmList, setGnbNmList] = useState([]);
     const dpGrpCd = 'DG230006';
 
     const handleChange = (e) => {
@@ -21,12 +22,21 @@ const SearchBox = () => {
     );
 
     const fetchMenuList = async (keyword) => {
-        if (keyword === undefined || keyword === 'undefined' || keyword === '') return setResultMenuList([]);
+        if (keyword === undefined || keyword === 'undefined' || keyword === '') {
+            setGnbNmList([]);
+            return setResultMenuList([]);
+        }
         let res = await api.roleMenu.getRoleMenuBySearch(dpGrpCd, keyword);
         if (res.status === 200) {
             setResultMenuList(res.data);
+            let temp = [];
+            res.data.map((element) => {
+                if (!temp.includes(element.gnbNm)) temp.push(element.gnbNm);
+            });
+            setGnbNmList(temp);
         } else {
             setResultMenuList([]);
+            setGnbNmList([]);
         }
     };
 
@@ -55,20 +65,23 @@ const SearchBox = () => {
                 <Box
                     position={'absolute'}
                     maxH={'350px'}
+                    minH={'50px'}
                     bg={'white'}
                     w={'100%'}
                     borderRadius="5px"
-                    opacity={'95%'}
+                    opacity={'90%'}
                     overflowY={'auto'}
+                    boxShadow={'lg'}
+                    mt={1}
                 >
                     {
                         resultMenuList.length > 0 ?
-                            resultMenuList.map((menuInfo, index) => {
-                                return <ResultCard menuInfo={menuInfo} index={index} />
+                            gnbNmList.map((gnbNm, index) => {
+                                return <ResultList  index={index} gnbNm={gnbNm} resultMenuList={resultMenuList} keyword={keyword} />
                             })
-                            : 
+                            :
                             <ResultCard content={'검색 결과가 없거나, 해당 메뉴에 대한 접근 권한이 없습니다.'} type={'none'} />
-                      }
+                    }
                 </Box>
             }
         </Box>

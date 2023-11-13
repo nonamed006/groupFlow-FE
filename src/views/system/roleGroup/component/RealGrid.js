@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import "assets/css//roleMenuRealgrid.css"; // RealGrid CSS 추가
 import { Box } from "@chakra-ui/react";
+
+import depIcon from "assets/img/gridIcon/department.png";
+
 const RealGrid = ({ org, type, setCheckedMenuCd }) => {
   const realgridElement = useRef(null);
   var fields = [
@@ -60,8 +63,8 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.columnByName("state").visible = false;
     treeView.columnByName("state").visible = false;
     treeView.columnByName("iconField").visible = false;
-    treeView.treeOptions.iconImagesRoot = "/img/";
-    treeView.treeOptions.iconImages = [ "department.png"];
+    
+    treeView.treeOptions.iconImages = [depIcon];
 
     // //옵션설정
     treeView.checkBar.fieldName = "state"; //state 필드와 체크박스 체크 여부 연결

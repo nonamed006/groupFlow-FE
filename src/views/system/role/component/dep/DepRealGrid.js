@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 import { Box } from "@chakra-ui/react";
 
+import corpIcon from "assets/img/gridIcon/corporation.png";
+import depIcon from "assets/img/gridIcon/department.png";
+
 const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdList, fetchRoleGroup}) => {
 
   const realgridElement = useRef(null);
@@ -12,6 +15,7 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
     { fieldName: "path", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
     { fieldName: "type", dataType: "text" },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var columns = [
@@ -20,6 +24,7 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
     { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
     { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
     { fieldName: "type", name: "type", header: { text: "type" } },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var treeProvider, treeView;
@@ -35,7 +40,7 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
 
     // treeProvider.setRows(org, "menuPath", false, null, "depth");
     
-    treeProvider.setObjectRows({rows: org}, 'rows', '', '');
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "iconField");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 42;
@@ -53,27 +58,13 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("code").visible = false;
     treeView.columnByName("type").visible = false;
-
+    treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
 
     // //옵션설정
     treeView.checkBar.fieldName = "state"; //state 필드와 체크박스 체크 여부 연결
 
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
+    treeView.treeOptions.iconImages = [corpIcon, depIcon];
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
