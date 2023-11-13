@@ -139,7 +139,7 @@ const routes = [
     component: LogInCentered,
   },
   {
-    name: "HOME",
+    name: "GROUP FLOW",
     layout: "/system",
     path: "/home",
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
