@@ -26,7 +26,7 @@ import PropTypes from "prop-types";
 
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
-import "../../assets/css/Sidebar.css"
+import "../../assets/css/Sidebar.css";
 
 import { SidebarContext } from "contexts/SidebarContext";
 
@@ -39,17 +39,17 @@ import { SidebarContext } from "contexts/SidebarContext";
 
 function Sidebar(props) {
   const { routes } = props;
-	const { collapse } = props;
+  const { collapse } = props;
   const { setCollapse } = props;
-  const [ GNBcollapse, setGNBCollapse ] = useState(collapse);
-	const [ LNBcollapse, setLNBCollapse ] = useState(false);
-  const [ route, setRoute ] = useState();
+  const [GNBcollapse, setGNBCollapse] = useState(collapse);
+  const [LNBcollapse, setLNBCollapse] = useState(false);
+  const [route, setRoute] = useState();
   useEffect(() => {
     return setGNBCollapse(collapse);
-  }, [collapse])
+  }, [collapse]);
 
   useEffect(() => {
-    if(route != null && route.items != null) {
+    if (route != null && route.items != null) {
       return setLNBCollapse(true);
     } else {
       return setLNBCollapse(false);
@@ -68,28 +68,28 @@ function Sidebar(props) {
   const context = useContext(SidebarContext);
 
   const mouseEvent = (flag) => {
-    if(flag) {
-      document.querySelector('.box_GNB').classList.remove('non_active')
-      document.querySelector('.box_GNB').classList.add('active')
+    if (flag) {
+      document.querySelector(".box_GNB").classList.remove("non_active");
+      document.querySelector(".box_GNB").classList.add("active");
 
       // document.querySelector('.box_LNB').classList.remove('active')
       // document.querySelector('.box_LNB').classList.add('non_active')
     } else {
-      document.querySelector('.box_GNB').classList.remove('active')
-      document.querySelector('.box_GNB').classList.add('non_active')
+      document.querySelector(".box_GNB").classList.remove("active");
+      document.querySelector(".box_GNB").classList.add("non_active");
 
       // document.querySelector('.box_LNB').classList.remove('non_active')
       // document.querySelector('.box_LNB').classList.add('active')
     }
     context.setCollapse(flag);
-  }
+  };
 
   useEffect(() => {
     console.log(route);
-    if(route === null) {
+    if (route === null) {
       mouseEvent(false);
-                    document.querySelector('.box_LNB').classList.remove('active')
-                    document.querySelector('.box_LNB').classList.add('non_active')
+      document.querySelector(".box_LNB").classList.remove("active");
+      document.querySelector(".box_LNB").classList.add("non_active");
     }
   }, [route]);
 
