@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
-//import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+
+import corpIcon from "assets/img/gridIcon/corporation.png";
+import depIcon from "assets/img/gridIcon/department.png";
+import empIcon from "assets/img/gridIcon/employee.png";
 
 const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
   const realgridElement = useRef(null);
@@ -9,13 +12,15 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
     { fieldName: "name", dataType: "text" },
     { fieldName: "path", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var columns = [
-    { fieldName: "path", name: "path", width: 50, header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 300, header: { text: "name" } },
-    { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
-    { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
+    { fieldName: "path", name: "path", header: { text: "path" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "name" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
+    { fieldName: "depth", name: "depth",  header: { text: "depth" } },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var treeProvider, treeView;
@@ -29,7 +34,7 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
     //treeProvider.setRows(org, "dpPath", true, null, null);
-    treeProvider.setObjectRows({ rows: org }, "rows", "", "");
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "iconField");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -49,22 +54,18 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
     treeView.columnByName("code").visible = false;
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("name").editable = false;
+    treeView.columnByName("iconField").visible = false;
+  
+    treeView.treeOptions.iconImages = [corpIcon, depIcon, empIcon];
 
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var iconField = grid.getValue(item.index, "iconField");
+      if (iconField === "0") {
+        return "";
+      } else if (iconField === "2") {
+        return "bottom-gnb-column";
+      }
+    });
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {

@@ -157,14 +157,10 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                 code={coCd}
             />
             {/* 목록 */}
-
-
-
             <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
                 <Box minH={'510px'}>
                     {
                         roleGrpList.length > 0 ?
-
                             <GroupCardList
                                 checkHandler={checkHandler}
                                 checkedList={checkedList}
@@ -185,7 +181,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
                                 검색된 데이터가 없습니다.
                             </Text>
                     }
-
                 </Box>
                 {
                     isLoading ?
@@ -198,8 +193,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
             {isDrawer &&
                 <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
             }
- 
-            
 
 {
     alertInfo.isOpen &&
