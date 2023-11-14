@@ -14,7 +14,7 @@ const TotalMenuModal = ({ isOpen, setIsOpen, rgCd, setChangeEdit, setAlertInfo, 
 
     // 권한그룹 메뉴 등록 및 수정
     const fetchModifyRoleMenu = async () => {
-        let res = await api.roleMenu.putRoleMenu(rgCd, checkedMenuCd);
+        let res = await api.roleMenu.putRoleMenu(rgCd, typeCd, checkedMenuCd);
 
         if (res.status === 200) {
             setAlertInfo({
