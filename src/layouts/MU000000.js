@@ -44,89 +44,89 @@ export default function Dashboard(props) {
   };
   const { ...rest } = props;
   // states and functions
-  const [fixed] = useState(false);
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+  //const [fixed] = useState(false);
+  //const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
-  const getRoute = () => {
-    return window.location.pathname !== "/admin/full-screen-maps";
-  };
+  // const getRoute = () => {
+  //   return window.location.pathname !== "/admin/full-screen-maps";
+  // };
 
   // 페이지 경로 이름 리턴
-  const test = (routes, gnb) => {
+  const getLocationPath = (routes, gnb) => {
     let pathArray = window.location.pathname.split('/').filter((path) => path !== ''); // 공백 제거한 path 배열
-    pathArray.shift();
+    pathArray.shift(); // 첫번째는 레이아웃이라 삭제
     let pathNow = pathArray.pop(); // 현재 path 코드(상단에 보여줄 경로에서는 빼고 리턴값으로 받아 현재 페이지 이름 보여주기 위해 pop)
+    if(pathNow === 'home') {
+      return 'HOME';
+    }
+
     let pathNowName = ''; // 현재 path 이름
     let pathString = '';  // path 전체 이름
-    console.log(pathArray);
-    let filtedRoutes = routes.filter((route) => route.code === pathArray[0]); // 현재에 맞는 대메뉴만 들고옴
-    
-      
+    let filtedRoutes = routes.filter((route) => route.code === (pathArray.length > 0 ? pathArray[0] : pathNow)); // 현재에 맞는 대메뉴만 들고옴
     
     switch(gnb) {
       case 'pathText' :
-        //pathString += route.name + ' / ';
-          //if(route.items.length > 0) { // 없어도 무방
-        pathArray.forEach((path) => { // MU230001/MU230002
-          //filtedRoutes.forEach(route => { // MU230001...
-            pathString += testFor(filtedRoutes, path, pathString) + ' / ';
-          //})
-          //} // 없어도 무방
-        })
+          if(pathArray.length > 0) {
+            pathArray.forEach((path) => { // MU230001/MU230002
+                pathString += addRoutesPath(filtedRoutes, path, pathString) + ' > ';
+            })
+          } else {
+            pathString += addRoutesPath(filtedRoutes, pathNow, pathString) + ' > ';
+          }
+        
         return pathString;
       case 'routeText' :
-        pathNowName = testFor(filtedRoutes, pathNow, pathNowName);
+        pathNowName = addRoutesPath(filtedRoutes, pathNow, pathNowName);
         return pathNowName;
     }
     //return pathString;
   }
 
   // 하위 라우터들 돌며 경로 이름 추가
-  const testFor = (routes, path, pathString) => {
+  const addRoutesPath = (routes, path, pathString) => {
     routes.forEach((route) => {
       if(route.code === path) {
         pathString = route.name;
       } else {
         if(route.items.length > 0) {
-          pathString = testFor(route.items, path, pathString);
+          pathString = addRoutesPath(route.items, path, pathString);
         }
       }
-
-      
     })
 
     return pathString;
   }
 
-  const getActiveRoute = (routes) => {
-    let activeRoute = "";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = getActiveRoute(routes[i].items);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else if (routes[i].category) {
-        let categoryActiveRoute = getActiveRoute(routes[i].items);
-        if (categoryActiveRoute !== activeRoute) {
-          return categoryActiveRoute;
-        }
-      } else {
-        if(findPath(routes, props.location.pathname) === null){
-          return ;
-        }else{
-           //찾은 PATH값의 NAME을 반환
-          activeRoute = findPath(routes, props.location.pathname).name;
-        }
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
-    }
-    return activeRoute;
-  };
+  // const getActiveRoute = (routes) => {
+  //   let activeRoute = "";
+  //   for (let i = 0; i < routes.length; i++) {
+  //     if (routes[i].collapse) {
+  //       let collapseActiveRoute = getActiveRoute(routes[i].items);
+  //       if (collapseActiveRoute !== activeRoute) {
+  //         return collapseActiveRoute;
+  //       }
+  //     } else if (routes[i].category) {
+  //       let categoryActiveRoute = getActiveRoute(routes[i].items);
+  //       if (categoryActiveRoute !== activeRoute) {
+  //         return categoryActiveRoute;
+  //       }
+  //     } else {
+  //       if(findPath(routes, props.location.pathname) === null){
+  //         return ;
+  //       }else{
+  //          //찾은 PATH값의 NAME을 반환
+  //         activeRoute = findPath(routes, props.location.pathname).name;
+  //       }
+  //       if (
+  //         window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+  //       ) {
+  //         return routes[i].name;
+  //       }
+  //     }
+  //   }
+  //   return activeRoute;
+  // };
+
   const getActiveNavbar = (routes) => {
     let activeNavbar = false;
     for (let i = 0; i < routes.length; i++) {
@@ -226,8 +226,8 @@ export default function Dashboard(props) {
                 <Navbar
                   onOpen={onOpen}
                   logoText={"Horizon UI Dashboard PRO"}
-                  pathText={test(routes, 'pathText')}
-                  brandText={test(routes, 'routeText')}////getActiveRoute(routes)
+                  pathText={getLocationPath(routes, 'pathText')}
+                  brandText={getLocationPath(routes, 'routeText')}////getActiveRoute(routes)
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
                   setAlertInfo={setAlertInfo}

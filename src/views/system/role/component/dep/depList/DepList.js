@@ -9,7 +9,7 @@ const DepList = ({setDpCd, setCoCd, fetchRoleGroup, setDpCdList}) => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" w={'450px'}>
+        <Box borderRadius="lg" bg="white" h="700px" p="6">
             {/* 목록 상단 */}
             <CardMenuBar
                 title={'부서'}

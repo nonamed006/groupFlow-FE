@@ -15,7 +15,7 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit, is
             {isLoading ?
                 <Loading />
                 :
-                roleMenu ?
+                (roleMenu !== undefined && roleMenu !== 'undefined' && roleMenu.length > 0) ?
                     <RealGrid org={roleMenu} />
                     :
                     <Text

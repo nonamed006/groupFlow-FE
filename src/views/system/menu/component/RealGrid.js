@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
+
+import depIcon from "assets/img/gridIcon/department.png";
 
 const setUseName = (items) => {
   items.forEach((item) => {
@@ -72,9 +74,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.columnByName("menuNm").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
- 
-    treeView.treeOptions.iconImagesRoot = "/img/";
-    treeView.treeOptions.iconImages = ["department.png"];
+    treeView.treeOptions.iconImages = [depIcon];
     treeView.treeOptions.defaultIcon = 0;
 
     treeView.onCellClicked = function (grid, clickData) {
@@ -91,6 +91,15 @@ const RealGrid = ({ org, setMenuDetail }) => {
         // }
       }
     };
+
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if (depth === "1") {
+        return "gnb-column";
+      } else if (depth === "2") {
+        return "bottom-gnb-column";
+      }
+    });
 
     treeView.expandAll();
     return () => {

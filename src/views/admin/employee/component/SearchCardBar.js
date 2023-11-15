@@ -31,7 +31,7 @@ const SearchCardBar = (props) => {
 
   return (
     <div>
-      <Box display="flex" borderRadius="lg" bg="white" p="6">
+      <Box borderRadius="lg" bg="white" p="6">
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
           <GridItem colSpan={1}>
             <div
@@ -48,7 +48,7 @@ const SearchCardBar = (props) => {
             </div>
           </GridItem>
           <GridItem colSpan={2}>
-          <Select
+            <Select
               placeholder="전체"
               onChange={(e) => {
                 props.setSearchCorp(e.target.value);
@@ -76,7 +76,7 @@ const SearchCardBar = (props) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-              <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체"/>
+            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" />
           </GridItem>
           <GridItem colStart={9} colEnd={9}>
             <div
@@ -86,7 +86,12 @@ const SearchCardBar = (props) => {
                 textAlign: "center",
               }}
             >
-              <Text color={textColor} fontSize="sm" fontWeight="600" id="searchNm">
+              <Text
+                color={textColor}
+                fontSize="sm"
+                fontWeight="600"
+                id="searchNm"
+              >
                 이름/ID
               </Text>
             </div>
@@ -97,11 +102,16 @@ const SearchCardBar = (props) => {
               placeholder="검색어를 입력하세요."
               size="md"
               borderRadius="14px"
-              onChange={(e)=>setSrhNm(e.target.value)}
+              onChange={(e) => setSrhNm(e.target.value)}
             />
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
-            <Button variant="brand" onClick={()=>props.getEmpList(srhCorp, srhWorkType, srhNm)}>검색</Button>
+            <Button
+              variant="brand"
+              onClick={() => props.getEmpList(srhCorp, srhWorkType, srhNm)}
+            >
+              검색
+            </Button>
           </GridItem>
         </Grid>
       </Box>

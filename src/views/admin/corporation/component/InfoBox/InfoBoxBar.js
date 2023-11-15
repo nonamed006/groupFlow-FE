@@ -21,6 +21,7 @@ const InfoBoxBar = ({
   isEditing,
   handleCancle,
   handleModify,
+  setAlertInfo,
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [isOpen, setIsOpen] = React.useState(false);
@@ -149,6 +150,7 @@ const InfoBoxBar = ({
                 chSearch={chSearch}
                 setChSearch={setChSearch}
                 handelChangeHistoryBtn={handelChangeHistoryBtn}
+                setAlertInfo={setAlertInfo}
               />
             </Box>
             <Box borderRadius="lg" bg="white" p="6">

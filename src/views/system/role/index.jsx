@@ -15,6 +15,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
                             사용자 기준
                         </Tab>
@@ -22,15 +23,17 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
-                            회사 기준
+                            부서 기준
                         </Tab>
                         <Tab
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
-                            부서 기준
+                            회사 기준
                         </Tab>
                     </Flex>
                 </TabList>
@@ -39,14 +42,13 @@ const Role = () => {
                     <TabPanel>
                         <RoleEmp/>
                     </TabPanel>
-
-                    {/* 권한-회사기준 */}
-                    <TabPanel>
-                       <RoleCorp />
-                    </TabPanel>
                     {/* 권한-부서기준 */}
                     <TabPanel>
                         <DepRole />
+                    </TabPanel>
+                    {/* 권한-회사기준 */}
+                    <TabPanel>
+                       <RoleCorp />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

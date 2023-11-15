@@ -92,7 +92,7 @@ function SignIn() {
         }
       });
     }).then(()=>{
-      window.location.replace("/system/home");
+      window.location.replace("/MU000000/home");
     });;
   }
 
