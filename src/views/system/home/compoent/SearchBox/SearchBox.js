@@ -17,7 +17,7 @@ const SearchBox = () => {
     };
 
     const delayedSearch = useCallback(
-        debounce(async (keyword) => fetchMenuList(keyword), 600),
+        debounce(async (keyword) => fetchMenuList(keyword), 500),
         []
     );
 
