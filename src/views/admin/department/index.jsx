@@ -46,12 +46,8 @@ const Department = () => {
   return (
     <Box h={'full'}>{/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
       <Grid
-<<<<<<< HEAD
         // h={"500px"}
         h={'full'} // 혜윤 수정
-=======
-        h={"500px"} 
->>>>>>> jej
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
         gap={5}
