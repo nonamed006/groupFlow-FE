@@ -6,15 +6,17 @@ export const corpSchema = object().shape({
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),
   addr: string().required("주소를 선택해주세요."),
-  sort: number("정렬값은 숫자를 입력해주세요.").required("정렬값을 입력해주세요.").positive("정렬값은 1 이상의 숫자를 입력해주세요."),
+  sort: number("정렬값은 숫자를 입력해주세요.")
+    .required("정렬값을 입력해주세요.")
+    .positive("정렬값은 1 이상의 숫자를 입력해주세요."),
   estDt: date().required("설립일을 입력해주세요."),
-  bsCd : string().required("회사구분을 선택해주세요."),
+  bsCd: string().required("회사구분을 선택해주세요."),
   opDt: date()
     .required("개업일을 입력해주세요.")
-    .min(ref('estDt'), `개업일은 설립일 이후의 날짜를 선택해주세요.`),
+    .min(ref("estDt"), `개업일은 설립일 이후의 날짜를 선택해주세요.`),
   clsDt: date()
     .nullable()
-    .min(ref('opDt'),`폐업일은 개업일 이후의 날짜를 선택해주세요.`),
+    .min(ref("opDt"), `폐업일은 개업일 이후의 날짜를 선택해주세요.`),
 });
 
 export const depSchema = object().shape({
@@ -24,7 +26,11 @@ export const depSchema = object().shape({
   dpNm: string().required("부서명을 입력해주세요."),
   recYn: string().default("false").required("대내외 수신여부를 선택해주세요."),
   useYn: string().default("false").required("사용여부를 선택해주세요."),
-  sort: number().required("정렬값을 입력해주세요.").positive().integer(),
+  sort: number()
+    .typeError("정렬값을 올바르게 입력해주세요.")
+    .required("정렬값을 입력해주세요.")
+    .positive("")
+    .integer(""),
   cdt: date().nullable(),
   mdt: date().nullable(),
 });

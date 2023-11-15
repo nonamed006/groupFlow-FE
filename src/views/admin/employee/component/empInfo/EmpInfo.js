@@ -22,7 +22,6 @@ import EmpWorkState from "../empWorkState/EmpWorkState";
 import EmpInfoDel from "../empDel/EmpInfoDel";
 import EmpDepDel from "../empDel/EmpDepDel";
 const EmpInfo = (props) => {
-
   const [tabStatus, setTabStatus] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   const [empId, setEmpId] = useState("");
@@ -47,35 +46,34 @@ const EmpInfo = (props) => {
   //empDept input 값 받기
   const empDeptHandleChange = (e, index, e2) => {
     if (!e2) {
-      props.setEmpDept(
-        [...props.empDept.map((emp, index_) => {
-          if (index_ === index) {
-            return {
-              ...emp,
-              ...{ [e.target.name]: e.target.value }
-            }
-          } else {
-            return emp
-          }
-        }),
-        ]);
-    } else {
-      props.setEmpDept(
-        [...props.empDept.map((emp, index_) => {
+      props.setEmpDept([
+        ...props.empDept.map((emp, index_) => {
           if (index_ === index) {
             return {
               ...emp,
               ...{ [e.target.name]: e.target.value },
-              ...{ [e2.target.name]: e2.target.value }
-            }
+            };
           } else {
-            return emp
+            return emp;
           }
         }),
-        ]);
+      ]);
+    } else {
+      props.setEmpDept([
+        ...props.empDept.map((emp, index_) => {
+          if (index_ === index) {
+            return {
+              ...emp,
+              ...{ [e.target.name]: e.target.value },
+              ...{ [e2.target.name]: e2.target.value },
+            };
+          } else {
+            return emp;
+          }
+        }),
+      ]);
     }
-
-  }
+  };
 
   //사원 ID 변경
   const updateEmpID = () => {
@@ -121,63 +119,60 @@ const EmpInfo = (props) => {
 
   //사원 조직 정보 추가
   const insertEmpDep = () => {
-    fetch(
-      `${PORT}/emp/insertEmpDep`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(props.empDept)
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+    fetch(`${PORT}/emp/insertEmpDep`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.empDept),
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         props.setAlertInfo({
           isOpen: true,
-          status: 'success',
+          status: "success",
           title: res.resultMsg,
-          width: 'fit-content'
+          width: "fit-content",
         });
         props.setEditState("read");
       });
-  }
+  };
 
   //사원 조직 정보 수정
   const updateEmpDep = () => {
-    fetch(
-      `${PORT}/emp/updateEmpDep`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(props.empDept)
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+    fetch(`${PORT}/emp/updateEmpDep`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.empDept),
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         props.setAlertInfo({
           isOpen: true,
-          status: 'success',
+          status: "success",
           title: res.resultMsg,
-          width: 'fit-content'
+          width: "fit-content",
         });
         props.setEditState("read");
       });
-  }
+  };
 
   // 사원의 조직 정보
   const getDeptInfo = () => {
-    console.log("Aaaaa", props.empDetail.empCd)
+    console.log("Aaaaa", props.empDetail.empCd);
     fetch(`${PORT}/emp/selectEmpDeptList/${props.empDetail.empCd}`, {
       method: "GET",
       headers: {
-        'Content-Type': "application/json; charset=utf-8",
-      }
-    }).then((res) => res.json())
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => res.json())
       .then((res) => {
-        if(res.data.length > 0){
+        if (res.data.length > 0) {
           props.setEmpDept(res.data);
         }
       });
@@ -188,16 +183,17 @@ const EmpInfo = (props) => {
     fetch(`${PORT}/emp/deleteEmp/${props.empDetail.empCd}`, {
       method: "GET",
       headers: {
-        'Content-Type': "application/json; charset=utf-8",
-      }
-    }).then((res) => res.json())
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
           props.setAlertInfo({
             isOpen: true,
-            status: 'success',
+            status: "success",
             title: "삭제되었습니다.",
-            width: 'fit-content'
+            width: "fit-content",
           });
           onClose();
           props.setIsReload(!props.isReload);
@@ -205,35 +201,33 @@ const EmpInfo = (props) => {
           alert("삭제 실패하였습니다.");
         }
       });
-  }
+  };
   // 선택한 사원 조직 정보 삭제
-const deleteChkEmpDep = () => {
-  fetch(
-    `${PORT}/emp/deleteChkEmpDep`,
-    {
+  const deleteChkEmpDep = () => {
+    fetch(`${PORT}/emp/deleteChkEmpDep`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(delEmpDep)
+      body: JSON.stringify(delEmpDep),
       // res에 결과가 들어옴
-    }
-  ).then((res) => res.json())
-    .then((res) => {
-      props.setAlertInfo({
-        isOpen: true,
-        status: 'success',
-        title: res.resultMsg,
-        width: 'fit-content'
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        getDeptInfo();
+        props.setEditState("read");
       });
-      onClose();
-      getDeptInfo();
-      props.setEditState("read");
-    });
-  }
+  };
 
   return (
-    <div>
+    <>
       <Box borderRadius="lg" bg="white" h="700px" p="6">
         <Tabs colorScheme="brandScheme">
           <TabList>
@@ -243,7 +237,7 @@ const deleteChkEmpDep = () => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={() => {
-                  props.setEditState("read")
+                  props.setEditState("read");
                   setTabStatus(1);
                 }}
               >
@@ -254,7 +248,7 @@ const deleteChkEmpDep = () => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={() => {
-                  props.setEditState("read")
+                  props.setEditState("read");
                   setTabStatus(2);
                 }}
               >
@@ -272,9 +266,9 @@ const deleteChkEmpDep = () => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: 'error',
+                                status: "error",
                                 title: "사원을 선택해주세요.",
-                                width: 'fit-content'
+                                width: "fit-content",
                               });
                               return;
                             }
@@ -291,9 +285,9 @@ const deleteChkEmpDep = () => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: 'error',
+                                status: "error",
                                 title: "사원을 선택해주세요.",
-                                width: 'fit-content'
+                                width: "fit-content",
                               });
                               return;
                             }
@@ -310,9 +304,9 @@ const deleteChkEmpDep = () => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: 'error',
+                                status: "error",
                                 title: "사원을 선택해주세요.",
-                                width: 'fit-content'
+                                width: "fit-content",
                               });
                               return;
                             }
@@ -323,36 +317,38 @@ const deleteChkEmpDep = () => {
                         >
                           퇴사처리
                         </Button>
-                      </Stack>) : <Stack direction="row" spacing={4}>
-                      <Button
-                        variant="action"
-                        onClick={() => {
-                          if (props.empDetail.empNm === "") {
-                            props.setAlertInfo({
-                              isOpen: true,
-                              status: 'warning',
-                              title: "사원을 선택해주세요.",
-                              width: 'fit-content'
-                            });
-                            return;
-                          }
-                          props.resetInput();
-                          props.setEditState("deptInsert");
-                        }}
-                      >
-                        조직정보 추가
-                      </Button>
-                    </Stack>
-                    }
+                      </Stack>
+                    ) : (
+                      <Stack direction="row" spacing={4}>
+                        <Button
+                          variant="action"
+                          onClick={() => {
+                            if (props.empDetail.empNm === "") {
+                              props.setAlertInfo({
+                                isOpen: true,
+                                status: "warning",
+                                title: "사원을 선택해주세요.",
+                                width: "fit-content",
+                              });
+                              return;
+                            }
+                            props.resetInput();
+                            props.setEditState("deptInsert");
+                          }}
+                        >
+                          조직정보 추가
+                        </Button>
+                      </Stack>
+                    )}
                     <Button
                       variant="action"
                       onClick={() => {
                         if (props.empDetail.empNm === "") {
                           props.setAlertInfo({
                             isOpen: true,
-                            status: 'error',
+                            status: "error",
                             title: "사원을 선택해주세요.",
-                            width: 'fit-content'
+                            width: "fit-content",
                           });
                           return;
                         }
@@ -371,9 +367,9 @@ const deleteChkEmpDep = () => {
                         if (props.empDetail.empNm === "") {
                           props.setAlertInfo({
                             isOpen: true,
-                            status: 'error',
+                            status: "error",
                             title: "사원을 선택해주세요.",
-                            width: 'fit-content'
+                            width: "fit-content",
                           });
                           return;
                         }
@@ -441,41 +437,49 @@ const deleteChkEmpDep = () => {
               />
             </TabPanel>
             <TabPanel>
-              <EmpTab2 
-              empDept={props.empDept} 
-              setEmpDept={props.setEmpDept} 
-              setAlertInfo={props.setAlertInfo} 
-              handleChange={empDeptHandleChange} 
-              editState={props.editState} 
-              isLoading={props.isLoading} 
-              setIsLoading={props.setIsLoading}
-              setDelEmpDep={setDelEmpDep}
-              delEmpDep={delEmpDep}
+              <EmpTab2
+                empDept={props.empDept}
+                setEmpDept={props.setEmpDept}
+                setAlertInfo={props.setAlertInfo}
+                handleChange={empDeptHandleChange}
+                editState={props.editState}
+                isLoading={props.isLoading}
+                setIsLoading={props.setIsLoading}
+                setDelEmpDep={setDelEmpDep}
+                delEmpDep={delEmpDep}
               />
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
       {/* ID 변경 모달 */}
-      {isOpen ?
+      {isOpen ? (
         <ModalLayout
           title={
             modalType == 1
               ? "ID변경"
               : modalType == 2
-                ? "비밀번호 초기화"
-                : modalType == 3
-                  ? "퇴사처리"
-                    : modalType == 4
-                    ? "사원삭제" 
-                    : "조직정보 삭제"
+              ? "비밀번호 초기화"
+              : modalType == 3
+              ? "퇴사처리"
+              : modalType == 4
+              ? "사원삭제"
+              : "조직정보 삭제"
           }
           buttonYn="false"
           isOpen={isOpen}
           onClose={onClose}
           btnText="확인"
           handleCheck={
-            modalType == 1 ? updateEmpID : modalType == 2 ? "" : modalType == 3 ? updateWorkType : modalType == 4 ? empDelete : deleteChkEmpDep
+            modalType == 1
+              ? updateEmpID
+              : modalType == 2
+              ? ""
+              : modalType == 3
+              ? updateWorkType
+              : modalType == 4
+              ? empDelete
+              : deleteChkEmpDep
           }
           children={
             modalType == 1 ? (
@@ -495,12 +499,16 @@ const deleteChkEmpDep = () => {
               <EmpWorkState />
             ) : modalType == 4 ? (
               <EmpInfoDel />
-            ) : <EmpDepDel />
+            ) : (
+              <EmpDepDel />
+            )
           }
           size="2xl"
         />
-        : ""}
-    </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 

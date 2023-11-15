@@ -25,11 +25,9 @@ const InfoBox = ({
       {tabStatus === 1 ? (
         <Stack direction="row" spacing={4}>
           <Button
-            variant="action"
-            textColor={textColor}
-            background={"#E2E8F0"}
-            borderRadius="5px"
-            fontWeight="600"
+            variant="brand"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
                 setAlertInfo({
@@ -47,8 +45,9 @@ const InfoBox = ({
             수정
           </Button>
           <Button
-            borderRadius="5px"
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
                 setAlertInfo({
@@ -68,8 +67,9 @@ const InfoBox = ({
       ) : (
         <Stack direction="row" spacing={4}>
           <Button
-            borderRadius="5px"
-            variant="action"
+            variant="brand"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               updateBtn();
             }}
@@ -77,8 +77,9 @@ const InfoBox = ({
             저장
           </Button>
           <Button
-            borderRadius="5px"
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               setDepDto([]);
               setTabStatus(1);

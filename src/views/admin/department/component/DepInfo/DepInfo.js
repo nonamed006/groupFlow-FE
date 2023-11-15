@@ -17,8 +17,10 @@ import DepGroup from "./DepGroup/DepGroup";
 import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
 import api from "api/Fetch";
+import { set } from "lodash";
 
 const DepInfo = ({
+  org,
   setTest,
   dpCd,
   editState,
@@ -33,7 +35,6 @@ const DepInfo = ({
   const [depDto, setDepDto] = useState({});
   const [dg, setDg] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
-
   //부서 상세조회
   const getDepDto = async () => {
     setIsLoading(true);
@@ -82,7 +83,7 @@ const DepInfo = ({
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "warning  ",
+        status: "warning",
         width: "fit-content",
       });
     } else {
@@ -153,9 +154,14 @@ const DepInfo = ({
       setDepDto({
         dpCd: "",
       });
+      setDg([]);
       setIsEditing(false);
     }
   }, [dpCd]);
+  useEffect(() => {
+    setDepDto([]);
+    setDg([]);
+  }, [org]);
   return (
     <>
       <Box
@@ -195,6 +201,7 @@ const DepInfo = ({
               <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
                 <DepBasic
                   depDto={depDto}
+                  setDepDto={setDepDto}
                   editState={editState}
                   change={change}
                   setAlertInfo={setAlertInfo}

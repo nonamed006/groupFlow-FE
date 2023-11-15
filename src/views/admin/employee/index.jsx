@@ -8,7 +8,6 @@ import { getCookie } from "common/common";
 import CommonAlert from "common/component/CommonAlert";
 
 const Employee = () => {
-
   //state
   const [empList, setEmpList] = useState([]);
   const [empNum, setEmpNum] = useState();
@@ -21,13 +20,13 @@ const Employee = () => {
   const [isReload, setIsReload] = useState(false);
 
   const [searchCorp, setSearchCorp] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [alertInfo, setAlertInfo] = useState({
-		isOpen: false
-	});
+    isOpen: false,
+  });
 
   const [empDept, setEmpDept] = useState([
     {
@@ -61,7 +60,7 @@ const Employee = () => {
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
-    }
+    },
   ]);
 
   //사원 목록 조회
@@ -71,12 +70,13 @@ const Employee = () => {
       {
         method: "GET",
         headers: {
-          'Content-Type': "application/json; charset=utf-8",
-          'Authorization': getCookie("Authorization")
-        }
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: getCookie("Authorization"),
+        },
         // res에 결과가 들어옴
       }
-    ).then((res) => res.json())
+    )
+      .then((res) => res.json())
       .then((res) => {
         setEmpList(res.data);
         setEmpNum(res.strData);
@@ -88,13 +88,14 @@ const Employee = () => {
     fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
       method: "GET",
       headers: {
-        'Content-Type': "application/json; charset=utf-8",
-        'Authorization': getCookie("Authorization")
-      }
-    }).then((res) => res.json())
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: getCookie("Authorization"),
+      },
+    })
+      .then((res) => res.json())
       .then((res) => {
-        if(res.data.length > 0){
-        setEmpDept(res.data);
+        if (res.data.length > 0) {
+          setEmpDept(res.data);
         }
       });
   };
@@ -195,10 +196,10 @@ const Employee = () => {
       .then((res) => {
         if (res.result === "success") {
           setAlertInfo({
-            isOpen : true,
-            status : 'success',
-            title : res.resultMsg,
-            width : 'fit-content'
+            isOpen: true,
+            status: "success",
+            title: res.resultMsg,
+            width: "fit-content",
           });
           setEditState("read");
           setIsReload(!isReload);
@@ -207,29 +208,27 @@ const Employee = () => {
       });
   };
 
-   //사원 정보 수정
-   const updateEmpInfo = () =>{
-    fetch(
-      `${PORT}/emp/updateEmpInfo`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(empDetail)
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+  //사원 정보 수정
+  const updateEmpInfo = () => {
+    fetch(`${PORT}/emp/updateEmpInfo`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(empDetail),
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         setAlertInfo({
-          isOpen : true,
-          status : 'success',
-          title : res.resultMsg,
-          width : 'fit-content'
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
         });
         setEditState("read");
       });
-  }
+  };
 
   useEffect(() => {
     resetInput();
@@ -238,64 +237,62 @@ const Employee = () => {
   }, [isReload]);
 
   return (
-    <div>
-      <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
-        <Grid
-          //h="1000px"
-          h={'full'} // 혜윤 수정
-          templateRows="repeat(11, 1fr)"
-          templateColumns="repeat(6, 1fr)"
-          gap={5}
-        >
-          <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} setSearchCorp={setSearchCorp} />
-          </GridItem>
-          <GridItem colSpan={2} rowSpan={5}>
-            <EmpCard
-              empList={empList}
-              empNum={empNum}
-              onClickRow={onClickRow}
-              resetInput={resetInput}
-              setEditState={setEditState}
-              editState={editState}
-              setSelectedIndex={setSelectedIndex}
-              selectedIndex={selectedIndex}
-            />
-          </GridItem>
-          <GridItem colSpan={4} rowSpan={5}>
-            <EmpInfo
-              setIsReload={setIsReload}
-              isReload={isReload}
-              empDetail={empDetail}
-              setEmpDetail={setEmpDetail}
-              empDept={empDept}
-              setEmpDept={setEmpDept}
-              setImgFile={setImgFile}
-              resetInput={resetInput}
-              onSaveEmpDetail={onSaveEmpDetail}
-              setEditState={setEditState}
-              editState={editState}
-              updateEmpInfo={updateEmpInfo}
-              setAlertInfo={setAlertInfo}
-              imgBase64={imgBase64}
-              setImgBase64={setImgBase64}
-              setSelectedIndex={setSelectedIndex}
-              selectedIndex={selectedIndex}
-              setIsLoading={setIsLoading}
-              isLoading={isLoading}
-            />
-          </GridItem>
-        </Grid>
+    <Box h={"full"}>
+      {/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
+      <Grid
+        //h="1000px"
+        h={"full"} // 혜윤 수정
+        templateRows="repeat(11, 1fr)"
+        templateColumns="repeat(6, 1fr)"
+        gap={5}
+      >
+        <GridItem colSpan={6} rowSpan={1}>
+          <SearchCardBar
+            getEmpList={getEmpList}
+            setSearchCorp={setSearchCorp}
+          />
+        </GridItem>
+        <GridItem colSpan={2} rowSpan={5}>
+          <EmpCard
+            empList={empList}
+            empNum={empNum}
+            onClickRow={onClickRow}
+            resetInput={resetInput}
+            setEditState={setEditState}
+            editState={editState}
+            setSelectedIndex={setSelectedIndex}
+            selectedIndex={selectedIndex}
+          />
+        </GridItem>
+        <GridItem colSpan={4} rowSpan={5}>
+          <EmpInfo
+            setIsReload={setIsReload}
+            isReload={isReload}
+            empDetail={empDetail}
+            setEmpDetail={setEmpDetail}
+            empDept={empDept}
+            setEmpDept={setEmpDept}
+            setImgFile={setImgFile}
+            resetInput={resetInput}
+            onSaveEmpDetail={onSaveEmpDetail}
+            setEditState={setEditState}
+            editState={editState}
+            updateEmpInfo={updateEmpInfo}
+            setAlertInfo={setAlertInfo}
+            imgBase64={imgBase64}
+            setImgBase64={setImgBase64}
+            setSelectedIndex={setSelectedIndex}
+            selectedIndex={selectedIndex}
+            setIsLoading={setIsLoading}
+            isLoading={isLoading}
+          />
+        </GridItem>
+      </Grid>
 
-        {alertInfo.isOpen &&
-				<CommonAlert
-					alertInfo={alertInfo}
-					setAlertInfo={setAlertInfo}
-				/>
-			}
-
-      </Box>
-    </div>
+      {alertInfo.isOpen && (
+        <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+      )}
+    </Box>
   );
 };
 

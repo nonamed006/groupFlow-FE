@@ -73,7 +73,7 @@ const ChangeDeleteTableTbody = ({ detail }) => {
       <Tr>
         <Td align="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            종목
+            업종
           </Text>
         </Td>
         <Td align="center">
@@ -210,7 +210,19 @@ const ChangeDeleteTableTbody = ({ detail }) => {
         </Td>
         <Td align="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            {detail.useYn}
+            {detail.useYN === "1" ? "사용" : "미사용"}
+          </Text>
+        </Td>
+      </Tr>
+      <Tr>
+        <Td align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="600">
+            우편번호
+          </Text>
+        </Td>
+        <Td align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="600">
+            {detail.postNum}
           </Text>
         </Td>
       </Tr>
@@ -223,6 +235,18 @@ const ChangeDeleteTableTbody = ({ detail }) => {
         <Td align="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
             {detail.addr}
+          </Text>
+        </Td>
+      </Tr>
+      <Tr>
+        <Td align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="600">
+            상세주소
+          </Text>
+        </Td>
+        <Td align="center">
+          <Text color={textColor} fontSize="sm" fontWeight="600">
+            {detail.addrDetail}
           </Text>
         </Td>
       </Tr>
