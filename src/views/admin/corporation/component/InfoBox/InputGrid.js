@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
@@ -8,7 +8,6 @@ import AddrBox from "common/addressAPI/AddrBox";
 import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
-import _ from "lodash"; // Lodash 라이브러리를 가져옴
 
 const InputGrid = ({ corp, setCorp, isEditing }) => {
   const {
@@ -39,6 +38,8 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
       [name]: value, // name 키를 가진 값을 value 로
     });
   };
+
+  useEffect(()=>{},[isEditing]);
 
   return (
     <>
@@ -198,7 +199,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           <FormSelect
             title={"회사구분"}
             name={"bsCd"}
-            defaultValue={bsCd}
+            defaultValue={bsCd==="COA0001" || bsCd==="COA0002" ?bsCd:''}
             pk={coCd}
             onChange={onChange}
             readOnly={!isEditing}

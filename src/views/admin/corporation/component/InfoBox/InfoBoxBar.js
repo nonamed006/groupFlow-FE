@@ -54,7 +54,6 @@ const InfoBoxBar = ({
     await fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.pageInfo);
         setChHistory(res.pageInfo);
       });
     setIsLoading(false);
