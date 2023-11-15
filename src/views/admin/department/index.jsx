@@ -46,7 +46,7 @@ const Test = () => {
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <Grid
-        h={"500px"}
+        h={"500px"} 
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
         gap={5}

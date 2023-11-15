@@ -60,9 +60,11 @@ export default function HeaderLinks(props) {
     "14px 17px 40px 4px rgba(112, 144, 176, 0.06)"
   );
   const borderButton = useColorModeValue("secondaryGray.500", "whiteAlpha.200");
-  const empInfo = useSelector((state) => state.solution.empData);
+  //const empInfo = useSelector((state) => state.solution.empData);
+  const [empInfo, setEmpInfo] = useState([]);
+  const loginEmpInfo = useSelector((state) => state.solution.empData);
   const dispatch = useDispatch();
-  const [dpType, setDpType] = useState("");
+  const [dpGrpCd, setDpGrpCd] = useState("");
   const [empDetail, setEmpDetail] = useState([]);
   const [empTemp, setEmpTemp] = useState();
 
@@ -82,7 +84,30 @@ export default function HeaderLinks(props) {
 			}
 		).then((res) => res.json())
 			.then((res) => {
-				setDpType(res?.data[0]?.dpType);
+				// setDpGrpCd(res?.data[0]?.dpGrpCd);
+				// setCookie("Emp_Dp_Type", res?.data[0]?.dpGrpCd, 2);
+				// dispatch(setEmpData(res?.data));
+				setEmpInfo(res.data);
+			});
+	}
+
+	//사원 정보 조회, 리덕스에 저장
+	const getLoginEmp = () => {
+		fetch(
+			`${PORT}/emp/getLoginEmp/${dpGrpCd}`,
+			{
+				method: "get",
+				headers: {
+					'Content-Type': "application/json; charset=utf-8",
+				},
+				credentials: 'include'
+				// res에 결과가 들어옴
+			}
+		).then((res) => res.json())
+			.then((res) => {
+				console.log("data", res.data);
+				setDpGrpCd(res?.data[0]?.dpGrpCd);
+				setCookie("Emp_Dp_Type", res?.data[0]?.dpGrpCd, 2);
 				dispatch(setEmpData(res?.data));
 			});
 	}
@@ -101,24 +126,25 @@ export default function HeaderLinks(props) {
       .then((res) => {
         deleteCookie("Authorization");
         deleteCookie("Emp_Dp_Type");
-        setDpType("");
+        setDpGrpCd("");
         window.location.replace("/auth/login");
       });
   };
 
   //체크박스 핸들링
   const handleChange = (e, empInfo) => {
-    setDpType(e.target.value);
+    setDpGrpCd(e.target.value);
     setEmpTemp(empInfo);
   };
 
   const clickHandle = () => {
-    setCookie("Emp_Dp_Type", dpType, 2);
+    setCookie("Emp_Dp_Type", dpGrpCd, 2);
     setEmpDetail(empTemp);
   };
 
   useEffect(() => {
     getEmpInfo();
+	getLoginEmp();
   }, []);
 
   return (
@@ -170,7 +196,7 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px"  onClick={() => { setDpType(getCookie("Emp_Dp_Type")); }}>
+				<MenuButton p="0px"  onClick={() => { setDpGrpCd(getCookie("Emp_Dp_Type")); console.log("asdqwe") }}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
@@ -253,7 +279,7 @@ export default function HeaderLinks(props) {
 													me='16px' 
 													colorScheme='brandScheme' 
 													value={column.dpGrpCd} 
-													isChecked={column.dpGrpCd == dpType ? true : false} 
+													isChecked={column.dpGrpCd == dpGrpCd ? true : false} 
 													onChange={(e) => handleChange(e, column)} 
 												/></Td>
 										</Tr>

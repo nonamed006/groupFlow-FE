@@ -241,7 +241,7 @@ const Employee = () => {
     <div>
       <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
         <Grid
-          h="1000px"
+          h="full"
           templateRows="repeat(11, 1fr)"
           templateColumns="repeat(6, 1fr)"
           gap={5}
