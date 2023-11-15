@@ -119,6 +119,21 @@ const roleMenu = {
    getRoleMenuBySearch: (dpGrpCd, keyword) => {
     const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
         return promise.then((responseJson) => responseJson);
+   },
+
+   /**
+    * 권한별 메뉴 목록 조회
+    * 이혜윤
+    * @param {String} dpGrpCd 
+    * @returns 
+    */
+   getRoleMenuListByDpGrpCd: (dpGrpCd) => {
+    const promise = getPromise({
+        url: `roleMenu/group/${dpGrpCd}`,
+        method: 'GET'
+    });
+
+    return promise.then((responseJson) => responseJson);
    }
 };
 

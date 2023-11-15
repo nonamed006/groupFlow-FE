@@ -6,7 +6,7 @@ import DepInfo from "./component/DepInfo/DepInfo";
 import api from "api/Fetch";
 import CommonAlert from "common/component/CommonAlert";
 
-const Test = () => {
+const Department = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
   const [searchText, setSearchText] = useState("");
   const [org, setOrg] = useState([]);
@@ -91,4 +91,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Department;

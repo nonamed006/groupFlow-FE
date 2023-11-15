@@ -27,7 +27,7 @@ export default function AdminNavbar(props) {
     };
   });
 
-  const { secondary, message, brandText, location } = props;
+  const { secondary, message, brandText, location, pathText } = props;
 
   //방문한 페이지 추가
   const updateHistory = () => {
@@ -121,28 +121,33 @@ export default function AdminNavbar(props) {
         alignItems={{ xl: "center" }}
         mb={gap}
       >
-        <Box marginRight={"30px"} mb={{ sm: "8px", md: "0px" }} w={"230px"}>
-          <Breadcrumb>
-            <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
+        <Box mr={"10px"} mb={{ sm: "8px", md: "0px" }} w={"220px"}>
+          <Text w={'100%'} fontSize={'0.1vw'}>{pathText}</Text>
+          {/* <Breadcrumb> */}
+            {/* <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
               </BreadcrumbLink>
-            </BreadcrumbItem>
+            </BreadcrumbItem> */}
 
-            <BreadcrumbItem color={secondaryText} fontSize="sm">
+            {/* <BreadcrumbItem color={secondaryText} fontSize="sm">
               <BreadcrumbLink href="#" color={secondaryText}>
-                {brandText}
+                {/* {brandText}}
+                {pathText}
               </BreadcrumbLink>
             </BreadcrumbItem>
-          </Breadcrumb>
+          </Breadcrumb> */}
           {/* Here we create navbar brand, based on route name */}
           <Link
+            display={'block'}
+            w={'100%'}
             color={mainText}
             href={location.pathname}
             bg="inherit"
             borderRadius="inherit"
             fontWeight="bold"
-            fontSize="34px"
+            fontSize={brandText.length > 7 ? '1.4vw' : '1.7vw'}//"34px"
+            textOverflow={"ellipsis"}
             _hover={{ color: { mainText } }}
             _active={{
               bg: "inherit",
@@ -160,7 +165,7 @@ export default function AdminNavbar(props) {
           h={"full"}
           // overflowX={'scroll'}
           // css={{'&::-webkit-scrollbar':{'display':'none'}}}
-          pt={"20px"}
+          pt={"15px"}
           mx={"15px"}
         >
           {history?.length > 0 &&
@@ -188,7 +193,7 @@ export default function AdminNavbar(props) {
                       : //: "navy.30"
                         "#F4F7FE"
                   }
-                  w={140}
+                  w={135}
                   height={"35px"}
                   key={index}
                 >
@@ -205,7 +210,7 @@ export default function AdminNavbar(props) {
                   <NavLink to={item?.location?.pathname}>
                     <div
                       style={{
-                        width: "95px",
+                        width: "90px",
                         height: "35px",
                         lineHeight: "35px",
                       }}

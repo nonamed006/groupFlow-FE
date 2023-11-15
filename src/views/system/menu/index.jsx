@@ -31,11 +31,14 @@ const Menu = () => {
 	useEffect(() => {
 		setMenuInfo({});
 		setSelectGnbMenuCd('');
+	}, [search.onSearchClick]);
+
+	useEffect(() => {
 		setSearch({
 			...search,
 			searchLnbMenuCd: ''
 		})
-	}, [search.onSearchClick]);
+	}, [search.searchGnbMenuCd])
 
 	return (
 		<Box h={'full'}>

@@ -44,23 +44,18 @@ function Sidebar(props) {
   const [GNBcollapse, setGNBCollapse] = useState(collapse);
   const [LNBcollapse, setLNBCollapse] = useState(false);
   const [route, setRoute] = useState();
-  useEffect(() => {
-    return setGNBCollapse(collapse);
-  }, [collapse]);
+  // useEffect(() => {
+  //   return setGNBCollapse(collapse);
+  // }, [collapse]);
 
-  useEffect(() => {
-    if (route != null && route.items != null) {
-      return setLNBCollapse(true);
-    } else {
-      return setLNBCollapse(false);
-    }
-  }, [route]);
+  // useEffect(() => {
+  //   if (route != null && route.items.length > 0) {
+  //     return setLNBCollapse(true);
+  //   } else {
+  //     return setLNBCollapse(false);
+  //   }
+  // }, [route]);
 
-  let variantChange = "0.2s linear";
-  let shadow = useColorModeValue(
-    "14px 17px 40px 4px rgba(112, 144, 176, 0.08)",
-    "unset"
-  );
   // Chakra Color Mode
   let sidebarBg = useColorModeValue("white", "navy.800");
   let sidebarMargins = "0px";
@@ -77,7 +72,6 @@ function Sidebar(props) {
     } else {
       document.querySelector(".box_GNB").classList.remove("active");
       document.querySelector(".box_GNB").classList.add("non_active");
-
       // document.querySelector('.box_LNB').classList.remove('non_active')
       // document.querySelector('.box_LNB').classList.add('active')
     }
@@ -85,11 +79,15 @@ function Sidebar(props) {
   };
 
   useEffect(() => {
-    console.log(route);
-    if (route === null) {
-      mouseEvent(false);
+    mouseEvent(false);
+    if (route == null) {
       document.querySelector(".box_LNB").classList.remove("active");
       document.querySelector(".box_LNB").classList.add("non_active");
+    } else {
+      if(route.items.length > 0) {
+        document.querySelector(".box_LNB").classList.add("active");
+        document.querySelector(".box_LNB").classList.remove("non_active");
+      }
     }
   }, [route]);
 
@@ -131,7 +129,7 @@ function Sidebar(props) {
               //   }
               // }
               >
-              <ContentLNB routes={routes} route={route} collapse={collapse} LNBroute={setRoute} setCollapse={setCollapse}/>
+              <ContentLNB routes={routes} route={route} LNBroute={setRoute}/>
             </Scrollbars>
           </Box>
 
