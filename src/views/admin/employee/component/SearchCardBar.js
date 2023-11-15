@@ -36,8 +36,6 @@ const SearchCardBar = (props) => {
           <GridItem colSpan={1}>
             <div
               style={{
-                width: "130px",
-                height: "40px",
                 lineHeight: "40px",
                 textAlign: "center",
               }}
@@ -61,7 +59,7 @@ const SearchCardBar = (props) => {
               ))}
             </Select>
           </GridItem>
-          <GridItem colStart={5} colEnd={6}>
+          <GridItem colStart={5} colEnd={5}>
             <div
               style={{
                 height: "40px",

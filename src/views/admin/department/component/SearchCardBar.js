@@ -15,7 +15,9 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" p="6"> {/*  w={"93%"} 혜윤 수정 */}
+      <Box borderRadius="lg" bg="white" p="6">
+        {" "}
+        {/*  w={"93%"} 혜윤 수정 */}
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
           <GridItem colSpan={1}>
             <div style={{ lineHeight: "40px", textAlign: "center" }}>회사</div>
@@ -53,8 +55,10 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
             <Button
-              borderRadius="5px"
               variant="brand"
+              borderRadius={"10px"}
+              fontWeight={"600"}
+              m={1}
               onClick={() => {
                 handleSearchBtn();
               }}

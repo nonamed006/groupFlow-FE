@@ -28,16 +28,19 @@ import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
 const DepBasic = (props) => {
-  const [depDto, setDepDto] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
-  const recYN = new Boolean(depDto?.recYN);
-  const useYN = new Boolean(depDto?.useYN);
+  const recYN = new Boolean(
+    props.depDto?.recYN === undefined ? true : props.depDto?.recYN
+  );
+  const useYN = new Boolean(
+    props.depDto?.useYN === undefined ? true : props.depDto?.useYN
+  );
   const [infiniteScrollRef, inView] = useInView();
   const onChange = (e) => {
     const { value, name } = e.target;
     const updateData = {
-      ...depDto,
+      ...props.depDto,
       [name]: value,
     };
     props.change(updateData);
@@ -46,7 +49,7 @@ const DepBasic = (props) => {
   const onChange2 = (e) => {
     const { value, name } = e.target;
     const updateData = {
-      ...depDto,
+      ...props.depDto,
       upperCd: value[0],
       upperName: value[1],
     };
@@ -55,12 +58,20 @@ const DepBasic = (props) => {
 
   let updatedDepDto;
   const getValue = (text) => {
-    console.log(text);
     //setUpdatedDepDto(text);
     updatedDepDto = text;
   };
 
   const click = () => {
+    if (updatedDepDto === undefined) {
+      props.setAlertInfo({
+        isOpen: true,
+        title: "상위부서를 선택해주세요.",
+        status: "warning",
+        width: "fit-content",
+      });
+      return 0;
+    }
     let dataArray = updatedDepDto._values[0].split("/");
     if (props.depDto.dpCd == "") {
     } else {
@@ -94,7 +105,7 @@ const DepBasic = (props) => {
     props.setIsLoading(false);
   };
   useEffect(() => {
-    setDepDto(props.depDto);
+    //setDepDto(props.depDto);
   }, [props]);
 
   return (
@@ -121,8 +132,8 @@ const DepBasic = (props) => {
               fontSize={"14px"}
               borderRadius="5px"
               name="upperName"
-              value={depDto?.upperName}
-              key={depDto?.dpCd}
+              value={props.depDto?.upperName}
+              key={props.depDto?.dpCd}
               readOnly
             />
           </FormControl>
@@ -173,7 +184,7 @@ const DepBasic = (props) => {
             title={"대내외 수신여부"}
             name={"recYN"}
             defaultValue={recYN.toString()}
-            pk={depDto?.dpCd}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={true}
@@ -193,8 +204,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"표준행정코드"}
             name={"stnd"}
-            value={depDto?.stnd}
-            pk={depDto?.dpCd}
+            value={props.depDto?.stnd}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={false}
@@ -205,8 +216,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"발신인명"}
             name={"reqNm"}
-            value={depDto?.reqNm}
-            pk={depDto?.dpCd}
+            value={props.depDto?.reqNm}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={false}
@@ -216,8 +227,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"부서코드"}
             name={"dpCd"}
-            value={depDto?.dpCd}
-            pk={depDto?.dpCd}
+            value={props.depDto?.dpCd}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={true}
             isRequired={false}
@@ -228,8 +239,8 @@ const DepBasic = (props) => {
           <FormSelect
             title={"부서유형"}
             name={"typeCd"}
-            defaultValue={depDto?.typeCd}
-            pk={depDto?.dpCd}
+            defaultValue={props.depDto?.typeCd}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             placeholder={"부서유형"}
@@ -255,8 +266,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"부서명"}
             name={"dpNm"}
-            value={depDto?.dpNm}
-            pk={depDto?.dpCd}
+            value={props.depDto?.dpNm}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={true}
@@ -267,8 +278,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"발신인명"}
             name={"dpAbb"}
-            value={depDto?.dpAbb}
-            pk={depDto?.dpCd}
+            value={props.depDto?.dpAbb}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={false}
@@ -276,8 +287,8 @@ const DepBasic = (props) => {
         </GridItem>
         <AddrBox
           title={"부서주소"}
-          data={depDto}
-          setData={setDepDto}
+          data={props.depDto}
+          setData={props.setDepDto}
           editState={props.editState}
         ></AddrBox>
 
@@ -286,7 +297,7 @@ const DepBasic = (props) => {
             title={"사용여부"}
             name={"useYN"}
             defaultValue={useYN.toString()}
-            pk={depDto?.dpCd}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={true}
@@ -307,8 +318,8 @@ const DepBasic = (props) => {
           <FormInput
             title={"정렬"}
             name={"sort"}
-            value={depDto?.sort}
-            pk={depDto?.dpCd}
+            value={props.depDto?.sort}
+            pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
             isRequired={true}

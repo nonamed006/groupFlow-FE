@@ -20,7 +20,9 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
 
   return (
     <>
-      <Box borderRadius="lg" bg="white" h="700px" p="6"> {/*  w={"450px"} 혜윤 수정 */}
+      <Box borderRadius="lg" bg="white" h="700px" p="6">
+        {" "}
+        {/*  w={"450px"} 혜윤 수정 */}
         <Box display="flex" bg="white" mb={4}>
           <Text
             color={textColor}
@@ -33,6 +35,8 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
           <Spacer />
           <Button
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               setDpCd(0);
               setEditState("update");

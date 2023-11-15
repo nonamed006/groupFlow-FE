@@ -31,7 +31,11 @@ export const depSchema = object().shape({
   dpNm: string().required("부서명을 입력해주세요."),
   recYn: string().default("false").required("대내외 수신여부를 선택해주세요."),
   useYn: string().default("false").required("사용여부를 선택해주세요."),
-  sort: number().required("정렬값을 입력해주세요.").positive().integer(),
+  sort: number()
+    .typeError("정렬값을 올바르게 입력해주세요.")
+    .required("정렬값을 입력해주세요.")
+    .positive("")
+    .integer(""),
   cdt: date().nullable(),
   mdt: date().nullable(),
 });

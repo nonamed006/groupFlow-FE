@@ -8,7 +8,6 @@ import { getCookie } from "common/common";
 import CommonAlert from "common/component/CommonAlert";
 
 const Employee = () => {
-
   //state
   const [empList, setEmpList] = useState([]);
   const [empNum, setEmpNum] = useState();
@@ -21,13 +20,13 @@ const Employee = () => {
   const [isReload, setIsReload] = useState(false);
 
   const [searchCorp, setSearchCorp] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [alertInfo, setAlertInfo] = useState({
-		isOpen: false
-	});
+    isOpen: false,
+  });
 
   const [empDept, setEmpDept] = useState([
     {
@@ -61,7 +60,7 @@ const Employee = () => {
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
-    }
+    },
   ]);
 
   //사원 목록 조회
@@ -76,7 +75,8 @@ const Employee = () => {
         credentials: 'include'
         // res에 결과가 들어옴
       }
-    ).then((res) => res.json())
+    )
+      .then((res) => res.json())
       .then((res) => {
         setEmpList(res.data);
         setEmpNum(res.strData);
@@ -88,13 +88,14 @@ const Employee = () => {
     fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
       method: "GET",
       headers: {
-        'Content-Type': "application/json; charset=utf-8",
-        'Authorization': getCookie("Authorization")
-      }
-    }).then((res) => res.json())
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: getCookie("Authorization"),
+      },
+    })
+      .then((res) => res.json())
       .then((res) => {
-        if(res.data.length > 0){
-        setEmpDept(res.data);
+        if (res.data.length > 0) {
+          setEmpDept(res.data);
         }
       });
   };
@@ -195,10 +196,10 @@ const Employee = () => {
       .then((res) => {
         if (res.result === "success") {
           setAlertInfo({
-            isOpen : true,
-            status : 'success',
-            title : res.resultMsg,
-            width : 'fit-content'
+            isOpen: true,
+            status: "success",
+            title: res.resultMsg,
+            width: "fit-content",
           });
           setEditState("read");
           setIsReload(!isReload);
@@ -207,29 +208,27 @@ const Employee = () => {
       });
   };
 
-   //사원 정보 수정
-   const updateEmpInfo = () =>{
-    fetch(
-      `${PORT}/emp/updateEmpInfo`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(empDetail)
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+  //사원 정보 수정
+  const updateEmpInfo = () => {
+    fetch(`${PORT}/emp/updateEmpInfo`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(empDetail),
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         setAlertInfo({
-          isOpen : true,
-          status : 'success',
-          title : res.resultMsg,
-          width : 'fit-content'
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
         });
         setEditState("read");
       });
-  }
+  };
 
   useEffect(() => {
     resetInput();
@@ -293,8 +292,10 @@ const Employee = () => {
 				/>
 			}
 
-      </Box>
-    </div>
+      {alertInfo.isOpen && (
+        <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+      )}
+    </Box>
   );
 };
 

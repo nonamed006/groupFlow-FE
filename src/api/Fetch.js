@@ -15,13 +15,13 @@ import menu from "./menu/MenuApi";
 // };
 
 export const getPromise = async ({ url, method, headers, body }) => {
-
-  if(!headers) { // header 받아온거 없으면 기본 application/json
+  if (!headers) {
+    // header 받아온거 없으면 기본 application/json
     headers = {
-      'Content-Type': 'application/json; charset=utf-8'
-    }
+      "Content-Type": "application/json; charset=utf-8",
+    };
   }
-  headers['Authorization'] = getCookie("Authorization");
+  headers["Authorization"] = getCookie("Authorization");
 
   return await fetch(`${PORT}/${url}`, {
     method: method,
@@ -32,6 +32,26 @@ export const getPromise = async ({ url, method, headers, body }) => {
     .then((response) => response.json())
     .then((responseJson) => responseJson);
 };
+
+//return await fetch(`${PORT}/${url}`, {
+//  method: method,
+//  body: body && body,
+//  headers: headers,
+//  credentials: "include",
+//})
+//  .then((response) => response.json())
+//  .then((responseJson) => {
+//    if (responseJson.status !== 200) {
+//      throw new Error(responseJson.resultMsg);
+//    } else {
+//      return responseJson;
+//    }
+//  })
+//  .catch((error) => {
+//    return error.message;
+//    console.log(error);
+//  });
+//};
 
 const api = {
   corp,
