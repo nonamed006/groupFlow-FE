@@ -25,15 +25,11 @@ import {
 import { RiOrganizationChart } from "react-icons/ri";
 
 // Custom Components
-import { ItemContent } from "components/menu/ItemContent";
-import { SearchBar } from "components/navbar/searchBar/SearchBar";
-import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
 
 import React, { useState, useEffect } from "react";
 // Assets
 import navImage from "assets/img/layout/Navbar.png";
-import { MdNotificationsNone, MdInfoOutline } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,8 +38,8 @@ import { setEmpData } from "redux/solution";
 import { getCookie } from "common/common";
 import { deleteCookie } from "common/common";
 import { setCookie } from "common/common";
-import { ThemeEditor } from "./ThemeEditor";
 import OrgChartModal from "views/system/orgChart/OrgChartModal";
+import { MdInfoOutline } from "react-icons/md";
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -66,11 +62,11 @@ export default function HeaderLinks(props) {
 	const loginEmpInfo = useSelector((state) => state.solution.empData);
 	const dispatch = useDispatch();
 	const [dpGrpCd, setDpGrpCd] = useState("");
-	const [empDetail, setEmpDetail] = useState([]);
 	const [empTemp, setEmpTemp] = useState();
 
 	// 조직도 isOpen
 	const [isOpen, setIsOpen] = useState(false);
+
 	//사원 정보 조회, 리덕스에 저장
 	const getEmpInfo = () => {
 		fetch(
@@ -85,33 +81,25 @@ export default function HeaderLinks(props) {
 			}
 		).then((res) => res.json())
 			.then((res) => {
-				// setDpGrpCd(res?.data[0]?.dpGrpCd);
-				// setCookie("Emp_Dp_Type", res?.data[0]?.dpGrpCd, 2);
-				// dispatch(setEmpData(res?.data));
+				dispatch(setEmpData(res?.data[0]));
 				setEmpInfo(res.data);
 			});
 	}
 
-	//사원 정보 조회, 리덕스에 저장
-	const getLoginEmp = () => {
-		fetch(
-			`${PORT}/emp/getLoginEmp/${dpGrpCd}`,
-			{
-				method: "get",
-				headers: {
-					'Content-Type': "application/json; charset=utf-8",
-				},
-				credentials: 'include'
-				// res에 결과가 들어옴
-			}
-		).then((res) => res.json())
-			.then((res) => {
-				console.log("data", res.data);
-				setDpGrpCd(res?.data[0]?.dpGrpCd);
-				setCookie("Emp_Dp_Type", res?.data[0]?.dpGrpCd, 2);
-				dispatch(setEmpData(res?.data));
-			});
-	}
+	//부서 변경하면 재로그인
+	const empLogin = (data) => {
+		fetch(`${PORT}/emp/getLoginEmp`, {
+		  method: "POST",
+		  body: JSON.stringify(data),
+		  headers: {
+			'Content-Type': "application/json; charset=utf-8"
+		  },
+		  credentials: 'include'
+		}).then((res) => res.json())
+		.then((res) => {
+			dispatch(setEmpData(res?.data[0]));
+		})
+	  }
 
 	//사원 로그아웃
 	const logoutemp = () => {
@@ -119,16 +107,14 @@ export default function HeaderLinks(props) {
 			method: "get",
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
-				Authorization: getCookie("Authorization"),
 			},
+				credentials: 'include'
 			// res에 결과가 들어옴
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				deleteCookie("Authorization");
 				deleteCookie("Emp_Dp_Type");
 				setDpGrpCd("");
-				window.location.replace("/auth/login");
 			});
 	};
 
@@ -140,12 +126,11 @@ export default function HeaderLinks(props) {
 
 	const clickHandle = () => {
 		setCookie("Emp_Dp_Type", dpGrpCd, 2);
-		setEmpDetail(empTemp);
+		empLogin(empTemp);
 	};
 
 	useEffect(() => {
 		getEmpInfo();
-		getLoginEmp();
 	}, []);
 
 	return (
@@ -215,10 +200,10 @@ export default function HeaderLinks(props) {
 								fontWeight="600"
 								color={textColor}
 							>
-								{empDetail?.empNm}
+								{loginEmpInfo?.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								{empDetail?.coNm} | {empDetail?.dpNm}
+								{loginEmpInfo?.coNm} | {loginEmpInfo?.dpNm}
 							</Text>
 						</Flex>
 						<ChevronDownIcon />
