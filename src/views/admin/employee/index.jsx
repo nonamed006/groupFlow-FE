@@ -72,8 +72,8 @@ const Employee = () => {
         method: "GET",
         headers: {
           'Content-Type': "application/json; charset=utf-8",
-          'Authorization': getCookie("Authorization")
-        }
+        },
+        credentials: 'include'
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())
@@ -241,8 +241,12 @@ const Employee = () => {
     <div>
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
         <Grid
+<<<<<<< HEAD
           //h="1000px"
           h={'full'} // 혜윤 수정
+=======
+          h="full"
+>>>>>>> jej
           templateRows="repeat(11, 1fr)"
           templateColumns="repeat(6, 1fr)"
           gap={5}
