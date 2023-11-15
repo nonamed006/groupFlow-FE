@@ -241,8 +241,7 @@ const Employee = () => {
     <div>
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
         <Grid
-          //h="1000px"
-          h={'full'} // 혜윤 수정
+          h="full"
           templateRows="repeat(11, 1fr)"
           templateColumns="repeat(6, 1fr)"
           gap={5}

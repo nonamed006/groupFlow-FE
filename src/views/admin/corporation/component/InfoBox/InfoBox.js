@@ -31,6 +31,8 @@ const InfoBox = ({
   const onReset = () => {
     setCorp({
       // 기본값 세팅
+      coNm: undefined,
+
       postNum: undefined,
       addr: undefined,
       delYn: false,
@@ -138,7 +140,6 @@ const InfoBox = ({
 
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-    console.log("ddddd");
     corpSchema
       .validate(corp)
       .then(() => {
