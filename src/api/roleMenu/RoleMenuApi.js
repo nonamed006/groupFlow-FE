@@ -96,9 +96,15 @@ const roleMenu = {
      * @param {*} menuCdList 등록 및 삭제할 메뉴코드 리스트 
      * @returns 
      */
-    putRoleMenu: (rgCd, menuCdList)=> {
+    putRoleMenu: (rgCd, typeCd, menuCdList)=> {
+        let url = `roleMenu/${rgCd}`;
+        const params = new URLSearchParams();
+        if (typeCd !== undefined && typeCd !== 'undefined')
+            params.append("menuTypeCd", typeCd);
+        const paramString = params.toString();
+        if (paramString)  url += "?" + paramString;
         const promise = getPromise({ 
-            url: `roleMenu/${rgCd}`, 
+            url: url, 
             method: "PUT",
             body: JSON.stringify(menuCdList)
         });
@@ -113,6 +119,21 @@ const roleMenu = {
    getRoleMenuBySearch: (dpGrpCd, keyword) => {
     const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
         return promise.then((responseJson) => responseJson);
+   },
+
+   /**
+    * 권한별 메뉴 목록 조회
+    * 이혜윤
+    * @param {String} dpGrpCd 
+    * @returns 
+    */
+   getRoleMenuListByDpGrpCd: (dpGrpCd) => {
+    const promise = getPromise({
+        url: `roleMenu/group/${dpGrpCd}`,
+        method: 'GET'
+    });
+
+    return promise.then((responseJson) => responseJson);
    }
 };
 

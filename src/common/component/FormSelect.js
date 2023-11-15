@@ -23,7 +23,7 @@ const FormSelect = ({
         {title}
       </FormLabel>
       <Select
-        w={"100%"}
+        w={"102%"}
         name={name}
         defaultValue={defaultValue}
         key={pk}

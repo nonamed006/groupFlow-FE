@@ -70,9 +70,9 @@ const Employee = () => {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: getCookie("Authorization"),
+          'Content-Type': "application/json; charset=utf-8",
         },
+        credentials: 'include'
         // res에 결과가 들어옴
       }
     )
@@ -237,57 +237,60 @@ const Employee = () => {
   }, [isReload]);
 
   return (
-    <Box h={"full"}>
-      {/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
-      <Grid
-        //h="1000px"
-        h={"full"} // 혜윤 수정
-        templateRows="repeat(11, 1fr)"
-        templateColumns="repeat(6, 1fr)"
-        gap={5}
-      >
-        <GridItem colSpan={6} rowSpan={1}>
-          <SearchCardBar
-            getEmpList={getEmpList}
-            setSearchCorp={setSearchCorp}
-          />
-        </GridItem>
-        <GridItem colSpan={2} rowSpan={5}>
-          <EmpCard
-            empList={empList}
-            empNum={empNum}
-            onClickRow={onClickRow}
-            resetInput={resetInput}
-            setEditState={setEditState}
-            editState={editState}
-            setSelectedIndex={setSelectedIndex}
-            selectedIndex={selectedIndex}
-          />
-        </GridItem>
-        <GridItem colSpan={4} rowSpan={5}>
-          <EmpInfo
-            setIsReload={setIsReload}
-            isReload={isReload}
-            empDetail={empDetail}
-            setEmpDetail={setEmpDetail}
-            empDept={empDept}
-            setEmpDept={setEmpDept}
-            setImgFile={setImgFile}
-            resetInput={resetInput}
-            onSaveEmpDetail={onSaveEmpDetail}
-            setEditState={setEditState}
-            editState={editState}
-            updateEmpInfo={updateEmpInfo}
-            setAlertInfo={setAlertInfo}
-            imgBase64={imgBase64}
-            setImgBase64={setImgBase64}
-            setSelectedIndex={setSelectedIndex}
-            selectedIndex={selectedIndex}
-            setIsLoading={setIsLoading}
-            isLoading={isLoading}
-          />
-        </GridItem>
-      </Grid>
+    <div>
+      <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
+        <Grid
+          h="full"
+          templateRows="repeat(11, 1fr)"
+          templateColumns="repeat(6, 1fr)"
+          gap={5}
+        >
+          <GridItem colSpan={6} rowSpan={1}>
+            <SearchCardBar getEmpList={getEmpList} setSearchCorp={setSearchCorp} />
+          </GridItem>
+          <GridItem colSpan={2} rowSpan={5}>
+            <EmpCard
+              empList={empList}
+              empNum={empNum}
+              onClickRow={onClickRow}
+              resetInput={resetInput}
+              setEditState={setEditState}
+              editState={editState}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+            />
+          </GridItem>
+          <GridItem colSpan={4} rowSpan={5}>
+            <EmpInfo
+              setIsReload={setIsReload}
+              isReload={isReload}
+              empDetail={empDetail}
+              setEmpDetail={setEmpDetail}
+              empDept={empDept}
+              setEmpDept={setEmpDept}
+              setImgFile={setImgFile}
+              resetInput={resetInput}
+              onSaveEmpDetail={onSaveEmpDetail}
+              setEditState={setEditState}
+              editState={editState}
+              updateEmpInfo={updateEmpInfo}
+              setAlertInfo={setAlertInfo}
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
+            />
+          </GridItem>
+        </Grid>
+
+        {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
 
       {alertInfo.isOpen && (
         <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />

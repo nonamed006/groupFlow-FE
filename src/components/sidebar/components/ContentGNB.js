@@ -34,7 +34,7 @@ function SidebarContentGNB(props) {
         }
       </Flex>
       <Stack direction='column' mb='auto' mt='8px'>
-        <Box ps='20px' pe={{ md: "16px", "2xl": "1px" }}>
+        <Box pe={'5px'}>
             <LinksGNB routes={routes} LNBroute={LNBroute}/>
         </Box>
       </Stack>
