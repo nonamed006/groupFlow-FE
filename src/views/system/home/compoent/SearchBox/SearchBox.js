@@ -42,7 +42,7 @@ const SearchBox = () => {
 
     return (
         <Box
-            w={'30%'}
+            w={'32%'}
             mb={'10%'}
             position={'absolute'}
         >
