@@ -12,14 +12,14 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
 
   return (
 
-    <Card 
+    <Card
       key={index}
       backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index)
       }}
-      onClick={()=>setDepGrp(depGrp)}
+      onClick={() => setDepGrp(depGrp)}
       boxShadow='lg'
       rounded='md'
       bg='white'
@@ -42,23 +42,15 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
           <Flex
             align={{ sm: "flex-start", lg: "center" }}
             px="10px"
-            pb="20px"
-            mb="10px"
             w="130%"
+            mb={2}
           >
             <Text
               color={textColor}
               fontSize="18px"
               fontWeight="700"
               lineHeight="100%"
-            >{depGrp.empDto.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
-            <Box w='1rem' />
-            <Text
-              color={textColor}
-              fontSize="15px"
-              fontWeight="300"
-              lineHeight="100%"
-            > {depGrp.empDto.mailId}</Text>
+            >{depGrp.empDto.empNm} </Text>
             <Spacer />
             <Box>
               <Text
@@ -68,21 +60,36 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
                 lineHeight="100%"
               >{depGrp.telNum}</Text>
             </Box>
-
           </Flex>
-
           <Text
             px="10px"
             color={textColor}
             fontSize="14px"
+            fontWeight="600"
+            lineHeight="100%"
+            mb={2}
+          >  {depGrp.rankNm} / {depGrp.pstnNm}</Text>
+          <Flex
+            align={{ sm: "flex-start", lg: "center" }}
+            px="10px"
+            w="130%"
+            mb={2}
+            color={textColor}
+            fontSize="14px"
             fontWeight="300"
-            lineHeight="100%">
-            {depGrp.dpPathNm &&
-              depGrp.dpPathNm.map((pathNm, index) => {
-                return <span key={index}>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
-                </span>
-              })}
-          </Text>
+            lineHeight="100%"
+          >
+            <Text mr={2}>
+              소속:
+            </Text>
+            <Text>
+              {depGrp.dpPathNm &&
+                depGrp.dpPathNm.map((pathNm, index) => {
+                  return <span key={index}>{pathNm} {index + 1 !== depGrp.dpPathNm.length ? '>' : ''}
+                  </span>
+                })}
+            </Text>
+          </Flex>
         </Box>
       </Flex>
     </Card>
