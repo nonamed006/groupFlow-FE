@@ -53,7 +53,7 @@ const LnbGrid = ({
     <Box borderRadius="lg" bg="white" h="700px" p="6">
       <CardMenuBar
         title={title}
-        count={count}
+        count={0}
         buttonType={false}
       />
       <LnbGridList list={list} setMenuDetail={setMenuDetail} />

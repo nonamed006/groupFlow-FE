@@ -113,6 +113,15 @@ const roleMenu = {
    getRoleMenuBySearch: (dpGrpCd, keyword) => {
     const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
         return promise.then((responseJson) => responseJson);
+   },
+
+   getRoleMenuTest: (dpGrpCd) => {
+    const promise = getPromise({
+        url: `roleMenu/group/${dpGrpCd}`,
+        method: 'GET'
+    });
+
+    return promise.then((responseJson) => responseJson);
    }
 };
 

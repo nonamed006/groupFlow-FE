@@ -2,7 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
+const setUseName = (items) => {
+  items.forEach((item) => {
+    item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
+
+    if(item.rows != null) {
+      setUseName(item.rows);
+    }
+  });
+}
+
 const RealGrid = ({ org, setMenuDetail }) => {
+  setUseName(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },

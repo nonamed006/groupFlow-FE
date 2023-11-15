@@ -154,8 +154,8 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
                 <Button variant="action" onClick={modifyGnb}>저장 {isEditing.current}</Button>
               :
               <Button variant="action" onClick={() => {
-                if(selectGnbMenuCd) {
-                  menuInfo.menuCd && setIsEditing(true)
+                if(menuInfo.menuCd) {
+                  setIsEditing(true)
                 } else {
                   setAlertInfo({
                     isOpen: true,
