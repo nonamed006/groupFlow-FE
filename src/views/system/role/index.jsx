@@ -15,6 +15,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
                             사용자 기준
                         </Tab>
@@ -22,6 +23,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
                             부서 기준
                         </Tab>
@@ -29,6 +31,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
                             회사 기준
                         </Tab>

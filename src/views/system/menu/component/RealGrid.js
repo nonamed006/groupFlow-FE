@@ -4,7 +4,18 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 
 import depIcon from "assets/img/gridIcon/department.png";
 
+const setUseName = (items) => {
+  items.forEach((item) => {
+    item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
+
+    if(item.rows != null) {
+      setUseName(item.rows);
+    }
+  });
+}
+
 const RealGrid = ({ org, setMenuDetail }) => {
+  setUseName(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
@@ -41,7 +52,8 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "menuPath", false, null, null);
+    //treeProvider.setRows(org, "menuPath", false, null, null);
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;

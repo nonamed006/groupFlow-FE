@@ -59,12 +59,11 @@ const SearchCardBar = ({search, setSearch}) => {
 					setKeyword={value => {
 						setSearch({
 							...search,
-							searchGnbMenuCd: value,
-							searchLnbMenuCd: ''
+							searchGnbMenuCd: value
 						})
 					}}
 					isSelect={true}
-					defaultValue={search.searchGnbMenuCd}
+					defaultValue={''}
 					values={gnbCategoryList}
 				/>
 			</Box>
@@ -74,13 +73,14 @@ const SearchCardBar = ({search, setSearch}) => {
 					placeholder="전체"
 					name='searchLnbMenuCd'
 					setKeyword={value => {
+						console.log('change', value);
 						setSearch({
 							...search,
 							searchLnbMenuCd: value
 						})
 					}}
 					isSelect={true}
-					defaultValue={search.searchLnbMenuCd}
+					defaultValue={''}
 					values={lnbCategoryList}
 				/>
 			</Box>

@@ -43,7 +43,6 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
 
   // 조직_그룹 목록 조회
   const fetchDepGrpList = async () => {
-    console.log('fetchDepGrpList');
     setIsLoading(true);
 
     let corpDepCd = (corpDep !== undefined && corpDep !== 'undefined') ? corpDep.code : undefined

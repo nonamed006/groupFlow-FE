@@ -192,6 +192,7 @@ const InfoBox = ({
           isEditing={isEditing}
           handleCancle={handleCancle}
           handleModify={handleModify}
+          setAlertInfo={setAlertInfo}
         />
         <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
           <InputGrid

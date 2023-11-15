@@ -28,7 +28,7 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        if (keyword.length > 0 && search === '') {
+        if ((search === '') && !((keyword ===undefined && keyword === 'undefined') || keyword === '' )) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',

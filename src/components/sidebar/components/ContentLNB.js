@@ -51,7 +51,7 @@ function SidebarContentGNB(props) {
                   <>
                     <ChevronLeftIcon/>
                     <Link
-                      me='auto'
+                      ml={'5px'}
                       color={'black'}
                       fontWeight={'bold'}
                       onClick={() => setLnbBack(routes)}
