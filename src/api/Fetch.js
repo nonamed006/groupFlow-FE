@@ -8,6 +8,7 @@ import depGrp from "./depGrp/DepGrpApi";
 import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
+import role from "./role/RoleApi";
 
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
@@ -62,6 +63,7 @@ const api = {
   roleEmp,
   dep,
   menu,
+  role
 };
 
 export default api;

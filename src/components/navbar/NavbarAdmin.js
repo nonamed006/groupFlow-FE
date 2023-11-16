@@ -122,7 +122,7 @@ export default function AdminNavbar(props) {
         mb={gap}
       >
         <Box mr={"10px"} mb={{ sm: "8px", md: "0px" }} w={"220px"}>
-          <Text w={'100%'} fontSize={'0.1vw'}>{pathText}</Text>
+          <Text w={'100%'} fontSize={'12px'}>{pathText}</Text>
           {/* <Breadcrumb> */}
             {/* <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
@@ -146,7 +146,7 @@ export default function AdminNavbar(props) {
             bg="inherit"
             borderRadius="inherit"
             fontWeight="bold"
-            fontSize={brandText.length > 7 ? '1.4vw' : '1.7vw'}//"34px"
+            fontSize={brandText.length > 7 ? '17px' : '25px'}//"34px"
             textOverflow={"ellipsis"}
             _hover={{ color: { mainText } }}
             _active={{
