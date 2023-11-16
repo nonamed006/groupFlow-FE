@@ -242,7 +242,7 @@ export default function Dashboard(props) {
             >
               <Switch>
                 {getRoutes(routes)}
-                <RouteRole path='/MU000000/home' component={<HomePage/>} setAlertInfo={setAlertInfo}/>
+                <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
               {/* <Redirect from="/" to="/err/NotFound" /> */}
               </Switch>
               {alertInfo.isOpen && (
