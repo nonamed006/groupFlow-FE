@@ -40,7 +40,6 @@ const InfoBoxBar = ({
     today.setMonth(today.getMonth());
     today.setDate(today.getDate());
 
-    console.log(page);
     if (page === undefined) {
       page = 1;
     }

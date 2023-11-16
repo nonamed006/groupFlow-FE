@@ -182,7 +182,7 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px" onClick={() => { setDpGrpCd(getCookie("Emp_Dp_Type")); console.log("asdqwe") }}>
+				<MenuButton p="0px" onClick={() => { setDpGrpCd(getCookie("Emp_Dp_Type"));}}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
