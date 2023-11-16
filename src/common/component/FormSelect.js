@@ -23,19 +23,13 @@ const FormSelect = ({
 
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
-      <FormLabel
-        color={textColor}
-        fontSize="md"
-        fontWeight="600"
-        w={"50%"}
-        lineHeight={"40px"}
-      >
+      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
         {title}
       </FormLabel>
       <Select
         w={"102%"}
         name={name}
-        value={value}
+        value={defaultValue}
         key={pk}
         onChange={onChange}
         placeholder={placeholder}

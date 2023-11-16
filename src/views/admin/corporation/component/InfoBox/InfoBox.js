@@ -21,18 +21,33 @@ const InfoBox = ({
   const [corp, setCorp] = useState(); // 회사 데이터 (하나)
   const [temp, setTemp] = useState();
 
-  useEffect(() => {
-    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0)
+  useEffect(async () => {
+    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0){
       fetchCorp(coCd); // coCd로 회사 조회
-    else onReset();
-    setIsEditing(coCd === 0 ? true : false);
+    }
+    else {
+      await onReset();
+    } 
+    await setIsEditing(coCd === 0 ? true : false);
   }, [coCd, sortValue]);
 
   const onReset = () => {
     setCorp({
       // 기본값 세팅
-      coNm: undefined,
-
+      coCd: "",
+      coNm: "",
+      ceoNm: "",
+      bsType: "",
+      bsStock: "",
+      bsCd: "",
+      coNum: "",
+      fax: "",
+      coDomain: "",
+      pageUrl: "",
+      bsnsNum: "",
+      coAbb: "",
+      stnd: "",
+      useYn: true,
       postNum: undefined,
       addr: undefined,
       delYn: false,
@@ -60,6 +75,7 @@ const InfoBox = ({
         title: res.resultMsg,
         width: "fit-content",
       });
+      setCoCd();
       setChangeYn(!changeYn); // 변경 여부 변경
     } else {
       setAlertInfo({
@@ -130,11 +146,11 @@ const InfoBox = ({
     coCd !== "undefined" && coCd !== undefined
       ? fetchCorpDelete(coCd)
       : setAlertInfo({
-          isOpen: true,
-          status: "warning",
-          title: "선택된 회사가 없습니다.",
-          width: "fit-content",
-        });
+        isOpen: true,
+        status: "warning",
+        title: "선택된 회사가 없습니다.",
+        width: "fit-content",
+      });
     onClose();
   };
 
@@ -196,7 +212,7 @@ const InfoBox = ({
         />
         <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
           <InputGrid
-            corp={corp !== undefined && corp !== "undefined" && corp}
+            corp={(corp !== undefined && corp !== "undefined") && corp}
             setCorp={setCorp}
             isEditing={isEditing}
           />

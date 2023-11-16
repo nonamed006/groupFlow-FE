@@ -78,7 +78,6 @@ const DepInfo = ({
   //부서 수정
   const fetchUpdateDep = async () => {
     const response = await api.dep.fetchUpdateDepApi(depDto);
-    console.log(response);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -108,10 +107,8 @@ const DepInfo = ({
       .then(() => {
         //  // 유효성 검사 통과한 데이터 처리
         isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-        console.log("유효성 검사 통과");
       })
       .catch((errors) => {
-        console.log(errors);
         // 유효성 검사 실패한 경우 에러 메세지
         setAlertInfo({
           isOpen: true,

@@ -11,7 +11,7 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit, is
     }, [changeEdit]);
 
     return (
-        <Box borderRadius="lg" bg="white" h="fit-content" px={5} >
+        <Box borderRadius="lg" bg="white" h="fit-content" px={9} >
             {isLoading ?
                 <Loading />
                 :

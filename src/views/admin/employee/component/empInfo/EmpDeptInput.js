@@ -70,7 +70,6 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       }
     });
     // setTimeout(() => {
-    //   console.log('22222');
     //   handleChange({
     //     target: {
     //       name: "dpNm", // 여러 값을 배열에 넣음
@@ -288,7 +287,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           title={"상세업무"}
           placeholder="상세업무를 입력하세요."
           name="jobDetail"
-          value={column?.payMail}
+          value={column?.jobDetail}
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}
@@ -334,7 +333,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           id="fax"
           name="fax"
           placeholder="팩스번호를 입력하세요."
-          value={column?.faxNum}
+          value={column?.fax}
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}
@@ -349,7 +348,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           name="telNum"
           id="telNum"
           placeholder="전화번호를 입력하세요."
-          value={column?.empNm}
+          value={column?.telNum}
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}

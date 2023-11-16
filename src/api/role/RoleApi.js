@@ -14,9 +14,9 @@ const role = {
      * @param {*} search 
      * @returns 
      */
-    getGnbMenuList: (search) => {
+    checkRoleSession: (dpGrpCd, search) => {
         const queryString = new URLSearchParams(search).toString();
-        const promise = getPromise({url: `menu/list?${queryString}`, method: 'GET'});
+        const promise = getPromise({url: `common/role-${dpGrpCd}?${queryString}`, method: 'GET'});
 
         return promise.then((responseJson) => responseJson);
     },

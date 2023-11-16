@@ -24,7 +24,7 @@ const FormRadio = ({
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
-      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"32%"}>
+      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"30%"}>
         {title}
       </FormLabel>
       <RadioGroup name={name} value={defaultValue} key={pk}>

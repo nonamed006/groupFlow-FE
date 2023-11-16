@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from 'components/card/Card';
-import { Box, Flex, Image, Spacer, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import searchIncon from 'assets/img/auth/searchIcon.png';
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const ResultCard = ({ menuInfo, index, type, content, keyword }) => {
+const ResultCard = ({ menuInfo, index, type, content, keyword, handleUseHistory }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textNumColor = useColorModeValue("brand.500", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
@@ -20,14 +20,14 @@ const ResultCard = ({ menuInfo, index, type, content, keyword }) => {
                 minH={'43px'}
                 display={'inline-block'}
                 p='3'
-                onClick={() => { }}
+                onClick={() => handleUseHistory(menuInfo.menuPath)}
                 borderColor={'brand.500'}
                 cursor={'pointer'}
             >
                 {
                     type !== 'none' && menuInfo !== undefined &&
                     <>
-                        <Flex justifyContent={'space-around'} >
+                        <Flex justifyContent={'space-around'} w={'100%'}>
                             <Image
                                 boxSize={'4'}
                                 src={searchIncon}
@@ -38,6 +38,7 @@ const ResultCard = ({ menuInfo, index, type, content, keyword }) => {
                                 fontSize="16.5px"
                                 fontWeight="400"
                                 lineHeight="100%"
+                                whiteSpace={'normal'}
                             >
                                 {menuInfo !== undefined &&
                                     menuInfo.menuNmPath &&
@@ -46,12 +47,13 @@ const ResultCard = ({ menuInfo, index, type, content, keyword }) => {
                                             <>
                                                 {
                                                     pathNm.includes(keyword) ?
-                                                        <Flex>
+                                                        <Text display={'flex'} whiteSpace={'nowrap'}>
                                                             {pathNm.split(keyword)[0]}
                                                             <Text textColor={textNumColor} fontWeight="600">{keyword}</Text>
                                                             {pathNm.split(keyword)[1]}
-                                                        </Flex>
-                                                        : <Text key={index} textColor={textColor}>{pathNm} </Text>
+                                                        </Text>
+                                                        :
+                                                        <Text whiteSpace={'nowrap'} key={index} textColor={textColor}>{pathNm} </Text>
                                                 }
                                                 {index + 1 !== menuInfo.menuNmPath.length ? '> ' : ''}
                                             </>
