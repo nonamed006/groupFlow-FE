@@ -24,6 +24,7 @@ const FormInput = ({
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
+      {title && (
         <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
           {title}
         </FormLabel>
