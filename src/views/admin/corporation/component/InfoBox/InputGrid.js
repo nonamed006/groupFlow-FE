@@ -32,14 +32,15 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
   const useYn = new Boolean(corp.useYn === undefined ? true : corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+    if (e.target.name === "useYn") {
+       value = JSON.parse(e.target.value.toLowerCase());
+    }
     setCorp({
       ...corp,
       [name]: value, // name 키를 가진 값을 value 로
-    });
+    })
   };
-
-  useEffect(() => { }, [isEditing]);
 
   return (
     <Box display={'flex'} justifyContent={"center"}>
