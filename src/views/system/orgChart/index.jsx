@@ -28,15 +28,16 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        if ((search === '') && !((keyword === undefined && keyword === 'undefined')||keyword === '')) {
-            setAlertInfo({
-                isOpen: true,
-                status: 'warning',
-                detail: '검색기준을 선택하세요',
-                width: 'fit-content'
-            });
-            return;
-        } else if (((keyword === undefined && keyword === 'undefined') || keyword === '') && !(search === '')) {
+        // if ((search === '') && !((keyword === undefined && keyword === 'undefined')||keyword === '')) {
+        //     setAlertInfo({
+        //         isOpen: true,
+        //         status: 'warning',
+        //         detail: '검색기준을 선택하세요',
+        //         width: 'fit-content'
+        //     });
+        //     return;
+        // } else
+         if (((keyword === undefined && keyword === 'undefined') || keyword === '') && !(search === '')) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
