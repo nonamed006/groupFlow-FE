@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // chakra imports
 import {
@@ -26,6 +26,9 @@ import PropTypes from "prop-types";
 
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
+import "../../assets/css/Sidebar.css";
+
+import { SidebarContext } from "contexts/SidebarContext";
 
 /*
 작업자 : 이혜윤
@@ -36,144 +39,138 @@ import { IoMenuOutline } from "react-icons/io5";
 
 function Sidebar(props) {
   const { routes } = props;
-	const { collapse } = props;
+  const { collapse } = props;
   const { setCollapse } = props;
-  const [ GNBcollapse, setGNBCollapse ] = useState(collapse);
-	const [ LNBcollapse, setLNBCollapse ] = useState(false);
-  const [ route, setRoute ] = useState();
-  useEffect(() => {
-    return setGNBCollapse(collapse);
-  }, [collapse])
+  const [GNBcollapse, setGNBCollapse] = useState(collapse);
+  const [LNBcollapse, setLNBCollapse] = useState(false);
+  const [route, setRoute] = useState();
+  // useEffect(() => {
+  //   return setGNBCollapse(collapse);
+  // }, [collapse]);
 
-  useEffect(() => {
-    if(route != null && route.items != null) {
-      return setLNBCollapse(true);
-    } else {
-      return setLNBCollapse(false);
-    }
-  }, [route]);
+  // useEffect(() => {
+  //   if (route != null && route.items.length > 0) {
+  //     return setLNBCollapse(true);
+  //   } else {
+  //     return setLNBCollapse(false);
+  //   }
+  // }, [route]);
 
-  let variantChange = "0.2s linear";
-  let shadow = useColorModeValue(
-    "14px 17px 40px 4px rgba(112, 144, 176, 0.08)",
-    "unset"
-  );
   // Chakra Color Mode
   let sidebarBg = useColorModeValue("white", "navy.800");
   let sidebarMargins = "0px";
 
+  const context = useContext(SidebarContext);
+
+  const mouseEvent = (flag) => {
+    if (flag) {
+      document.querySelector(".box_GNB").classList.remove("non_active");
+      document.querySelector(".box_GNB").classList.add("active");
+
+      // document.querySelector('.box_LNB').classList.remove('active')
+      // document.querySelector('.box_LNB').classList.add('non_active')
+    } else {
+      document.querySelector(".box_GNB").classList.remove("active");
+      document.querySelector(".box_GNB").classList.add("non_active");
+      // document.querySelector('.box_LNB').classList.remove('non_active')
+      // document.querySelector('.box_LNB').classList.add('active')
+    }
+    context.setCollapse(flag);
+  };
+
+  useEffect(() => {
+    mouseEvent(false);
+    if (route == null) {
+      document.querySelector(".box_LNB").classList.remove("active");
+      document.querySelector(".box_LNB").classList.add("non_active");
+    } else {
+      if(route.items.length > 0) {
+        document.querySelector(".box_LNB").classList.add("active");
+        document.querySelector(".box_LNB").classList.remove("non_active");
+      }
+    }
+  }, [route]);
+
   // SIDEBAR
   return (
-    <Box display={{ sm: "none", xl: "block" }} w="100%" position='fixed' minH='100%'>
+    <Box display={{ sm: "none", xl: "block" }} w="fit-content" position='fixed' minH='100%' >
           <Box
             bg={sidebarBg}
             // borderRight='1px'
             // borderRightColor='gray'
-				    w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-            maxW={LNBcollapse ? 300 : 70}
-            h='100vh'
+				    w={'300px'}
+            // maxW={LNBcollapse ? 300 : 70}
+            className="box_LNB non_active"
+            h='full'
             m={sidebarMargins}
             minH='100%'
             overflowX='hidden'
             position='absolute'
-            display={LNBcollapse ? 'block' : 'none'}
-            onMouseOver={() => setLNBCollapse(true)}
-            onMouseLeave={() => setLNBCollapse(false)}
-          >
-            <Scrollbars
-              autoHide
-              renderTrackVertical={renderTrack}
-              renderThumbVertical={renderThumb}
-              renderView={renderView}>
-              <ContentLNB routes={routes} route={route} collapse={collapse} LNBroute={setRoute} setCollapse={setCollapse}/>
-            </Scrollbars>
-          </Box>
-
-          {/* GNB 영역 추가 */}
-          <Box
-            bg={sidebarBg}
-            // borderRight='1px'
-            // borderRightColor='gray'
-				    //w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-            w={GNBcollapse ? 300 : 70}
-            maxW={GNBcollapse ? 300 : 70}
-            h='100vh'
-            m={sidebarMargins}
-            minH='100%'
-            overflowX='hidden'
-            position='absolute'
+            //display={!context.collapse ? 'block' : 'none'}
+            onMouseOver={() => {
+              document.querySelector('.box_LNB').classList.remove('non_active')
+              document.querySelector('.box_LNB').classList.add('active')
+            }}
+            onMouseLeave={() => {
+              document.querySelector('.box_LNB').classList.remove('active')
+              document.querySelector('.box_LNB').classList.add('non_active')
+              // context.setCollapse(false);
+            }}
           >
             <Scrollbars
               autoHide
               renderTrackVertical={renderTrack}
               renderThumbVertical={renderThumb}
               renderView={renderView}
+              // onClick={() => {
+              //     mouseEvent(false);
+              //       document.querySelector('.box_LNB').classList.remove('active')
+              //       document.querySelector('.box_LNB').classList.add('non_active')
+              //   }
+              // }
+              >
+              <ContentLNB routes={routes} route={route} LNBroute={setRoute}/>
+            </Scrollbars>
+          </Box>
+
+          {/* GNB 영역 추가 */}
+          <Box
+            bg={sidebarBg}
+            className="box_GNB non_active"
+            h='full'
+            m={sidebarMargins}
+            minH='100%'
+            overflowX='hidden'
+            position='absolute'
+            onMouseOver={() => {
+              mouseEvent(true);
+            }}
+            onMouseLeave={() => {
+              mouseEvent(false);
+            }}
+          >
+            <Scrollbars
+              autoHide
+              renderTrackVertical={renderTrack}
+              renderThumbVertical={renderThumb}
+              renderView={renderView}
+              className="scrollbar"
               onClick={() => {
-                  setGNBCollapse(false);
+                  mouseEvent(false);
+                  document.querySelector('.box_LNB').classList.remove('non_active')
+                  document.querySelector('.box_LNB').classList.add('active')
                 }
               }
-              onMouseOver={() => setGNBCollapse(true)}
-              onMouseLeave={() => setGNBCollapse(false)}>
-              <ContentGNB routes={routes} collapse={GNBcollapse} LNBroute={setRoute}/>
+              // onMouseOver={() => setGNBCollapse(true)}
+              // onMouseLeave={() => setGNBCollapse(false)}
+              >
+              <ContentGNB routes={routes} LNBroute={setRoute}/>
             </Scrollbars>
           </Box>
       {/* ! GNB 영역 추가 */}
     </Box>
   );
 }
-
-// FUNCTIONS
-export function SidebarResponsive(props) {
-  let sidebarBackgroundColor = useColorModeValue("white", "navy.800");
-  let menuColor = useColorModeValue("gray.400", "white");
-  // // SIDEBAR
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
-
-  const { routes } = props;
-  //  BRAND
-
-  return (
-    <Flex  display={{ sm: "none", xl: "block" }} w="100%" position='fixed' minH='100%' left={0} top={0}>
-      <Flex ref={btnRef} w='max-content' h='max-content' onClick={onOpen}>
-        <Icon
-          as={IoMenuOutline}
-          color={menuColor}
-          my='auto'
-          w='20px'
-          h='20px'
-          me='10px'
-          _hover={{ cursor: "pointer" }}
-        />
-      </Flex>
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement={document.documentElement.dir === "rtl" ? "right" : "left"}
-        finalFocusRef={btnRef}>
-        <DrawerOverlay />
-        <DrawerContent w='285px' maxW='285px' bg={sidebarBackgroundColor}>
-          <DrawerCloseButton
-            zIndex='3'
-            onClose={onClose}
-            _focus={{ boxShadow: "none" }}
-            _hover={{ boxShadow: "none" }}
-          />
-          <DrawerBody maxW='285px' px='0rem' pb='0'>
-            <Scrollbars
-              autoHide
-              renderTrackVertical={renderTrack}
-              renderThumbVertical={renderThumb}
-              renderView={renderView}>
-              <Content routes={routes} />
-            </Scrollbars>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </Flex>
-  );
-}
-// PROPS
 
 Sidebar.propTypes = {
   logoText: PropTypes.string,

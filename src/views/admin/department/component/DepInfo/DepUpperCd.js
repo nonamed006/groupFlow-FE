@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
+import {} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 
+import corImage from "assets/img/realgrid/corporation.png";
+import depImage from "assets/img/realgrid/department.png";
 function DepUpperCd(props) {
   const realgridElement = useRef(null);
 
@@ -9,6 +12,7 @@ function DepUpperCd(props) {
     { fieldName: "name", dataType: "text" },
     { fieldName: "code", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
+    { fieldName: "iconField", dataType: "text" },
   ];
 
   var columns = [
@@ -16,20 +20,21 @@ function DepUpperCd(props) {
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var treeProvider, treeView;
 
   useEffect(() => {
     const container = realgridElement.current;
-    if (!container) {
-      return; // 컨테이너가 아직 없으면 아무 작업도 수행하지 않음
-    }
-    treeProvider = new LocalTreeDataProvider();
+
+    treeProvider = new LocalTreeDataProvider(true);
     treeView = new TreeView(container);
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
+
+    treeProvider.setObjectRows({ rows: props.value }, "rows", "", "iconField");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -47,47 +52,23 @@ function DepUpperCd(props) {
     treeView.columnByName("path").visible = false;
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("code").visible = false;
+    treeView.columnByName("iconField").visible = false;
 
     //해당컬럼 tn
     treeView.columnByName("name").editable = false;
 
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
+    //public
+    //treeView.treeOptions.iconImagesRoot = `${process.env.PUBLIC_URL}/img/`;
+    //treeView.treeOptions.iconImages = ["corporation.png", "department.png"];
+
+    //src
+    treeView.treeOptions.iconImages = [corImage, depImage];
 
     treeView.onCellClicked = function (grid, clickData) {
       let dpData = grid._dataProvider._rowMap[clickData.dataRow];
-
-      let dataArray = dpData._values[0].split("/");
-      if (props.data.depDto.dpCd == "") {
-      } else {
-        if (dataArray.includes(props.data.depDto.dpCd)) {
-          //setAlertInfo({
-          //  isOpen: true,
-          //  title: response.resultMsg,
-          //  status: "success",
-          //  width: "fit-content",
-          //});
-          alert("하위부서는 선택할 수 없습니다.");
-          return 0;
-        }
-      }
       props.getValue(dpData);
     };
 
-    treeProvider.setObjectRows({ rows: props.value }, "rows", "", "");
     treeView.expandAll();
     return () => {
       treeProvider.clearRows();

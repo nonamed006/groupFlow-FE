@@ -22,8 +22,6 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       onClick={() => {
         setCoCd(data.coCd);
       }}
-      // borderColor={coCd === data.coCd && 'brand.500'}
-      // shadow={coCd === data.coCd ? 'outline' : 'md'}
       cursor={'pointer'}
       >
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
@@ -33,13 +31,11 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       </Td>
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
         <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
-
           {data.ceoNm}
         </Text>
       </Td>
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
         <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
-
           {data.ccNm}
         </Text>
       </Td>

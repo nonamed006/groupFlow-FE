@@ -4,7 +4,7 @@ import {
 import React from "react";
 
 import ListCardTableTbody from "./ListCardTableTbody";
-import ListCardTableHeader from "views/admin/roleGroup/component/tableList/TableHeader";
+import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 
 const ListCardTable = ({ listData, setCoCd, coCd }) => {
   const headerGroups = ["회사명", "대표자", "회사구분", "사용" ];

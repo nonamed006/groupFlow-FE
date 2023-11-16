@@ -1,5 +1,9 @@
-
-import { FormControl, FormLabel, Select, useColorModeValue } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormLabel,
+  Select,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -7,7 +11,7 @@ import "assets/css/MiniCalendar.css";
 const FormSelect = ({
   title,
   name,
-  defaultValue,
+  value,
   pk,
   onChange,
   readOnly,
@@ -19,13 +23,13 @@ const FormSelect = ({
 
   return (
     <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
-      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"} lineHeight={"40px"}>
+      <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
         {title}
       </FormLabel>
       <Select
-        w={"100%"}
+        w={"102%"}
         name={name}
-        defaultValue={defaultValue}
+        value={defaultValue}
         key={pk}
         onChange={onChange}
         placeholder={placeholder}

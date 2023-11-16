@@ -10,15 +10,17 @@ const roleGrp = {
     * @returns 
     */
     getRoleGrpList: (searchCorp, keyword, pageNum) => {
+        let url = `roleGrp`;
         const params = new URLSearchParams();
-        if (searchCorp !== undefined && searchCorp !== 'undefined') params.append("coCd", searchCorp);
-        if (keyword !== undefined && keyword !== 'undefined') params.append("grpNm", keyword);
-        // 페이지 요청
+        if (searchCorp !== undefined && searchCorp !== 'undefined') 
+            params.append("coCd", searchCorp);
+        if (keyword !== undefined && keyword !== 'undefined')
+            params.append("grpNm", keyword);
         params.append("pageNum", pageNum);
-
-        // URL에 파라미터 추가
         const paramString = params.toString();
-        const promise = getPromise({ url: `roleGrp?${paramString}`, method: 'GET' });
+        if (paramString)
+            url += "?" + paramString; 
+        const promise = getPromise({ url: url, method: 'GET' });
         return promise.then((responseJson) => responseJson);
     },
 

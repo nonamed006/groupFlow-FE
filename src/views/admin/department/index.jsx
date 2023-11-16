@@ -3,17 +3,18 @@ import React, { useEffect, useState } from "react";
 import SearchCardBar from "./component/SearchCardBar";
 import DepCard from "./component/DepCard/DepCard";
 import DepInfo from "./component/DepInfo/DepInfo";
-import { getDepOrganizationApi } from "api/dep/DepApi";
+import api from "api/Fetch";
 import CommonAlert from "common/component/CommonAlert";
 
-const Test = () => {
+const Department = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
   const [searchText, setSearchText] = useState("");
   const [org, setOrg] = useState([]);
-  const [dpCd, setDpCd] = useState(0);
+  const [dpCd, setDpCd] = useState();
   const [test, setTest] = useState(false);
   const [editState, setEditState] = useState("read");
   const [tabStatus, setTabStatus] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
@@ -25,9 +26,15 @@ const Test = () => {
 
   //조직도 조회
   const onClickSearchText = async () => {
-    const response = await getDepOrganizationApi(selectedCoCd, searchText);
+    setIsLoading(true);
+    const response = await api.dep.getDepOrganizationApi(
+      selectedCoCd,
+      searchText
+    );
     setOrg(response.data);
+    setIsLoading(false);
   };
+
   useEffect(() => {
     if (test === true) {
       setTest(false);
@@ -38,9 +45,11 @@ const Test = () => {
   }, [test]);
 
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+    <Box h={"full"}>
+      {/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
       <Grid
-        h={"500px"}
+        // h={"500px"}
+        h={'full'} // 혜윤 수정
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
         gap={5}
@@ -58,10 +67,14 @@ const Test = () => {
             setDpCd={setDpCd}
             setEditState={setEditState}
             setTabStatus={setTabStatus}
+            isLoading={isLoading}
           />
         </GridItem>
-        <GridItem colSpan={4} rowSpan={5}>
+        <GridItem colSpan={5} rowSpan={5}>
           <DepInfo
+            org={org}
+            setIsLoading={setIsLoading}
+            isLoading={isLoading}
             setTest={setTest}
             dpCd={dpCd}
             setDpCd={setDpCd}
@@ -81,4 +94,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Department;

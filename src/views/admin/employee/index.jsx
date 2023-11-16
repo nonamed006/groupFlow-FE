@@ -5,17 +5,30 @@ import { PORT } from "set";
 import EmpCard from "./component/empCard/EmpCard";
 import EmpInfo from "./component/empInfo/EmpInfo";
 import { getCookie } from "common/common";
+import CommonAlert from "common/component/CommonAlert";
+import { empSchema } from "common/Schema";
+import { empUpdateSchema } from "common/Schema";
 
 const Employee = () => {
-
   //state
   const [empList, setEmpList] = useState([]);
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
+  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
+  const [empCdTmp, setEmpCdTmp] = useState("");
+
   const [editState, setEditState] = useState("read");
-  const [infoEditState, setInfoEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
+
+  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [alertInfo, setAlertInfo] = useState({
+    isOpen: false,
+  });
+
   const [empDept, setEmpDept] = useState([
     {
       addr: "",
@@ -31,7 +44,7 @@ const Employee = () => {
       dpNm: "",
       dpType: "",
       dpTypeNm: "",
-      empCd: "",
+      empCd: empCdTmp,
       empTypeCd: "",
       empTypeNm: "",
       fax: "",
@@ -44,26 +57,27 @@ const Employee = () => {
       pstnNm: "",
       rankCd: "",
       rankNm: "",
-      reDt: "",
+      reDt: null,
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
-    }
+    },
   ]);
 
   //사원 목록 조회
-  const getEmpList = (searchCorp, searchWorkType, searchNm) => {
+  const getEmpList = (srhCorp, srhWorkType, srhNm) => {
     fetch(
-      `${PORT}/emp/getEmp?searchCorp=${searchCorp}&searchWorkType=${searchWorkType}&searchNm=${searchNm}`,
+      `${PORT}/emp/getEmp?srhCorp=${srhCorp}&srhWorkType=${srhWorkType}&srhNm=${srhNm}`,
       {
         method: "GET",
         headers: {
-          'Content-Type': "application/json; charset=utf-8",
-          'Authorization': getCookie("Authorization")
-        }
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        credentials: "include",
         // res에 결과가 들어옴
       }
-    ).then((res) => res.json())
+    )
+      .then((res) => res.json())
       .then((res) => {
         setEmpList(res.data);
         setEmpNum(res.strData);
@@ -77,17 +91,19 @@ const Employee = () => {
       headers: {
         'Content-Type': "application/json; charset=utf-8",
         'Authorization': getCookie("Authorization")
-      }
+      },
+      credentials: 'include'
     }).then((res) => res.json())
       .then((res) => {
-        if(res.data.length > 0){
-        setEmpDept(res.data);
+        if (res.data.length > 0) {
+          setEmpDept(res.data);
         }
       });
   };
 
   // 사원 목록 클릭시
   const onClickRow = (empList) => {
+    setEmpCdTmp(empList.empCd);
     resetInput();
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
@@ -95,6 +111,8 @@ const Employee = () => {
 
   // input 값 초기화
   const resetInput = () => {
+    setImgBase64([]);
+
     setEmpDetail({
       empNm: "",
       mailId: "",
@@ -128,7 +146,7 @@ const Employee = () => {
         dpNm: "",
         dpType: "",
         dpTypeNm: "",
-        empCd: "",
+        empCd: empCdTmp, //수정필요
         empTypeCd: "",
         empTypeNm: "",
         fax: "",
@@ -149,8 +167,57 @@ const Employee = () => {
     ]);
   };
 
+  //유효성 검사
+  const handleInsertCheck = () => {
+    if(imgFile != null){
+      empSchema.validate(empDetail)
+      .then(() => {
+        // 유효성 검사 통과한 데이터 처리
+        onSaveEmpDetail()
+      })
+      .catch((errors) => {
+        // 유효성 검사 실패한 경우 에러 메세지
+        setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: "입력값을 확인해주세요.",
+          detail: errors.message,
+          width: "fit-content",
+        });
+      });
+    }else{
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: "사진을 등록해주세요.",
+        width: "fit-content",
+      });
+    }
+  }
+
+   //유효성 검사
+   const handleUpdateCheck = () => {
+    empUpdateSchema.validate(empDetail)
+    .then(() => {
+      // 유효성 검사 통과한 데이터 처리
+      updateEmpInfo()
+    })
+    .catch((errors) => {
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: errors.message,
+        width: "fit-content",
+      });
+    });
+  }
+
   //사원 기본정보 저장
-  const onSaveEmpDetail = () => {
+  const onSaveEmpDetail = () => { 
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
 
@@ -173,12 +240,20 @@ const Employee = () => {
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
       body: fd,
+      credentials: 'include'
       // res에 결과가 들어옴
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
+          setAlertInfo({
+            isOpen: true,
+            status: "success",
+            title: res.resultMsg,
+            width: "fit-content",
+          });
           setEditState("read");
+          setIsReload(!isReload);
         } else {
         }
       });
@@ -193,31 +268,39 @@ const Employee = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(empDetail)
+        body: JSON.stringify(empDetail),
+        credentials: 'include'
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())
       .then((res) => {
+        setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
         setEditState("read");
       });
-  }
+  };
 
   useEffect(() => {
     resetInput();
+    setSelectedIndex(undefined);
     getEmpList("", "", "");
   }, [isReload]);
 
   return (
-    <div>
-      <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+      <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
         <Grid
-          h="1000px"
+          //h="1000px"
+          h={'full'} // 혜윤 수정
           templateRows="repeat(11, 1fr)"
           templateColumns="repeat(6, 1fr)"
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} />
+            <SearchCardBar getEmpList={getEmpList} /> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -227,6 +310,8 @@ const Employee = () => {
               resetInput={resetInput}
               setEditState={setEditState}
               editState={editState}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>
@@ -239,17 +324,21 @@ const Employee = () => {
               setEmpDept={setEmpDept}
               setImgFile={setImgFile}
               resetInput={resetInput}
-              onSaveEmpDetail={onSaveEmpDetail}
+              onSaveEmpDetail={handleInsertCheck}
               setEditState={setEditState}
               editState={editState}
-              infoEditState={infoEditState}
-              setInfoEditState={setInfoEditState}
-              updateEmpInfo={updateEmpInfo}
+              updateEmpInfo={handleUpdateCheck}
+              setAlertInfo={setAlertInfo}
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
             />
           </GridItem>
         </Grid>
-      </Box>
-    </div>
+    </Box>
   );
 };
 

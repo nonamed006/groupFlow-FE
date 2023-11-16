@@ -1,17 +1,27 @@
-import { number, object, string, date } from "yup";
+import { number, object, string, date, ref } from "yup";
 
 export const corpSchema = object().shape({
-  coCd: string().nullable(),
   useYn: string().default("false").required("사용여부를 체크해주세요."),
   coNm: string().required("회사명을 입력해주세요."),
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),
   addr: string().required("주소를 선택해주세요."),
-  sort: number().required("정렬값을 입력해주세요.").positive().integer(),
-  chCd: string().nullable(),
-  estDt: date().required("설립일을 입력해주세요."),
-  opDt: date().required("개업일을 입력해주세요."),
-  clsDt: date().nullable(),
+  sort: number()
+    .required("정렬값을 입력해주세요.")
+    .positive("정렬값은 1 이상의 숫자를 입력해주세요.")
+    .typeError('정렬값은 숫자를 입력해주세요.'),
+  estDt: date()
+    .required("설립일을 선택해주세요.")
+    .typeError('설립일을 선택해주세요.'),
+  bsCd : string().required("회사구분을 선택해주세요."),
+  opDt: date()
+    .required("개업일을 선택해주세요.")
+    .min(ref('estDt'), `개업일은 설립일 이후의 날짜를 선택해주세요.`)
+    .typeError('개업일을 선택해주세요.'),
+  clsDt: date()
+    .nullable()
+    .min(ref('opDt'),`폐업일은 개업일 이후의 날짜를 선택해주세요.`)
+    .typeError('폐업일을 선택해주세요.'),
 });
 
 export const depSchema = object().shape({
@@ -21,14 +31,16 @@ export const depSchema = object().shape({
   dpNm: string().required("부서명을 입력해주세요."),
   recYn: string().default("false").required("대내외 수신여부를 선택해주세요."),
   useYn: string().default("false").required("사용여부를 선택해주세요."),
-  sort: number().required("정렬값을 입력해주세요.").positive().integer(),
+  sort: number()
+    .typeError("정렬값을 올바르게 입력해주세요.")
+    .required("정렬값을 입력해주세요.")
+    .positive("")
+    .integer(""),
   cdt: date().nullable(),
   mdt: date().nullable(),
 });
 
 export const empSchema = object().shape({
-  empCd: string().required("상위부서를 선택해주세요."),
-  fileCd: string(),
   empNm: string().required("사원 이름을 입력해주세요."),
   mailId: string().required("메일ID를 입력해주세요."),
   loginId: string()
@@ -56,7 +68,29 @@ export const empSchema = object().shape({
     }),
   useYn: string().required("계정 사용여부를 선택해주세요."),
   joinDt: date().required("최초입사일을 선택해주세요."),
-  reDt: date().nullable(),
+  cdt: date().nullable(),
+  mdt: date().nullable(),
+});
+
+export const empUpdateSchema = object().shape({
+  fileCd: string().required("사진을 등록해주세요."),
+  empNm: string().required("사원 이름을 입력해주세요."),
+  mailId: string().required("메일ID를 입력해주세요."),
+  loginId: string()
+    .required("로그인ID를 입력해주세요.")
+    .min(4, "로그인 ID는 4자리 이상 입력해주세요")
+    .max(15, "로그인 ID는 15자리 이하 입력해주세요")
+    .matches(/^[A-Za-z0-9]*$/, "로그인 ID는 영문과 숫자로 입력해주세요."),
+  gender: string().required("성별을 선택해주세요."),
+  psnMail: string().nullable().email("이메일 형식을 확인해주세요."),
+  payMail: string().nullable().email("이메일 형식을 확인해주세요."),
+  empTel: string()
+    .required("휴대전화를 입력해주세요.")
+    .matches(/^010-\d{4}-\d{4}$/, {
+      message: "휴대전화는 010-0000-0000 형식으로 입력해주세요.",
+    }),
+  useYn: string().required("계정 사용여부를 선택해주세요."),
+  joinDt: date().required("최초입사일을 선택해주세요."),
   cdt: date().nullable(),
   mdt: date().nullable(),
 });
@@ -72,12 +106,9 @@ export const depGrpSchema = object().shape({
   workTypeCd: string().required("재직구분을 선택해주세요."),
   empTypeCd: string().required("고용구분을 선택해주세요."),
   joinDt: date().required("입사일을 선택해주세요."),
-  reDt: date().nullable(),
 });
 
 export const menuSchema = object().shape({
-  menuCd: string().nullable(),
-  typeCd: string().nullable(),
   upperCd: string().required("상위메뉴를 선택하세요"),
   fileCd: string().when("upperCd", {
     is: "",
@@ -90,7 +121,6 @@ export const menuSchema = object().shape({
 });
 
 export const roleGrpSchema = object().shape({
-  rgCd: string().nullable(),
   grpNm: string().required("그룹명을 입력해주세요."),
   useYn: string().required("사용여부를 선택해주세요."),
   coCd: string().required("회사를 선택해주세요."),

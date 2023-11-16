@@ -40,6 +40,7 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
                     placeholder={'전체'}
                     isSelect={true}
                     values={values}
+                    defaultValue={''}
                 />
             </Box>
             <Box w={'40%'}>
@@ -49,10 +50,14 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
                     placeholder={'검색어를 입력하세요.'}
                     defaultValue={''}
                     name={'keyword'}
-                />
+                />        
             </Box>
             <Box w={'10%'}>
-                <Button variant="brand" onClick={() => handleSearchBtn()}>{'검색'}</Button>
+                <Button 
+                    variant="brand" 
+              		borderRadius={"10px"}
+              		fontWeight={"600"} 
+                    onClick={() => handleSearchBtn()}>{'검색'}</Button>
             </Box>
 
         </Flex>

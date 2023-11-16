@@ -92,8 +92,8 @@ function SignIn() {
         }
       });
     }).then(()=>{
-      window.location.replace("/admin/default");
-    });;
+      window.location.replace("/MU000000/home");
+    });
   }
 
   return (

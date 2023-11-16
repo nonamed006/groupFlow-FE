@@ -1,13 +1,13 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { React, useState, useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
-import GroupCardList from "views/admin/roleGroup/component/GroupBox/GroupCardList";
+import GroupCardList from "views/system/roleGroup/component/GroupBox/GroupCardList";
 import api from "api/Fetch";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import BottomDrawer from "common/component/BottomDrawer";
 import SearchBar from "common/component/SearchBar";
 
-const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword}) => {//coCd, empCd
+const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
     const [ roleList, setRoleList ] = useState([]);
     const [ total, setTotal ] = useState(0);
 
@@ -17,9 +17,15 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword}) => {//coCd, emp
 
     // 사용자 회사의 권한 목록 조회
     const getRoleList = async () => {
+        console.log(keyword);
         const response = await api.roleEmp.getRoleListApi(dpGrpCd, keyword);//coCd, empCd
-        setRoleList(response.data);
-        setTotal(response.data.length);
+        if(response.status === 200) {
+            setRoleList(response.data);
+            setTotal(response.data.length);
+        } else {
+            setRoleList([]);
+            setTotal(0);
+        }
         setRgCd('');
     }
 
@@ -54,7 +60,12 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword}) => {//coCd, emp
 
     const handleSearchBtn = () => {
         if(!dpGrpCd) {
-            alert('사용자를 선택해주세요.');
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                title: '사용자를 선택해주세요.',
+                width: 'fit-content',
+            })
             return false;
         }
 
@@ -93,15 +104,28 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword}) => {//coCd, emp
         <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
         <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
             <Box minH={'510px'}>
-                <GroupCardList
-                    checkedList={checkedList}
-                    checkHandler={checkHandler}
-                    rgCd={rgCd}
-                    roleGrpList={roleList}  // 해당 회사의 권한 그룹 목록
-                    setRgCd={setRgCd}       // 권한그룹 선택
-                    coCd={dpGrpCd}
-                    total={true}            // 내 권한그룹의 전체 메뉴 조회 여부
-                />
+                {
+                    roleList.length > 0 ? 
+                    <GroupCardList
+                        checkedList={checkedList}
+                        checkHandler={checkHandler}
+                        rgCd={rgCd}
+                        roleGrpList={roleList}  // 해당 회사의 권한 그룹 목록
+                        setRgCd={setRgCd}       // 권한그룹 선택
+                        coCd={dpGrpCd}
+                        total={true}            // 내 권한그룹의 전체 메뉴 조회 여부
+                    />
+                    :
+                    <Text
+                        pt={200}
+                        align={'center'}
+                        fontWeight={600}
+                        color={'lightgray'}
+                        fontSize={'18px'}
+                    >
+                        검색된 데이터가 없습니다.
+                    </Text>
+                }
             </Box>
         </Box>
         {isDrawer &&

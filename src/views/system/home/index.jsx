@@ -1,45 +1,43 @@
-import { Box, Button, Image, Input, Text, useColorModeValue } from '@chakra-ui/react';
-import SearchBar from 'common/component/SearchBar';
+
+import { Box, Image } from '@chakra-ui/react';
 import React from 'react';
-import searchIncon from 'assets/img/auth/searchIcon.png';
+import douzoneImg from 'assets/img/auth/douzoneImg.png';
+import SearchBox from './compoent/SearchBox/SearchBox';
+import test from "assets/img/auth/test.png";
 const HomePage = () => {
-    const textColor = useColorModeValue("secondaryGray.900", "white");
-    const textNumColor = useColorModeValue("brand.500", "white");
-
- 
     return (
-       <Box
-       position={'fixed'}
-       overflow={'hidden'}
-       w={'100%'}
-       h={'100%'}
-       zIndex={100}
-       top={0}
-       right={0}
-       bottom={0}
-       display={'flex'}
-       alignItems={'center'}
-       justifyContent={'center'}
-       >
-        {/* 검색창 */}
-        <Box position={'absolute'} w={'25%'}  >
-            <Input 
-             borderRadius="5px"
-             placeholder='통합 검색'
-             bg={'white'}
-             size='lg'
-             w={'100%'}
-             />
-             {/* <Box w={'10px'}>
-                 <Image  
-             size={'3px'}
+        <>
+            <Box
+                position={'fixed'}
+                overflow={'hidden'}
+                w={'100%'}
+                h={'100%'}
+                top={0}
+                right={0}
+                bottom={0}
+                zIndex={-1}
+                backgroundImage={test}
+                backgroundSize={'cover'}
+            >
+                {/* <Box
+                    w={'100%'}
+                    h={'100%'}
+                   bg={'rgba(0,0,0,0.3)'}
+                   opacity={'90%'}
+                ></Box> */}
+            </Box>
+            {/* 검색창 */}
+            <Box
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                w={'100%'}
+                h={'100%'}
+            >
+                <SearchBox />
+            </Box>
 
-             src={searchIncon} />
-             </Box>
-             */}
-        </Box>
-
-        </Box>
+        </>
     );
 };
 export default HomePage;

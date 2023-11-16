@@ -1,14 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
+import depIcon from "assets/img/gridIcon/department.png";
+
+const setUseName = (items) => {
+  items.forEach((item) => {
+    item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
+
+    if(item.rows != null) {
+      setUseName(item.rows);
+    }
+  });
+}
+
 const RealGrid = ({ org, setMenuDetail }) => {
+  setUseName(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
     { fieldName: "menuNm", dataType: "text" },
     { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
+    { fieldName: "iconField", name: "iconField" },
   ];
 
   var columns = [
@@ -38,8 +52,8 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "menuPath", false, null, "depth");
-    console.log(org);
+    //treeProvider.setRows(org, "menuPath", false, null, null);
+    treeProvider.setObjectRows({ rows: org }, "rows", "", "");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
@@ -60,21 +74,8 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.columnByName("menuNm").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
-    treeView.treeOptions.iconImagesRoot = "/horizon-ui-chakra/img/";
-    treeView.treeOptions.iconImages = [
-      "cor2.png",
-      "cor2.png",
-      "dep2.png",
-      "dep.png",
-      "cor.png",
-      "icon2.png",
-      "is.png",
-      "kr.png",
-      "mx.png",
-      "pt.png",
-      "us.png",
-      "ve.png",
-    ];
+    treeView.treeOptions.iconImages = [depIcon];
+    treeView.treeOptions.defaultIcon = 0;
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
@@ -90,6 +91,15 @@ const RealGrid = ({ org, setMenuDetail }) => {
         // }
       }
     };
+
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if (depth === "1") {
+        return "gnb-column";
+      } else if (depth === "2") {
+        return "bottom-gnb-column";
+      }
+    });
 
     treeView.expandAll();
     return () => {

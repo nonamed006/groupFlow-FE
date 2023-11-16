@@ -7,6 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 const ChangeModifyTableTbody = ({ detail }) => {
+  console.log(detail);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Tbody>
@@ -109,7 +110,7 @@ const ChangeModifyTableTbody = ({ detail }) => {
         <Tr>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              종목
+              업종
             </Text>
           </Td>
           <Td align="center">
@@ -219,7 +220,7 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
         </Tr>
       )}
-      {detail.coDoamin1 !== undefined && (
+      {detail.coDomain1 !== undefined && (
         <Tr>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
@@ -228,12 +229,12 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.coDoamin1}
+              {detail.coDomain1}
             </Text>
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.coDoamin2}
+              {detail.coDomain2}
             </Text>
           </Td>
         </Tr>
@@ -290,7 +291,7 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.fax1}
+              {detail.fax2}
             </Text>
           </Td>
         </Tr>
@@ -323,12 +324,31 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.useYN1}
+              {detail.useYN1 === "1" ? "사용" : "미사용"}
             </Text>
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.useYN2}
+              {detail.useYN2 === "1" ? "사용" : "미사용"}
+            </Text>
+          </Td>
+        </Tr>
+      )}
+      {detail.postNum1 !== undefined && (
+        <Tr>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              우편번호
+            </Text>
+          </Td>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              {detail.postNum1}
+            </Text>
+          </Td>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              {detail.postNum2}
             </Text>
           </Td>
         </Tr>
@@ -348,6 +368,26 @@ const ChangeModifyTableTbody = ({ detail }) => {
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.addr2}
+            </Text>
+          </Td>
+        </Tr>
+      )}
+
+      {detail.addrDetail1 !== undefined && (
+        <Tr>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              상세주소
+            </Text>
+          </Td>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              {detail.addrDetail1}
+            </Text>
+          </Td>
+          <Td align="center">
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              {detail.addrDetail2}
             </Text>
           </Td>
         </Tr>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DepList from './depList/DepList';
 import DepGrpBox from './depGrpBox.js/DepGrpBox';
 import { PORT } from 'set';
-import MenuBox from 'views/admin/roleGroup/component/MenuBox/MenuBox';
+import MenuBox from 'views/system/roleGroup/component/MenuBox/MenuBox';
 
 const DepRole = () => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록

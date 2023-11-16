@@ -16,43 +16,44 @@ import DepBasic from "./DepBasic";
 import DepGroup from "./DepGroup/DepGroup";
 import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
-import {
-  getDepDtoApi,
-  getDepGroupApi,
-  fetchSaveDepApi,
-  fetchUpdateDepApi,
-  deleteBtnApi,
-} from "api/dep/DepApi";
+import api from "api/Fetch";
+import { set } from "lodash";
 
 const DepInfo = ({
+  org,
   setTest,
+  setDpCd,
   dpCd,
   editState,
   setEditState,
   setTabStatus,
   tabStatus,
   setAlertInfo,
+  setIsLoading,
+  isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
   const [depDto, setDepDto] = useState({});
   const [dg, setDg] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
-
   //부서 상세조회
   const getDepDto = async () => {
-    const response = await getDepDtoApi(dpCd);
+    setIsLoading(true);
+    const response = await api.dep.getDepDtoApi(dpCd);
     setDepDto(response.voData);
+    setIsLoading(false);
   };
-
   //부서원 조회
   const getDepGroup = async () => {
-    const response = await getDepGroupApi(dpCd);
+    setIsLoading(true);
+    const response = await api.dep.getDepGroupApi(dpCd);
     setDg(response.data);
+    setIsLoading(false);
   };
 
   //부서 등록
   const fetchSaveDep = async () => {
-    const response = await fetchSaveDepApi(depDto);
+    const response = await api.dep.fetchSaveDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -76,12 +77,12 @@ const DepInfo = ({
 
   //부서 수정
   const fetchUpdateDep = async () => {
-    const response = await fetchUpdateDepApi(depDto);
+    const response = await api.dep.fetchUpdateDepApi(depDto);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "error",
+        status: "warning",
         width: "fit-content",
       });
     } else {
@@ -101,23 +102,27 @@ const DepInfo = ({
     setDepDto(depDto);
   };
   const updateBtn = () => {
-    console.log(depDto);
     depSchema
       .validate(depDto)
       .then(() => {
         //  // 유효성 검사 통과한 데이터 처리
         isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-        console.log("유효성 검사 통과");
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지
-        alert(errors.message);
+        setAlertInfo({
+          isOpen: true,
+          title: "필수값 미입력",
+          detail: errors.message,
+          status: "warning",
+          width: "fit-content",
+        });
       });
   };
 
   //부서 삭제
   const deleteBtn = async () => {
-    const response = await deleteBtnApi(dpCd);
+    const response = await api.dep.deleteBtnApi(dpCd);
     if (response.status !== 200) {
       setAlertInfo({
         isOpen: true,
@@ -138,17 +143,21 @@ const DepInfo = ({
     onClose();
   };
   useEffect(() => {
-    if (dpCd !== 0) {
+    if (dpCd !== undefined && dpCd !== 0) {
       getDepDto();
       getDepGroup();
       setIsEditing(true);
     } else {
-      setDepDto({
-        dpCd: "",
-      });
+      console.log("-==");
+      setDepDto({ stnd: "", recYN: true, typeCd: "" });
+      setDg([]);
       setIsEditing(false);
     }
   }, [dpCd]);
+  useEffect(() => {
+    setDepDto([]);
+    setDg([]);
+  }, [org]);
   return (
     <>
       <Box
@@ -158,7 +167,7 @@ const DepInfo = ({
         p="6"
         backgroundColor="white"
         overflowY={"auto"}
-        w={"1100px"}
+        // w={"1100px"} 혜윤 수정
       >
         <Tabs colorScheme="brandScheme">
           <TabList>
@@ -172,6 +181,7 @@ const DepInfo = ({
             </Flex>
             <Spacer />
             <DepInfoBox
+              setDpCd={setDpCd}
               depDto={depDto}
               updateBtn={updateBtn}
               onOpen={onOpen}
@@ -188,14 +198,17 @@ const DepInfo = ({
               <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
                 <DepBasic
                   depDto={depDto}
+                  setDepDto={setDepDto}
                   editState={editState}
                   change={change}
                   setAlertInfo={setAlertInfo}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
                 />
               </Box>
             </TabPanel>
             <TabPanel>
-              <DepGroup value={dg} />
+              <DepGroup value={dg} isLoading={isLoading} />
             </TabPanel>
           </TabPanels>
         </Tabs>

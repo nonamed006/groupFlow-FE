@@ -3,6 +3,7 @@ import { React, useState, useEffect } from "react";
 import { PORT } from "set";
 import GnbCardList from "./GnbCardList";
 import GnbCardBar from "./GnbCardBar";
+import api from 'api/Fetch';
 
 const GnbCard = ({
   title,
@@ -22,24 +23,15 @@ const GnbCard = ({
 
   /* 메뉴 목록 조회 */
   const gnbMenuList = async () => {
-    // const params = {
-    //   searchGnbMenuCd: searchGnbMenuCd,
-    //   searchMenuNm: searchMenuNm
-    // }
-    const queryString = new URLSearchParams(search).toString();
-    await fetch(`${PORT}/menu/list?${queryString}`, { method: 'GET', })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        if(responseJson.result.toUpperCase() === 'SUCCESS') {
-          setList(responseJson.data);
-          setGnbMenuList(responseJson.data);
-        } else {
-          // alert(responseJson.resultMsg);
-          setList([]);
-          setGnbMenuList([]);
-        }
-      });
+    const responseJson = await api.menu.getGnbMenuList(search);
+
+    if(responseJson.result.toUpperCase() === 'SUCCESS') {
+      setList(responseJson.data);
+      setGnbMenuList(responseJson.data);
+    } else {
+      setList([]);
+      setGnbMenuList([]);
+    }
   }
 
   /* 선택한 메뉴 정보 조회 */
@@ -52,16 +44,13 @@ const GnbCard = ({
     }
 
     setSelectGnbMenuCd(menuCd);       // LNB에서 사용할 GNB menuCd 설정
-    await fetch(`${PORT}/menu/find-${menuCd}`, {method: 'GET'})
-      .then((response) => response.json())
-      .then((responseJson) => {
-          if(responseJson.result.toUpperCase() === 'SUCCESS') {
-            setMenuInfo(responseJson.voData);
-          } else {
-            alert(responseJson.resultMsg);
-          }
-        }
-      );
+    const responseJson = await api.menu.getMenuDetail(menuCd);
+
+    if(responseJson.result.toUpperCase() === 'SUCCESS') {
+      setMenuInfo(responseJson.voData);
+    } else {
+      alert(responseJson.resultMsg);
+    }
   }
 
   useEffect(() => {
@@ -69,7 +58,7 @@ const GnbCard = ({
   }, [menuInfo, search.onSearchClick]);//onSearchClick
 
   return (
-      <Box borderRadius="lg" bg="white" h="fit-content"  p="6">
+      <Box borderRadius="lg" bg="white" h='700px'  p="6">
           {/* 목록 상단 */}
         <GnbCardBar title={title} count={list&&list.length}/>
           {/* 목록 테이블(카드형식) */}

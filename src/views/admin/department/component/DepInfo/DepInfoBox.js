@@ -6,8 +6,10 @@ import {
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import { useEffect } from "react";
+import { setDataPk } from "redux/solution";
 
 const InfoBox = ({
+  setDpCd,
   depDto,
   updateBtn,
   onOpen,
@@ -25,11 +27,9 @@ const InfoBox = ({
       {tabStatus === 1 ? (
         <Stack direction="row" spacing={4}>
           <Button
-            variant="action"
-            textColor={textColor}
-            background={"#E2E8F0"}
-            borderRadius={"10"}
-            fontWeight="600"
+            variant="brand"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
                 setAlertInfo({
@@ -48,6 +48,8 @@ const InfoBox = ({
           </Button>
           <Button
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               if (depDto.length === 0 || depDto.dpCd === "") {
                 setAlertInfo({
@@ -67,7 +69,9 @@ const InfoBox = ({
       ) : (
         <Stack direction="row" spacing={4}>
           <Button
-            variant="action"
+            variant="brand"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               updateBtn();
             }}
@@ -76,7 +80,10 @@ const InfoBox = ({
           </Button>
           <Button
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
+              setDpCd(0);
               setDepDto([]);
               setTabStatus(1);
               setEditState("read");

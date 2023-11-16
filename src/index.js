@@ -12,8 +12,11 @@ import { createStore } from "redux";
 import rootReducer from "redux/rootReducer";
 import { Provider } from "react-redux";
 import SystemLayout from "layouts/system"; //이혜윤 - 추가
+import MU000000 from "layouts/MU000000"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
+import LoginPage from "views/auth/login";
+import HomePage from "views/system/home";
 
 const store = createStore(rootReducer);
 
@@ -24,13 +27,15 @@ ReactDOM.render(
 			<ThemeEditorProvider>
 				<BrowserRouter>
 					<Switch>
-						<Route path={`/system`} component={SystemLayout}/>
+						{/* <Route path={`/system`} component={SystemLayout}/>제거하기 */}
+						<Route path={`/MU000000`} component={MU000000}/>
 						<Route path={`/auth`} component={AuthLayout} />
-						<Route path={`/admin`} component={AdminLayout} />
-						<Route path={`/rtl`} component={RtlLayout} />
-						<Route path={`/err:params`} component={ErrorPage} />
+						{/* 타입에 따른 에러페이지 (NotFound/NoAccess/NotWorking) */}
+						<Route path={`/err/:type`} component={ErrorPage} />
 						{/* 로그인 안했을때 */}
-						<Redirect from='/' to='/auth/login' />
+						{<Redirect from='/' to='/auth/login' />}
+						{/*없는 url 입력시 에러 페이지로(NotFound) */}
+						<Route component={ErrorPage} />
 					</Switch>
 				</BrowserRouter>
 			</ThemeEditorProvider>

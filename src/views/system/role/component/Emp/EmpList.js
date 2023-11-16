@@ -3,6 +3,7 @@ import api from "api/Fetch";
 import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
 import CardMenuBar from "common/component/CardMenuBar";
+import Loading from "common/Loading";
 
 const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
     const [ searchCoCd, setSearchCoCd ] = useState('');         // 회사 카테고리 코드
@@ -10,10 +11,14 @@ const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
     const [ keyword, setKeyword ] = useState('');               // 검색어
     const [ list, setList ] = useState([]);                     // 회사 + 부서 + 사용자 목록
     const [ empCount, setEmpCount ] = useState([]);             // 사용자 카운트
+    const [ isLoading, setIsLoading ] = useState(false);
 
     // 회사 + 부서 + 사용자 목록 조회
     const getEmpList = async() => {
+        setDpGrpCd('');
+        setIsLoading(true);
         const response = await api.roleEmp.getEmpListApi(searchCoCd, keyword);
+        setIsLoading(false);
         setList(response.data);
         setEmpCount(response.voData.empCount);
     }
@@ -37,7 +42,7 @@ const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
                     <Select onChange={(e) => {
                         setSearchCoCd(e.target.value);
                     }}>
-                        <option>전체</option>
+                        <option value=''>전체</option>
                         {
                             searchCorpList && searchCorpList.map((corp, key) => {
                                 return (
@@ -53,14 +58,19 @@ const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
 					}}/>
 				</GridItem>
 				<GridItem colStart={4} colEnd={4}>
-					<Button variant="brand" onClick={() => {
+					<Button borderRadius={'10px'} fontWeight={'600'} variant="brand" onClick={() => {
 						getEmpList();
 					}}>검색</Button>
 				</GridItem>
 			</Grid>
             
             <Box w={"full"} h={'500px'} overflowY={'scroll'}>
-                <RealGrid org={list} setListDetail={setDpGrpCd}/>
+                {
+                    isLoading ?
+                        <Loading/>
+                    :
+                        <RealGrid org={list} setListDetail={setDpGrpCd}/>
+                }
             </Box>
         </Box>
     )

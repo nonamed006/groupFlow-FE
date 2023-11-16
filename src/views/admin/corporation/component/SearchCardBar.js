@@ -38,7 +38,13 @@ const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
 				/>
 			</Box>
 			<Box w={'30%'}>
-				<Button float={'right'} variant="brand" onClick={() => { handleSearchBtn() }}>검색</Button>
+				<Button 
+					float={'right'} 
+					variant="brand" 
+              		borderRadius={"10px"}
+              		fontWeight={"600"}
+              		m={1}
+					onClick={() => { handleSearchBtn() }}>검색</Button>
 			</Box>
 		</Flex>
 	)

@@ -70,9 +70,7 @@ const CorpList = ({ setCoCd, coCd }) => {
       />
       <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
 
-
       {/* 목록 테이블 */}
-
       <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
         <Box minH={'560px'} w={'100%'}  >
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />

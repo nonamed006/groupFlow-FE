@@ -74,10 +74,18 @@ const roleMenu = {
     /**
      * 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
      * @param {*} rgCd 권한그룹 코드
+     * @param {*} typeCd 전체/관리자/사용자
      * @returns 
      */
-    getMenuListWithRole: (rgCd) => {
-        const promise = getPromise({ url: `roleMenu/menu/${rgCd}`, method: 'GET' });
+    getMenuListWithRole: (rgCd, typeCd) => {
+        let url = `roleMenu/menu/${rgCd}`;
+        const params = new URLSearchParams();
+        if (typeCd !== undefined && typeCd !== 'undefined')
+            params.append("menuType", typeCd);
+        const paramString = params.toString();
+        if (paramString)  url += "?" + paramString;
+        
+        const promise = getPromise({ url: url, method: 'GET' });
         return promise.then((responseJson) => responseJson);
     },
 
@@ -88,18 +96,45 @@ const roleMenu = {
      * @param {*} menuCdList 등록 및 삭제할 메뉴코드 리스트 
      * @returns 
      */
-    putRoleMenu: (rgCd, menuCdList)=> {
-        console.log(menuCdList);
-        console.log(rgCd);
+    putRoleMenu: (rgCd, typeCd, menuCdList)=> {
+        let url = `roleMenu/${rgCd}`;
+        const params = new URLSearchParams();
+        if (typeCd !== undefined && typeCd !== 'undefined')
+            params.append("menuTypeCd", typeCd);
+        const paramString = params.toString();
+        if (paramString)  url += "?" + paramString;
         const promise = getPromise({ 
-            url: `roleMenu/${rgCd}`, 
+            url: url, 
             method: "PUT",
             body: JSON.stringify(menuCdList)
         });
         return promise.then((responseJson) => responseJson);
-    }
+    },
 
+    /**
+     * 부서그룹코드 + 메뉴 검색어로 권한 메뉴 조회'
+     * 안은비
+     * 
+    */
+   getRoleMenuBySearch: (dpGrpCd, keyword) => {
+    const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
+        return promise.then((responseJson) => responseJson);
+   },
 
+   /**
+    * 권한별 메뉴 목록 조회
+    * 이혜윤
+    * @param {String} dpGrpCd 
+    * @returns 
+    */
+   getRoleMenuListByDpGrpCd: (dpGrpCd) => {
+    const promise = getPromise({
+        url: `roleMenu/group/${dpGrpCd}`,
+        method: 'GET'
+    });
+
+    return promise.then((responseJson) => responseJson);
+   }
 };
 
 export default roleMenu;

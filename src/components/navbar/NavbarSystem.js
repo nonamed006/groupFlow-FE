@@ -19,7 +19,6 @@ export default function AdminNavbar(props) {
   const location = props.location;
   const match = props.match;
 
-  console.log(routes);
   const menu = location.pathname.split("/");
   const gnbMenu = routes.map((route) => {
     if (match.path === route.layout && !route.path) {
@@ -49,7 +48,6 @@ export default function AdminNavbar(props) {
       return findMenu(route);
     }
   });
-  console.log(props);
   useEffect(() => {
     window.addEventListener("scroll", changeNavbar);
 

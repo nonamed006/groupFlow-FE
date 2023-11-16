@@ -7,17 +7,22 @@ import {
   Spacer,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
+import Loading from "common/Loading";
+import { useInView } from "react-intersection-observer";
 
-const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
+const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {}, []);
 
   return (
     <>
-      <Box borderRadius="lg" bg="white" h="700px" p="6" w={"450px"}>
+      <Box borderRadius="lg" bg="white" h="700px" p="6">
+        {" "}
+        {/*  w={"450px"} 혜윤 수정 */}
         <Box display="flex" bg="white" mb={4}>
           <Text
             color={textColor}
@@ -30,8 +35,10 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
           <Spacer />
           <Button
             variant="action"
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
-              setDpCd(0);
+              setDpCd(undefined);
               setEditState("update");
               setTabStatus(2);
             }}
@@ -49,6 +56,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus }) => {
             ></RealGrid>
           </Box>
         </Box>
+        {isLoading ? <Loading /> : <Box ref={infiniteScrollRef} h={"1px"} />}
       </Box>
     </>
   );

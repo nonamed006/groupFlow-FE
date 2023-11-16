@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import { SidebarContext } from "contexts/SidebarContext";
 
 /**
  * sidebar/components/Links.js
@@ -14,31 +15,22 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 
 export function SidebarLinks(props) {
   //   Chakra color mode
-  let location = useLocation();
-  let activeColor = useColorModeValue("gray.700", "black");
-  let inactiveColor = useColorModeValue(
-    "secondaryGray.600",
-    "secondaryGray.600"
-  );
-  let activeIcon = useColorModeValue("brand.500", "black");
-  let textColor = useColorModeValue("secondaryGray.500", "black");
-  let brandColor = useColorModeValue("brand.500", "brand.400");
-
   const { routes } = props; //전체 라우터
   const { route } = props; //선택한 하나의 라우터
-  const { setCollapse } = props;
   const { LNBroute } = props; //function setRoute 클릭 시 하나의 라우터 세팅
-  const [routeStat, setRouteStat] = useState(location.pathname);
+  const [routeStat, setRouteStat] = useState(window.location.pathname);
+
+  const context = useContext(SidebarContext);
 
   // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return routeStat === routeName;
-  };
+  // const activeRoute = (routeName) => {
+  //   return routeStat === routeName;
+  // };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (prop) => {
     return prop.map((route, index) => {
-      return route.path || !route.items ? ( //path가 있을때(하위메뉴가 없는 메뉴)
+      return route.path && route.items.length <= 0 ? ( //path가 있을때(하위메뉴가 없는 메뉴)
         <NavLink key={index} to={route.layout + route.path}>
           <Box
             onClick={() => {
@@ -69,7 +61,7 @@ export function SidebarLinks(props) {
           key={index}
         >
           <HStack
-            spacing={activeRoute(route.layout.toLowerCase()) ? "22px" : "26px"}
+            spacing={"22px"}
             py="5px"
             ps="10px"
           >
@@ -91,13 +83,13 @@ export function SidebarLinks(props) {
   };
   //  BRAND
   if (route) {
-    if (Object.keys(route).includes("items")) {
+    if (route.items.length > 0) {
       //하위메뉴 있는 메뉴
       return createLinks(route.items);
     } else {
       //하위메뉴 없는 메뉴
       LNBroute(null);
-      setCollapse(70);
+      context.setCollapse(false);
       return null;
     }
   } else {

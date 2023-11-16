@@ -1,15 +1,21 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import RoleList from "./component/Emp/RoleList";
 import EmpList from "./component/Emp/EmpList";
-import MenuBox from "views/admin/roleGroup/component/MenuBox/MenuBox";
+import MenuBox from "views/system/roleGroup/component/MenuBox/MenuBox";
 import { useState } from "react";
+import CommonAlert from "common/component/CommonAlert";
 
 const RoleEmp = () => {
     const [ dpGrpCd, setDpGrpCd] = useState('');
     const [ rgCd, setRgCd] = useState('');
     const [ roleKeyword, setRoleKeyword ] = useState('');
 
+    const [ alertInfo, setAlertInfo ] = useState({
+        isOpen: false
+    })
+
     return (
+        <>
         <Grid
             h='500px'
             templateRows="repeat(11, 1fr)"
@@ -28,6 +34,7 @@ const RoleEmp = () => {
                     setRgCd={setRgCd}
                     keyword={roleKeyword}
                     setKeyword={setRoleKeyword}
+                    setAlertInfo={setAlertInfo}
                 />
             </GridItem>
             <GridItem colSpan={3} rowSpan={5} >
@@ -40,6 +47,13 @@ const RoleEmp = () => {
                 />
             </GridItem>
         </Grid>
+        {alertInfo.isOpen &&
+            <CommonAlert
+                alertInfo={alertInfo}
+                setAlertInfo={setAlertInfo}
+            />
+        }
+        </>
     )
 }
 

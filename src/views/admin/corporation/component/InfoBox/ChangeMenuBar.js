@@ -4,13 +4,41 @@ import {
   Grid,
   GridItem,
   Select,
-  Button
+  Button,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 
-const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
+const ChangeMenuBar = ({
+  chSearch,
+  setChSearch,
+  handelChangeHistoryBtn,
+  setAlertInfo,
+}) => {
   const onChange = (e) => {
     const { value, name } = e.target;
+    if (name === "startCdt") {
+      if (value > chSearch.endCdt) {
+        setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: "시작일자가 종료일자보다 클 수 없습니다.",
+          width: "fit-content",
+        });
+        return false;
+      }
+    }
+
+    if (name === "endCdt") {
+      if (value < chSearch.startCdt) {
+        setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: "종료일자가 시작일자보다 작을 수 없습니다.",
+          width: "fit-content",
+        });
+        return false;
+      }
+    }
     setChSearch({
       ...chSearch,
       [name]: value, // name 키를 가진 값을 value 로
@@ -33,7 +61,6 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
       </GridItem>
       <GridItem colStart={3} colEnd={4}>
         <Input
-          placeholder="Select Date and Time"
           size="md"
           type="date"
           name="startCdt"
@@ -44,7 +71,6 @@ const ChangeMenuBar = ({ chSearch, setChSearch, handelChangeHistoryBtn }) => {
 
       <GridItem colStart={4} colEnd={5}>
         <Input
-          placeholder="Select Date and Time"
           size="md"
           type="date"
           name="endCdt"

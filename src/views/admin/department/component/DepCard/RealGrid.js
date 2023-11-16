@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/depRealGrid.css"; // RealGrid CSS 추가
+import corpIcon from "assets/img/gridIcon/corporation.png";
+import depIcon from "assets/img/gridIcon/department.png";
 
 const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
-
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "path", dataType: "text" },
@@ -49,8 +50,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     treeView.columnByName("code").visible = false;
     treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
-    treeView.treeOptions.iconImagesRoot = "/img/";
-    treeView.treeOptions.iconImages = ["corporation.png", "department.png"];
+    treeView.treeOptions.iconImages = [corpIcon, depIcon];
 
     //treeView.orderBy("path", "depth");
     treeView.onCellClicked = function (grid, clickData) {
@@ -67,10 +67,19 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
         }
       }
     };
-    console.log("clear22");
+
+    
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if (depth === "0") {
+        return "gnb-column";
+      } else if (depth === "2") {
+        return "bottom-gnb-column";
+      }
+    });
+
     treeView.expandAll();
     return () => {
-      console.log("clear");
       treeProvider.clearRows();
       treeView.destroy();
     };

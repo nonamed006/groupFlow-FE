@@ -7,7 +7,7 @@ import RoleEmp from "./RoleEmp";
 const Role = () => {
 
 	return (
-        <Box borderRadius="lg" h="500px" mt={{ base: '130px', md: '130px', xl: '120px' }} px={'20px'} pt={'20px'}>
+        <Box borderRadius="lg" h="full">
             <Tabs colorScheme="brandScheme">
                 <TabList>
                     <Flex align={{ sm: "flex-start", lg: "center" }} w="100%">
@@ -15,6 +15,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
                             사용자 기준
                         </Tab>
@@ -22,15 +23,17 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
-                            회사 기준
+                            부서 기준
                         </Tab>
                         <Tab
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
+                            onClick={(e) => e.target.blur()}
                         >
-                            부서 기준
+                            회사 기준
                         </Tab>
                     </Flex>
                 </TabList>
@@ -39,14 +42,13 @@ const Role = () => {
                     <TabPanel>
                         <RoleEmp/>
                     </TabPanel>
-
-                    {/* 권한-회사기준 */}
-                    <TabPanel>
-                       <RoleCorp />
-                    </TabPanel>
                     {/* 권한-부서기준 */}
                     <TabPanel>
                         <DepRole />
+                    </TabPanel>
+                    {/* 권한-회사기준 */}
+                    <TabPanel>
+                       <RoleCorp />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

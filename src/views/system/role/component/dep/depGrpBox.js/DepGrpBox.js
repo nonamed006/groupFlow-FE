@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import CardMenuBar from 'common/component/CardMenuBar';
 import React, { useEffect, useState } from 'react';
 import RoleGrpSearchBar from '../../Corp/RoleGrpBox/RoleGrpSearchBar';
-import GroupCardList from 'views/admin/roleGroup/component/GroupBox/GroupCardList';
+import GroupCardList from 'views/system/roleGroup/component/GroupBox/GroupCardList';
 import { useInView } from 'react-intersection-observer';
 import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';
@@ -78,7 +78,7 @@ const DepGrpBox = ({setRgCd, rgCd, dpCd, setKeyword, roleGrpList, totalCount, ha
     }, [checkedList]);
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" w={'450px'}>
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
             {/* 검색바 */}
