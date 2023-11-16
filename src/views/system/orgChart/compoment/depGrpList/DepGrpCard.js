@@ -5,6 +5,9 @@ import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React, { useState } from "react";
 
+import { PORT } from 'set';
+import defaultProfile  from "assets/img/profile/defaultProfile.png";
+
 const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
@@ -29,11 +32,11 @@ const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
       p='0'>
       <Flex>
         {/* 프로필 */}
-        <Box >
+        <Box w={'90px'} display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Image
-            src='https://bit.ly/dan-abramov'
+             src={depGrp.empDto.fileCd?`${PORT}/menu/icon-${depGrp.empDto.fileCd}`:defaultProfile}
             alt='Dan Abramov'
-            boxSize={'90px'}
+            boxSize={depGrp.empDto.fileCd?'90px':'40px'}
             objectFit='cover'
             rounded='md' />
         </Box>
