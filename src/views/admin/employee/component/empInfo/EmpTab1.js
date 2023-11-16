@@ -54,7 +54,7 @@ const EmpTab1 = (props) => {
       <Grid
         templateColumns="repeat(13, 1fr)"
         templateRows="repeat(12, 1fr)"
-        gap={2}
+        gap={1}
       >
         <GridItem colSpan={2} rowSpan={4}>
           <Text fontSize="sm" fontWeight="600">
