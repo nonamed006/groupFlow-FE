@@ -1,4 +1,4 @@
-import { Button, GridItem, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, GridItem, Text, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import AddrModal from "./AddrModal";
 import FormInput from "common/component/FormInput";
@@ -24,9 +24,10 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       addrDetail: e.target.value,
     });
   };
+
   return (
     <>
-      <GridItem colStart={1} colEnd={5} colSpan={5}>
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
         <FormInput
           title={"우편번호"}
           name={"postNum"}
@@ -36,9 +37,10 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
           placeholder="주소를 선택하세요"
         />
       </GridItem>
-      <GridItem colStart={5} colEnd={10}>
+      <GridItem colStart={4} colEnd={8} >
         {/* 우편번호 찾기 부분 ! */}
         <Button
+          ml={3}
           bg={"#E2E8F0"}
           borderRadius={"10px"}
           fontWeight={600}
@@ -55,7 +57,7 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
         </Button>
       </GridItem>
       {/* 주소 */}
-      <GridItem colStart={1} colEnd={5} colSpan={5}>
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
         <FormInput
           title={"주소"}
           name={"addr"}
@@ -67,16 +69,17 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       </GridItem>
 
       {/* 상세주소 */}
-      <GridItem colStart={5} colEnd={10} colSpan={5}>
-        <FormInput
-          name={"addrDetail"}
-          value={data.addrDetail ? data.addrDetail : ""}
-          readOnly={editState === "update" ? false : true}
-          isRequired={isRequired}
-          placeholder="상세주소를 입력하세요"
-          onChange={onChangeAddrDetail}
-          pk={dataPk}
-        />
+      <GridItem colStart={4} colEnd={8} colSpan={4}>
+        <Box ml={3}>
+          <FormInput
+            name={"addrDetail"}
+            value={data.addrDetail ? data.addrDetail : ""}
+            readOnly={editState === "update" ? false : true}
+            isRequired={isRequired}
+            placeholder="상세주소를 입력하세요"
+            onChange={onChangeAddrDetail}
+            pk={dataPk} />
+        </Box>
       </GridItem>
 
       {/* 주소찾기 모달 */}

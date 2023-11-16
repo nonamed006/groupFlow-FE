@@ -5,7 +5,7 @@ import Card from "components/card/Card";
 import { UseMouseOver } from "hook/UseMouseOver";
 import React, { useState } from "react";
 
-const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
+const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textNumColor = useColorModeValue("brand.500", "white");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
@@ -14,7 +14,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp }) => {
 
     <Card
       key={index}
-      backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+      backgroundColor={mouseOverIndex === index || depGrpInfo === depGrp ? 'navy.50' : 'white'}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index)

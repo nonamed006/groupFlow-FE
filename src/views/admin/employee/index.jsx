@@ -284,7 +284,6 @@ const Employee = () => {
           />
         </GridItem>
       </Grid>
-
       {alertInfo.isOpen &&
       <CommonAlert
         alertInfo={alertInfo}

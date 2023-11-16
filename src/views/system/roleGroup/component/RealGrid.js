@@ -22,13 +22,13 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
       fieldName: "menuNm",
       name: "menuNm",
       width: type === "modify" ? 410 : 500,
-      header: { text: "menuNm" },
+      header: { text: "메뉴" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
     { fieldName: "menuCd", name: "menuCd", header: { text: "menuCd" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "state", name: "state", header: { text: "Boolean" } },
-    { fieldName: "type", name: "type", header: { text: "type" } },
+    { fieldName: "type", name: "type", header: { text: "메뉴타입" } },
     { fieldName: "iconField", name: "iconField" },
   ];
 
@@ -42,7 +42,6 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-
     treeProvider.setRows(org, "menuPath", false, null, 'iconField');
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
@@ -57,10 +56,9 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
 
     //해당 컬럼 표시X
-    treeView.columnByName("menuPath").visible = false;
+    treeView.columnByName("menuPath").visible =false;
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("menuCd").visible = false;
-    treeView.columnByName("state").visible = false;
     treeView.columnByName("state").visible = false;
     treeView.columnByName("iconField").visible = false;
     

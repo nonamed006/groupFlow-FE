@@ -111,18 +111,18 @@ const DepBasic = (props) => {
   return (
     <>
       <Grid
-        templateColumns="repeat(10, 1fr)"
-        templateRows="repeat(10, 1fr)"
-        gap={2}
+        templateColumns="repeat(8, 1fr)"
+        templateRows="repeat(8, 1fr)"
+        gap={1}
         w={"100%"}
         paddingLeft={10}
       >
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormControl display={"flex"} w={"100%"} isRequired={true}>
             <FormLabel
               fontSize="md"
               fontWeight="600"
-              w={"50%"}
+              w={"40%"}
               lineHeight={"40px"}
             >
               상위부서
@@ -138,7 +138,7 @@ const DepBasic = (props) => {
             />
           </FormControl>
         </GridItem>
-        <GridItem colStart={5} colEnd={6}>
+        <GridItem colStart={4}>
           <Button
             onClick={() => {
               if (props.editState === "update") {
@@ -179,7 +179,7 @@ const DepBasic = (props) => {
           </Modal>
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormRadio
             title={"대내외 수신여부"}
             name={"recYN"}
@@ -200,7 +200,7 @@ const DepBasic = (props) => {
             ]}
           />
         </GridItem>
-        <GridItem colSpan={5} colStart={1} colEnd={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"표준행정코드"}
             name={"stnd"}
@@ -212,7 +212,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"발신인명"}
             name={"reqNm"}
@@ -223,7 +223,7 @@ const DepBasic = (props) => {
             isRequired={false}
           />
         </GridItem>
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"부서코드"}
             name={"dpCd"}
@@ -235,7 +235,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormSelect
             title={"부서유형"}
             name={"typeCd"}
@@ -262,7 +262,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"부서명"}
             name={"dpNm"}
@@ -274,7 +274,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"발신인명"}
             name={"dpAbb"}
@@ -292,7 +292,7 @@ const DepBasic = (props) => {
           editState={props.editState}
         ></AddrBox>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+<GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormRadio
             title={"사용여부"}
             name={"useYN"}
@@ -314,7 +314,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"정렬"}
             name={"sort"}
