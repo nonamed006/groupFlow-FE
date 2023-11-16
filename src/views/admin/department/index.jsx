@@ -10,7 +10,7 @@ const Department = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
   const [searchText, setSearchText] = useState("");
   const [org, setOrg] = useState([]);
-  const [dpCd, setDpCd] = useState(0);
+  const [dpCd, setDpCd] = useState();
   const [test, setTest] = useState(false);
   const [editState, setEditState] = useState("read");
   const [tabStatus, setTabStatus] = useState(1);
@@ -34,6 +34,7 @@ const Department = () => {
     setOrg(response.data);
     setIsLoading(false);
   };
+
   useEffect(() => {
     if (test === true) {
       setTest(false);
@@ -47,8 +48,7 @@ const Department = () => {
     <Box h={"full"}>
       {/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
       <Grid
-        h={'full'} // 혜윤 수정
-        h={"500px"} 
+        h={"full"} // 혜윤 수정
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
         gap={5}
