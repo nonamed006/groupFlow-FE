@@ -25,7 +25,7 @@ const FormSelect = ({
       <Select
         w={"102%"}
         name={name}
-        defaultValue={defaultValue}
+        value={defaultValue}
         key={pk}
         onChange={onChange}
         placeholder={placeholder}

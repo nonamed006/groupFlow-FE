@@ -29,7 +29,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
     stnd,
     sort,
   } = corp; // 비구조화 할당을 통해 값 추출
-  const useYn = new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
+  const useYn = new Boolean(corp.useYn === undefined ? true : corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
 
   const onChange = (e) => {
     const { value, name } = e.target;

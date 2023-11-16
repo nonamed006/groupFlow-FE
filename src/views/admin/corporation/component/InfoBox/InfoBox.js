@@ -47,7 +47,7 @@ const InfoBox = ({
       bsnsNum: "",
       coAbb: "",
       stnd: "",
-      useYn: false,
+      useYn: true,
       postNum: undefined,
       addr: undefined,
       delYn: false,

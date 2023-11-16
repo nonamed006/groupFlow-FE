@@ -27,7 +27,7 @@ const FormRadio = ({
       <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"30%"}>
         {title}
       </FormLabel>
-      <RadioGroup name={name} defaultValue={defaultValue} key={pk}>
+     <RadioGroup name={name}  defaultValue={defaultValue} key={pk}>
         <HStack spacing="24px">
           {values.map((value) => {
             return (
