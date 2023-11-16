@@ -107,7 +107,6 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword }) => {
     // 권한-회사 맵핑 수정 시
     const fetchCheckedRoleGrp = async () => {
         let res = await api.roleCorp.putRoleCorpList(coCd, checkedList);
-        console.log(res);
         if (res.status === 200) {
             checkedList.length === 0 && isDrawerClose();
             setAlertInfo({

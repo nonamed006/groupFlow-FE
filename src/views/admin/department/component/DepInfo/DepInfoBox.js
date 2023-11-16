@@ -6,8 +6,10 @@ import {
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import { useEffect } from "react";
+import { setDataPk } from "redux/solution";
 
 const InfoBox = ({
+  setDpCd,
   depDto,
   updateBtn,
   onOpen,
@@ -81,6 +83,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
+              setDpCd(0);
               setDepDto([]);
               setTabStatus(1);
               setEditState("read");

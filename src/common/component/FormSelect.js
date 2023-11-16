@@ -1,5 +1,9 @@
-
-import { FormControl, FormLabel, Select, useColorModeValue } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormLabel,
+  Select,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";

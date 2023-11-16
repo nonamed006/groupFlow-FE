@@ -38,7 +38,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
-              setDpCd(0);
+              setDpCd(undefined);
               setEditState("update");
               setTabStatus(2);
             }}

@@ -73,7 +73,6 @@ const SearchCardBar = ({search, setSearch}) => {
 					placeholder="전체"
 					name='searchLnbMenuCd'
 					setKeyword={value => {
-						console.log('change', value);
 						setSearch({
 							...search,
 							searchLnbMenuCd: value

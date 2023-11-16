@@ -117,7 +117,6 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
                     setSelectedIndex(1);
                   }
                 }
-                console.log(selectedIndex);
               }}
             >
               {">"}

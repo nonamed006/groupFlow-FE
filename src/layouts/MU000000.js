@@ -30,7 +30,6 @@ export default function Dashboard(props) {
   const findPath = (data, targetPath) => {
     for (const item of data) {
       //if (item.layout + item.path === targetPath) {
-        console.log(item.layout + item.path, targetPath);
       if (item.layout + item.path === targetPath) {
         return item; // 원하는 항목을 찾았을 때 반환
       }
@@ -242,7 +241,7 @@ export default function Dashboard(props) {
             >
               <Switch>
                 {getRoutes(routes)}
-                <RouteRole path='/MU000000/home' component={<HomePage/>} setAlertInfo={setAlertInfo}/>
+                <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
               {/* <Redirect from="/" to="/err/NotFound" /> */}
               </Switch>
               {alertInfo.isOpen && (

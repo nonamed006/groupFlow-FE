@@ -75,7 +75,6 @@ const componentMap = {
 const component = {
   getRoute: async () => {
     const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd('DG230006');
-    console.log('routes');
     const data = responseJson.data;
     setComponent(data);
     const sys = {

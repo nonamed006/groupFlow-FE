@@ -27,18 +27,22 @@ import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
+import { set } from "lodash";
 const DepBasic = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
-  const recYN = new Boolean(
+  let recYN = new Boolean(
     props.depDto?.recYN === undefined ? true : props.depDto?.recYN
   );
-  const useYN = new Boolean(
+  let useYN = new Boolean(
     props.depDto?.useYN === undefined ? true : props.depDto?.useYN
   );
   const [infiniteScrollRef, inView] = useInView();
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+    if (e.target.name === "recYN") {
+      value = e.target.value.toLowerCase() === "true";
+    }
     const updateData = {
       ...props.depDto,
       [name]: value,
@@ -105,7 +109,7 @@ const DepBasic = (props) => {
     props.setIsLoading(false);
   };
   useEffect(() => {
-    //setDepDto(props.depDto);
+    recYN = true;
   }, [props]);
 
   return (

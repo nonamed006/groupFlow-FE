@@ -5,7 +5,6 @@ import { LocalTreeDataProvider, TreeView } from "realgrid";
 import corImage from "assets/img/realgrid/corporation.png";
 import depImage from "assets/img/realgrid/department.png";
 function DepUpperCd(props) {
-  console.log(props);
   const realgridElement = useRef(null);
 
   var fields = [

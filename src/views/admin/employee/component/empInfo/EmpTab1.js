@@ -15,6 +15,7 @@ import {
   Text,
   color,
 } from "@chakra-ui/react";
+import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
 import FormRadio from "common/component/FormRadio";
@@ -22,6 +23,8 @@ import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 
 const EmpTab1 = (props) => {
+
+  const useYN = new Boolean(props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN);
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
@@ -85,6 +88,7 @@ const EmpTab1 = (props) => {
               />
               <Input
                 type="file"
+                name="fileUpBtn"
                 id="fileUpBtn"
                 multiple
                 display="none"
@@ -167,25 +171,29 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14} rowSpan={8}>
-          <FormInput
-            title={"주소"}
-            name="addr"
-            id="addr"
-            placeholder="주소를 입력하세요"
-            value={props.empDetail?.addr}
-            onChange={props.handleChange}
-            readOnly={props.editState === "read"}
-            isRequired={false}
-            pk={props.empDetail?.empCd}
-          />
+        <GridItem colStart={8} colEnd={14}>
+          <InputGroup>
+            <InputRightElement pointerEvents='none'>
+              <LockIcon color='gray.300' />
+            </InputRightElement>
+            <FormInput 
+              title={"로그인 비밀번호"}
+              id="loginPw"
+              name="loginPw"
+              inputType="password"
+              readOnly={props.editState === "read" || props.editState === "update"}
+              onChange={props.handleChange} 
+              isRequired={props.editState === "insert"}
+              pk={props.empDetail?.empCd}
+            />
+          </InputGroup>
         </GridItem>
 
         <GridItem colStart={1} colEnd={7} lineHeight="40px">
         <FormRadio 
             title={"성별"}
             name="gender"
-            defaultValue={props.empDetail.gender}
+            defaultValue={props.empDetail.gender ?? "M"}
             pk={props.empDetail?.empCd}
             onChange={props.handleRadioChange}
             readOnly={props.editState === "read"}
@@ -202,6 +210,24 @@ const EmpTab1 = (props) => {
 
           />
         </GridItem>
+        
+        <GridItem colStart={8} colEnd={14}>
+          <InputGroup>
+            <InputRightElement pointerEvents='none'>
+              <LockIcon color='gray.300' />
+            </InputRightElement>
+            <FormInput
+            title={"결재 비밀번호"}
+            id="signPw"
+            name="signPw"
+            inputType="password"
+            readOnly={props.editState === "read" || props.editState === "update"}
+            onChange={props.handleChange}
+            isRequired={props.editState === "insert"}
+            pk={props.empDetail?.empCd}
+          />
+          </InputGroup>
+        </GridItem>
 
         <GridItem colStart={1} colEnd={7}>
           <FormInput
@@ -216,6 +242,28 @@ const EmpTab1 = (props) => {
             onChange={props.handleChange}
             isRequired={true}
             pk={props.empDetail?.empCd}
+          />
+        </GridItem>
+
+        <GridItem colStart={8} colEnd={14}>
+        <FormRadio 
+            title={"계정사용"}
+            name="useYn"
+            defaultValue={useYN.toString()}
+            pk={props.empDetail?.empCd}
+            onChange={props.handleRadioChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: "true",
+                name: '사용'
+              },
+              {
+                value: "false",
+                name: '미사용'
+              }]}
+
           />
         </GridItem>
 
@@ -236,41 +284,6 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <GridItem colStart={1} colEnd={7}>
-          <InputGroup>
-            <InputRightElement pointerEvents='none'>
-              <LockIcon color='gray.300' />
-            </InputRightElement>
-            <FormInput 
-              title={"로그인 비밀번호"}
-              id="loginPw"
-              name="loginPw"
-              inputType="password"
-              readOnly={props.editState === "read" || props.editState === "update"}
-              onChange={props.handleChange} 
-              isRequired={true}
-              pk={props.empDetail?.empCd}
-            />
-          </InputGroup>
-        </GridItem>
-
-        <GridItem colStart={1} colEnd={7}>
-          <InputGroup>
-            <InputRightElement pointerEvents='none'>
-              <LockIcon color='gray.300' />
-            </InputRightElement>
-            <FormInput
-            title={"결재 비밀번호"}
-            id="signPw"
-            inputType="password"
-            readOnly={props.editState === "read" || props.editState === "update"}
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-          </InputGroup>
-        </GridItem>
-
-        <GridItem colStart={1} colEnd={7}>
           <FormInput
             title={"휴대전화"}
             id="empTel"
@@ -284,27 +297,13 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7} lineHeight="40px">
-          <FormRadio 
-            title={"계정사용"}
-            name="useYn"
-            defaultValue={props.empDetail?.useYn?.toString()}
-            pk={props.empDetail?.empCd}
-            onChange={props.handleRadioChange}
-            readOnly={props.editState === "read"}
-            isRequired={true}
-            values={[
-              {
-                value: '1',
-                name: '사용'
-              },
-              {
-                value: '0',
-                name: '미사용'
-              }]}
-
-          />
-        </GridItem>
+        <AddrBox
+        title={'회사주소'}
+        data={props.empDetail}
+        setData={props.setEmpDetail}
+        editState={props.editState != "read" && 'update'}
+        isRequired={true}
+      />
       </Grid>
     </div>
   );

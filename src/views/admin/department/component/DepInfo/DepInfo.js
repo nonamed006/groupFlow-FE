@@ -22,6 +22,7 @@ import { set } from "lodash";
 const DepInfo = ({
   org,
   setTest,
+  setDpCd,
   dpCd,
   editState,
   setEditState,
@@ -42,7 +43,6 @@ const DepInfo = ({
     setDepDto(response.voData);
     setIsLoading(false);
   };
-
   //부서원 조회
   const getDepGroup = async () => {
     setIsLoading(true);
@@ -143,14 +143,13 @@ const DepInfo = ({
     onClose();
   };
   useEffect(() => {
-    if (dpCd !== 0) {
+    if (dpCd !== undefined && dpCd !== 0) {
       getDepDto();
       getDepGroup();
       setIsEditing(true);
     } else {
-      setDepDto({
-        dpCd: "",
-      });
+      console.log("-==");
+      setDepDto({ stnd: "", recYN: true, typeCd: "" });
       setDg([]);
       setIsEditing(false);
     }
@@ -182,6 +181,7 @@ const DepInfo = ({
             </Flex>
             <Spacer />
             <DepInfoBox
+              setDpCd={setDpCd}
               depDto={depDto}
               updateBtn={updateBtn}
               onOpen={onOpen}
