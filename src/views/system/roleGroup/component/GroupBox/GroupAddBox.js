@@ -5,17 +5,20 @@ import React, { useEffect } from "react";
 
 
 const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
-    
+
     useEffect(() => {
         setRoleGrp({    // 생성할 권한그룹
             coCd: '',
             grpNm: '',
-            useYn: 'true',
+            useYn: true,
         });
     }, []);
 
     const onChange = (e) => {
-        const { value, name } = e.target;
+        let { value, name } = e.target;
+        if (e.target.name === "useYn") {
+            value = JSON.parse(e.target.value.toLowerCase());
+         }
         setRoleGrp({
             ...roleGrp,
             [name]: value // name 키를 가진 값을 value 로
@@ -30,7 +33,7 @@ const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
             <Grid templateColumns="repeat(7, 1fr)" m={'2'}>
                 <GridItem colSpan={8} colEnd={8} m={'1'}>
                     <FormControl display={"flex"} w={"100%"} isRequired={true}>
-                        <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"} lineHeight={"40px"}>
+                        <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
                             {'회사'}
                         </FormLabel>
                         <Select
@@ -60,12 +63,12 @@ const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
                     <FormRadio
                         title={'사용여부'}
                         name={"useYn"}
-                        defaultValue={'true'}
+                        defaultValue={roleGrp.useYn}
                         onChange={onChange}
                         isRequired={true}
                         values={[
-                            { name: '사용', value: 'true' },
-                            { name: '미사용', value: 'false' },
+                            { name: '사용', value: true },
+                            { name: '미사용', value: false },
                         ]}
                     />
                 </GridItem>
