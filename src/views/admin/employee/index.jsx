@@ -71,9 +71,9 @@ const Employee = () => {
       {
         method: "GET",
         headers: {
-          'Content-Type': "application/json; charset=utf-8",
+          "Content-Type": "application/json; charset=utf-8",
         },
-        credentials: 'include'
+        credentials: "include",
         // res에 결과가 들어옴
       }
     )
@@ -338,7 +338,6 @@ const Employee = () => {
             />
           </GridItem>
         </Grid>
-
     </Box>
   );
 };

@@ -10,7 +10,7 @@ const Department = () => {
   const [selectedCoCd, setSelectedCoCd] = useState("");
   const [searchText, setSearchText] = useState("");
   const [org, setOrg] = useState([]);
-  const [dpCd, setDpCd] = useState(0);
+  const [dpCd, setDpCd] = useState();
   const [test, setTest] = useState(false);
   const [editState, setEditState] = useState("read");
   const [tabStatus, setTabStatus] = useState(1);
@@ -34,6 +34,7 @@ const Department = () => {
     setOrg(response.data);
     setIsLoading(false);
   };
+
   useEffect(() => {
     if (test === true) {
       setTest(false);

@@ -1,5 +1,9 @@
-
-import { FormControl, FormLabel, Select, useColorModeValue } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormLabel,
+  Select,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -7,7 +11,7 @@ import "assets/css/MiniCalendar.css";
 const FormSelect = ({
   title,
   name,
-  defaultValue,
+  value,
   pk,
   onChange,
   readOnly,

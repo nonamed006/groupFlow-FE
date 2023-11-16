@@ -3,11 +3,12 @@ import React from "react";
 import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 import ChangeModifyTableTbody from "./ChangeModifyTableTbody";
 const ChangeModifyTable = ({ detail }) => {
+  console.log(detail);
   const headerGroups = ["항목명", "변경전", "변경후"];
   return (
     <>
       {detail === null ? (
-        <Text fontSize="sm" fontWeight="600"  colorScheme={'facebook'}>
+        <Text fontSize="sm" fontWeight="600" colorScheme={"facebook"}>
           변경사항이 없습니다.
         </Text>
       ) : (

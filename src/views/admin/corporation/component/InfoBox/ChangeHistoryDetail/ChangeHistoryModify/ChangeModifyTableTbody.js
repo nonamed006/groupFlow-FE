@@ -7,6 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 const ChangeModifyTableTbody = ({ detail }) => {
+  console.log(detail);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Tbody>
@@ -219,7 +220,7 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
         </Tr>
       )}
-      {detail.coDoamin1 !== undefined && (
+      {detail.coDomain1 !== undefined && (
         <Tr>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
@@ -228,12 +229,12 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.coDoamin1}
+              {detail.coDomain1}
             </Text>
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.coDoamin2}
+              {detail.coDomain2}
             </Text>
           </Td>
         </Tr>
