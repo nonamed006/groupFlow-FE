@@ -243,7 +243,7 @@ const DepBasic = (props) => {
           <FormSelect
             title={"부서유형"}
             name={"typeCd"}
-            value={props.depDto?.typeCd}
+            defaultValue={props.depDto?.typeCd}
             pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
