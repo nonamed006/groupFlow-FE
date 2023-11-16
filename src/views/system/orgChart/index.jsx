@@ -16,7 +16,7 @@ const OrgChartBox = () => {
     const [corpDep, setCorpDep] = useState();
     const [corpDepList, setCorpDepList] = useState();  // 회사 및 부서 목록
     const [changeYn, setChangeYn] = useState(); // 첫로딩, 검색시 초기화
-	const formInputRef = useRef(null);
+    const formInputRef = useRef(null);
     const [alertInfo, setAlertInfo] = useState({ isOpen: false });
 
     const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +28,7 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        if ((search === '') && !((keyword ===undefined && keyword === 'undefined') || keyword === '' )) {
+        if ((search === '') && !((keyword === undefined && keyword === 'undefined')||keyword === '')) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
@@ -36,8 +36,7 @@ const OrgChartBox = () => {
                 width: 'fit-content'
             });
             return;
-        } else if (((keyword ===undefined && keyword === 'undefined') || keyword === '' )
-            && !(search === '' )) {
+        } else if (((keyword === undefined && keyword === 'undefined') || keyword === '') && !(search === '')) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
@@ -75,11 +74,11 @@ const OrgChartBox = () => {
     };
 
     const onClearSelect = () => {
-		if (formInputRef.current){
+        if (formInputRef.current) {
             formInputRef.current.reset();
             setKeyword();
         }
-	};
+    };
 
     return (
         <>
@@ -104,8 +103,17 @@ const OrgChartBox = () => {
                         </GridItem>
                         {/* 사원 목록 */}
                         <GridItem colSpan={2} rowSpan={5} >
-                            <DepGrpCardList setIsLoading={setIsLoading} setChangeYn={setChangeYn} changeYn={changeYn} corpDep={corpDep && corpDep} search={search} keyword={keyword} setDepGrp={setDepGrp} />
+                            <DepGrpCardList
+                                setIsLoading={setIsLoading}
+                                setChangeYn={setChangeYn}
+                                changeYn={changeYn}
+                                corpDep={corpDep && corpDep}
+                                search={search}
+                                keyword={keyword}
+                                setDepGrp={setDepGrp} 
+                                depGrp={depGrp} />
                         </GridItem>
+
                         {/* 사원 정보 */}
                         <GridItem colSpan={1} rowSpan={5} >
                             <DepGrpInfo setIsLoading={setIsLoading} depGrp={depGrp} />
