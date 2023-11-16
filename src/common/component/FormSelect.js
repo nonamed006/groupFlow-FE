@@ -27,7 +27,7 @@ const FormSelect = ({
         color={textColor}
         fontSize="md"
         fontWeight="600"
-        w={"50%"}
+        w={"40%"}
         lineHeight={"40px"}
       >
         {title}
@@ -35,7 +35,7 @@ const FormSelect = ({
       <Select
         w={"102%"}
         name={name}
-        value={value}
+        value={defaultValue}
         key={pk}
         onChange={onChange}
         placeholder={placeholder}

@@ -9,7 +9,8 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
-    useEffect(()=>{},[roleGrpList])
+    useEffect(()=>{},[roleGrpList]);
+
     return (
         <Box
             overflowY={"auto"}

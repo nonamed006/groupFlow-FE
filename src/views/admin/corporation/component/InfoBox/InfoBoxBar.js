@@ -40,7 +40,6 @@ const InfoBoxBar = ({
     today.setMonth(today.getMonth());
     today.setDate(today.getDate());
 
-    console.log(page);
     if (page === undefined) {
       page = 1;
     }
@@ -54,7 +53,6 @@ const InfoBoxBar = ({
     await fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.pageInfo);
         setChHistory(res.pageInfo);
       });
     setIsLoading(false);
@@ -66,8 +64,7 @@ const InfoBoxBar = ({
       justify="space-between"
       w="100%"
       px="20px"
-      pb="20px"
-      mb="10px"
+      mb="15px"
     >
       <Text
         color={textColor}

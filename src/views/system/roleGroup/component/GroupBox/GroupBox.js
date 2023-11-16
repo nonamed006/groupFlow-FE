@@ -52,10 +52,9 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
         fetchRoleGroup();
     }, [init]);
 
-
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
-        setIsLoading(true);
+        await setIsLoading(true);
         let res = await api.roleGrp.getRoleGrpList(searchCorp, keyword, pageNum);
         if (res.status === 200 && res.pageInfo) {
             let { list, total, isLastPage, hasNextPage } = res.pageInfo;
@@ -70,7 +69,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
             setTotalCount(0);
             setIsLastPage(true);
         }
-        setIsLoading(false);
+        await setIsLoading(false);
         setRgCd(undefined);
     };
 
@@ -92,7 +91,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                 width: 'fit-content'
             });
             setIsAddOpen(!isAddOpen); // 모달창 닫기
-            fetchRoleGroup();
+            handleSearchBtn();
         } else {
             setAlertInfo({
                 isOpen: true,
@@ -143,7 +142,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                 title: res.resultMsg,
                 width: 'fit-content'
             });
-            fetchRoleGroup();
+            handleSearchBtn();
         } else {
             setAlertInfo({
                 isOpen: true,
@@ -171,7 +170,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                 title: res.resultMsg,
                 width: 'fit-content'
             });
-            fetchRoleGroup();
+            handleSearchBtn();
         } else {
             setAlertInfo({
                 isOpen: true,

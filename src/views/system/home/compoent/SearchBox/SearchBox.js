@@ -17,7 +17,7 @@ const SearchBox = () => {
     };
 
     const delayedSearch = useCallback(
-        debounce(async (keyword) => fetchMenuList(keyword), 600),
+        debounce(async (keyword) => fetchMenuList(keyword), 500),
         []
     );
 
@@ -42,7 +42,7 @@ const SearchBox = () => {
 
     return (
         <Box
-            w={'30%'}
+            w={'32%'}
             mb={'10%'}
             position={'absolute'}
         >

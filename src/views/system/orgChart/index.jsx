@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBarOrga from "./compoment/SearchBarOrga";
 import OrgList from './compoment/orgList/OrgList';
 import DepGrpCardList from './compoment/depGrpList/DepGrpCardList';
@@ -16,7 +16,7 @@ const OrgChartBox = () => {
     const [corpDep, setCorpDep] = useState();
     const [corpDepList, setCorpDepList] = useState();  // 회사 및 부서 목록
     const [changeYn, setChangeYn] = useState(); // 첫로딩, 검색시 초기화
-
+    const formInputRef = useRef(null);
     const [alertInfo, setAlertInfo] = useState({ isOpen: false });
 
     const [isLoading, setIsLoading] = useState(true);
@@ -28,17 +28,29 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        if ((search === '') && !((keyword ===undefined && keyword === 'undefined') || keyword === '' )) {
+        // if ((search === '') && !((keyword === undefined && keyword === 'undefined')||keyword === '')) {
+        //     setAlertInfo({
+        //         isOpen: true,
+        //         status: 'warning',
+        //         detail: '검색기준을 선택하세요',
+        //         width: 'fit-content'
+        //     });
+        //     return;
+        // } else
+         if (((keyword === undefined && keyword === 'undefined') || keyword === '') && !(search === '')) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
-                detail: '검색기준을 선택하세요',
+                detail: '검색어를 입력하세요.',
                 width: 'fit-content'
             });
-        } else {
+            return;
+        }
+        else {
             setChangeYn(true);
             setCorpDep({ code: undefined, name: '검색결과' });
             setDepGrp();
+            return;
         }
     }
 
@@ -59,6 +71,14 @@ const OrgChartBox = () => {
         setCorpDep(corpDep);
         setDepGrp();
         setChangeYn(true);
+        onClearSelect();
+    };
+
+    const onClearSelect = () => {
+        if (formInputRef.current) {
+            formInputRef.current.reset();
+            setKeyword();
+        }
     };
 
     return (
@@ -74,7 +94,9 @@ const OrgChartBox = () => {
                     >
                         {/* 검색바 */}
                         <GridItem colSpan={4}   >
-                            <SearchBarOrga corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
+                            <form ref={formInputRef}>
+                                <SearchBarOrga corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
+                            </form>
                         </GridItem>
                         {/* 조직도 그리드 */}
                         <GridItem colSpan={1} rowSpan={5} >
@@ -82,8 +104,17 @@ const OrgChartBox = () => {
                         </GridItem>
                         {/* 사원 목록 */}
                         <GridItem colSpan={2} rowSpan={5} >
-                            <DepGrpCardList setIsLoading={setIsLoading} setChangeYn={setChangeYn} changeYn={changeYn} corpDep={corpDep && corpDep} search={search} keyword={keyword} setDepGrp={setDepGrp} />
+                            <DepGrpCardList
+                                setIsLoading={setIsLoading}
+                                setChangeYn={setChangeYn}
+                                changeYn={changeYn}
+                                corpDep={corpDep && corpDep}
+                                search={search}
+                                keyword={keyword}
+                                setDepGrp={setDepGrp} 
+                                depGrp={depGrp} />
                         </GridItem>
+
                         {/* 사원 정보 */}
                         <GridItem colSpan={1} rowSpan={5} >
                             <DepGrpInfo setIsLoading={setIsLoading} depGrp={depGrp} />

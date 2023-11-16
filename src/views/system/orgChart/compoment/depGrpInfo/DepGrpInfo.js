@@ -13,12 +13,14 @@ const DepGrpInfo = ({ depGrp }) => {
     <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
       {depGrp ?
      <>
-      <Box align={"center"}>
+     <Box display={'flex'} justifyContent={"center"}>
+       <Box align={"center"} mb={2} pb={2} borderBottom={"1px"} color={"lightgray"} w={'90%'}>
         <Box m={3}>
           <Image
             align={"center"}
             objectFit='cover'
-            borderRadius='full'
+            borderRadius='lg'
+            mb={4}
             boxSize='120px'
             src='https://bit.ly/dan-abramov'
             alt='사원사진'
@@ -28,12 +30,40 @@ const DepGrpInfo = ({ depGrp }) => {
           color={textColor}
           fontSize="18px"
           fontWeight="700"
-          lineHeight="100%">{depGrp.empDto.empNm} {depGrp.rankNm}/{depGrp.pstnNm}</Text>
-        <Text>{depGrp.empDto.mailId}</Text>
+          lineHeight="100%">{depGrp.empDto.empNm}</Text>
       </Box>
-      <br />
+     </Box>
+     
       <Box>
         <Grid gap={2} p={2}>
+        <GridItem m={1} colSpan={2} colStart={0} colEnd={2} >
+            <Text color={textColor}
+              fontSize="15px"
+              fontWeight="600"
+              lineHeight="100%">직급</Text>
+          </GridItem>
+          <GridItem m={1} colSpan={2} colStart={3} colEnd={5}>
+            <Text
+              color={textColor}
+              fontSize="15px"
+              fontWeight="300"
+              lineHeight="100%"
+            >{depGrp.rankNm}</Text>
+          </GridItem>
+          <GridItem m={1} colSpan={2} colStart={0} colEnd={2} >
+            <Text color={textColor}
+              fontSize="15px"
+              fontWeight="600"
+              lineHeight="100%">직책</Text>
+          </GridItem>
+          <GridItem m={1} colSpan={2} colStart={3} colEnd={5}>
+            <Text
+              color={textColor}
+              fontSize="15px"
+              fontWeight="300"
+              lineHeight="100%"
+            >{depGrp.pstnNm}</Text>
+          </GridItem>
           <GridItem m={1} colSpan={2} colStart={0} colEnd={2} >
             <Text color={textColor}
               fontSize="15px"
@@ -83,7 +113,7 @@ const DepGrpInfo = ({ depGrp }) => {
               fontSize="15px"
               fontWeight="300"
               lineHeight="100%"
-            >{depGrp.empDto.mailId}@{depGrp.coDomain}</Text>
+            >{depGrp.empDto.mailId}{depGrp.coDomain&&'@'+depGrp.coDomain}</Text>
           </GridItem>
 
           <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
