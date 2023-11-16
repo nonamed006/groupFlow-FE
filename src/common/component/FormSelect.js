@@ -11,7 +11,7 @@ import "assets/css/MiniCalendar.css";
 const FormSelect = ({
   title,
   name,
-  value,
+  defaultValue,
   pk,
   onChange,
   readOnly,
