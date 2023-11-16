@@ -36,11 +36,11 @@ const roleEmp = {
     /**
      * 작업명 : 권한 목록 조회
      * @param {string} dpGrpCd 
-     * @param {string} params
+     * @param {string} keyword
      * @returns 
      */
-    getRoleListApi : (dpGrpCd, params) => {//coCd, empCd,
-        const promise = getPromise({url: `roleEmp/list-${dpGrpCd}?${params}`, method: 'GET'});//${coCd}-${empCd}
+    getRoleListApi : (dpGrpCd, keyword) => {//coCd, empCd,
+        const promise = getPromise({url: `roleEmp/list-${dpGrpCd}?keyword=${keyword}`, method: 'GET'});//${coCd}-${empCd}
 
         return promise.then(responseJson => responseJson);
     },

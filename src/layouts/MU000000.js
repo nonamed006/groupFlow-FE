@@ -13,6 +13,7 @@ import CommonAlert from "common/component/CommonAlert";
 import { SidebarContext } from "contexts/SidebarContext";
 import "../assets/css/Sidebar.css"
 import HomePage from "views/system/home";
+import RouteRole from "routeRole";
 
 /*
 layouts/admin/index.js
@@ -180,10 +181,11 @@ export default function Dashboard(props) {
       }
       
       return (
-        <Route
+        <RouteRole
           path={prop.layout + prop.path}
           component={prop.component}
           key={key}
+          setAlertInfo={setAlertInfo}
         />
       );
     });
@@ -240,7 +242,7 @@ export default function Dashboard(props) {
             >
               <Switch>
                 {getRoutes(routes)}
-                <Route path='/MU000000/home' component={HomePage}/>
+                <RouteRole path='/MU000000/home' component={<HomePage/>} setAlertInfo={setAlertInfo}/>
               {/* <Redirect from="/" to="/err/NotFound" /> */}
               </Switch>
               {alertInfo.isOpen && (
