@@ -33,6 +33,9 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
 
   const onChange = (e) => {
     const { value, name } = e.target;
+    // if (e.target.name === "useYn") {
+    //   value = e.target.value.toLowerCase() === "true";
+    // }
     setCorp({
       ...corp,
       [name]: value, // name 키를 가진 값을 value 로
