@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 import corpIcon from "assets/img/gridIcon/corporation.png";
 import depIcon from "assets/img/gridIcon/department.png";
 
-const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdList, fetchRoleGroup}) => {
+const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fetchRoleGroup}) => {
 
   const realgridElement = useRef(null);
 
@@ -95,28 +95,14 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
         });
 
         //클릭시 fetch
-        fetchRoleGroup(dpCd, coCd);
-        setDpCdList(dpCdArr);
-        setDpCd(dpCd);
-        setCoCd(coCd);
+        // fetchRoleGroup(dpCd, coCd);
+        // setDpCdList(dpCdArr);
+        // setDpCd(dpCd);
+        // setCoCd(coCd);
+        handleDpCd(dpCd, coCd, dpCdArr);
       }
     }; 
 
-    //자식노드들이 모두 체크되었을때 부모노드도 체크되게
-    treeView.onItemChecked = function (grid, itemIndex, checked) {
-      var dataRow = grid.getDataRow(itemIndex);
-      checkNode(grid, dataRow, checked);
-      let checkedMenuCd = [];
-      // 체크된 행의 인덱스 배열
-      treeView.getCheckedRows().forEach((i) => {
-        // 중복없이 체크된 menuCd를 checkedMenuCd에 추가
-        let menuCd = grid._dataProvider.getValue(i, 2);
-        if (!checkedMenuCd.includes(menuCd)) {
-          checkedMenuCd.push(menuCd);
-        }
-      });
-      setCheckedMenuCd(checkedMenuCd); // setCheckedMenuCd
-    };
 
     treeView.expandAll();
     return () => {
@@ -124,50 +110,6 @@ const DepRealGrid = ({ org, type, setCheckedMenuCd , setDpCd, setCoCd, setDpCdLi
       treeView.destroy();
     };
   }, [org]);
-
-  function checkNode(grid, dataRow, checked) {
-    var provider = grid.getDataSource();
-
-    // 형제 노드 체크 후 부모 노드 체크
-    //checkSiblingNode(grid, dataRow, checked);
-
-    // 자식 노드 체크
-    var desRows = provider.getDescendants(dataRow);
-    if (desRows) {
-      grid.checkRows(desRows, checked, false);
-    }
-  }
-
-  function checkSiblingNode(grid, dataRow, checked) {
-    var provider = grid.getDataSource();
-    // 부모 노드
-    var parent = provider.getParent(dataRow);
-    // 형제 노드
-    var sibling =
-      parent == -1 ? provider.getChildren() : provider.getChildren(parent);
-    // 하나 이상의 자식 노드가 체크되었는지 확인하기 위한 변수
-    var atLeastOneChecked = false;
-    for (var i in sibling) {
-      var value = grid.isCheckedRow(sibling[i]);
-      if (value) {
-        atLeastOneChecked = true;
-        break;
-      }
-    }
-
-    if (atLeastOneChecked) {
-      checked = true;
-    } else {
-      checked = false;
-    }
-
-    if (parent > -1) {
-      grid.checkRow(parent, checked, false, false);
-    }
-    // checkBar.head 영역의 V표시 제어
-    if (parent == -1) grid.setAllCheck(checked, false);
-    if (parent > -1) checkSiblingNode(grid, parent, checked);
-  }
 
   return <Box ref={realgridElement} w="100%" h="500px" />;
 };
