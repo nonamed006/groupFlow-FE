@@ -69,17 +69,16 @@ const AddrBox = ({ title, data, setData, dataPk, editState, isRequired }) => {
       </GridItem>
 
       {/* 상세주소 */}
-      <GridItem colStart={4} colEnd={8} colSpan={4}>
-        <Box ml={3}>
+      <GridItem colStart={4} colEnd={8} >
+     
           <FormInput
             name={"addrDetail"}
             value={data.addrDetail ? data.addrDetail : ""}
             readOnly={editState === "update" ? false : true}
-            isRequired={isRequired}
+           // isRequired={isRequired}
             placeholder="상세주소를 입력하세요"
             onChange={onChangeAddrDetail}
             pk={dataPk} />
-        </Box>
       </GridItem>
 
       {/* 주소찾기 모달 */}
