@@ -27,7 +27,7 @@ const FormInput = ({
       {title && (
         <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
           {title}
-        </FormLabel>
+        </FormLabel>)}
       <Input
         name={name}
         w={"100%"}
@@ -41,6 +41,7 @@ const FormInput = ({
         placeholder={placeholder}
       />
     </FormControl>
+
   );
 };
 
