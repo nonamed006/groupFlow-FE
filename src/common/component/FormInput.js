@@ -27,7 +27,6 @@ const FormInput = ({
         <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"40%"} lineHeight={"40px"}>
           {title}
         </FormLabel>
-      )}
       <Input
         name={name}
         w={"100%"}
