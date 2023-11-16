@@ -55,7 +55,6 @@ const DepBasic = (props) => {
 
   let updatedDepDto;
   const getValue = (text) => {
-    console.log(text);
     //setUpdatedDepDto(text);
     updatedDepDto = text;
   };

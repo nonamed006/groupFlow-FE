@@ -138,7 +138,6 @@ const InfoBox = ({
 
   // 저장 버튼 클릭 시
   const handleSaveBtn = () => {
-    console.log("ddddd");
     corpSchema
       .validate(corp)
       .then(() => {

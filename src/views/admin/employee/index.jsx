@@ -6,6 +6,8 @@ import EmpCard from "./component/empCard/EmpCard";
 import EmpInfo from "./component/empInfo/EmpInfo";
 import { getCookie } from "common/common";
 import CommonAlert from "common/component/CommonAlert";
+import { empSchema } from "common/Schema";
+import { empUpdateSchema } from "common/Schema";
 
 const Employee = () => {
 
@@ -20,7 +22,6 @@ const Employee = () => {
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
 
-  const [searchCorp, setSearchCorp] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(undefined); 
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +58,7 @@ const Employee = () => {
       pstnNm: "",
       rankCd: "",
       rankNm: "",
-      reDt: "",
+      reDt: null,
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
@@ -90,7 +91,8 @@ const Employee = () => {
       headers: {
         'Content-Type': "application/json; charset=utf-8",
         'Authorization': getCookie("Authorization")
-      }
+      },
+      credentials: 'include'
     }).then((res) => res.json())
       .then((res) => {
         if(res.data.length > 0){
@@ -117,7 +119,7 @@ const Employee = () => {
       loginId: "",
       loginPw: "",
       signPw: "",
-      empMail: "",
+      psnMail: "",
       payMail: "",
       empTel: "",
       postNum: "",
@@ -165,8 +167,57 @@ const Employee = () => {
     ]);
   };
 
+  //유효성 검사
+  const handleInsertCheck = () => {
+    if(imgFile != null){
+      empSchema.validate(empDetail)
+      .then(() => {
+        // 유효성 검사 통과한 데이터 처리
+        onSaveEmpDetail()
+      })
+      .catch((errors) => {
+        // 유효성 검사 실패한 경우 에러 메세지
+        setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: "입력값을 확인해주세요.",
+          detail: errors.message,
+          width: "fit-content",
+        });
+      });
+    }else{
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: "사진을 등록해주세요.",
+        width: "fit-content",
+      });
+    }
+  }
+
+   //유효성 검사
+   const handleUpdateCheck = () => {
+    empUpdateSchema.validate(empDetail)
+    .then(() => {
+      // 유효성 검사 통과한 데이터 처리
+      updateEmpInfo()
+    })
+    .catch((errors) => {
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: errors.message,
+        width: "fit-content",
+      });
+    });
+  }
+
   //사원 기본정보 저장
-  const onSaveEmpDetail = () => {
+  const onSaveEmpDetail = () => { 
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
 
@@ -189,6 +240,7 @@ const Employee = () => {
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
       body: fd,
+      credentials: 'include'
       // res에 결과가 들어옴
     })
       .then((res) => res.json())
@@ -216,7 +268,8 @@ const Employee = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(empDetail)
+        body: JSON.stringify(empDetail),
+        credentials: 'include'
         // res에 결과가 들어옴
       }
     ).then((res) => res.json())
@@ -247,7 +300,7 @@ const Employee = () => {
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} setSearchCorp={setSearchCorp} />
+            <SearchCardBar getEmpList={getEmpList} /> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -271,10 +324,10 @@ const Employee = () => {
               setEmpDept={setEmpDept}
               setImgFile={setImgFile}
               resetInput={resetInput}
-              onSaveEmpDetail={onSaveEmpDetail}
+              onSaveEmpDetail={handleInsertCheck}
               setEditState={setEditState}
               editState={editState}
-              updateEmpInfo={updateEmpInfo}
+              updateEmpInfo={handleUpdateCheck}
               setAlertInfo={setAlertInfo}
               imgBase64={imgBase64}
               setImgBase64={setImgBase64}

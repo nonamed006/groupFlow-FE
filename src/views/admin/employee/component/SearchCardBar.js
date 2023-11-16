@@ -51,7 +51,7 @@ const SearchCardBar = (props) => {
             <Select
               placeholder="전체"
               onChange={(e) => {
-                props.setSearchCorp(e.target.value);
+                setSrhCorp(e.target.value);
               }}
             >
               {corpNm.map((item, index) => (
@@ -76,7 +76,7 @@ const SearchCardBar = (props) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" />
+            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" handleChange={(e)=>{setSrhWorkType(e.target.value)}}/>
           </GridItem>
           <GridItem colStart={9} colEnd={9}>
             <div

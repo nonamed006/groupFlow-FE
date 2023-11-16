@@ -46,7 +46,6 @@ const roleEmp = {
     },
 
     mappingEmpRoleApi : (dpGrpCd, rgCdList) => {
-        console.log(rgCdList);
         const promise = getPromise({url: `roleEmp/${dpGrpCd}`, method: 'PUT', 
             header: {'Content-type': 'application/json; utf-8'},
             body: JSON.stringify(rgCdList),

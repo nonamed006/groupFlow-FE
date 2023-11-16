@@ -30,8 +30,6 @@ export const depSchema = object().shape({
 });
 
 export const empSchema = object().shape({
-  empCd: string().required("상위부서를 선택해주세요."),
-  fileCd: string(),
   empNm: string().required("사원 이름을 입력해주세요."),
   mailId: string().required("메일ID를 입력해주세요."),
   loginId: string()
@@ -59,7 +57,29 @@ export const empSchema = object().shape({
     }),
   useYn: string().required("계정 사용여부를 선택해주세요."),
   joinDt: date().required("최초입사일을 선택해주세요."),
-  reDt: date().nullable(),
+  cdt: date().nullable(),
+  mdt: date().nullable(),
+});
+
+export const empUpdateSchema = object().shape({
+  fileCd: string().required("사진을 등록해주세요."),
+  empNm: string().required("사원 이름을 입력해주세요."),
+  mailId: string().required("메일ID를 입력해주세요."),
+  loginId: string()
+    .required("로그인ID를 입력해주세요.")
+    .min(4, "로그인 ID는 4자리 이상 입력해주세요")
+    .max(15, "로그인 ID는 15자리 이하 입력해주세요")
+    .matches(/^[A-Za-z0-9]*$/, "로그인 ID는 영문과 숫자로 입력해주세요."),
+  gender: string().required("성별을 선택해주세요."),
+  psnMail: string().nullable().email("이메일 형식을 확인해주세요."),
+  payMail: string().nullable().email("이메일 형식을 확인해주세요."),
+  empTel: string()
+    .required("휴대전화를 입력해주세요.")
+    .matches(/^010-\d{4}-\d{4}$/, {
+      message: "휴대전화는 010-0000-0000 형식으로 입력해주세요.",
+    }),
+  useYn: string().required("계정 사용여부를 선택해주세요."),
+  joinDt: date().required("최초입사일을 선택해주세요."),
   cdt: date().nullable(),
   mdt: date().nullable(),
 });
@@ -75,7 +95,6 @@ export const depGrpSchema = object().shape({
   workTypeCd: string().required("재직구분을 선택해주세요."),
   empTypeCd: string().required("고용구분을 선택해주세요."),
   joinDt: date().required("입사일을 선택해주세요."),
-  reDt: date().nullable(),
 });
 
 export const menuSchema = object().shape({
