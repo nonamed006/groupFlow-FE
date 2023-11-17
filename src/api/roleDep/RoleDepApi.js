@@ -6,16 +6,13 @@ const roleDep = {
      * 권한그룹 목록 조회 - 권한부서
      *  
      */
-    getRoleGrpList: ( coCd, dpCd, keyword, pageNum ) => {
+    getRoleGrpList: ( coCd, dpCd, keyword ) => {
         let url = `roleDep/${coCd}/${dpCd}`
-
         const params = new URLSearchParams();
         if (keyword !== undefined && keyword !== 'undefined') params.append("grpNm", keyword);
-        params.append("pageNum", (pageNum !== undefined && pageNum !== 'undefined')?pageNum:1);
         const paramString = params.toString();
         if (paramString) 
             url += "?" + paramString;
-
         const promise = getPromise({ url: url, method: 'GET' });
         return promise.then((responseJson) => responseJson);
     },

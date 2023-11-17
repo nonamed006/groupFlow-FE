@@ -57,8 +57,8 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
                 roleGrpList.map((group, index) => {
                     return (
                         <GroupCard
-                        checkedList={checkedList} 
-                        checkHandler={checkHandler}
+                            checkedList={checkedList} 
+                            checkHandler={checkHandler}
                             rgCd={rgCd}
                             key={index}
                             group={group}

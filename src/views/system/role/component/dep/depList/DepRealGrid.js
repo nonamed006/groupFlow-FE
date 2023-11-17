@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 import corpIcon from "assets/img/gridIcon/corporation.png";
 import depIcon from "assets/img/gridIcon/department.png";
 
-const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fetchRoleGroup}) => {
+const DepRealGrid = ({ org, handleClick }) => {
 
   const realgridElement = useRef(null);
 
@@ -19,10 +19,10 @@ const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fet
   ];
 
   var columns = [
-    { fieldName: "path", name: "path", width: 50, header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 300, header: { text: "name" } },
-    { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
-    { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
+    { fieldName: "path", name: "path",  header: { text: "path" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "name" } },
+    { fieldName: "code", name: "code",  header: { text: "code" } },
+    { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "type", name: "type", header: { text: "type" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -38,8 +38,6 @@ const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fet
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
 
-    // treeProvider.setRows(org, "menuPath", false, null, "depth");
-    
     treeProvider.setObjectRows({ rows: org }, "rows", "", "iconField");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
@@ -49,7 +47,7 @@ const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fet
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
 
     treeView.setStateBar({ visible: false }); //상태바 표시X
-    treeView.setCheckBar({ visible: type === "modify" ? true : false }); //체크박스 표시
+    treeView.setCheckBar({ visible: false }); //체크박스 표시
 
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
 
@@ -78,33 +76,30 @@ const DepRealGrid = ({ org, type ,handleDpCd, setDpCd, setCoCd, setDpCdList, fet
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         var provider = grid.getDataSource();
-        let dpCd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
-        let coCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2].split("/")[0];
-        let arr = [];
+        if (grid._dataProvider._rowMap[clickData.dataRow]._values[3] !== '0') {
+          let dpCd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
+          let coCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2].split("/")[0];
+          let arr = [];
 
-        var dataRow = grid.getDataRow(clickData.itemIndex);
-        var desRows = provider.getDescendants(dataRow);
-        if(desRows != null){
-          desRows.push(dataRow);
-          arr = desRows;
-        }else{
-          arr.push(dataRow);
+          var dataRow = grid.getDataRow(clickData.itemIndex);
+          var desRows = provider.getDescendants(dataRow);
+          if (desRows != null) {
+            desRows.push(dataRow);
+            arr = desRows;
+          } else {
+            arr.push(dataRow);
+          }
+          const dpCdArr = arr.map((item) => {
+            return provider.getValues(item)[0]
+          });
+          handleClick(dpCd, coCd, dpCdArr);
+        } else {
+          handleClick(undefined, undefined, []);
         }
-        const dpCdArr = arr.map((item)=>{
-          return provider.getValues(item)[0]
-        });
-
-        //클릭시 fetch
-        // fetchRoleGroup(dpCd, coCd);
-        // setDpCdList(dpCdArr);
-        // setDpCd(dpCd);
-        // setCoCd(coCd);
-        handleDpCd(dpCd, coCd, dpCdArr);
       }
-    }; 
-
-
+    };
     treeView.expandAll();
+
     return () => {
       treeProvider.clearRows();
       treeView.destroy();

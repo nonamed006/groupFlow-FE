@@ -1,18 +1,16 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import CardMenuBar from 'common/component/CardMenuBar';
 import React, { useEffect, useState } from 'react';
 import SearchBarRoleGrp from 'views/system/roleGroup/component/GroupBox/SearchBarRoleGrp';
 
 import api from "api/Fetch";
-import Loading from 'common/Loading';
 import DepRealGrid from './DepRealGrid';
 
-const DepList = ({ setDpCd, setCoCd, setDpCdList }) => {
+const DepList = ({ setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [corps, setCorps] = useState([]); // 회사 코드 및 명 목록 (셀렉트박스에서 사용됨)
     const [searchCoCd, setSearchCoCd] = useState(); // 검색바에서 선택된 회사 코드
     const [org, setOrg] = useState([]); // 조직도 데이터
-    const [isLoading, setIsLoading] = useState(true);
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
 
     useEffect(() => {
@@ -35,21 +33,22 @@ const DepList = ({ setDpCd, setCoCd, setDpCdList }) => {
             setOrg(res.data);
         }
         else setOrg([]);
+        setRgCd(undefined);
         setIsLoading(false);
     };
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
         fetchOrg();
+        setCoCd(undefined);
+        setDpCd(undefined);
     };
 
     // 조직도 부서 클릭 시
-    const handleDpCd = (dpCd, coCd, dpCdArr) => {
-       // fetchRoleGroup(dpCd, coCd);
-       console.log(dpCd, coCd, dpCdArr);
+    const handleClickGrid = (dpCd, coCd, dpCdArr) => {
         setDpCdList(dpCdArr);
-        setDpCd(dpCd);
         setCoCd(coCd);
+        setDpCd(dpCd);
     }
 
 
@@ -71,21 +70,27 @@ const DepList = ({ setDpCd, setCoCd, setDpCdList }) => {
             />
             {/* 목록 테이블 */}
             <Box w={'100%'} display={'inline-block'} height={'550px'} >
-                <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="6">
-                    <DepRealGrid
-                        org={org}
-                        // setDpCd={setDpCd} 
-                        // setCoCd={setCoCd} 
-                        // fetchRoleGroup={fetchRoleGroup} 
-                        // setDpCdList={setDpCdList}
-                        handleDpCd={handleDpCd}
-                    />
-                </Box>
+                {
+                    org.length > 0 ?
+                        <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="6">
+                            <DepRealGrid
+                                org={org}
+                                handleClick={handleClickGrid}
+                            />
+                        </Box>
+                        :
+                        <Text
+                            pt={200}
+                            align={'center'}
+                            fontWeight={600}
+                            color={'lightgray'}
+                            fontSize={'18px'}
+                        >
+                            검색된 데이터가 없습니다.
+                        </Text>
+                }
             </Box>
-            {
-            isLoading &&
-                <Loading />}
-        </Box>
+        </Box >
     );
 };
 

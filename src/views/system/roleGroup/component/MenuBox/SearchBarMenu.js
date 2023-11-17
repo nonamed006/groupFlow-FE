@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import SearchBar from "common/component/SearchBar";
 
-const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
+const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
 	let [values, setValues] = useState();
 	const formInputRef = useRef(null);
 
@@ -22,7 +22,7 @@ const SearchBarMenu = ({ menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn,
 			fetchMenuList();
 		}
 		onClearSelect();
-	}, [rgCd, typeCd]);
+	}, [ code, rgCd, typeCd]);
 
 
 	const onClearSelect = () => {

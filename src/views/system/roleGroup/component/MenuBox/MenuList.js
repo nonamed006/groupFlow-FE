@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Loading from "common/Loading";
 import RealGrid from "../RealGrid";
 
-const MenuList = ({ fetchRoleMenu, roleMenu, rgCd, changeEdit, setChangeEdit, isLoading }) => {
+const MenuList = ({ fetchRoleMenu, roleMenu, rgCd,  changeEdit, setChangeEdit, isLoading }) => {
     useEffect(() => {
         changeEdit ? setChangeEdit(false)
             : (rgCd !== undefined && rgCd !== 'undefined') && fetchRoleMenu();

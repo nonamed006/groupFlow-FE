@@ -3,85 +3,56 @@ import CardMenuBar from 'common/component/CardMenuBar';
 import React, { useEffect, useState } from 'react';
 import RoleGrpSearchBar from '../../Corp/RoleGrpBox/RoleGrpSearchBar';
 import GroupCardList from 'views/system/roleGroup/component/GroupBox/GroupCardList';
-import { useInView } from 'react-intersection-observer';
 import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';
-import { PORT } from 'set';
-import Loading from 'common/Loading';
-import CommonAlert from 'common/component/CommonAlert';
 import api from 'api/Fetch';
 
-const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, isReload, setIsReload }) => {
+const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlertInfo }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
     const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
 
-    // 페이지네이션
-    const [pageNum, setPageNum] = useState(1);  // 요청할 페이지 번호
-    const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
-    const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
-    const [infiniteScrollRef, inView] = useInView();
+    const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
 
     // 체크박스
     const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
     const [isChecked, setIsChecked] = useState(false);
-    // 로딩
-    const [isLoading, setIsLoading] = useState();
-    // 공통 alert
-    const [alertInfo, setAlertInfo] = useState({ isOpen: false });
-
 
     useEffect(() => {
-        if(dpCd !== undefined && dpCd !== 'undefined'){
+        if((coCd !== undefined && coCd !== 'undefined')&&(dpCd !== undefined && dpCd !== 'undefined')){
             isDrawerClose();
             fetchRoleGroup(); // 권한그룹 목록 조회
+        }else{
+            setRgCd(undefined);
+            setRoleGrpList([]);
         }
     }, [dpCd]);
-
-    useEffect(async () => {
-        if (inView && !isLastPage) {
-            fetchRoleGroup();
-        }
-    }, [inView]);
 
     useEffect(() => {
         fetchRoleGroup();
     }, [init]);
 
-    useEffect(async () => {
-        roleGrpList.map(async (roleGrp) => {
-            if (roleGrp.state === 1) {
-                await checkedList.includes(roleGrp.rgCd);
-                await checkedItemHandler(roleGrp.rgCd, true);
-            }
-        });
-    }, [roleGrpList]);
-
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
+        if((coCd === undefined || coCd === 'undefined')&&(dpCd === undefined || dpCd === 'undefined')){return;}
         setIsLoading(true);
-        let res = await api.roleDep.getRoleGrpList(coCd, dpCd, keyword, pageNum);
-        if (res.status === 200 && res.pageInfo) {
-            let { list, total, isLastPage, hasNextPage } = res.pageInfo;
-            setRoleGrpList(pageNum === 1 ? list : [...roleGrpList, ...list]);
-            setTotalCount(total);
-            setIsLastPage(isLastPage);
-            if (hasNextPage)
-              setPageNum((prev) => prev + 1);
+        let res = await api.roleDep.getRoleGrpList(coCd, dpCd, keyword);
+        if (res.status === 200) {
+            setRoleGrpList(res.data);
+            setTotalCount(res.data.length);
           } else {
             setRoleGrpList([]);
             setTotalCount(0);
-            setIsLastPage(true);
           }
+        setRgCd(undefined);
         setIsLoading(false);
         setCheckedList([]);
-        //setRgCd(undefined);
     };
 
 // 권한-부서 맵핑 수정 시
 const fetchCheckedRoleGrp = async () => {
-    
+    setIsLoading(true);
     let arr = [];
     let list = new Object();
     list.rgCdList = checkedList;
@@ -107,6 +78,7 @@ const fetchCheckedRoleGrp = async () => {
         }); 
        // setIsReload(!isReload);
     };
+    setIsLoading(false);
 };
 
 // 체크리스트 추가 및 삭제
@@ -144,7 +116,17 @@ useEffect(() => {
 
 // 검색 시
 const handleSearchBtn = () => {
-    setInit(!init);
+    if (dpCd !== undefined && dpCd !== 'undefined') {
+        setInit(!init);
+        setRgCd(undefined);
+    } else {
+        setAlertInfo({
+            isOpen: true,
+            status: 'warning',
+            title: '부서를 선택하세요',
+            width: 'fit-content'
+        });
+    }
 }
 return (
     <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
@@ -157,8 +139,7 @@ return (
             code={dpCd}
         />
         {/* 목록 */}
-        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
-            <Box minH={'510px'}>
+        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'700px'} >
                 {
                     roleGrpList.length > 0 ?
                         <GroupCardList
@@ -181,24 +162,10 @@ return (
                             검색된 데이터가 없습니다.
                         </Text>
                 }
-            </Box>
-            {
-                isLoading ?
-                    <Loading />
-                    :
-                    <Box ref={infiniteScrollRef} h={'1px'} />
-            }
         </Box>
 
         {isDrawer &&
             <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
-        }
-        {
-            alertInfo.isOpen &&
-            <CommonAlert
-                alertInfo={alertInfo}
-                setAlertInfo={setAlertInfo}
-            />
         }
     </Box>
 );

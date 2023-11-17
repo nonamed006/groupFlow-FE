@@ -9,12 +9,11 @@ const roleCorp = {
      * @param {number} pageNum 
      * @returns 
      */
-    getRoleGrpList: ( coCd, keyword, pageNum ) => {
+    getRoleGrpList: ( coCd, keyword ) => {
         let url = `roleCorp/${coCd}`
 
         const params = new URLSearchParams();
         if (keyword !== undefined && keyword !== 'undefined') params.append("grpNm", keyword);
-        params.append("pageNum", pageNum);
         const paramString = params.toString();
         if (paramString) 
             url += "?" + paramString;

@@ -63,7 +63,7 @@ const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
                     <FormRadio
                         title={'사용여부'}
                         name={"useYn"}
-                        defaultValue={roleGrp.useYn}
+                        defaultValue={roleGrp?roleGrp.useYn:true}
                         onChange={onChange}
                         isRequired={true}
                         values={[

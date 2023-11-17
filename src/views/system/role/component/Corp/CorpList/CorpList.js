@@ -7,9 +7,8 @@ import ListCardTable from "views/admin/corporation/component/ListCard/ListCardTa
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
 import api from "api/Fetch";
-import Loading from "common/Loading";
 
-const CorpList = ({ setCoCd, coCd }) => {
+const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
 
   const [corpList, setCorpList] = useState([]); // 회사데이터 목록
   const [keyword, setKeyword] = useState(); // 검색어
@@ -19,7 +18,6 @@ const CorpList = ({ setCoCd, coCd }) => {
   const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
   const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
-  const [isLoading, setIsLoading] = useState(true);
   const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {
@@ -75,12 +73,7 @@ const CorpList = ({ setCoCd, coCd }) => {
         <Box minH={'560px'} w={'100%'}  >
           <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
-        {
-          isLoading ?
-            <Loading />
-            :
-            <Box ref={infiniteScrollRef} h={'1px'} />
-        }
+        <Box ref={infiniteScrollRef} h={'1px'} />
       </Box>
 
     </Box>
