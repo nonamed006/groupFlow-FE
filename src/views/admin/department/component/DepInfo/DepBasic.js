@@ -243,7 +243,7 @@ const DepBasic = (props) => {
           <FormSelect
             title={"부서유형"}
             name={"typeCd"}
-            value={props.depDto?.typeCd}
+            defaultValue={props.depDto?.typeCd}
             pk={props.depDto?.dpCd}
             onChange={onChange}
             readOnly={props.editState === "read"}
@@ -296,7 +296,7 @@ const DepBasic = (props) => {
           editState={props.editState}
         ></AddrBox>
 
-<GridItem colStart={1} colEnd={4} colSpan={4}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormRadio
             title={"사용여부"}
             name={"useYN"}
