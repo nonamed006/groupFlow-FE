@@ -10,11 +10,12 @@ import { UseMouseOver } from "hook/UseMouseOver";
 
 const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const unusedTextColor = "secondaryGray.600";
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   return (
     <Tr
-      backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' : 'white'}
+      backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' :'white' }
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);
@@ -25,23 +26,23 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       cursor={'pointer'}
       >
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'} >
+        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'} >
           {data.coNm}
         </Text>
       </Td>
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
           {data.ceoNm}
         </Text>
       </Td>
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={textColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
           {data.ccNm}
         </Text>
       </Td>
 
       <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Box color={textColor} fontSize="sm" fontWeight="500" textOverflow={'ellipsis'} whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
+        <Box color={data.useYn?textColor:unusedTextColor} fontSize="sm" fontWeight="500" textOverflow={'ellipsis'} whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
           {data.useYn ? '사용' : '미사용'}
         </Box>
       </Td>
