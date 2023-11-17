@@ -21,7 +21,7 @@ const Employee = () => {
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
 
-  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -89,11 +89,12 @@ const Employee = () => {
     fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
       method: "GET",
       headers: {
-        'Content-Type': "application/json; charset=utf-8",
-        'Authorization': getCookie("Authorization")
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: getCookie("Authorization"),
       },
-      credentials: 'include'
-    }).then((res) => res.json())
+      credentials: "include",
+    })
+      .then((res) => res.json())
       .then((res) => {
         if (res.data.length > 0) {
           setEmpDept(res.data);
@@ -169,11 +170,42 @@ const Employee = () => {
 
   //유효성 검사
   const handleInsertCheck = () => {
-    if(imgFile != null){
-      empSchema.validate(empDetail)
+    if (imgFile != null) {
+      empSchema
+        .validate(empDetail)
+        .then(() => {
+          // 유효성 검사 통과한 데이터 처리
+          onSaveEmpDetail();
+        })
+        .catch((errors) => {
+          // 유효성 검사 실패한 경우 에러 메세지
+          setAlertInfo({
+            isOpen: true,
+            status: "warning",
+            title: "입력값을 확인해주세요.",
+            detail: errors.message,
+            width: "fit-content",
+          });
+        });
+    } else {
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: "사진을 등록해주세요.",
+        width: "fit-content",
+      });
+    }
+  };
+
+  //유효성 검사
+  const handleUpdateCheck = () => {
+    empUpdateSchema
+      .validate(empDetail)
       .then(() => {
         // 유효성 검사 통과한 데이터 처리
-        onSaveEmpDetail()
+        updateEmpInfo();
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지
@@ -185,39 +217,10 @@ const Employee = () => {
           width: "fit-content",
         });
       });
-    }else{
-      // 유효성 검사 실패한 경우 에러 메세지
-      setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "입력값을 확인해주세요.",
-        detail: "사진을 등록해주세요.",
-        width: "fit-content",
-      });
-    }
-  }
-
-   //유효성 검사
-   const handleUpdateCheck = () => {
-    empUpdateSchema.validate(empDetail)
-    .then(() => {
-      // 유효성 검사 통과한 데이터 처리
-      updateEmpInfo()
-    })
-    .catch((errors) => {
-      // 유효성 검사 실패한 경우 에러 메세지
-      setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "입력값을 확인해주세요.",
-        detail: errors.message,
-        width: "fit-content",
-      });
-    });
-  }
+  };
 
   //사원 기본정보 저장
-  const onSaveEmpDetail = () => { 
+  const onSaveEmpDetail = () => {
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
 
@@ -240,7 +243,7 @@ const Employee = () => {
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
       body: fd,
-      credentials: 'include'
+      credentials: "include",
       // res에 결과가 들어옴
     })
       .then((res) => res.json())
@@ -259,20 +262,18 @@ const Employee = () => {
       });
   };
 
-   //사원 정보 수정
-   const updateEmpInfo = () =>{
-    fetch(
-      `${PORT}/emp/updateEmpInfo`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(empDetail),
-        credentials: 'include'
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
+  //사원 정보 수정
+  const updateEmpInfo = () => {
+    fetch(`${PORT}/emp/updateEmpInfo`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(empDetail),
+      credentials: "include",
+      // res에 결과가 들어옴
+    })
+      .then((res) => res.json())
       .then((res) => {
         setAlertInfo({
           isOpen: true,
@@ -291,6 +292,7 @@ const Employee = () => {
   }, [isReload]);
 
   return (
+
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
         <Grid
           //h="1000px"
