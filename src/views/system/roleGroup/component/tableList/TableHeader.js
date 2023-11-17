@@ -21,7 +21,6 @@ const ListCardTableHeader = ({ headerGroups }) => {
                                 fontSize="md"
                                 fontWeight="600"
                                 lineHeight="100%"
-                                w={'80px'}
                             >
                                 {header}
                             </Text>

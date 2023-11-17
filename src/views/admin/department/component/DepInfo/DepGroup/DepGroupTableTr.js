@@ -18,23 +18,23 @@ const DepGroupTableTr = ({ data, index }) => {
         onMouseOver(index);
       }}
     >
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.dpNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.rankName}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.pstnName}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.empNm}
         </Text>
       </Td>

@@ -4,15 +4,19 @@ import React, { useEffect } from "react";
 import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 import DepGroupTbody from "./DepGroupTbody";
 import Loading from "common/Loading";
-import { useInView } from "react-intersection-observer";
 
 const DepGroup = (props) => {
   const headerGroups = ["부서", "직급", "직책", "사용자명"];
-  const [infiniteScrollRef, inView] = useInView();
-  useEffect(() => {}, [props]);
+  useEffect(() => { }, [props]);
   return (
-    <div>
-      <Box minHeight={450}>
+    <Box display={'flex'} justifyContent={"center"}>
+      <Box
+        minHeight={450}
+        maxH={530}
+        w={'95%'}
+        mt={5}
+        overflowY={"auto"}
+      >
         {props.value.length > 0 ? (
           <Table variant="simple" w={"100%"} colorScheme="facebook">
             {/* Thead */}
@@ -32,13 +36,9 @@ const DepGroup = (props) => {
           </Text>
         )}
 
-        {props.isLoading ? (
-          <Loading />
-        ) : (
-          <Box ref={infiniteScrollRef} h={"1px"} />
-        )}
+        {props.isLoading && <Loading />}
       </Box>
-    </div>
+    </Box>
   );
 };
 
