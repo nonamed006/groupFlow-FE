@@ -9,6 +9,7 @@ import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
 import role from "./role/RoleApi";
+import emp from "./emp/EmpApi";
 
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
@@ -22,7 +23,6 @@ export const getPromise = async ({ url, method, headers, body }) => {
       "Content-Type": "application/json; charset=utf-8",
     };
   }
-  headers["Authorization"] = getCookie("Authorization");
 
   return await fetch(`${PORT}/${url}`, {
     method: method,
@@ -63,7 +63,8 @@ const api = {
   roleEmp,
   dep,
   menu,
-  role
+  role,
+  emp
 };
 
 export default api;

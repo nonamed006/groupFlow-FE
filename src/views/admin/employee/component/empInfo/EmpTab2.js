@@ -7,7 +7,7 @@ import EmpDeptInput from "./EmpDeptInput";
 
 const EmpTab2 = (props) => {
   return (
-    <div>
+    <div> 
       <Grid
         overflowY={'scroll'} overflowX={'hidden'}
         h={'600px'}
@@ -26,6 +26,7 @@ const EmpTab2 = (props) => {
               isLoading={props.isLoading} 
               setDelEmpDep={props.setDelEmpDep}
               delEmpDep={props.delEmpDep}
+              empDeptTmp={props.empDeptTmp}
               />
           } else if (props.editState === "read") {
             return <Text

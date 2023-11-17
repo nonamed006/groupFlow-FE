@@ -28,7 +28,7 @@ import DepUpperCd from "views/admin/department/component/DepInfo/DepUpperCd";
 import Loading from "common/Loading";
 import { useInView } from "react-intersection-observer";
 
-const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, isLoading, setAlertInfo, setDelEmpDep, delEmpDep }) => {
+const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, isLoading, setAlertInfo, empDeptTmp, setDelEmpDep, delEmpDep, empDept }) => {
   const [corpNm, setCorpNm] = useState([]);
   const [org, setOrg] = useState([]);
   const [infiniteScrollRef, inView] = useInView();
@@ -58,27 +58,35 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
   };
 
   const click = () => {
-    handleChange({
-      target: {
-        name: "dpCd", // 여러 값을 배열에 넣음
-        value: updatedDepDto?._values[2], // 값을 배열에 넣음
+    let idx = 0;
+
+    empDeptTmp.map((data, index) => {
+      if (data.dpCd === updatedDepDto?._values[2]) {
+        idx++;
+        setAlertInfo({
+          isOpen: true,
+          status: 'warning',
+          title: "이미 존재하는 조직은 선택할 수 없습니다.",
+          width: 'fit-content'
+        });
       }
-    }, index, {
-      target: {
-        name: "dpNm", // 여러 값을 배열에 넣음
-        value: updatedDepDto?._values[1], // 값을 배열에 넣음
-      }
-    });
-    // setTimeout(() => {
-    //   handleChange({
-    //     target: {
-    //       name: "dpNm", // 여러 값을 배열에 넣음
-    //       value: updatedDepDto?._values[1], // 값을 배열에 넣음
-    //     }
-    //   }, index);
-    //   onClose();
-    // }, 1);
-    onClose();
+    })
+
+    if (idx == 0) {
+      handleChange({
+        target: {
+          name: "dpCd", // 여러 값을 배열에 넣음
+          value: updatedDepDto?._values[2], // 값을 배열에 넣음
+        }
+      }, index, {
+        target: {
+          name: "dpNm", // 여러 값을 배열에 넣음
+          value: updatedDepDto?._values[1], // 값을 배열에 넣음
+        }
+      });
+      onClose();
+    }
+
   };
 
   // 체크된 조직정보 삭제
