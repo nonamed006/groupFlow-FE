@@ -44,6 +44,7 @@ const RoleEmp = () => {
                     code={dpGrpCd}      // 회사/부서/조직 코드
                     grpNm={roleKeyword} // 검색할 권한그룹명
                     modify={false}
+                    setAlertInfo={setAlertInfo}
                 />
             </GridItem>
         </Grid>

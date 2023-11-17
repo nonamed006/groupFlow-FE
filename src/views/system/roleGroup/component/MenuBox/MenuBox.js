@@ -34,7 +34,18 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
         // 검색 내용에 따른 목록 조회
-        setChangeEdit(true);
+        if(rgCd !== undefined && rgCd !== 'undefined'){
+            setChangeEdit(true);
+            return;
+        }else{
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                title: '권한그룹을 선택하세요',
+                width: 'fit-content'
+            });
+            return;
+        }
     };
 
     const changeTypeTab = (typeCd) => {
@@ -72,6 +83,7 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
                 menuList={menuList}
                 fetchMenuList={fetchMenuList}
                 rgCd={rgCd}
+                code={code}
                 typeCd={typeCd}
                 handleSearchBtn={handleSearchBtn}
                 setKeyword={setKeyword}
