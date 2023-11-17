@@ -14,8 +14,7 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
   }, []);
 
   return (
-    <div>
-      <Box borderRadius="lg" bg="white" p="6">
+      <Box borderRadius="lg" bg="white" p="3" pt={5}>
         {" "}
         {/*  w={"93%"} 혜윤 수정 */}
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
@@ -68,7 +67,6 @@ const SearchCardBar = ({ setSearchText, setSelectedCoCd, handleSearchBtn }) => {
           </GridItem>
         </Grid>
       </Box>
-    </div>
   );
 };
 

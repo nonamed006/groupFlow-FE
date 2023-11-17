@@ -2,13 +2,13 @@ import { Select, Box } from "@chakra-ui/react";
 import React from "react";
 import SearchBar from "common/component/SearchBar";
 
-const SearchBarRoleGrp = ({ setSearchCorp, setKeyword, handleSearchBtn, corps }) => {
+const SearchBarRoleGrp = ({ setSearchCorp, placeholder, setKeyword, handleSearchBtn, corps }) => {
 
     return (
         <Box >
             <Select
                 name='coCd'
-                borderRadius="10px"
+                borderRadius="5px"
                 defaultValue={''}
                 onChange={(e) => setSearchCorp(e.target.value)}  
                 mb={1}>
@@ -22,7 +22,7 @@ const SearchBarRoleGrp = ({ setSearchCorp, setKeyword, handleSearchBtn, corps })
             <SearchBar
                 setKeyword={setKeyword}
                 handleSearchBtn={handleSearchBtn}
-                placeholder={'검색어를 입력하세요'}
+                placeholder={placeholder?placeholder:'검색어를 입력하세요'}
                 btnText={'검색'}
             />
 

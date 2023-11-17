@@ -47,7 +47,7 @@ const Corporation = () => {
 				h="full" // 혜윤 수정
 				templateRows="repeat(11, 1fr)"
 				templateColumns="repeat(6, 1fr)"
-				gap={5}
+				gap={3}
 			>
 				{/* 검색창 */}
 				<GridItem colSpan={6} rowSpan={1}>

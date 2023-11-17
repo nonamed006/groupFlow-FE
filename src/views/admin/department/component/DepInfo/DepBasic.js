@@ -1,5 +1,4 @@
 import {
-  useColorModeValue,
   Input,
   useDisclosure,
   Button,
@@ -14,7 +13,6 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
-  Box,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -26,8 +24,7 @@ import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
 import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
-import { useInView } from "react-intersection-observer";
-import { set } from "lodash";
+
 const DepBasic = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
@@ -37,7 +34,7 @@ const DepBasic = (props) => {
   let useYN = new Boolean(
     props.depDto?.useYN === undefined ? true : props.depDto?.useYN
   );
-  const [infiniteScrollRef, inView] = useInView();
+
   const onChange = (e) => {
     let { value, name } = e.target;
     if (e.target.name === "recYN") {
@@ -166,11 +163,7 @@ const DepBasic = (props) => {
                   setAlertInfo={props.setAlertInfo}
                   setIsLoading={props.setIsLoading}
                 />
-                {props.isLoading ? (
-                  <Loading />
-                ) : (
-                  <Box ref={infiniteScrollRef} h={"1px"} />
-                )}
+                {props.isLoading && <Loading />}
               </ModalBody>
 
               <ModalFooter>
@@ -183,50 +176,6 @@ const DepBasic = (props) => {
           </Modal>
         </GridItem>
 
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormRadio
-            title={"대내외 수신여부"}
-            name={"recYN"}
-            defaultValue={recYN.toString()}
-            pk={props.depDto?.dpCd}
-            onChange={onChange}
-            readOnly={props.editState === "read"}
-            isRequired={true}
-            values={[
-              {
-                value: "true",
-                name: "사용",
-              },
-              {
-                value: "false",
-                name: "미사용",
-              },
-            ]}
-          />
-        </GridItem>
-        <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormInput
-            title={"표준행정코드"}
-            name={"stnd"}
-            value={props.depDto?.stnd}
-            pk={props.depDto?.dpCd}
-            onChange={onChange}
-            readOnly={props.editState === "read"}
-            isRequired={false}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"발신인명"}
-            name={"reqNm"}
-            value={props.depDto?.reqNm}
-            pk={props.depDto?.dpCd}
-            onChange={onChange}
-            readOnly={props.editState === "read"}
-            isRequired={false}
-          />
-        </GridItem>
         <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"부서코드"}
@@ -238,7 +187,28 @@ const DepBasic = (props) => {
             isRequired={false}
           />
         </GridItem>
-
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
+          <FormInput
+            title={"표준행정코드"}
+            name={"stnd"}
+            value={props.depDto?.stnd}
+            pk={props.depDto?.dpCd}
+            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
+          />
+        </GridItem>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
+          <FormInput
+            title={"부서명"}
+            name={"dpNm"}
+            value={props.depDto?.dpNm}
+            pk={props.depDto?.dpCd}
+            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+          />
+        </GridItem>
         <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormSelect
             title={"부서유형"}
@@ -265,22 +235,9 @@ const DepBasic = (props) => {
             ]}
           />
         </GridItem>
-
         <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
-            title={"부서명"}
-            name={"dpNm"}
-            value={props.depDto?.dpNm}
-            pk={props.depDto?.dpCd}
-            onChange={onChange}
-            readOnly={props.editState === "read"}
-            isRequired={true}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"발신인명"}
+            title={"부서약칭"}
             name={"dpAbb"}
             value={props.depDto?.dpAbb}
             pk={props.depDto?.dpCd}
@@ -289,13 +246,44 @@ const DepBasic = (props) => {
             isRequired={false}
           />
         </GridItem>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
+          <FormInput
+            title={"발신인명"}
+            name={"reqNm"}
+            value={props.depDto?.reqNm}
+            pk={props.depDto?.dpCd}
+            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={false}
+          />
+        </GridItem>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
+          <FormRadio
+            title={"대내외 수신여부"}
+            name={"recYN"}
+            defaultValue={recYN.toString()}
+            pk={props.depDto?.dpCd}
+            onChange={onChange}
+            readOnly={props.editState === "read"}
+            isRequired={true}
+            values={[
+              {
+                value: "true",
+                name: "사용",
+              },
+              {
+                value: "false",
+                name: "미사용",
+              },
+            ]}
+          />
+        </GridItem>
         <AddrBox
           title={"부서주소"}
           data={props.depDto}
           setData={props.setDepDto}
           editState={props.editState}
         ></AddrBox>
-
         <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormRadio
             title={"사용여부"}
@@ -318,7 +306,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"정렬"}
             name={"sort"}
@@ -330,11 +318,7 @@ const DepBasic = (props) => {
           />
         </GridItem>
       </Grid>
-      {props.isLoading ? (
-        <Loading />
-      ) : (
-        <Box ref={infiniteScrollRef} h={"1px"} />
-      )}
+      {props.isLoading && <Loading />}
     </>
   );
 };
