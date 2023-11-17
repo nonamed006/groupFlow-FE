@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Loading from "common/Loading";
 import RealGrid from "../RealGrid";
 
-const MenuList = ({ fetchRoleMenu, roleMenu, rgCd,  changeEdit, setChangeEdit, isLoading }) => {
+const MenuList = ({ fetchRoleMenu, roleMenu, rgCd,  changeEdit, setChangeEdit }) => {
     useEffect(() => {
         changeEdit ? setChangeEdit(false)
             : (rgCd !== undefined && rgCd !== 'undefined') && fetchRoleMenu();
@@ -12,9 +12,7 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd,  changeEdit, setChangeEdit, i
 
     return (
         <Box borderRadius="lg" bg="white" h="fit-content" px={9} >
-            {isLoading ?
-                <Loading />
-                :
+            {
                 (roleMenu !== undefined && roleMenu !== 'undefined' && roleMenu.length > 0) ?
                     <RealGrid org={roleMenu} />
                     :

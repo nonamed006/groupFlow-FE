@@ -14,11 +14,12 @@ const DepRole = ({setAlertInfo, setIsLoading}) => {
     const [dpCdList, setDpCdList] = useState([]);
 
     return (
+        <>
         <Grid
-            h="500px"
+            h='500px'
             templateRows="repeat(11, 1fr)"
             templateColumns="repeat(7, 1fr)"
-            gap={5}
+            gap={3}
         >
 
             {/* 부서 목록 */}
@@ -53,9 +54,11 @@ const DepRole = ({setAlertInfo, setIsLoading}) => {
                     grpNm={keyword} // 검색할 권한그룹명
                     modify={false}
                     setAlertInfo={setAlertInfo}
+                    setIsLoading={setIsLoading}
                 />
             </GridItem>
         </Grid>
+        </>
     );
 };
 

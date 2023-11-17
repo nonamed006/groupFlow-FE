@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { React, useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/system/roleGroup/component/MenuBox/MenuBox";
@@ -40,6 +40,7 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                     grpNm={keyword} // 검색할 권한그룹명
                     modify={false}
                     setAlertInfo={setAlertInfo}
+                    setIsLoading={setIsLoading}
                 />
             </Box>
         </Flex>

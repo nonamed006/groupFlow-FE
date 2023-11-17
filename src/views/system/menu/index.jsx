@@ -41,7 +41,7 @@ const Menu = () => {
 				h={'full'}
 				templateRows='repeat(16, 1fr)'
 				templateColumns='repeat(8, 1fr)'
-				gap={5}
+				gap={3}
 			>
 				<GridItem colSpan={8} rowSpan={1} >
                     <SearchCardBar

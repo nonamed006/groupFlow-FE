@@ -17,7 +17,7 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
             overflowX={'hidden'}
             bg='white'
             borderRadius='lg'
-            h={'76%'}
+            h={'100%'}
             px={5}>
 
             {total &&

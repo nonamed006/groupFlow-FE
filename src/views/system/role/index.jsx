@@ -46,7 +46,9 @@ const Role = () => {
                 <TabPanels>
                     {/* 권한-사용자기준 */}
                     <TabPanel>
-                        <RoleEmp/>
+                        <RoleEmp 
+                        setIsLoading={setIsLoading} // menuBox 변경에 따른 안은비 수정
+                        />
                     </TabPanel>
                     {/* 권한-부서기준 */}
                     <TabPanel>

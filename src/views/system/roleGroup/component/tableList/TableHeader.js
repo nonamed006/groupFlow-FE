@@ -3,12 +3,16 @@ import React from "react";
 
 
 const ListCardTableHeader = ({ headerGroups }) => {
-    const headerColor = useColorModeValue("#8F9BBA",'white');
+    const headerColor = useColorModeValue("navy.700",'white');
 
     return (
 
-        <Thead>
-            <Tr bg={'#F4F7FE'} boxShadow='lg' > 
+        <Thead
+        w={'100%'}>
+            <Tr 
+            bg={'#F4F7FE'} 
+            // boxShadow='lg'
+             > 
                 {headerGroups.map((header, index) => {
                     return ( 
                         <Td key={index} textAlign={"center"} >
@@ -17,7 +21,6 @@ const ListCardTableHeader = ({ headerGroups }) => {
                                 fontSize="md"
                                 fontWeight="600"
                                 lineHeight="100%"
-                                w={'80px'}
                             >
                                 {header}
                             </Text>
