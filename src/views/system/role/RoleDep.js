@@ -48,7 +48,7 @@ const DepRole = ({setAlertInfo, setIsLoading}) => {
             <GridItem colSpan={3} rowSpan={5}>
                 <MenuBox
                     rgCd={rgCd} // 선택되는 권한그룹 코드
-                    type={'dpCd'}   // 권한맵핑 기준
+                    type={'dep'}   // 권한맵핑 기준
                     code={dpCd} // 회사/부서/조직 코드
                     grpNm={keyword} // 검색할 권한그룹명
                     modify={false}
