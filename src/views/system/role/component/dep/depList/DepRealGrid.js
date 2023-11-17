@@ -76,9 +76,9 @@ const DepRealGrid = ({ org, handleClick }) => {
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         var provider = grid.getDataSource();
+        let coCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2].split("/")[0];
         if (grid._dataProvider._rowMap[clickData.dataRow]._values[3] !== '0') {
           let dpCd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
-          let coCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2].split("/")[0];
           let arr = [];
 
           var dataRow = grid.getDataRow(clickData.itemIndex);
@@ -94,7 +94,8 @@ const DepRealGrid = ({ org, handleClick }) => {
           });
           handleClick(dpCd, coCd, dpCdArr);
         } else {
-          handleClick(undefined, undefined, []);
+          
+          handleClick(undefined, coCd, []);
         }
       }
     };

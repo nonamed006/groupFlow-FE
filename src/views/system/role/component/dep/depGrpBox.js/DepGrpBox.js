@@ -136,7 +136,7 @@ return (
         <RoleGrpSearchBar
             setKeyword={setKeyword}
             handleSearchBtn={handleSearchBtn}
-            code={dpCd}
+            code={dpCd? dpCd:coCd}
         />
         {/* 목록 */}
         <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
