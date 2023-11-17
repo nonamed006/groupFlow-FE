@@ -23,6 +23,19 @@ const roleEmp = {
         return promise.then((responseJson) => responseJson);
     },
     
+    getEmpListByParamApi : (empYn, searchCoCdParam, keywordParam, searchType) => {
+        const search = {
+            empYn: (empYn !== undefined && empYn !== 'undefined')?empYn:'Y',
+            searchCoCd: (searchCoCdParam !== undefined && searchCoCdParam !== 'undefined')?searchCoCdParam:'',
+            keyword:(keywordParam !== undefined && keywordParam !== 'undefined')?keywordParam:'',
+            search:(searchType !== undefined && searchType !== 'undefined')?searchType:'',
+        }
+        const queryString = new URLSearchParams(search).toString();
+
+        const promise = getPromise({url: `roleEmp/list?${queryString}`, method: 'GET'});
+        return promise.then((responseJson) => responseJson);
+    },
+
     /**
      * 작업명 : 회사 카테고리 조회
      * @returns promise

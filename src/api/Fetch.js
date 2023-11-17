@@ -9,7 +9,7 @@ import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
 import role from "./role/RoleApi";
-
+import roleDep from "./roleDep/RoleDepApi";
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
 //   Authorization: getCookie("Authorization"),
@@ -63,7 +63,8 @@ const api = {
   roleEmp,
   dep,
   menu,
-  role
+  role,
+  roleDep
 };
 
 export default api;

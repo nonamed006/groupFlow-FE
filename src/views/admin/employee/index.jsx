@@ -292,54 +292,54 @@ const Employee = () => {
   }, [isReload]);
 
   return (
-    <Box h={"full"}>
-      {/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
-      <Grid
-        //h="1000px"
-        h={"full"} // 혜윤 수정
-        templateRows="repeat(11, 1fr)"
-        templateColumns="repeat(6, 1fr)"
-        gap={5}
-      >
-        <GridItem colSpan={6} rowSpan={1}>
-          <SearchCardBar getEmpList={getEmpList} />
-        </GridItem>
-        <GridItem colSpan={2} rowSpan={5}>
-          <EmpCard
-            empList={empList}
-            empNum={empNum}
-            onClickRow={onClickRow}
-            resetInput={resetInput}
-            setEditState={setEditState}
-            editState={editState}
-            setSelectedIndex={setSelectedIndex}
-            selectedIndex={selectedIndex}
-          />
-        </GridItem>
-        <GridItem colSpan={4} rowSpan={5}>
-          <EmpInfo
-            setIsReload={setIsReload}
-            isReload={isReload}
-            empDetail={empDetail}
-            setEmpDetail={setEmpDetail}
-            empDept={empDept}
-            setEmpDept={setEmpDept}
-            setImgFile={setImgFile}
-            resetInput={resetInput}
-            onSaveEmpDetail={handleInsertCheck}
-            setEditState={setEditState}
-            editState={editState}
-            updateEmpInfo={handleUpdateCheck}
-            setAlertInfo={setAlertInfo}
-            imgBase64={imgBase64}
-            setImgBase64={setImgBase64}
-            setSelectedIndex={setSelectedIndex}
-            selectedIndex={selectedIndex}
-            setIsLoading={setIsLoading}
-            isLoading={isLoading}
-          />
-        </GridItem>
-      </Grid>
+
+      <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
+        <Grid
+          //h="1000px"
+          h={'full'} // 혜윤 수정
+          templateRows="repeat(11, 1fr)"
+          templateColumns="repeat(6, 1fr)"
+          gap={3}
+        >
+          <GridItem colSpan={6} rowSpan={1}>
+            <SearchCardBar getEmpList={getEmpList} /> 
+          </GridItem>
+          <GridItem colSpan={2} rowSpan={5}>
+            <EmpCard
+              empList={empList}
+              empNum={empNum}
+              onClickRow={onClickRow}
+              resetInput={resetInput}
+              setEditState={setEditState}
+              editState={editState}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+            />
+          </GridItem>
+          <GridItem colSpan={4} rowSpan={5}>
+            <EmpInfo
+              setIsReload={setIsReload}
+              isReload={isReload}
+              empDetail={empDetail}
+              setEmpDetail={setEmpDetail}
+              empDept={empDept}
+              setEmpDept={setEmpDept}
+              setImgFile={setImgFile}
+              resetInput={resetInput}
+              onSaveEmpDetail={handleInsertCheck}
+              setEditState={setEditState}
+              editState={editState}
+              updateEmpInfo={handleUpdateCheck}
+              setAlertInfo={setAlertInfo}
+              imgBase64={imgBase64}
+              setImgBase64={setImgBase64}
+              setSelectedIndex={setSelectedIndex}
+              selectedIndex={selectedIndex}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
+            />
+          </GridItem>
+        </Grid>
     </Box>
   );
 };

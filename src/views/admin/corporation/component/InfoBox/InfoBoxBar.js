@@ -64,7 +64,9 @@ const InfoBoxBar = ({
       justify="space-between"
       w="100%"
       px="20px"
-      mb="15px"
+      mb="10px"
+      pb="10px"
+      borderBottom={"1px"} color={'lightgray'}
     >
       <Text
         color={textColor}
