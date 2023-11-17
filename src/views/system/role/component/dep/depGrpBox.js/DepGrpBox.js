@@ -139,7 +139,7 @@ return (
             code={dpCd}
         />
         {/* 목록 */}
-        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'700px'} >
+        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
                 {
                     roleGrpList.length > 0 ?
                         <GroupCardList

@@ -7,7 +7,7 @@ import MenuList from "./MenuList";
 import TotalMenuModal from "./TotalMenuModal";
 import api from "api/Fetch";
 
-const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
+const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo, h, setIsLoading }) => {
     const [keyword, setKeyword] = useState();   // 검색어(메뉴명)
     const [selectedMenu, setSelectedMenu] = useState(); // 검색바에서 선택된 대메뉴
     const [changeEdit, setChangeEdit] = useState(false);
@@ -16,9 +16,6 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
     const [menuList, setMenuList] = useState();// 대메뉴 목록 (셀렉트박스에서 사용됨)
 
     const [isOpen, setIsOpen] = useState(false);    // 권한메뉴 수정 모달
-
-    const [isLoading, setIsLoading] = useState();
-
 
     useEffect(() => {
         setRoleMenu();
@@ -74,7 +71,7 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
     };
 
     return (
-        <Box bg='white' borderRadius="lg" h="700px" p="6" backgroundColor="white">
+        <Box bg='white' borderRadius="lg" h={h?h:'700px'} p="6" backgroundColor="white">
 
             {/* 메뉴 상단 */}
             <MenuTab setIsOpen={setIsOpen} changeTypeTab={changeTypeTab} typeCd={typeCd} modify={modify} />
@@ -97,7 +94,6 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo }) => {
                 setChangeEdit={setChangeEdit}
                 fetchRoleMenu={fetchRoleMenu}
                 roleMenu={roleMenu}
-                isLoading={isLoading}
             />
             {/* 수정버튼 클릭 시 권한메뉴 모달창 */}
             <TotalMenuModal setAlertInfo={setAlertInfo} isOpen={isOpen} setIsOpen={setIsOpen} typeCd={typeCd} setChangeEdit={setChangeEdit} rgCd={rgCd} />

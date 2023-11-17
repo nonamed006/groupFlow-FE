@@ -132,7 +132,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword, setAlertInfo, se
                 code={coCd}
             />
             {/* 목록 */}
-            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'700px'} >
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
                     {
                         roleGrpList.length > 0 ?
                             <GroupCardList

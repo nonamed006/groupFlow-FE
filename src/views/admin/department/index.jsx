@@ -52,7 +52,7 @@ const Department = () => {
         h={'full'} // 혜윤 수정
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
-        gap={5}
+        gap={3}
       >
         <GridItem colSpan={7} rowSpan={1}>
           <SearchCardBar
