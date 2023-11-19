@@ -7,6 +7,7 @@ import {
 import React from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 const DepGroupTableTr = ({ data, index }) => {
+  const dpNm = data.dpPathNm[data.dpPathNm.length-1];
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
@@ -20,22 +21,22 @@ const DepGroupTableTr = ({ data, index }) => {
     >
       <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
-          {data.dpNm}
+          {dpNm}
         </Text>
       </Td>
       <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
-          {data.rankName}
+          {data.rankNm}
         </Text>
       </Td>
       <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
-          {data.pstnName}
+          {data.pstnNm}
         </Text>
       </Td>
       <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
-          {data.empNm}
+          {data.empDto.empNm}
         </Text>
       </Td>
     </Tr>

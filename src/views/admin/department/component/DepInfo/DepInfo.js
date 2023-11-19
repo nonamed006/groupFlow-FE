@@ -46,8 +46,10 @@ const DepInfo = ({
   //부서원 조회
   const getDepGroup = async () => {
     setIsLoading(true);
-    const response = await api.dep.getDepGroupApi(dpCd);
-    setDg(response.data);
+    let corpDepCd = "";
+    let search = "code";
+    let res = await api.depGrp.getDepGepList(corpDepCd, search, dpCd, 1);
+    setDg(res.pageInfo.list);
     setIsLoading(false);
   };
 
@@ -149,7 +151,6 @@ const DepInfo = ({
       getDepGroup();
       setIsEditing(true);
     } else {
-      console.log("-==");
       setDepDto({ stnd: "", recYN: true, typeCd: "" });
       setDg([]);
       setIsEditing(false);

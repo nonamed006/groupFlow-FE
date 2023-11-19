@@ -6,7 +6,6 @@ import {
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React from "react";
 import { useEffect } from "react";
-import { setDataPk } from "redux/solution";
 
 const InfoBox = ({
   setDpCd,
@@ -31,7 +30,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
-              if (depDto.length === 0 || depDto.dpCd === "") {
+              if (depDto.length === 0 || depDto.dpCd === "" || depDto.dpCd === undefined) {
                 setAlertInfo({
                   isOpen: true,
                   title: "부서를 선택해주세요.",
@@ -51,7 +50,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
-              if (depDto.length === 0 || depDto.dpCd === "") {
+              if (depDto.length === 0 || depDto.dpCd === "" || depDto.dpCd === undefined) {
                 setAlertInfo({
                   isOpen: true,
                   title: "부서를 선택해주세요.",
