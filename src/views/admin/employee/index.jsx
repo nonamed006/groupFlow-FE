@@ -228,7 +228,7 @@ const Employee = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.result === "success") {
+        if (res.status === 200) {
           setAlertInfo({
             isOpen: true,
             status: "success",
@@ -238,6 +238,12 @@ const Employee = () => {
           setEditState("read");
           setIsReload(!isReload);
         } else {
+          setAlertInfo({
+            isOpen: true,
+            status: "warning",
+            title: res.resultMsg,
+            width: "fit-content",
+          });
         }
       });
   };

@@ -1,8 +1,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import React, { useState } from "react";
 import LoginIdChg from "./LoginIdChg";
 import EmailIdChg from "./EmailIdChg";
-import { PORT } from "set";
+import api from "api/Fetch";
 
 const EmpIdChg = (props) => {
   // input value값 받기 이벤트
@@ -11,16 +10,26 @@ const EmpIdChg = (props) => {
   };
 
   //사원 ID 중복체크
-  const chkEmpId = () => {
+  const chkEmpId = async() => {
     if(props.empId != ""){
-    fetch(`${PORT}/emp/selectChkEmpId/${props.empId}/${props.modalTabStatus}`, {
-      method: "GET",
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        alert(res.resultMsg);
-      });
+      const res = await api.emp.updateEmpInfo(props.empId,props.modalTabStatus);
+
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        props.setIsIdChk(false);
+      }else{
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
     }else{
         alert("ID를 입력해주세요.");
     }
@@ -36,6 +45,7 @@ const EmpIdChg = (props) => {
             lineHeight="100%"
             onClick={() => {
                 props.setModalTabStatus("type1");
+                props.setIsIdChk(false);
             }}
           >
             로그인ID변경
@@ -46,6 +56,7 @@ const EmpIdChg = (props) => {
             lineHeight="100%"
             onClick={() => {
               props.setModalTabStatus("type2");
+              props.setIsIdChk(false);
             }}
           >
             이메일ID변경

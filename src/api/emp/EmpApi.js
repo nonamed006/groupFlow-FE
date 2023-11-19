@@ -126,6 +126,17 @@ const emp = {
         return promise.then((responseJson) => responseJson);
     },
 
+    /**
+    * 사원 ID 중복 확인
+    * @param {empId} empId 입력받은 사원ID
+    * @param {modalTabStatus} modalTabStatus 현재 탭
+    * @returns 
+    */
+    chkEmpId: (empId, modalTabStatus) => {
+        const promise = getPromise({ url: `emp/selectChkEmpId/${empId}/${modalTabStatus}`, method: 'GET' });
+        return promise.then((responseJson) => responseJson);
+    },
+
 }
 
 export default emp;

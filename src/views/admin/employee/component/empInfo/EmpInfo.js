@@ -32,6 +32,7 @@ const EmpInfo = (props) => {
   const [empPwd, setEmpPwd] = useState();
   const [delEmpDep, setDelEmpDep] = useState([]);
   const [empDeptTmp, setEmpDeptTmp] = useState([]);
+  const [isIdChk, setIsIdChk] = useState(false);
 
   // empDetail input value값 받기 이벤트
   const handleChange = (e) => {
@@ -79,10 +80,11 @@ const EmpInfo = (props) => {
   };
 
   //사원 ID 변경
-  const updateEmpID = async() => {
+  const updateEmpID = async () => {
+    if(isIdChk){
     const res = await api.emp.updateEmpInfo(empId, props.empDetail.empCd, modalTabStatus);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -94,7 +96,7 @@ const EmpInfo = (props) => {
         ...props.empDetail,
         [modalTabStatus == "type1" ? "loginId" : "mailId"]: empId,
       });
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
@@ -102,13 +104,21 @@ const EmpInfo = (props) => {
         width: "fit-content",
       });
     }
+  }else{
+    props.setAlertInfo({
+      isOpen: true,
+      status: "warning",
+      title: "ID 중복확인을 해주세요.",
+      width: "fit-content",
+    });
+  }
   };
 
   //사원 퇴사처리
-  const updateWorkType = async() => {
+  const updateWorkType = async () => {
     const res = await api.emp.updateWorkType(props.empDetail.empCd);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -117,7 +127,7 @@ const EmpInfo = (props) => {
       });
       onClose();
       props.setIsReload(!props.isReload);
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
@@ -130,27 +140,27 @@ const EmpInfo = (props) => {
   //유효성 검사
   const handleInsertCheck = () => {
     depGrpSchema.validate(props.empDept[0])
-    .then(() => {
-      // 유효성 검사 통과한 데이터 처리
-      insertEmpDep()
-    })
-    .catch((errors) => {
-      // 유효성 검사 실패한 경우 에러 메세지
-      props.setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "입력값을 확인해주세요.",
-        detail: errors.message,
-        width: "fit-content",
+      .then(() => {
+        // 유효성 검사 통과한 데이터 처리
+        insertEmpDep()
+      })
+      .catch((errors) => {
+        // 유효성 검사 실패한 경우 에러 메세지
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: "입력값을 확인해주세요.",
+          detail: errors.message,
+          width: "fit-content",
+        });
       });
-    });
   }
 
   //사원 조직 정보 추가
-  const insertEmpDep = async() => {
+  const insertEmpDep = async () => {
     const res = await api.emp.insertEmpDep(props.empDept);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -159,7 +169,7 @@ const EmpInfo = (props) => {
       });
       props.setEditState("read");
       getDeptInfo(props.empDept[0].empCd);
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
@@ -170,10 +180,10 @@ const EmpInfo = (props) => {
   };
 
   //사원 조직 정보 수정
-  const updateEmpDep = async() => {
+  const updateEmpDep = async () => {
     const res = await api.emp.updateEmpDep(props.empDept);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -181,7 +191,7 @@ const EmpInfo = (props) => {
         width: "fit-content",
       });
       props.setEditState("read");
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
@@ -192,20 +202,20 @@ const EmpInfo = (props) => {
   };
 
   // 사원의 조직 정보
-  const getDeptInfo = async(empCd) => {
+  const getDeptInfo = async (empCd) => {
     empCd = empCd ?? props.empDetail.empCd;
     const res = await api.emp.getDeptInfo(empCd);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setEmpDept(res.data);
     }
   };
 
   //사원 삭제
-  const empDelete = async() => {
+  const empDelete = async () => {
     const res = await api.emp.deleteEmp(props.empDetail.empCd);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -214,7 +224,7 @@ const EmpInfo = (props) => {
       });
       onClose();
       props.setIsReload(!props.isReload);
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -224,10 +234,10 @@ const EmpInfo = (props) => {
     }
   };
   // 선택한 사원 조직 정보 삭제
-  const deleteChkEmpDep = async() => {
+  const deleteChkEmpDep = async () => {
     const res = await api.emp.deleteChkEmpDep(delEmpDep);
 
-    if(res.status === 200){
+    if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
         status: "success",
@@ -237,7 +247,7 @@ const EmpInfo = (props) => {
       onClose();
       getDeptInfo(props.empDetail.empCd);
       props.setEditState("read");
-    }else{
+    } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
@@ -283,11 +293,13 @@ const EmpInfo = (props) => {
                       <Stack direction="row" spacing={4}>
                         <Button
                           variant="action"
+                          borderRadius={'10px'}
+                          fontWeight={'600'}
                           onClick={() => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: "error",
+                                status: "warning",
                                 title: "사원을 선택해주세요.",
                                 width: "fit-content",
                               });
@@ -302,11 +314,13 @@ const EmpInfo = (props) => {
                         </Button>
                         <Button
                           variant="action"
+                          borderRadius={'10px'}
+                          fontWeight={'600'}
                           onClick={() => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: "error",
+                                status: "warning",
                                 title: "사원을 선택해주세요.",
                                 width: "fit-content",
                               });
@@ -321,11 +335,13 @@ const EmpInfo = (props) => {
                         </Button>
                         <Button
                           variant="action"
+                          borderRadius={'10px'}
+                          fontWeight={'600'}
                           onClick={() => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
                                 isOpen: true,
-                                status: "error",
+                                status: "warning",
                                 title: "사원을 선택해주세요.",
                                 width: "fit-content",
                               });
@@ -343,6 +359,8 @@ const EmpInfo = (props) => {
                       <Stack direction="row" spacing={4}>
                         <Button
                           variant="action"
+                          borderRadius={'10px'}
+                          fontWeight={'600'}
                           onClick={() => {
                             if (props.empDetail.empNm === "") {
                               props.setAlertInfo({
@@ -363,12 +381,14 @@ const EmpInfo = (props) => {
                       </Stack>
                     )}
                     <Button
-                      variant="action"
+                      variant="brand"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
                       onClick={() => {
                         if (props.empDetail.empNm === "") {
                           props.setAlertInfo({
                             isOpen: true,
-                            status: "error",
+                            status: "warning",
                             title: "사원을 선택해주세요.",
                             width: "fit-content",
                           });
@@ -385,11 +405,13 @@ const EmpInfo = (props) => {
                     </Button>
                     <Button
                       variant="action"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
                       onClick={() => {
                         if (props.empDetail.empNm === "") {
                           props.setAlertInfo({
                             isOpen: true,
-                            status: "error",
+                            status: "warning",
                             title: "사원을 선택해주세요.",
                             width: "fit-content",
                           });
@@ -413,6 +435,8 @@ const EmpInfo = (props) => {
                   <Stack direction="row" spacing={4} align="center">
                     <Button
                       variant="brand"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
                       onClick={() => {
                         if (tabStatus === 1) {
                           if (props.editState === "insert") {
@@ -433,6 +457,8 @@ const EmpInfo = (props) => {
                     </Button>
                     <Button
                       variant="action"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
                       onClick={() => {
                         props.setEditState("read");
                         props.resetInput();
@@ -484,12 +510,12 @@ const EmpInfo = (props) => {
             modalType == 1
               ? "ID변경"
               : modalType == 2
-              ? "비밀번호 초기화"
-              : modalType == 3
-              ? "퇴사처리"
-              : modalType == 4
-              ? "사원삭제"
-              : "조직정보 삭제"
+                ? "비밀번호 초기화"
+                : modalType == 3
+                  ? "퇴사처리"
+                  : modalType == 4
+                    ? "사원삭제"
+                    : "조직정보 삭제"
           }
           buttonYn="false"
           isOpen={isOpen}
@@ -499,12 +525,12 @@ const EmpInfo = (props) => {
             modalType == 1
               ? updateEmpID
               : modalType == 2
-              ? ""
-              : modalType == 3
-              ? updateWorkType
-              : modalType == 4
-              ? empDelete
-              : deleteChkEmpDep
+                ? ""
+                : modalType == 3
+                  ? updateWorkType
+                  : modalType == 4
+                    ? empDelete
+                    : deleteChkEmpDep
           }
           children={
             modalType == 1 ? (
@@ -514,6 +540,8 @@ const EmpInfo = (props) => {
                 empId={empId}
                 setModalTabStatus={setModalTabStatus}
                 modalTabStatus={modalTabStatus}
+                setIsIdChk={setIsIdChk}
+                isIdChk={isIdChk}
               />
             ) : modalType == 2 ? (
               <EmpPwdChg
