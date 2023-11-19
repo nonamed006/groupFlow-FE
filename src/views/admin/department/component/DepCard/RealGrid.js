@@ -63,6 +63,8 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
           setTabStatus(1);
           setEditState("read");
         } else if (depth === "0") {
+          setTabStatus(1);
+          setEditState("read");
           setDpCd(0);
         }
       }
