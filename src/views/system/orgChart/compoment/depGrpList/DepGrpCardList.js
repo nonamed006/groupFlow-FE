@@ -70,7 +70,7 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
         isLoading ?
           <Loading />
           :
-          <Box overflowY={totalCount > 0 ? "auto" : "hidden"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='lg' h={'590px'} p={2}>
+          <Box overflowY={totalCount > 0 ? "auto" : "hidden"} overflowX={'hidden'} boxShadow='lg' bg='white' borderRadius='5px' h={'590px'} p={2}>
             <Box minH={'600px'}>
               {depGrpList.length > 0 ?
                 depGrpList.map((depGrpData) => {
