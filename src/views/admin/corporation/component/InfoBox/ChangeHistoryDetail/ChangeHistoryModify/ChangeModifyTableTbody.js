@@ -7,7 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 const ChangeModifyTableTbody = ({ detail }) => {
-  console.log(detail);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Tbody>

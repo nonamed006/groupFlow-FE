@@ -52,12 +52,9 @@ import { useDispatch } from "react-redux";
 import { setEmpData } from "redux/solution";
 import { setCookie } from "common/common";
 import CommonAlert from "common/component/CommonAlert";
+import api from "api/Fetch";
 
 function SignIn(props) {
-  const [alertInfo, setAlertInfo] = useState({
-    isOpen: false
-  });
-
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -75,7 +72,9 @@ function SignIn(props) {
   const [show, setShow] = React.useState(false);
   const [empInfo, setEmpInfo] = useState({ loginId: "", loginPw: "" });
   const handleClick = () => setShow(!show);
-  const dispatch = useDispatch();
+  const [alertInfo, setAlertInfo] = useState({
+    isOpen: false,
+  });
 
   const handleChange = (e) => {
     setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
@@ -243,10 +242,12 @@ function SignIn(props) {
           </FormControl>
         </Flex>
       </Flex>
-      {
-        alertInfo.isOpen &&
-        <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo}/>
-      }
+      {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
     </DefaultAuth>
   );
 }
