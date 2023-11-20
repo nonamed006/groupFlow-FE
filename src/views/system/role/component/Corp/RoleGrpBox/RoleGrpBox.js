@@ -122,7 +122,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword, setAlertInfo, se
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white">
+        <Box borderRadius="5px" bg="white" h="700px" p="6" backgroundColor="white">
             {/* 메뉴상단 */}
             <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
             {/* 검색바 */}

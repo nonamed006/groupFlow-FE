@@ -96,7 +96,7 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
     }, [checkedList]);
   
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
+    <Box borderRadius="5px" bg="white" h="700px" p="6" backgroundColor="white" >
         {/* 메뉴상단 */}
         <CardMenuBar title={'권한그룹'} count={total} buttonType={false} />
         {/* 검색바 */}

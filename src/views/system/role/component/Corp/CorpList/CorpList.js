@@ -59,7 +59,7 @@ const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
   };
 
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6">
+    <Box borderRadius="5px" bg="white" h="700px" p="6">
       {/* 목록 상단 */}
       <CardMenuBar
         title={'회사'}

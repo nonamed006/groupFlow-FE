@@ -12,7 +12,7 @@ const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
 			w={'100%'}
 			pl={5}
 			p={1}
-			borderRadius={'10px'}
+			borderRadius={'5px'}
 			pt={5}
 			>
 			<Box w={'30%'} >
