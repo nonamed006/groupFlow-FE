@@ -33,7 +33,6 @@ const EmpInfo = (props) => {
   const [delEmpDep, setDelEmpDep] = useState([]);
   const [empDeptTmp, setEmpDeptTmp] = useState([]);
   const [isIdChk, setIsIdChk] = useState(false);
-
   // empDetail input value값 받기 이벤트
   const handleChange = (e) => {
     props.setEmpDetail({ ...props.empDetail, [e.target.name]: e.target.value });
@@ -82,8 +81,7 @@ const EmpInfo = (props) => {
   //사원 ID 변경
   const updateEmpID = async () => {
     if(isIdChk){
-    const res = await api.emp.updateEmpInfo(empId, props.empDetail.empCd, modalTabStatus);
-
+    const res = await api.emp.updateEmpID(empId, props.empDetail.empCd, modalTabStatus);
     if (res.status === 200) {
       props.setAlertInfo({
         isOpen: true,
@@ -92,10 +90,7 @@ const EmpInfo = (props) => {
         width: "fit-content",
       });
       onClose();
-      props.setEmpDetail({
-        ...props.empDetail,
-        [modalTabStatus == "type1" ? "loginId" : "mailId"]: empId,
-      });
+      props.setIsReload(!props.isReload);
     } else {
       props.setAlertInfo({
         isOpen: true,
@@ -542,6 +537,7 @@ const EmpInfo = (props) => {
                 modalTabStatus={modalTabStatus}
                 setIsIdChk={setIsIdChk}
                 isIdChk={isIdChk}
+                setAlertInfo={props.setAlertInfo}
               />
             ) : modalType == 2 ? (
               <EmpPwdChg

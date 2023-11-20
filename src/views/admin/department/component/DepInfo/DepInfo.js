@@ -148,7 +148,6 @@ const DepInfo = ({
       getDepGroup();
       setIsEditing(true);
     } else {
-      console.log("-==");
       setDepDto({ stnd: "", recYN: true, typeCd: "" });
       setDg([]);
       setIsEditing(false);

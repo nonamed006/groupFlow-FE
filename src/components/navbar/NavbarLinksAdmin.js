@@ -61,7 +61,6 @@ export default function HeaderLinks(props) {
 	const [empInfo, setEmpInfo] = useState([]);
 	const loginEmpInfo = useSelector((state) => state.solution.empData);
 	const dispatch = useDispatch();
-	const [dpGrpCd, setDpGrpCd] = useState("");
 	const [empTemp, setEmpTemp] = useState();
 
 	// 조직도 isOpen
@@ -114,18 +113,15 @@ export default function HeaderLinks(props) {
 			.then((res) => res.json())
 			.then((res) => {
 				deleteCookie("Emp_Dp_Type");
-				setDpGrpCd("");
 			});
 	};
 
 	//체크박스 핸들링
 	const handleChange = (e, empInfo) => {
-		setDpGrpCd(e.target.value);
 		setEmpTemp(empInfo);
 	};
 
 	const clickHandle = () => {
-		setCookie("Emp_Dp_Type", dpGrpCd, 2);
 		empLogin(empTemp);
 	};
 
@@ -182,7 +178,7 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px" onClick={() => { setDpGrpCd(getCookie("Emp_Dp_Type"));}}>
+				<MenuButton p="0px">
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
@@ -265,7 +261,7 @@ export default function HeaderLinks(props) {
 												me='16px'
 												colorScheme='brandScheme'
 												value={column.dpGrpCd}
-												isChecked={column.dpGrpCd == dpGrpCd ? true : false}
+												isChecked={column.dpGrpCd == loginEmpInfo?.dpGrpCd ? true : false}
 												onChange={(e) => handleChange(e, column)}
 											/></Td>
 										</Tr>

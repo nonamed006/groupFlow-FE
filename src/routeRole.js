@@ -6,7 +6,6 @@ import LoginPage from "views/auth/login";
 
 const checkRole = async ({rest, Component, setAlertInfo}) => {
     const response = await api.role.checkRoleSession('DG230006');
-    console.log(response);
 
     if(response.status === 200) {
         return (

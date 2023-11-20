@@ -34,26 +34,6 @@ export const getPromise = async ({ url, method, headers, body }) => {
     .then((responseJson) => responseJson);
 };
 
-//return await fetch(`${PORT}/${url}`, {
-//  method: method,
-//  body: body && body,
-//  headers: headers,
-//  credentials: "include",
-//})
-//  .then((response) => response.json())
-//  .then((responseJson) => {
-//    if (responseJson.status !== 200) {
-//      throw new Error(responseJson.resultMsg);
-//    } else {
-//      return responseJson;
-//    }
-//  })
-//  .catch((error) => {
-//    return error.message;
-//    console.log(error);
-//  });
-//};
-
 const api = {
   corp,
   roleGrp,
