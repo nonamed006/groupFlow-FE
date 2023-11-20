@@ -9,12 +9,9 @@ import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
 import role from "./role/RoleApi";
-<<<<<<< HEAD
 import roleDep from "./roleDep/RoleDepApi";
-=======
 import emp from "./emp/EmpApi";
 
->>>>>>> jej
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
 //   Authorization: getCookie("Authorization"),
