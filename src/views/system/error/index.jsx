@@ -114,9 +114,10 @@ const ErrorPage = () => {
                             fontWeight={600}
                             size='md'
                             onClick={() => {
-                                history.goBack();
+                                //history.goBack();
+                                window.location.href = '/MU000000/home'
                             }}
-                        >돌아가기
+                        >HOME
                         </Button>
                     </Box>
                 }

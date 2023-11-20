@@ -1,11 +1,11 @@
-import { propNames } from '@chakra-ui/system';
 import { getPromise } from 'api/Fetch';
-import { PORT } from 'set';
+import { getCookie } from 'common/common';
 
 /* 
     작업명 : 권한 API
     작업자 : 이혜윤
 */
+
 const role = {
 
     /**
@@ -14,9 +14,12 @@ const role = {
      * @param {*} search 
      * @returns 
      */
-    checkRoleSession: (dpGrpCd, search) => {
-        const queryString = new URLSearchParams(search).toString();
-        const promise = getPromise({url: `common/role-${dpGrpCd}?${queryString}`, method: 'GET'});
+    CheckRoleSession: (menuCd) => {
+        const dpGrpCd = getCookie('Emp_Dp_Type');
+        const promise = getPromise({
+            url: `common/role?menuCd=${menuCd}&dpGrpCd=${dpGrpCd}`,
+            method: 'GET'
+        });
 
         return promise.then((responseJson) => responseJson);
     },

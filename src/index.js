@@ -33,7 +33,7 @@ ReactDOM.render(
 						{/* 타입에 따른 에러페이지 (NotFound/NoAccess/NotWorking) */}
 						<Route path={`/err/:type`} component={ErrorPage} />
 						{/* 로그인 안했을때 */}
-						{<Redirect from='/' to='/auth/login' />}
+						<Redirect from='/' to='/MU000000' />
 						{/*없는 url 입력시 에러 페이지로(NotFound) */}
 						<Route component={ErrorPage} />
 					</Switch>
