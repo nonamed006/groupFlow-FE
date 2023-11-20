@@ -6,6 +6,7 @@ import React from "react";
 import EmpDeptInput from "./EmpDeptInput";
 
 const EmpTab2 = (props) => {
+
   return (
     <div> 
       <Grid

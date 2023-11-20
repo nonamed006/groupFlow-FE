@@ -80,33 +80,64 @@ const EmpInfo = (props) => {
 
   //사원 ID 변경
   const updateEmpID = async () => {
-    if(isIdChk){
-    const res = await api.emp.updateEmpID(empId, props.empDetail.empCd, modalTabStatus);
-    if (res.status === 200) {
-      props.setAlertInfo({
-        isOpen: true,
-        status: "success",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
-      onClose();
-      props.setIsReload(!props.isReload);
+    if (isIdChk) {
+      const res = await api.emp.updateEmpID(empId, props.empDetail.empCd, modalTabStatus);
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        props.setIsReload(!props.isReload);
+      } else {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
     } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
-        title: res.resultMsg,
+        title: "ID 중복확인을 해주세요.",
         width: "fit-content",
       });
     }
-  }else{
-    props.setAlertInfo({
-      isOpen: true,
-      status: "warning",
-      title: "ID 중복확인을 해주세요.",
-      width: "fit-content",
-    });
-  }
+  };
+
+  //사원 비밀번호 초기화
+  const resetPwd = async () => {
+    if (empPwd.length > 3) {
+      const res = await api.emp.resetPwd(empPwd, props.empDetail.empCd, modalTabStatus);
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        props.setIsReload(!props.isReload);
+      } else {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
+    } else {
+      props.setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "비밀번호를 4자리 이상 입력해주세요.",
+        width: "fit-content",
+      });
+    }
   };
 
   //사원 퇴사처리
@@ -300,6 +331,7 @@ const EmpInfo = (props) => {
                               });
                               return;
                             }
+                            setIsIdChk(false);
                             setModalType(1);
                             setModalTabStatus("type1");
                             onOpen();
@@ -520,7 +552,7 @@ const EmpInfo = (props) => {
             modalType == 1
               ? updateEmpID
               : modalType == 2
-                ? ""
+                ? resetPwd
                 : modalType == 3
                   ? updateWorkType
                   : modalType == 4

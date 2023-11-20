@@ -32,6 +32,7 @@ const LoginPwdTab = (props) => {
               size="md"
               borderRadius="14px"
               isReadOnly={false}
+              onChange={props.handleChange}
             />
             <InputRightElement width="4.5rem">
               <Button h="1.75rem" size="sm" onClick={props.handleClick}>
