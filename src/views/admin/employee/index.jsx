@@ -263,6 +263,7 @@ const Employee = () => {
         width: "fit-content",
       });
       setEditState("read");
+      setIsReload(!isReload);
     }else{
       setAlertInfo({
         isOpen: true,
