@@ -9,7 +9,6 @@ const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
     const [gnbNmList, setGnbNmList] = useState([]);
-    const dpGrpCd = 'DG230006';
 
     const handleChange = (e) => {
         setKeyword(e.target.value);
@@ -26,7 +25,7 @@ const SearchBox = () => {
             setGnbNmList([]);
             return setResultMenuList([]);
         }
-        let res = await api.roleMenu.getRoleMenuBySearch(dpGrpCd, keyword);
+        let res = await api.roleMenu.getRoleMenuBySearch(keyword);
         if (res.status === 200) {
             setResultMenuList(res.data);
             let temp = [];

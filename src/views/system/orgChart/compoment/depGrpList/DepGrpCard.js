@@ -29,7 +29,10 @@ const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
       m={2}
       w='98%'
       display={'inline-block'}
-      p='0'>
+      p='0'
+      borderColor={( depGrpInfo === depGrp ) && 'brand.500'}
+      shadow={ ( depGrpInfo === depGrp ) ? 'outline' : 'md'}
+      >
       <Flex>
         {/* 프로필 */}
         <Box w={'90px'} display={"flex"} justifyContent={"center"} alignItems={"center"}>
