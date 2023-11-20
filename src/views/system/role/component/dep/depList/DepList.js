@@ -47,7 +47,7 @@ const DepList = ({ setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
     // 조직도 부서 클릭 시
     const handleClickGrid = (dpCd, coCd, dpCdArr) => {
         setDpCdList(dpCdArr);
-        setCoCd(coCd);
+        setCoCd(coCd); 
         setDpCd(dpCd);
     }
 

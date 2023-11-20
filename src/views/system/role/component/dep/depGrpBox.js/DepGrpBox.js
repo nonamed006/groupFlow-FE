@@ -20,126 +20,137 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
     const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
-        if((coCd !== undefined && coCd !== 'undefined')&&(dpCd !== undefined && dpCd !== 'undefined')){
+        initDataInfo();
+    }, [coCd]);
+
+    useEffect(() => {
+        if ((coCd !== undefined && coCd !== 'undefined') && (dpCd !== undefined && dpCd !== 'undefined')) {
             isDrawerClose();
             fetchRoleGroup(); // 권한그룹 목록 조회
-        }else{
-            setRgCd(undefined);
-            setRoleGrpList([]);
+        } else {
+            initDataInfo();
         }
     }, [dpCd]);
 
-    useEffect(() => {
-        fetchRoleGroup();
-    }, [init]);
+    // 데이터 정보 초기화
+    const initDataInfo = () => {
+        setRoleGrpList([]);
+        setTotalCount(0);
+        setRgCd(undefined);
+        setCheckedList([]);
+    };
 
     // 권한그룹 목록 조회
     const fetchRoleGroup = async () => {
-        if((coCd === undefined || coCd === 'undefined')&&(dpCd === undefined || dpCd === 'undefined')){return;}
+        if ((coCd === undefined || coCd === 'undefined') && (dpCd === undefined || dpCd === 'undefined')) { return; }
         setIsLoading(true);
         let res = await api.roleDep.getRoleGrpList(coCd, dpCd, keyword);
         if (res.status === 200) {
             setRoleGrpList(res.data);
             setTotalCount(res.data.length);
-          } else {
+        } else {
             setRoleGrpList([]);
             setTotalCount(0);
-          }
+        }
         setRgCd(undefined);
         setIsLoading(false);
         setCheckedList([]);
     };
 
-// 권한-부서 맵핑 수정 시
-const fetchCheckedRoleGrp = async () => {
-    setIsLoading(true);
-    let arr = [];
-    let list = new Object();
-    list.rgCdList = checkedList;
-    list.dpCdList = dpCdList;
-    arr.push(list);
+    // 권한-부서 맵핑 수정 시
+    const fetchCheckedRoleGrp = async () => {
+        setIsLoading(true);
+        let arr = [];
+        let list = new Object();
+        list.rgCdList = checkedList;
+        list.dpCdList = dpCdList;
+        arr.push(list);
 
-    let res = await api.roleDep.postRoleDepList(list);
-    if (res.status === 200) {
-        checkedList.length === 0 && isDrawerClose();
-        setAlertInfo({
-            isOpen: true,
-            status: 'success',
-            title: res.resultMsg,
-            width: 'fit-content'
-        });
-    } else {
-        setAlertInfo({
-            isOpen: true,
-            status: 'error',
-            title: '수정 실패',
-            detail: res.resultMsg,
-            width: 'fit-content'
-        }); 
-       // setIsReload(!isReload);
+        let res = await api.roleDep.postRoleDepList(list);
+        if (res.status === 200) {
+            checkedList.length === 0 && isDrawerClose();
+            setAlertInfo({
+                isOpen: true,
+                status: 'success',
+                title: res.resultMsg,
+                width: 'fit-content'
+            });
+        } else {
+            setAlertInfo({
+                isOpen: true,
+                status: 'error',
+                title: '수정 실패',
+                detail: res.resultMsg,
+                width: 'fit-content'
+            });
+            // setIsReload(!isReload);
+        };
+        setIsLoading(false);
     };
-    setIsLoading(false);
-};
 
-// 체크리스트 추가 및 삭제
-const checkedItemHandler = async (value, isChecked) => {
-    if (isChecked) {
-        setCheckedList((prev) => [...prev, value]);
-        return;
-    }
-    if (!isChecked && checkedList.includes(value)) {
-        setCheckedList(checkedList.filter((item) => item !== value));
-        return;
-    }
-    return;
-};
-
-// 체크박스 핸들러
-const checkHandler = (e, value) => {
-    setIsChecked(!isChecked);
-    checkedItemHandler(value, e.target.checked);
-};
-
-
-useEffect(async () => {
-    roleGrpList.map(async (roleGrp) => {
-        if (roleGrp.state === 1) {
-            await checkedList.includes(roleGrp.rgCd);
-            await checkedItemHandler(roleGrp.rgCd, true);
+    // 체크리스트 추가 및 삭제
+    const checkedItemHandler = async (value, isChecked) => {
+        if (isChecked) {
+            setCheckedList((prev) => [...prev, value]);
+            return;
         }
-    });
-}, [roleGrpList]);
+        if (!isChecked && checkedList.includes(value)) {
+            setCheckedList(checkedList.filter((item) => item !== value));
+            return;
+        }
+        return;
+    };
 
-useEffect(() => {
-    checkedList.length > 0 && isDrawerOpen();
-}, [checkedList]);
+    // 체크박스 핸들러
+    const checkHandler = (e, value) => {
+        setIsChecked(!isChecked);
+        checkedItemHandler(value, e.target.checked);
+    };
 
-// 검색 시
-const handleSearchBtn = () => {
-    if (dpCd !== undefined && dpCd !== 'undefined') {
-        setInit(!init);
-        setRgCd(undefined);
-    } else {
-        setAlertInfo({
-            isOpen: true,
-            status: 'warning',
-            title: '부서를 선택하세요',
-            width: 'fit-content'
+
+    useEffect(async () => {
+        roleGrpList.map(async (roleGrp) => {
+            if (roleGrp.state === 1) {
+                await checkedList.includes(roleGrp.rgCd);
+                await checkedItemHandler(roleGrp.rgCd, true);
+            }
         });
-    }
-}
-return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
-        {/* 메뉴상단 */}
-        <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
-        {/* 검색바 */}
-        <RoleGrpSearchBar
-            setKeyword={setKeyword}
-            handleSearchBtn={handleSearchBtn}
-            code={dpCd? dpCd:coCd}
-        />
-        {/* 목록 */}
-        <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
+    }, [roleGrpList]);
+
+    useEffect(() => {
+        checkedList.length > 0 && isDrawerOpen();
+    }, [checkedList]);
+
+    // 검색 시
+    const handleSearchBtn = () => {
+        if (dpCd !== undefined && dpCd !== 'undefined') {
+            setInit(!init);
+            setRgCd(undefined);
+        } else {
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                title: '부서를 선택하세요',
+                width: 'fit-content'
+            });
+        }
+    };
+
+    useEffect(() => {
+        fetchRoleGroup(); // 권한그룹 목록 조회
+    }, [init]);
+    return (
+        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
+            {/* 메뉴상단 */}
+            <CardMenuBar title={'권한그룹'} count={totalCount} buttonType={false} />
+            {/* 검색바 */}
+            <RoleGrpSearchBar
+                setKeyword={setKeyword}
+                handleSearchBtn={handleSearchBtn}
+                code={dpCd ? dpCd : coCd}
+            />
+            {/* 목록 */}
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
                 {
                     roleGrpList.length > 0 ?
                         <GroupCardList
@@ -162,13 +173,13 @@ return (
                             검색된 데이터가 없습니다.
                         </Text>
                 }
-        </Box>
+            </Box>
 
-        {isDrawer &&
-            <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
-        }
-    </Box>
-);
+            {isDrawer &&
+                <BottomDrawer cnt={checkedList.length} handler1={fetchCheckedRoleGrp} isDrawerClose={() => setCheckedList([])} type={4} />
+            }
+        </Box>
+    );
 };
 
 export default DepGrpBox;

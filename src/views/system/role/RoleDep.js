@@ -10,7 +10,6 @@ const DepRole = ({setAlertInfo, setIsLoading}) => {
     const [coCd, setCoCd] = useState(); // 선택한 회사코드
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
     const [dpCd, setDpCd] = useState(); // 선택한 부서코드
-
     const [dpCdList, setDpCdList] = useState([]);
 
     return (
