@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "assets/css/App.css";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -15,8 +15,6 @@ import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import MU000000 from "layouts/MU000000"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
-import LoginPage from "views/auth/login";
-import HomePage from "views/system/home";
 
 const store = createStore(rootReducer);
 

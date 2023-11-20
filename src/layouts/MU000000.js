@@ -16,6 +16,7 @@ import HomePage from "views/system/home";
 import RouteRole from "routeRole";
 import { getCookie } from "common/common";
 import { useSelector } from "react-redux";
+import ErrorPage from "views/system/error";
 
 /*
 layouts/admin/index.js
@@ -89,7 +90,6 @@ export default function Dashboard(props) {
     let pathNowName = ''; // 현재 path 이름
     let pathString = '';  // path 전체 이름
     let filtedRoutes = routes.filter((route) => route.code === (pathArray.length > 0 ? pathArray[0] : pathNow)); // 현재에 맞는 대메뉴만 들고옴
-    
     switch(gnb) {
       case 'pathText' :
           if(pathArray.length > 0) {
@@ -252,7 +252,7 @@ export default function Dashboard(props) {
 							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={"GROUPFLOW"}
+                  logoText={"GROUP FLOW"}
                   pathText={getLocationPath(routes, 'pathText')}
                   brandText={getLocationPath(routes, 'routeText')}////getActiveRoute(routes)
                   secondary={getActiveNavbar(routes)}
@@ -268,7 +268,9 @@ export default function Dashboard(props) {
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-						    <Redirect from="/MU000000" to="/MU000000/home" />
+                <Route path='*' component={ErrorPage} />
+                {/* <Redirect from="" to="/err/NotFound" />
+						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
               {alertInfo.isOpen && (
