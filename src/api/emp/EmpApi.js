@@ -62,6 +62,18 @@ const emp = {
     },
 
     /**
+    * 사원 비밀번호 변경
+    * @param {empPwd} empPwd 
+    * @param {empCd} empCd 
+    * @param {modalTabStatus} modalTabStatus 
+    * @returns 
+    */
+    resetPwd: (empPwd, empCd, modalTabStatus) => {
+        const promise = getPromise({ url: `emp/resetPwd/${empPwd}/${empCd}/${modalTabStatus}`, method: 'GET' });
+        return promise.then((responseJson) => responseJson);
+    },
+
+    /**
     * 사원 퇴사 처리
     * @param {empCd} empCd 사원코드
     * @returns 
