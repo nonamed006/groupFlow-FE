@@ -5,7 +5,7 @@ import RealGrid from "./RealGrid";
 
   const OrgList = ({ corpDepList, handleGrid }) => {
     return (
-      <Box  boxShadow='lg' borderRadius='lg' h={'650px'} p={2} overflowY={'auto'} >
+      <Box  boxShadow='lg' borderRadius='5px' h={'650px'} p={2} overflowY={'auto'} >
          {(corpDepList!==undefined && corpDepList!=='undefined')&&
           <RealGrid  handleGrid={handleGrid} org={corpDepList} />
         } 

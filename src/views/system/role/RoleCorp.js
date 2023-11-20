@@ -12,7 +12,7 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
     return (
         <Flex>
             {/* 회사 목록 */}
-            <Box w={'580px'} mr={5}>
+            <Box w={'580px'} mr={3}>
                 <CorpList
                     setCoCd={setCoCd}
                     coCd={coCd}
@@ -20,7 +20,7 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                 />
             </Box>
             {/* 권한그룹 목록 */}
-            <Box w={'420px'} mr={5}>
+            <Box w={'420px'} mr={3}>
                 <RoleGrpBox
                     keyword={keyword}
                     setKeyword={setKeyword}

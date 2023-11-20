@@ -11,8 +11,8 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     const groupHeader = ['부서명', '부서/직책', '이름(ID)'];
     const [userList, setUserList] = useState([]); // 사용자목록
     const [keyword, setKeyword] = useState();   //  검색어
-	const formInputRef = useRef(null);
-    
+    const formInputRef = useRef(null);
+
     const [pageNum, setPageNum] = useState(1);   // 요청할 페이지
     const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
@@ -25,6 +25,7 @@ const UserBox = ({ rgCd, setIsLoading }) => {
             initPageInfo();
             onClearSelect();
         }
+        initDataInfo();
     }, [rgCd]);
 
     useEffect(() => {
@@ -40,11 +41,11 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     }, [inView]);
 
     const onClearSelect = () => {
-		if (formInputRef.current){
+        if (formInputRef.current) {
             formInputRef.current.reset();
             setKeyword();
         }
-	};
+    };
 
     // 권한그룹 코드에 따른 사용자 목록 조회 + 사용자 검색
     const fetchRoleUserList = async () => {
@@ -58,12 +59,16 @@ const UserBox = ({ rgCd, setIsLoading }) => {
             if (hasNextPage)
                 setPageNum((prev) => prev + 1);
         } else {
-            setUserList([]);
-            setTotalCount(0);
-            setIsLastPage(true);
+            initDataInfo();
         }
         setIsLoading(false);
     };
+
+    const initDataInfo = () => {
+        setUserList([]);
+        setTotalCount(0);
+        setIsLastPage(true);
+    }
 
     // 검색 버튼 클릭 시
     const initPageInfo = () => {
@@ -80,14 +85,14 @@ const UserBox = ({ rgCd, setIsLoading }) => {
                 <SearchBar init={rgCd} textLabel={'이름'} setKeyword={setKeyword} handleSearchBtn={initPageInfo} placeholder={'검색어를 입력하세요'} btnText={'검색'} />
             </form>
             {/* 목록 */}
-            <Box overflowY={userList.length > 0 ?'auto':'hidden'} mt={4} height={'550px'} w={'430px'} display={'block'} >
+            <Box overflowY={userList.length > 0 ? 'auto' : 'hidden'} mt={4} height={'550px'} w={'430px'} display={'block'} >
                 <Box minH={'560px'}  >
                     {
                         userList.length > 0 ?
                             <CustomTable groupHeader={groupHeader} dataList={userList} />
                             :
                             <Text
-                                pt={200}
+                                pt={220}
                                 align={'center'}
                                 fontWeight={600}
                                 color={'lightgray'}
