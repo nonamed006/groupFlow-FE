@@ -52,10 +52,10 @@ const ModalLayout = ({
           {/* 확인 및 취소 버튼 */}
           {buttonYn && (
             <ModalFooter>
-              <Button m="2" variant="brand" onClick={handleCheck}>
+              <Button m="2" borderRadius={"10px"} fontWeight={600} variant="brand" onClick={handleCheck}>
                 {btnText}
               </Button>
-              <Button onClick={onClose} variant="action">
+              <Button onClick={onClose} borderRadius={"10px"} fontWeight={600}  variant="action">
                 취소
               </Button>
             </ModalFooter>

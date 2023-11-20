@@ -6,9 +6,8 @@ import CardMenuBar from "common/component/CardMenuBar";
 import SearchBar from "common/component/SearchBar";
 import { useInView } from 'react-intersection-observer';
 import api from "api/Fetch";
-import Loading from "common/Loading";
 
-const UserBox = ({ rgCd }) => {
+const UserBox = ({ rgCd, setIsLoading }) => {
     const groupHeader = ['부서명', '부서/직책', '이름(ID)'];
     const [userList, setUserList] = useState([]); // 사용자목록
     const [keyword, setKeyword] = useState();   //  검색어
@@ -19,7 +18,6 @@ const UserBox = ({ rgCd }) => {
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
 
     const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
-    const [isLoading, setIsLoading] = useState(false);
     const [infiniteScrollRef, inView] = useInView();
 
     useEffect(() => {
@@ -74,7 +72,7 @@ const UserBox = ({ rgCd }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" display={'inline-block'} w={'480px'}>
+        <Box borderRadius="5px" bg="white" h="780px" p="6" backgroundColor="white" display={'inline-block'} w={'480px'}>
             {/* 상단 */}
             <CardMenuBar title={'사용자 목록'} count={totalCount} buttonType={false} />
             {/* 검색바 */}
@@ -100,12 +98,7 @@ const UserBox = ({ rgCd }) => {
                     }
 
                 </Box>
-                {
-                    isLoading ?
-                        <Loading />
-                        :
-                        <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
-                }
+                <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
             </Box>
         </Box>
 

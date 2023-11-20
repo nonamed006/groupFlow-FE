@@ -13,9 +13,8 @@ import BottomDrawer from "common/component/BottomDrawer";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import DeleteModal from "common/modal/DeleteModal";
 import api from "api/Fetch";
-import Loading from 'common/Loading';
 
-const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
+const GroupBox = ({ setRgCd, rgCd, setAlertInfo, setIsLoading }) => {
     const [keyword, setKeyword] = useState();   // 검색어
     const [searchCorp, setSearchCorp] = useState(); // 검색바에서 선택된 회사 코드
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
@@ -30,8 +29,6 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
     const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
     const [infiniteScrollRef, inView] = useInView();
-
-    const [isLoading, setIsLoading] = useState(true);
 
     const [isDrawer, drawerCnt, isDrawerOpen, isDrawerClose, setCnt] = UseDrawerOpen();
     const [checkedList, setCheckedList] = useState([]);// 선택한 권한 그룹 목록
@@ -209,8 +206,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6" backgroundColor="white" >
-
+        <Box borderRadius="5px" bg="white" h="780px" p="6" backgroundColor="white" >
             <Box>
                 {/* 메뉴상단 */}
                 <CardMenuBar title={'권한그룹'} count={totalCount ? totalCount : 0} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />
@@ -218,8 +214,8 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                 <SearchBar corps={corps} setKeyword={setKeyword} setSearchCorp={setSearchCorp} handleSearchBtn={handleSearchBtn} />
                 {/* 목록 */}
 
-                <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
-                    <Box minH={'510px'}>
+                <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'570px'} >
+                    <Box minH={'580px'}>
                         {
                             roleGrpList.length > 0 ?
                                 <GroupCardList
@@ -240,12 +236,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo }) => {
                                     검색된 데이터가 없습니다.</Text>
                         }
                     </Box>
-                    {isLoading ?
-                        <Loading />
-                        :
-                        <Box ref={infiniteScrollRef} h={'1px'} />
-                    }
-
+                    <Box ref={infiniteScrollRef} h={'1px'} />
                 </Box>
 
                 {/* 권한그룹 추가 모달 */}

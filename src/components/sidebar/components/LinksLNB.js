@@ -30,55 +30,63 @@ export function SidebarLinks(props) {
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (prop) => {
     return prop.map((route, index) => {
-      return route.path && route.items.length <= 0 ? ( //path가 있을때(하위메뉴가 없는 메뉴)
-        <NavLink key={index} to={route.layout + route.path}>
+      //return route.path && route.items.length <= 0 ? ( //path가 있을때(하위메뉴가 없는 메뉴)
+      
+      return <NavLink key={index} to={(route.path && route.items.length <= 0) && route.layout + route.path}>
           <Box
             onClick={() => {
               LNBroute(route);
             }}
+            cursor={"pointer"}
+            key={index}
           >
-            <HStack spacing={"10"} py="5px" ps="10px">
+            <HStack
+              spacing={"22px"}
+              py="5px"
+              ps="10px"
+            >
               <Flex
                 w="100%"
                 alignItems="center"
                 justifyContent="center"
-                pl={"30"}
+                pl={"50px"}
               >
                 <Text me="auto" color="black" fontWeight="normal">
                   {route.name}
                 </Text>
+                {route.items.length > 0 && <ChevronRightIcon />}
               </Flex>
             </HStack>
           </Box>
         </NavLink>
-      ) : (
-        //path 없을때(하위 메뉴 있는 메뉴)
-        <Box
-          onClick={() => {
-            LNBroute(route); //LNB 정보 변경
-          }}
-          cursor={"pointer"}
-          key={index}
-        >
-          <HStack
-            spacing={"22px"}
-            py="5px"
-            ps="10px"
-          >
-            <Flex
-              w="100%"
-              alignItems="center"
-              justifyContent="center"
-              ml="40px"
-            >
-              <Text me="auto" color={"black"} fontWeight={"normal"}>
-                {route.name}
-              </Text>
-              {route.items && <ChevronRightIcon />}
-            </Flex>
-          </HStack>
-        </Box>
-      );
+      // ) : (
+      //   //path 없을때(하위 메뉴 있는 메뉴)
+      //   <Box
+      //     onClick={() => {
+      //       LNBroute(route); //LNB 정보 변경
+      //     }}
+      //     cursor={"pointer"}
+      //     key={index}
+      //   >
+      //     <HStack
+      //       spacing={"22px"}
+      //       py="5px"
+      //       ps="10px"
+      //     >
+      //       <Flex
+      //         w="100%"
+      //         alignItems="center"
+      //         justifyContent="center"
+      //         ml="40px"
+      //       >
+      //         <Text me="auto" color={"black"} fontWeight={"normal"}>
+      //           {route.name}
+      //         </Text>
+      //         {route.items.length > 0 && <ChevronRightIcon />}
+      //       </Flex>
+      //     </HStack>
+      //   </Box>
+      // );
     });
   };
   //  BRAND

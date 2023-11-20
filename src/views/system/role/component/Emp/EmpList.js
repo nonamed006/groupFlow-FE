@@ -35,7 +35,7 @@ const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
     }, [])
 
     return (
-        <Box borderRadius="lg" bg="white" h="700px" p="6">
+        <Box borderRadius="5px" bg="white" h="700px" p="6">
             <CardMenuBar title='사용자' count={empCount}/>
             <Grid templateColumns='repeat(4, 1fr)' gap={2}>
 				<GridItem colSpan={4}>

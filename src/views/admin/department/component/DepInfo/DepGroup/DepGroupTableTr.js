@@ -7,6 +7,7 @@ import {
 import React from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 const DepGroupTableTr = ({ data, index }) => {
+  const dpNm = data.dpPathNm[data.dpPathNm.length-1];
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
@@ -18,24 +19,24 @@ const DepGroupTableTr = ({ data, index }) => {
         onMouseOver(index);
       }}
     >
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.dpNm}
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
+          {dpNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.rankName}
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
+          {data.rankNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.pstnName}
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
+          {data.pstnNm}
         </Text>
       </Td>
-      <Td align="center">
-        <Text color={textColor} fontSize="sm" fontWeight="600">
-          {data.empNm}
+      <Td textAlign="center">
+        <Text color={textColor} fontSize="sm" fontWeight="500">
+          {data.empDto.empNm}
         </Text>
       </Td>
     </Tr>

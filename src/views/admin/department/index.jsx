@@ -49,10 +49,10 @@ const Department = () => {
       {/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
       <Grid
         // h={"500px"}
-        h={'full'} // 혜윤 수정
+        h={"full"} // 혜윤 수정
         templateRows="repeat(11, 1fr)"
         templateColumns="repeat(7, 1fr)"
-        gap={5}
+        gap={3}
       >
         <GridItem colSpan={7} rowSpan={1}>
           <SearchCardBar

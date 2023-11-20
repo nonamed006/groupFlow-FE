@@ -8,6 +8,7 @@ import { getCookie } from "common/common";
 import CommonAlert from "common/component/CommonAlert";
 import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
+import api from "api/Fetch";
 
 const Employee = () => {
   //state
@@ -21,7 +22,7 @@ const Employee = () => {
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
 
-  const [selectedIndex, setSelectedIndex] = useState(undefined); 
+  const [selectedIndex, setSelectedIndex] = useState(undefined);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,40 +66,22 @@ const Employee = () => {
   ]);
 
   //사원 목록 조회
-  const getEmpList = (srhCorp, srhWorkType, srhNm) => {
-    fetch(
-      `${PORT}/emp/getEmp?srhCorp=${srhCorp}&srhWorkType=${srhWorkType}&srhNm=${srhNm}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        credentials: "include",
-        // res에 결과가 들어옴
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        setEmpList(res.data);
-        setEmpNum(res.strData);
-      });
+  const getEmpList = async(srhCorp, srhWorkType, srhNm) => {
+    const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm);
+
+    if(res.status === 200){
+      setEmpList(res.data);
+      setEmpNum(res.strData);
+    }
   };
 
   // 사원의 조직 정보
-  const getDeptInfo = (empCd) => {
-    fetch(`${PORT}/emp/selectEmpDeptList/${empCd}`, {
-      method: "GET",
-      headers: {
-        'Content-Type': "application/json; charset=utf-8",
-        'Authorization': getCookie("Authorization")
-      },
-      credentials: 'include'
-    }).then((res) => res.json())
-      .then((res) => {
-        if (res.data.length > 0) {
-          setEmpDept(res.data);
-        }
-      });
+  const getDeptInfo = async(empCd) => {
+    const res = await api.emp.getDeptInfo(empCd);
+
+    if(res.status === 200){
+      setEmpDept(res.data);
+    }
   };
 
   // 사원 목록 클릭시
@@ -169,11 +152,42 @@ const Employee = () => {
 
   //유효성 검사
   const handleInsertCheck = () => {
-    if(imgFile != null){
-      empSchema.validate(empDetail)
+    if (imgFile != null) {
+      empSchema
+        .validate(empDetail)
+        .then(() => {
+          // 유효성 검사 통과한 데이터 처리
+          onSaveEmpDetail();
+        })
+        .catch((errors) => {
+          // 유효성 검사 실패한 경우 에러 메세지
+          setAlertInfo({
+            isOpen: true,
+            status: "warning",
+            title: "입력값을 확인해주세요.",
+            detail: errors.message,
+            width: "fit-content",
+          });
+        });
+    } else {
+      // 유효성 검사 실패한 경우 에러 메세지
+      setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: "사진을 등록해주세요.",
+        width: "fit-content",
+      });
+    }
+  };
+
+  //유효성 검사
+  const handleUpdateCheck = () => {
+    empUpdateSchema
+      .validate(empDetail)
       .then(() => {
         // 유효성 검사 통과한 데이터 처리
-        onSaveEmpDetail()
+        updateEmpInfo();
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지
@@ -185,39 +199,10 @@ const Employee = () => {
           width: "fit-content",
         });
       });
-    }else{
-      // 유효성 검사 실패한 경우 에러 메세지
-      setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "입력값을 확인해주세요.",
-        detail: "사진을 등록해주세요.",
-        width: "fit-content",
-      });
-    }
-  }
-
-   //유효성 검사
-   const handleUpdateCheck = () => {
-    empUpdateSchema.validate(empDetail)
-    .then(() => {
-      // 유효성 검사 통과한 데이터 처리
-      updateEmpInfo()
-    })
-    .catch((errors) => {
-      // 유효성 검사 실패한 경우 에러 메세지
-      setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "입력값을 확인해주세요.",
-        detail: errors.message,
-        width: "fit-content",
-      });
-    });
-  }
+  };
 
   //사원 기본정보 저장
-  const onSaveEmpDetail = () => { 
+  const onSaveEmpDetail = () => {
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
 
@@ -240,12 +225,12 @@ const Employee = () => {
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
       body: fd,
-      credentials: 'include'
+      credentials: "include",
       // res에 결과가 들어옴
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.result === "success") {
+        if (res.status === 200) {
           setAlertInfo({
             isOpen: true,
             status: "success",
@@ -255,33 +240,36 @@ const Employee = () => {
           setEditState("read");
           setIsReload(!isReload);
         } else {
+          setAlertInfo({
+            isOpen: true,
+            status: "warning",
+            title: res.resultMsg,
+            width: "fit-content",
+          });
         }
       });
   };
 
    //사원 정보 수정
-   const updateEmpInfo = () =>{
-    fetch(
-      `${PORT}/emp/updateEmpInfo`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(empDetail),
-        credentials: 'include'
-        // res에 결과가 들어옴
-      }
-    ).then((res) => res.json())
-      .then((res) => {
-        setAlertInfo({
-          isOpen: true,
-          status: "success",
-          title: res.resultMsg,
-          width: "fit-content",
-        });
-        setEditState("read");
+   const updateEmpInfo = async() =>{
+    const res = await api.emp.updateEmpInfo(empDetail);
+
+    if(res.status === 200){
+      setAlertInfo({
+        isOpen: true,
+        status: "success",
+        title: res.resultMsg,
+        width: "fit-content",
       });
+      setEditState("read");
+    }else{
+      setAlertInfo({
+        isOpen: true,
+        status: "error",
+        title: res.resultMsg,
+        width: "fit-content",
+      });
+    }
   };
 
   useEffect(() => {
@@ -338,6 +326,12 @@ const Employee = () => {
             />
           </GridItem>
         </Grid>
+        {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
     </Box>
   );
 };

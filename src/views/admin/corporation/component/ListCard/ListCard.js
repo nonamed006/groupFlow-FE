@@ -63,7 +63,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
     setCoCd(0);
   }
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p={6} >
+    <Box borderRadius="5px" bg="white" h="700px" p={6} >
       {/* 목록 상단 */}
       <CardMenuBar
         handleOnClik={handleOnClik}

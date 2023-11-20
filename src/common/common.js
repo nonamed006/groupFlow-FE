@@ -34,9 +34,7 @@ export const setCookie = (cookie_name, value, time) => {
     // 설정 일수만큼 현재시간에 만료값으로 지정
   
     var cookie_value = escape(value) + ((time == null) ? '' : '; expires=' + exdate.toUTCString());
-    document.cookie = cookie_name + '=' + cookie_value;
-    //httpOnly 설정
-    document.cookie = cookie_name + "; httpOnly";
+    document.cookie = cookie_name + '=' + cookie_value + "; path=/";
   }
 
 //쿠키 get

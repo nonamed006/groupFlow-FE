@@ -68,6 +68,8 @@ const EmpCard = (props) => {
           <Spacer />
           <Button
             variant="action"
+            borderRadius={'10px'} 
+            fontWeight={'600'}
             onClick={() => {
               props.setEditState("insert");
               props.resetInput();

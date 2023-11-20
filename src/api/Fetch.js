@@ -9,7 +9,12 @@ import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
 import role from "./role/RoleApi";
+<<<<<<< HEAD
+import roleDep from "./roleDep/RoleDepApi";
+=======
+import emp from "./emp/EmpApi";
 
+>>>>>>> jej
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
 //   Authorization: getCookie("Authorization"),
@@ -22,7 +27,6 @@ export const getPromise = async ({ url, method, headers, body }) => {
       "Content-Type": "application/json; charset=utf-8",
     };
   }
-  headers["Authorization"] = getCookie("Authorization");
 
   return await fetch(`${PORT}/${url}`, {
     method: method,
@@ -34,26 +38,6 @@ export const getPromise = async ({ url, method, headers, body }) => {
     .then((responseJson) => responseJson);
 };
 
-//return await fetch(`${PORT}/${url}`, {
-//  method: method,
-//  body: body && body,
-//  headers: headers,
-//  credentials: "include",
-//})
-//  .then((response) => response.json())
-//  .then((responseJson) => {
-//    if (responseJson.status !== 200) {
-//      throw new Error(responseJson.resultMsg);
-//    } else {
-//      return responseJson;
-//    }
-//  })
-//  .catch((error) => {
-//    return error.message;
-//    console.log(error);
-//  });
-//};
-
 const api = {
   corp,
   roleGrp,
@@ -63,7 +47,9 @@ const api = {
   roleEmp,
   dep,
   menu,
-  role
+  role,
+  roleDep,
+  emp
 };
 
 export default api;

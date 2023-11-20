@@ -40,6 +40,9 @@ export default function AdminNavbar(props) {
     if (isUniqueProps(props)) {
       const newProps = { ...props };
       // 최대 5개까지만 저장
+      if(newProps.location.pathname === '/MU000000') {
+        return false;
+      }
       if (history.length < 5) {
         setHistory([newProps, ...history]);
       } else {

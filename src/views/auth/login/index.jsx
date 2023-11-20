@@ -21,7 +21,7 @@
 
 */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -51,8 +51,10 @@ import { PORT } from "set";
 import { useDispatch } from "react-redux";
 import { setEmpData } from "redux/solution";
 import { setCookie } from "common/common";
+import CommonAlert from "common/component/CommonAlert";
+import api from "api/Fetch";
 
-function SignIn() {
+function SignIn(props) {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -70,7 +72,9 @@ function SignIn() {
   const [show, setShow] = React.useState(false);
   const [empInfo, setEmpInfo] = useState({ loginId: "", loginPw: "" });
   const handleClick = () => setShow(!show);
-  const dispatch = useDispatch();
+  const [alertInfo, setAlertInfo] = useState({
+    isOpen: false,
+  });
 
   const handleChange = (e) => {
     setEmpInfo({ ...empInfo, [e.target.id]: e.target.value });
@@ -95,6 +99,19 @@ function SignIn() {
       window.location.replace("/MU000000/home");
     });
   }
+
+  useEffect(() => {
+    const status = new URLSearchParams(props.location.search).get('status');
+    switch(status) {
+      case '401' : 
+        setAlertInfo({
+          isOpen: true,
+          status: 'warning',
+          title: '로그인이 필요한 서비스입니다.',
+          width: 'fit-content',
+        })
+    }
+  }, [])
 
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -225,6 +242,12 @@ function SignIn() {
           </FormControl>
         </Flex>
       </Flex>
+      {alertInfo.isOpen &&
+				<CommonAlert
+					alertInfo={alertInfo}
+					setAlertInfo={setAlertInfo}
+				/>
+			}
     </DefaultAuth>
   );
 }

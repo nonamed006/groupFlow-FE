@@ -15,9 +15,9 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 300, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "명칭" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
+    { fieldName: "code", name: "code",  header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -63,6 +63,8 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
           setTabStatus(1);
           setEditState("read");
         } else if (depth === "0") {
+          setTabStatus(1);
+          setEditState("read");
           setDpCd(0);
         }
       }
@@ -86,7 +88,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
+    <div ref={realgridElement} style={{  width: "100%" }}></div>
   );
 };
 

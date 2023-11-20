@@ -3,7 +3,8 @@ import { Box, Image } from '@chakra-ui/react';
 import React from 'react';
 import douzoneImg from 'assets/img/auth/douzoneImg.png';
 import SearchBox from './compoent/SearchBox/SearchBox';
-import test from "assets/img/auth/test.png";
+import test from "assets/img/auth/test.jpg";
+import testTmp from "assets/img/auth/test_tmp.jpg";
 const HomePage = () => {
     return (
         <>
@@ -16,15 +17,15 @@ const HomePage = () => {
                 right={0}
                 bottom={0}
                 zIndex={-1}
-                backgroundImage={test}
+                backgroundImage={testTmp}
                 backgroundSize={'cover'}
             >
-                {/* <Box
+                <Box
                     w={'100%'}
                     h={'100%'}
                    bg={'rgba(0,0,0,0.3)'}
                    opacity={'90%'}
-                ></Box> */}
+                ></Box>
             </Box>
             {/* 검색창 */}
             <Box

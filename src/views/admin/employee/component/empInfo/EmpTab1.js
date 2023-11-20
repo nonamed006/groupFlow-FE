@@ -55,16 +55,17 @@ const EmpTab1 = (props) => {
   return (
     <div>
       <Grid
-        templateColumns="repeat(13, 1fr)"
-        templateRows="repeat(12, 1fr)"
+        templateColumns="repeat(8, 1fr)"
         gap={1}
+        w={"100%"}
+        pl={10}
       >
-        <GridItem colSpan={2} rowSpan={4}>
+        <GridItem colSpan={1} rowSpan={1}>
           <Text fontSize="sm" fontWeight="600">
             사진
           </Text>
         </GridItem>
-        <GridItem colStart={3} colEnd={7} rowSpan={4}>
+        <GridItem colStart={2} colEnd={4} rowSpan={4}>
           <Box>
             <Stack direction="row">
               <Image
@@ -98,7 +99,7 @@ const EmpTab1 = (props) => {
           </Box>
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={'개인메일'}
             name="psnMail"
@@ -112,7 +113,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"급여메일"}
             name="payMail"
@@ -126,7 +127,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"최초입사일"}
             name="joinDt"
@@ -142,7 +143,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
         
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"최종퇴사일"}
             id="reDt"
@@ -157,7 +158,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"이름"}
             name="empNm"
@@ -171,7 +172,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <InputGroup>
             <InputRightElement pointerEvents='none'>
               <LockIcon color='gray.300' />
@@ -189,7 +190,7 @@ const EmpTab1 = (props) => {
           </InputGroup>
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7} lineHeight="40px">
+        <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
         <FormRadio 
             title={"성별"}
             name="gender"
@@ -211,7 +212,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
         
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <InputGroup>
             <InputRightElement pointerEvents='none'>
               <LockIcon color='gray.300' />
@@ -229,7 +230,7 @@ const EmpTab1 = (props) => {
           </InputGroup>
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"메일ID"}
             name="mailId"
@@ -245,7 +246,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={8} colEnd={14}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
         <FormRadio 
             title={"계정사용"}
             name="useYn"
@@ -267,7 +268,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"로그인ID"}
             name="loginId"
@@ -283,7 +284,7 @@ const EmpTab1 = (props) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={7}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"휴대전화"}
             id="empTel"

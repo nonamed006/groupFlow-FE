@@ -1,50 +1,63 @@
 import api from "api/Fetch";
-import { rest } from "lodash";
 import { useEffect, useState } from "react";
-import { Link, Route } from "react-router-dom/cjs/react-router-dom.min";
-import LoginPage from "views/auth/login";
+import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
 
-const checkRole = async ({rest, Component, setAlertInfo}) => {
-    const response = await api.role.checkRoleSession('DG230006');
-    console.log(response);
+const RouteRole = ({component: Component, ...rest}) => {
+    const [ resp, setResp ] = useState({
+        status: 200,
+        component: ''
+    });
 
-    if(response.status === 200) {
-        return (
-            <Route
-                {...rest}
-                render={props => {
-                    return (
-                        <Component {...props}/>   
-                    )
-                }}
-            />
-        )
-    } else {
-        setAlertInfo({
-            isOpen: true,
-            status: 'error',
-            title: response.resultMsg,
-            width: 'fit-content',
-        })
-        return (
-            <Link to='/auth/login'/>
-        )
+    const loginEmpInfo = useSelector((state) => state.solution.empData);
+
+    const CheckRole = async (loginEmpInfo) => {
+        const pathArray = rest.path.split('/').filter(path => path !== '');
+        const pathNow = pathArray.pop();
+
+        if(pathNow === 'home') {
+            return false;
+        }
+        const response = await api.role.CheckRoleSession(pathNow, loginEmpInfo);
+        if(!response) {
+            setResp({
+                status: 400,
+                url: '/err/NotWorking'
+            })
+        } else {
+            if(response.status !== 200) {
+                setResp({
+                    status: response.status,
+                    url: response.status === 403 ? '/err/NoAccess' : '/err/NotWorking'
+                })
+            }
+        }
     }
-}
 
-const RouteRole = ({component: Component, setAlertInfo: setAlertInfo, ...rest}) => {
+
+
+    useEffect(() => {
+        if(loginEmpInfo) {
+            CheckRole(loginEmpInfo);
+        }
+    }, [loginEmpInfo])
 
     return (
-        <Route
-            {...rest}
-            render={props => {
-                if(Component) {
-                    return (
-                        <Component {...props}/>
-                    )
-                }
-            }}
-        />
+            resp.status === 200 ?
+                (
+                    Component ? 
+                        <Route
+                            {...rest}
+                            render={props => {
+                                return <Component {...props}/>
+                            }}
+                        />
+                    :
+                        <Redirect to='/err/NotFound'/>
+                )
+                
+            :
+                <Redirect to={resp.url}/>
     )
 }
 

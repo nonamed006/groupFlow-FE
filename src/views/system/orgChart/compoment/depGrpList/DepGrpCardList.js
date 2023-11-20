@@ -46,6 +46,7 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
     setIsLoading(true);
     let corpDepCd = (corpDep !== undefined && corpDep !== 'undefined') ? corpDep.code : undefined
     let res = await api.depGrp.getDepGepList(corpDepCd, search, keyword, pageNum);
+    
     if (res.status === 200 && res.pageInfo) { // 성공일 때
       let { list, total, isLastPage, hasNextPage } = res.pageInfo;
       setDepGrpList(pageNum === 1 ? list : [...depGrpList, ...list]);

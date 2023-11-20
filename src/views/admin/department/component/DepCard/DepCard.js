@@ -10,11 +10,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
 import Loading from "common/Loading";
-import { useInView } from "react-intersection-observer";
 
 const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const [infiniteScrollRef, inView] = useInView();
 
   useEffect(() => {}, []);
 
@@ -47,7 +45,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
           </Button>
         </Box>
         <Box w={"100%"} display={"inline-block"} height={"502px"}>
-          <Box w="518px" minH={"560px"} display={"flex"} px="6" h="fit-content">
+          <Box w="450px" h={"600px"} display={"flex"} px="6">
             <RealGrid
               org={org}
               setDpCd={setDpCd}
@@ -56,7 +54,7 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
             ></RealGrid>
           </Box>
         </Box>
-        {isLoading ? <Loading /> : <Box ref={infiniteScrollRef} h={"1px"} />}
+        {isLoading && <Loading /> }
       </Box>
     </>
   );

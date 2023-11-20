@@ -31,7 +31,7 @@ const SearchCardBar = (props) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" p="6">
+      <Box borderRadius="lg" bg="white" p="3" pt={5}>
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
           <GridItem colSpan={1}>
             <div
