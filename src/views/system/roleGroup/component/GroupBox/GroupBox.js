@@ -206,8 +206,7 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo, setIsLoading }) => {
     };
 
     return (
-        <Box borderRadius="lg" bg="white" h="780px" p="6" backgroundColor="white" >
-
+        <Box borderRadius="5px" bg="white" h="780px" p="6" backgroundColor="white" >
             <Box>
                 {/* 메뉴상단 */}
                 <CardMenuBar title={'권한그룹'} count={totalCount ? totalCount : 0} handleOnClik={changeIsOpen} buttonType={true} btnText={'추가'} />

@@ -17,7 +17,7 @@ const HomePage = () => {
                 right={0}
                 bottom={0}
                 zIndex={-1}
-                backgroundImage={douzoneImg}
+                backgroundImage={testTmp}
                 backgroundSize={'cover'}
             >
                 <Box
