@@ -31,7 +31,7 @@ const SearchCardBar = (props) => {
 
   return (
     <div>
-      <Box borderRadius="lg" bg="white" p="6">
+      <Box borderRadius="lg" bg="white" p="3" pt={5}>
         <Grid templateColumns="repeat(14, 1fr)" gap={2}>
           <GridItem colSpan={1}>
             <div
@@ -49,7 +49,7 @@ const SearchCardBar = (props) => {
             <Select
               placeholder="전체"
               onChange={(e) => {
-                props.setSearchCorp(e.target.value);
+                setSrhCorp(e.target.value);
               }}
             >
               {corpNm.map((item, index) => (
@@ -74,7 +74,7 @@ const SearchCardBar = (props) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" />
+            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" handleChange={(e)=>{setSrhWorkType(e.target.value)}}/>
           </GridItem>
           <GridItem colStart={9} colEnd={9}>
             <div

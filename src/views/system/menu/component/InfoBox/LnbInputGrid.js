@@ -95,7 +95,6 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
 
       return false;
     }
-
     menuInputData.useYn = menuInputData.useYn === "true" ? 1 : 0;
     const responseJson = await api.menu.modifyLnb(menuInputData);
 
@@ -135,7 +134,8 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
     };
     setMenuInputData(clickData);
     onClose();
-  };
+   };
+
 
   useEffect(() => {
     setMenuInputData(menuInfo);
@@ -311,7 +311,7 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
         </GridItem>
       </Grid>
     </>
-  );
+  )
 };
 
 export default LnbInputGrid;

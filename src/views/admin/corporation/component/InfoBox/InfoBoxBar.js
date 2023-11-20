@@ -40,7 +40,6 @@ const InfoBoxBar = ({
     today.setMonth(today.getMonth());
     today.setDate(today.getDate());
 
-    console.log(page);
     if (page === undefined) {
       page = 1;
     }
@@ -65,8 +64,9 @@ const InfoBoxBar = ({
       justify="space-between"
       w="100%"
       px="20px"
-      pb="20px"
       mb="10px"
+      pb="10px"
+      borderBottom={"1px"} color={'lightgray'}
     >
       <Text
         color={textColor}

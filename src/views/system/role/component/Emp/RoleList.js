@@ -17,7 +17,6 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
 
     // 사용자 회사의 권한 목록 조회
     const getRoleList = async () => {
-        console.log(keyword);
         const response = await api.roleEmp.getRoleListApi(dpGrpCd, keyword);//coCd, empCd
         if(response.status === 200) {
             setRoleList(response.data);

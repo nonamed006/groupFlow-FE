@@ -8,6 +8,7 @@ import React from "react";
 import { useEffect } from "react";
 
 const InfoBox = ({
+  setDpCd,
   depDto,
   updateBtn,
   onOpen,
@@ -29,7 +30,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
-              if (depDto.length === 0 || depDto.dpCd === "") {
+              if (depDto.length === 0 || depDto.dpCd === "" || depDto.dpCd === undefined) {
                 setAlertInfo({
                   isOpen: true,
                   title: "부서를 선택해주세요.",
@@ -49,7 +50,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
-              if (depDto.length === 0 || depDto.dpCd === "") {
+              if (depDto.length === 0 || depDto.dpCd === "" || depDto.dpCd === undefined) {
                 setAlertInfo({
                   isOpen: true,
                   title: "부서를 선택해주세요.",
@@ -81,6 +82,7 @@ const InfoBox = ({
             borderRadius={"10px"}
             fontWeight={"600"}
             onClick={() => {
+              setDpCd(0);
               setDepDto([]);
               setTabStatus(1);
               setEditState("read");

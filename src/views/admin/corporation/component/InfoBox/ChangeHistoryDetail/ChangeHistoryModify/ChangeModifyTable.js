@@ -7,7 +7,7 @@ const ChangeModifyTable = ({ detail }) => {
   return (
     <>
       {detail === null ? (
-        <Text fontSize="sm" fontWeight="600"  colorScheme={'facebook'}>
+        <Text fontSize="sm" fontWeight="600" colorScheme={"facebook"}>
           변경사항이 없습니다.
         </Text>
       ) : (

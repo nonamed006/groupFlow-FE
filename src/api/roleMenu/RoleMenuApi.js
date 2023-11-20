@@ -1,5 +1,5 @@
 import { getPromise } from "api/Fetch";
-import { getCookie } from "common/common";
+import { getCookie } from 'common/common';
 
 const roleMenu = {
     /**
@@ -117,7 +117,8 @@ const roleMenu = {
      * 안은비
      * 
     */
-   getRoleMenuBySearch: (dpGrpCd, keyword) => {
+   getRoleMenuBySearch: (keyword) => {
+    let dpGrpCd = getCookie('Emp_Dp_Type');
     const promise = getPromise({ url: `roleMenu/${dpGrpCd}?keyword=${keyword}`, method: 'GET' });
         return promise.then((responseJson) => responseJson);
    },

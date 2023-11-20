@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
 import "react-calendar/dist/Calendar.css";
@@ -29,28 +29,29 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
     stnd,
     sort,
   } = corp; // 비구조화 할당을 통해 값 추출
-  const useYn = new Boolean(corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
+  const useYn = new Boolean(corp.useYn === undefined ? true : corp.useYn); // 사용자 여부 toString 형변환을 위해 따로 선언
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+    if (e.target.name === "useYn") {
+       value = JSON.parse(e.target.value.toLowerCase());
+    }
     setCorp({
       ...corp,
       [name]: value, // name 키를 가진 값을 value 로
-    });
+    })
   };
 
-  useEffect(()=>{},[isEditing]);
-
   return (
-    <>
+    <Box display={'flex'} justifyContent={"center"}>
       <Grid
-        templateColumns="repeat(10, 1fr)"
-        templateRows="repeat(10, 1fr)"
-        gap={2}
+        templateColumns="repeat(8, 1fr)"
+        templateRows="repeat(8, 1fr)"
+        gap={1}
         w={"100%"}
-        paddingLeft={10}
+        pl={10}
       >
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"회사코드"}
             name={"coCd"}
@@ -62,7 +63,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormRadio
             title={"사용여부"}
             name={"useYn"}
@@ -84,7 +85,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"회사명"}
             name={"coNm"}
@@ -96,7 +97,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"회사약칭"}
             name={"coAbb"}
@@ -108,7 +109,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"업태"}
             name={"bsType"}
@@ -120,7 +121,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"업종"}
             name={"bsStock"}
@@ -132,7 +133,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"행정표준코드"}
             name={"stnd"}
@@ -144,7 +145,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"설립일"}
             name={"estDt"}
@@ -157,7 +158,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"개업일"}
             name={"opDt"}
@@ -170,7 +171,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"폐업일"}
             name={"clsDt"}
@@ -183,7 +184,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"사업자번호"}
             name={"bsnsNum"}
@@ -195,11 +196,11 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5}>
+        <GridItem colStart={1} colEnd={4}>
           <FormSelect
             title={"회사구분"}
             name={"bsCd"}
-            defaultValue={bsCd==="COA0001" || bsCd==="COA0002" ?bsCd:''}
+            defaultValue={bsCd === "COA0001" || bsCd === "COA0002" ? bsCd : ''}
             pk={coCd}
             onChange={onChange}
             readOnly={!isEditing}
@@ -218,7 +219,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"법인번호"}
             name={"coNum"}
@@ -230,7 +231,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"대표자명"}
             name={"ceoNm"}
@@ -242,7 +243,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"대표팩스"}
             name={"fax"}
@@ -262,7 +263,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           isRequired={true}
         />
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"홈페이지"}
             name={"pageUrl"}
@@ -274,7 +275,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={6} colEnd={10} colSpan={5}>
+        <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"기본도메인"}
             name={"coDomain"}
@@ -286,7 +287,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
 
-        <GridItem colStart={1} colEnd={5} colSpan={5}>
+        <GridItem colStart={1} colEnd={4} colSpan={4}>
           <FormInput
             title={"정렬"}
             name={"sort"}
@@ -298,7 +299,7 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
           />
         </GridItem>
       </Grid>
-    </>
+    </Box>
   );
 };
 

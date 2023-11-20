@@ -21,6 +21,7 @@ import EmpPwdChg from "../empPwdChg/EmpPwdChg";
 import EmpWorkState from "../empWorkState/EmpWorkState";
 import EmpInfoDel from "../empDel/EmpInfoDel";
 import EmpDepDel from "../empDel/EmpDepDel";
+import { depGrpSchema } from "common/Schema";
 const EmpInfo = (props) => {
   const [tabStatus, setTabStatus] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
@@ -117,17 +118,39 @@ const EmpInfo = (props) => {
       });
   };
 
+  //유효성 검사
+  const handleInsertCheck = () => {
+    depGrpSchema.validate(props.empDept[0])
+    .then(() => {
+      // 유효성 검사 통과한 데이터 처리
+      insertEmpDep()
+    })
+    .catch((errors) => {
+      // 유효성 검사 실패한 경우 에러 메세지
+      props.setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "입력값을 확인해주세요.",
+        detail: errors.message,
+        width: "fit-content",
+      });
+    });
+  }
+
   //사원 조직 정보 추가
   const insertEmpDep = () => {
-    fetch(`${PORT}/emp/insertEmpDep`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(props.empDept),
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
+    fetch(
+      `${PORT}/emp/insertEmpDep`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify(props.empDept)
+        // res에 결과가 들어옴
+      }
+    ).then((res) => res.json()) 
       .then((res) => {
         props.setAlertInfo({
           isOpen: true,
@@ -136,20 +159,26 @@ const EmpInfo = (props) => {
           width: "fit-content",
         });
         props.setEditState("read");
+        
+      }).then(()=>{
+        getDeptInfo(props.empDept[0].empCd);
       });
   };
 
   //사원 조직 정보 수정
   const updateEmpDep = () => {
-    fetch(`${PORT}/emp/updateEmpDep`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(props.empDept),
-      // res에 결과가 들어옴
-    })
-      .then((res) => res.json())
+    fetch(
+      `${PORT}/emp/updateEmpDep`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.empDept),
+        credentials: 'include'
+        // res에 결과가 들어옴
+      }
+    ).then((res) => res.json())
       .then((res) => {
         props.setAlertInfo({
           isOpen: true,
@@ -162,15 +191,15 @@ const EmpInfo = (props) => {
   };
 
   // 사원의 조직 정보
-  const getDeptInfo = () => {
-    console.log("Aaaaa", props.empDetail.empCd);
-    fetch(`${PORT}/emp/selectEmpDeptList/${props.empDetail.empCd}`, {
+  const getDeptInfo = (empCd) => {
+    empCd = empCd ?? props.empDetail.empCd;
+    fetch(`${PORT}/emp/selectEmpDeptList/{${empCd}}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
+        'Content-Type': "application/json; charset=utf-8",
       },
-    })
-      .then((res) => res.json())
+      credentials: 'include'
+    }).then((res) => res.json())
       .then((res) => {
         if (res.data.length > 0) {
           props.setEmpDept(res.data);
@@ -183,10 +212,10 @@ const EmpInfo = (props) => {
     fetch(`${PORT}/emp/deleteEmp/${props.empDetail.empCd}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
+        'Content-Type': "application/json; charset=utf-8",
       },
-    })
-      .then((res) => res.json())
+      credentials: 'include'
+    }).then((res) => res.json())
       .then((res) => {
         if (res.result === "success") {
           props.setAlertInfo({
@@ -210,6 +239,7 @@ const EmpInfo = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(delEmpDep),
+      credentials: 'include'
       // res에 결과가 들어옴
     })
       .then((res) => res.json())
@@ -221,7 +251,7 @@ const EmpInfo = (props) => {
           width: "fit-content",
         });
         onClose();
-        getDeptInfo();
+        getDeptInfo(props.empDetail.empCd);
         props.setEditState("read");
       });
   };
@@ -400,7 +430,7 @@ const EmpInfo = (props) => {
                           }
                         } else if (tabStatus === 2) {
                           if (props.editState === "deptInsert") {
-                            insertEmpDep();
+                            handleInsertCheck();
                           } else if (props.editState === "deptUpdate") {
                             updateEmpDep();
                           }
@@ -428,9 +458,11 @@ const EmpInfo = (props) => {
             <TabPanel>
               <EmpTab1
                 empDetail={props.empDetail}
+                setEmpDetail={props.setEmpDetail}
                 imgBase64={props.imgBase64}
                 setImgBase64={props.setImgBase64}
                 setImgFile={props.setImgFile}
+                imgFile={props.imgFile}
                 handleChange={handleChange}
                 handleRadioChange={handleRadioChange}
                 editState={props.editState}

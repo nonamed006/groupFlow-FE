@@ -22,6 +22,7 @@ import { set } from "lodash";
 const DepInfo = ({
   org,
   setTest,
+  setDpCd,
   dpCd,
   editState,
   setEditState,
@@ -42,12 +43,13 @@ const DepInfo = ({
     setDepDto(response.voData);
     setIsLoading(false);
   };
-
   //부서원 조회
   const getDepGroup = async () => {
     setIsLoading(true);
-    const response = await api.dep.getDepGroupApi(dpCd);
-    setDg(response.data);
+    let corpDepCd = "";
+    let search = "code";
+    let res = await api.depGrp.getDepGepList(corpDepCd, search, dpCd, 1);
+    setDg(res.pageInfo.list);
     setIsLoading(false);
   };
 
@@ -96,6 +98,7 @@ const DepInfo = ({
         status: "success",
         width: "fit-content",
       });
+      window.location.href = "/MU000000/home";
     }
   };
   const change = (depDto) => {
@@ -143,14 +146,12 @@ const DepInfo = ({
     onClose();
   };
   useEffect(() => {
-    if (dpCd !== 0) {
+    if (dpCd !== undefined && dpCd !== 0) {
       getDepDto();
       getDepGroup();
       setIsEditing(true);
     } else {
-      setDepDto({
-        dpCd: "",
-      });
+      setDepDto({ stnd: "", recYN: true, typeCd: "" });
       setDg([]);
       setIsEditing(false);
     }
@@ -182,6 +183,7 @@ const DepInfo = ({
             </Flex>
             <Spacer />
             <DepInfoBox
+              setDpCd={setDpCd}
               depDto={depDto}
               updateBtn={updateBtn}
               onOpen={onOpen}
