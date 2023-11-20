@@ -41,6 +41,7 @@ import MU230012 from "views/routes/MU230012";
 import MU230013 from "views/routes/MU230013";
 import MU230015 from "views/routes/MU230015";
 import MU230035 from "views/routes/MU230035";
+import { useSelector } from "react-redux";
 
 const componentMap = {
   'MU230005': MU230005,
@@ -49,10 +50,12 @@ const componentMap = {
   'MU230008': MU230008,
   'MU230009': MU230009,
   'MU230010': MU230010,
+  'MU230011': MU230015,
   'MU230012': MU230012,
   'MU230013': MU230015,
   'MU230014': MU230015,
   'MU230015': MU230015,
+  'MU230032': MU230035,
   'MU230035': MU230035,
 }
 // 원본 horizon-ui
@@ -74,8 +77,11 @@ const componentMap = {
 
 const component = {
   getRoute: async () => {
-    const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd('DG230006');
-    console.log('routes');
+    const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd();
+    if(responseJson.status !== 200) {
+      return [];
+    }
+    
     const data = responseJson.data;
     setComponent(data);
     const sys = {
@@ -194,7 +200,7 @@ const setComponent = (items) => {
 }
 
 //getRoute();
-const Routes = await component.getRoute();
+const Routes = await component.getRoute()
 
 export default Routes;
 

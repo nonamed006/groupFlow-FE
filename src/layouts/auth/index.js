@@ -8,6 +8,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 
 // Layout components
 import { SidebarContext } from "contexts/SidebarContext";
+import CommonAlert from "common/component/CommonAlert";
 
 // Custom Chakra theme
 export default function Auth() {
@@ -58,7 +59,7 @@ export default function Auth() {
           transitionDuration='.2s, .2s, .35s'
           transitionProperty='top, bottom, width'
           transitionTimingFunction='linear, linear, ease'>
-          {getRoute() ? (
+          {
             <Box mx='auto' minH='100vh'>
               <Switch>
                 {/* {getRoutes(routes)} */}
@@ -68,12 +69,11 @@ export default function Auth() {
                 />
                 <Redirect
                   from='/auth'
-                  to='/auth/login
-                  '
+                  to='/auth/login'
                 />
               </Switch>
             </Box>
-          ) : null}
+          }
         </Box>
       </SidebarContext.Provider>
     </Box>

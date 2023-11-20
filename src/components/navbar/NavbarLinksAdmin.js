@@ -40,6 +40,7 @@ import { deleteCookie } from "common/common";
 import { setCookie } from "common/common";
 import OrgChartModal from "views/system/orgChart/OrgChartModal";
 import { MdInfoOutline } from "react-icons/md";
+
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -81,6 +82,9 @@ export default function HeaderLinks(props) {
 			}
 		).then((res) => res.json())
 			.then((res) => {
+				if(res.status !== 200) {
+					return window.location.href = '/auth/login?status='+res.status;
+				}
 				dispatch(setEmpData(res?.data[0]));
 				setEmpInfo(res.data);
 			});
@@ -258,7 +262,7 @@ export default function HeaderLinks(props) {
 								</Thead>
 								<Tbody>
 									{empInfo?.map((column, index) => (
-										<Tr>
+										<Tr key={index}>
 											<Td>{column.coNm}</Td>
 											<Td>{column.dpNm}</Td>
 											<Td><Checkbox

@@ -1,4 +1,5 @@
 import { getPromise } from "api/Fetch";
+import { getCookie } from "common/common";
 
 const roleMenu = {
     /**
@@ -124,10 +125,10 @@ const roleMenu = {
    /**
     * 권한별 메뉴 목록 조회
     * 이혜윤
-    * @param {String} dpGrpCd 
     * @returns 
     */
-   getRoleMenuListByDpGrpCd: (dpGrpCd) => {
+   getRoleMenuListByDpGrpCd: () => {
+    const dpGrpCd = getCookie('Emp_Dp_Type');
     const promise = getPromise({
         url: `roleMenu/group/${dpGrpCd}`,
         method: 'GET'

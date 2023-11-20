@@ -17,7 +17,7 @@ export function SidebarBrand() {
     <Flex align='center' direction='column'  >
       {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> 이혜윤 - 수정(HorizonLogo -> GroupwareLogo) */}
       {/* 로고 클릭 시 홈화면으로 - 안은비 추가 */}
-      <Link to='/'>
+      <Link to='/MU000000/home'>
         <GroupwareLogo h='26px' w='175px' my='32px' color={logoColor} />
       </Link>
       {/* <HSeparator mb='20px' /> */}
