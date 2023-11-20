@@ -35,9 +35,6 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { PORT } from "set";
 import { setEmpData } from "redux/solution";
-import { getCookie } from "common/common";
-import { deleteCookie } from "common/common";
-import { setCookie } from "common/common";
 import OrgChartModal from "views/system/orgChart/OrgChartModal";
 import { MdInfoOutline } from "react-icons/md";
 
@@ -62,6 +59,7 @@ export default function HeaderLinks(props) {
 	const [empInfo, setEmpInfo] = useState([]);
 	const loginEmpInfo = useSelector((state) => state.solution.empData);
 	const dispatch = useDispatch();
+	const [dpGrpCd, setDpGrpCd] = useState("");
 	const [empTemp, setEmpTemp] = useState();
 
 	// 조직도 isOpen
@@ -116,12 +114,13 @@ export default function HeaderLinks(props) {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				deleteCookie("Emp_Dp_Type");
+				setDpGrpCd("");
 			});
 	};
 
 	//체크박스 핸들링
 	const handleChange = (e, empInfo) => {
+		setDpGrpCd(e.target.value);
 		setEmpTemp(empInfo);
 	};
 
@@ -182,7 +181,7 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px">
+				<MenuButton p="0px" onClick={() => { setDpGrpCd(loginEmpInfo.dpGrpCd);}}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
@@ -265,7 +264,7 @@ export default function HeaderLinks(props) {
 												me='16px'
 												colorScheme='brandScheme'
 												value={column.dpGrpCd}
-												isChecked={column.dpGrpCd == loginEmpInfo?.dpGrpCd ? true : false}
+												isChecked={column.dpGrpCd == dpGrpCd ? true : false}
 												onChange={(e) => handleChange(e, column)}
 											/></Td>
 										</Tr>
