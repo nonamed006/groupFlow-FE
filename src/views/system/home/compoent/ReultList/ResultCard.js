@@ -16,12 +16,11 @@ const ResultCard = ({ menuInfo, index, type, content, keyword, handleUseHistory 
                 backgroundColor={(mouseOverIndex === index) && type !== 'none' ? 'navy.50' : 'white'}
                 onMouseOut={onMouseOut}
                 onMouseOver={() => { type !== 'none' && onMouseOver(index) }}
-                rounded='lg'
+                rounded='none'
                 minH={'43px'}
                 display={'inline-block'}
                 p='3'
                 onClick={() => handleUseHistory(menuInfo.menuPath)}
-                borderColor={'brand.500'}
                 cursor={'pointer'}
             >
                 {

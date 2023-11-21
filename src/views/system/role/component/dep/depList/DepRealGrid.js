@@ -20,7 +20,7 @@ const DepRealGrid = ({ org, handleClick }) => {
 
   var columns = [
     { fieldName: "path", name: "path",  header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 380, header: { text: "name" } },
+    { fieldName: "name", name: "name", width: 376, header: { text: "name" } },
     { fieldName: "code", name: "code",  header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "type", name: "type", header: { text: "type" } },

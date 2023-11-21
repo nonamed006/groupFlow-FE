@@ -10,12 +10,12 @@ import { UseMouseOver } from "hook/UseMouseOver";
 
 const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const unusedTextColor = "secondaryGray.600";
+  const unusedTextColor = "secondaryGray.700";
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   return (
     <Tr
-      backgroundColor={(mouseOverIndex === index) || (coCd === data.coCd) ? 'navy.50' :'white' }
+      backgroundColor={(mouseOverIndex === index) ?  "gray.200" : (coCd === data.coCd) ? 'navy.50' :'white' }
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);

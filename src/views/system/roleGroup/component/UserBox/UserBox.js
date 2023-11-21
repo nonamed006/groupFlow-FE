@@ -21,7 +21,6 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     const [infiniteScrollRef, inView] = useInView();
 
     useEffect(() => {
-        console.log(rgCd);
         if (rgCd !== undefined && rgCd !== 'undefined') {
             initPageInfo();
         }else{
