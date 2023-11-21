@@ -189,6 +189,18 @@ const emp = {
     });
     return promise.then((responseJson) => responseJson);
   },
+
+   /**
+    * 사원 조직 정보 조회
+    * @param {string} empCd 사원 코드
+    * @returns 
+    */
+   getDeptInfo: (empCd) => {
+    const promise = getPromise({ url: `emp/selectEmpDeptList/${empCd}`, method: 'GET' });
+    return promise.then((responseJson) => responseJson);
+},
 };
+
+
 
 export default emp;
