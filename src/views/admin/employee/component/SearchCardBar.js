@@ -106,7 +106,7 @@ const SearchCardBar = (props) => {
           <GridItem colStart={14} colEnd={14}>
             <Button
               variant="brand"
-              onClick={() => props.getEmpList(srhCorp, srhWorkType, srhNm)}
+              onClick={() => {props.getEmpList(srhCorp, srhWorkType, srhNm);}}
             >
               검색
             </Button>

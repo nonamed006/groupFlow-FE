@@ -61,8 +61,9 @@ const EmpTab1 = (props) => {
         pl={10}
       >
         <GridItem colSpan={1} rowSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
+          <Text fontSize="md" fontWeight="600">
             사진
+            <span style={{color:"#e03131", margin:"5px" }}>*</span>
           </Text>
         </GridItem>
         <GridItem colStart={2} colEnd={4} rowSpan={4}>
@@ -184,6 +185,7 @@ const EmpTab1 = (props) => {
               inputType="password"
               readOnly={props.editState === "read" || props.editState === "update"}
               onChange={props.handleChange} 
+              value={props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -224,6 +226,7 @@ const EmpTab1 = (props) => {
             inputType="password"
             readOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
+            value={props.empDetail?.empPw}
             isRequired={props.editState === "insert"}
             pk={props.empDetail?.empCd}
           />
@@ -303,7 +306,7 @@ const EmpTab1 = (props) => {
         data={props.empDetail}
         setData={props.setEmpDetail}
         editState={props.editState != "read" && 'update'}
-        isRequired={true}
+        isRequired={false}
       />
       </Grid>
     </div>

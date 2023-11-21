@@ -12,7 +12,7 @@ const EmpIdChg = (props) => {
   //사원 ID 중복체크
   const chkEmpId = async() => {
     if(props.empId != ""){
-      const res = await api.emp.chkEmpId(props.empId,props.modalTabStatus);
+      const res = await api.emp.chkEmpId(props.empId, props.empCdTmp, props.modalTabStatus);
 
       if (res.status === 200) {
         props.setAlertInfo({
@@ -25,7 +25,7 @@ const EmpIdChg = (props) => {
       }else{
         props.setAlertInfo({
           isOpen: true,
-          status: "success",
+          status: "warning",
           title: res.resultMsg,
           width: "fit-content",
         });

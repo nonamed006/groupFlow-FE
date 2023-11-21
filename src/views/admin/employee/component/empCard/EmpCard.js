@@ -55,7 +55,7 @@ const EmpCard = (props) => {
             fontWeight="700"
             lineHeight="100%"
           >
-            {props.empNum}
+            {props.empList.length}
           </Text>
           <Text
             color={textColor}
@@ -71,6 +71,7 @@ const EmpCard = (props) => {
             borderRadius={'10px'} 
             fontWeight={'600'}
             onClick={() => {
+              props.tabClick();
               props.setEditState("insert");
               props.resetInput();
             }}

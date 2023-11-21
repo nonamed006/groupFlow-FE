@@ -18,6 +18,7 @@ const Employee = () => {
   const [imgFile, setImgFile] = useState(null); //파일
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [empCdTmp, setEmpCdTmp] = useState("");
+  const [empTmp, setEmpTmp] = useState({});
 
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
@@ -41,9 +42,9 @@ const Employee = () => {
       delYn: "",
       dpCd: "",
       dpGrpNum: "",
-      dpGrpcd: "",
+      dpGrpcd: "DGA0001",
       dpNm: "",
-      dpType: "",
+      dpType: "DGB0001",
       dpTypeNm: "",
       empCd: empCdTmp,
       empTypeCd: "",
@@ -70,8 +71,10 @@ const Employee = () => {
     const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm);
 
     if(res.status === 200){
+      resetInput();
       setEmpList(res.data);
       setEmpNum(res.strData);
+      setSelectedIndex(undefined);
     }
   };
 
@@ -91,12 +94,10 @@ const Employee = () => {
     setEditState("read");
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
+    setEmpTmp(empList);
   };
 
-  // input 값 초기화
-  const resetInput = () => {
-    setImgBase64([]);
-
+  const resetEmpDetail = () => {
     setEmpDetail({
       empNm: "",
       mailId: "",
@@ -114,21 +115,25 @@ const Employee = () => {
       workTypeCd: "",
       useYn: "1",
       gender: "M",
+      empPw: "",
     });
+  }
+
+  const resetEmpDept = () => {
     setEmpDept([
       {
         addr: "",
         addrDetail: "",
         coCd: "",
         coNm: "",
-        coType: "",
+        coType: "DGA0001",
         coTypeNm: "",
         delYn: "",
         dpCd: "",
         dpGrpNum: "",
         dpGrpcd: "",
         dpNm: "",
-        dpType: "",
+        dpType: "DGB0001",
         dpTypeNm: "",
         empCd: empCdTmp, //수정필요
         empTypeCd: "",
@@ -149,6 +154,14 @@ const Employee = () => {
         workTypeNm: "",
       },
     ]);
+  }
+
+  // input 값 초기화
+  const resetInput = () => {
+    setImgBase64([]);
+
+    resetEmpDetail();
+    resetEmpDept();
   };
 
   //유효성 검사
@@ -275,10 +288,12 @@ const Employee = () => {
   };
 
   useEffect(() => {
-    resetInput();
-    setSelectedIndex(undefined);
     getEmpList("", "", "");
   }, [isReload]);
+
+  const tabClick = () => {
+    document.getElementById("tabs-44--tab-0").click();
+  };
 
   return (
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
@@ -290,7 +305,7 @@ const Employee = () => {
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} /> 
+            <SearchCardBar getEmpList={getEmpList} setSelectedIndex={setSelectedIndex}/> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -302,6 +317,7 @@ const Employee = () => {
               editState={editState}
               setSelectedIndex={setSelectedIndex}
               selectedIndex={selectedIndex}
+              tabClick={tabClick}
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>
@@ -325,6 +341,9 @@ const Employee = () => {
               selectedIndex={selectedIndex}
               setIsLoading={setIsLoading}
               isLoading={isLoading}
+              empCdTmp={empCdTmp}
+              empTmp={empTmp}
+              getDeptInfo={getDeptInfo}
             />
           </GridItem>
         </Grid>

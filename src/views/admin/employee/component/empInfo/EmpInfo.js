@@ -29,7 +29,7 @@ const EmpInfo = (props) => {
   const [empId, setEmpId] = useState("");
   const [modalTabStatus, setModalTabStatus] = useState("type1");
   const [modalType, setModalType] = useState(1);
-  const [empPwd, setEmpPwd] = useState();
+  const [empPwd, setEmpPwd] = useState("");
   const [delEmpDep, setDelEmpDep] = useState([]);
   const [empDeptTmp, setEmpDeptTmp] = useState([]);
   const [isIdChk, setIsIdChk] = useState(false);
@@ -293,7 +293,9 @@ const EmpInfo = (props) => {
                 fontSize="22px"
                 fontWeight="700"
                 lineHeight="100%"
-                onClick={() => {
+                onClick={(e) => {
+                  props.resetInput();
+                  props.setEmpDetail(props.empTmp);
                   props.setEditState("read");
                   setTabStatus(1);
                 }}
@@ -304,7 +306,8 @@ const EmpInfo = (props) => {
                 fontSize="22px"
                 fontWeight="700"
                 lineHeight="100%"
-                onClick={() => {
+                onClick={(e) => {
+                  getDeptInfo(props.empCdTmp);
                   props.setEditState("read");
                   setTabStatus(2);
                 }}
@@ -595,7 +598,8 @@ const EmpInfo = (props) => {
           }
           children={
             modalType == 1 ? (
-              <EmpIdChg
+              <EmpIdChg 
+              empCdTmp={props.empCdTmp}
                 empDetail={props.empDetail}
                 setEmpId={setEmpId}
                 empId={empId}

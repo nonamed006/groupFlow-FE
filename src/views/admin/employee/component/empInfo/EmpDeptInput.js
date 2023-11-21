@@ -59,7 +59,6 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
 
   const click = () => {
     let idx = 0;
-
     empDeptTmp.map((data, index) => {
       if (data.dpCd === updatedDepDto?._values[2]) {
         idx++;
@@ -71,6 +70,16 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         });
       }
     })
+
+    if ("CO" === updatedDepDto?._values[2].substr(0,2)) {
+      idx++;
+      setAlertInfo({
+        isOpen: true,
+        status: 'warning',
+        title: "회사는 선택할 수 없습니다.",
+        width: 'fit-content'
+      });
+    }
 
     if (idx == 0) {
       handleChange({
@@ -115,10 +124,11 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
     <Grid
       templateColumns="repeat(13, 1fr)"
       templateRows="repeat(10, 1fr)"
-      gap={2}
+      gap={1}
     >
+      <GridItem colStart={0} colSpan={13}>
       <Checkbox
-        me='16px'
+        me='5px'
         size="lg"
         colorScheme='brandScheme'
         name="dpGrpCd"
@@ -128,9 +138,11 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         }}
         style={{visibility: editState === "deptDelete" ? "visible" : "hidden"}}
       />
-      <GridItem colStart={0} colEnd={2}>
-        <Text fontSize="sm" fontWeight="600">
+      </GridItem>
+      <GridItem colSpan={2}>
+        <Text fontSize="md" fontWeight="600">
           회사/부서
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={6}>
@@ -249,6 +261,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem>
         <Text fontSize="md" fontWeight="600">
           직급
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
@@ -258,6 +271,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem colStart={8} colEnd={10}>
         <Text fontSize="md" fontWeight="600">
           직책
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
@@ -267,6 +281,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem colSpan={2}>
         <Text fontSize="md" fontWeight="600">
           재직구분
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
@@ -276,6 +291,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem colStart={8} colEnd={10}>
         <Text fontSize="md" fontWeight="600">
           고용구분
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={10} colEnd={14}>
@@ -285,6 +301,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem colSpan={2}>
         <Text fontSize="md" fontWeight="600">
           직무
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={7}>
@@ -305,8 +322,9 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       </GridItem>
 
       <GridItem colSpan={2}>
-        <Text fontSize="sm" fontWeight="600">
+        <Text fontSize="md" fontWeight="600">
           입사일 / 퇴사일
+          <span style={{color:"#e03131", margin:"5px" }}>*</span>
         </Text>
       </GridItem>
       <GridItem colStart={3} colEnd={5}>

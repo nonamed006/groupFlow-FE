@@ -179,12 +179,13 @@ const emp = {
   /**
    * 사원 ID 중복 확인
    * @param {empId} empId 입력받은 사원ID
+   * @param {empCd} empCd 입력받은 사원Cd
    * @param {modalTabStatus} modalTabStatus 현재 탭
    * @returns
    */
-  chkEmpId: (empId, modalTabStatus) => {
+  chkEmpId: (empId, empCd, modalTabStatus) => {
     const promise = getPromise({
-      url: `emp/selectChkEmpId/${empId}/${modalTabStatus}`,
+      url: `emp/selectChkEmpId/${empId}/${empCd}/${modalTabStatus}`, 
       method: "GET",
     });
     return promise.then((responseJson) => responseJson);
