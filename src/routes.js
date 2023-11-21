@@ -181,10 +181,10 @@ const component = {
   },
 };
 const setComponent = (items) => {
-  if(!items) {
+  if (!items) {
     return false;
   }
-  items.forEach(item => {
+  items.forEach((item) => {
     item.code = item.menu_cd;
     item.name = item.menu_nm;
     item.path = item.menu_path;
@@ -211,10 +211,9 @@ const setComponent = (items) => {
   });
 };
 
-
 const RoleRoutes = async () => {
-  const responseJson =  await api.roleMenu.getRoleMenuListByDpGrpCd();
-  if(responseJson.status !== 200) {
+  const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd();
+  if (responseJson.status !== 200) {
     return [];
   }
 
@@ -222,6 +221,6 @@ const RoleRoutes = async () => {
   setComponent(data);
 
   return data;
-}
+};
 
 export default RoleRoutes;

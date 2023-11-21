@@ -90,7 +90,7 @@ const ChangeInsertTableTbody = ({ detail }) => {
         </Td>
         <Td textAlign="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            {detail.bsDiv}
+            {detail.bsCd === "COA0001" ? "개인" : "법인"}
           </Text>
         </Td>
       </Tr>
