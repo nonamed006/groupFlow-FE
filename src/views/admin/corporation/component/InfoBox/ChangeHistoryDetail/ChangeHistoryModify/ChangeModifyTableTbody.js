@@ -12,17 +12,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
     <Tbody>
       {detail.co1Nm !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               회사명
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.co1Nm}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.co2Nm}
             </Text>
@@ -31,17 +31,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.co1Abb !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               회사약칭
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.co1Abb}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.co2Abb}
             </Text>
@@ -50,17 +50,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.bsnsNum1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               사업자번호
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsnsNum1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsnsNum2}
             </Text>
@@ -69,17 +69,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.ceoNm1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               대표자명
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.ceoNm1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.ceoNm2}
             </Text>
@@ -88,17 +88,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.bsType1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               업태
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsType1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsType2}
             </Text>
@@ -107,17 +107,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.bsStock1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               업종
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsStock1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsStock2}
             </Text>
@@ -126,17 +126,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.bsDiv1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               사업자구분
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsDiv1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.bsDiv2}
             </Text>
@@ -145,17 +145,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.coNum1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               법인번호
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.coNum1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.coNum2}
             </Text>
@@ -164,17 +164,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.estDt1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               설립일
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.estDt1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.estDt2}
             </Text>
@@ -183,17 +183,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.opDt1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               개업일
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.opDt1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.opDt2}
             </Text>
@@ -202,17 +202,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.clsDt1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               폐업일
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.clsDt1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.clsDt2}
             </Text>
@@ -221,17 +221,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.coDomain1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               도메인
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.coDomain1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.coDomain2}
             </Text>
@@ -240,17 +240,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.pageUrl1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               홈페이지주소
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.pageUrl1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.pageUrl2}
             </Text>
@@ -259,17 +259,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.sort1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               정렬
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.sort1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.sort2}
             </Text>
@@ -278,17 +278,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.fax1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               팩스
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.fax1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.fax2}
             </Text>
@@ -297,17 +297,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.stnd1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               행정표준코드
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.stnd1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.stnd2}
             </Text>
@@ -316,17 +316,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.useYN1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               사용여부
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.useYN1 === "1" ? "사용" : "미사용"}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.useYN2 === "1" ? "사용" : "미사용"}
             </Text>
@@ -335,17 +335,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.postNum1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               우편번호
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.postNum1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.postNum2}
             </Text>
@@ -354,17 +354,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
       )}
       {detail.addr1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               회사주소
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.addr1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.addr2}
             </Text>
@@ -374,17 +374,17 @@ const ChangeModifyTableTbody = ({ detail }) => {
 
       {detail.addrDetail1 !== undefined && (
         <Tr>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               상세주소
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.addrDetail1}
             </Text>
           </Td>
-          <Td align="center">
+          <Td textAlign="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
               {detail.addrDetail2}
             </Text>

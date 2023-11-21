@@ -144,7 +144,7 @@ const InfoBoxBar = ({
             buttonYn={false}
             size={"6xl"}
           >
-            <Box borderRadius="lg" bg="white" p="6">
+            <Box  bg="white" p="6"  borderBottom={"1px"} borderColor={'lightgray'}>
               <ChangeMenuBar
                 chSearch={chSearch}
                 setChSearch={setChSearch}
@@ -152,7 +152,7 @@ const InfoBoxBar = ({
                 setAlertInfo={setAlertInfo}
               />
             </Box>
-            <Box borderRadius="lg" bg="white" p="6">
+            <Box bg="white" p="6" >
               <ChangeTable
                 chHistory={chHistory}
                 handelChangeHistoryBtn={handelChangeHistoryBtn}
