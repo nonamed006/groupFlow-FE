@@ -8,6 +8,7 @@ import DepGrpInfo from './compoment/depGrpInfo/DepGrpInfo';
 import { PORT } from "set";
 import CommonAlert from 'common/component/CommonAlert';
 import Loading from 'common/Loading';
+import api from 'api/Fetch';
 
 const OrgChartBox = () => {
     const [depGrp, setDepGrp] = useState();  // 선택된 부서원 데이터 하나
@@ -28,16 +29,15 @@ const OrgChartBox = () => {
 
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
-        // if ((search === '') && !((keyword === undefined && keyword === 'undefined')||keyword === '')) {
-        //     setAlertInfo({
-        //         isOpen: true,
-        //         status: 'warning',
-        //         detail: '검색기준을 선택하세요',
-        //         width: 'fit-content'
-        //     });
-        //     return;
-        // } else
-         if (((keyword === undefined && keyword === 'undefined') || keyword === '') && !(search === '')) {
+        if ((search === '') && !(keyword === undefined || keyword === 'undefined' || keyword === '')) {
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                detail: '검색기준을 선택하세요',
+                width: 'fit-content'
+            });
+            return;
+        } else if ((keyword === undefined || keyword === 'undefined' || keyword === '') && !(search === '')) {
             setAlertInfo({
                 isOpen: true,
                 status: 'warning',
@@ -57,13 +57,15 @@ const OrgChartBox = () => {
     // 회사 및 부서 목록 조회
     const fetchCorpDepList = async () => {
         //await setIsLoading(true);
-        let url = `${PORT}/roleEmp/list?empYn=N`;
-        fetch(url, {
-            method: "GET"
-        }).then(res => res.json()).then(res => {
+        let res = await api.roleEmp.getEmpListByParamApi('N', undefined, undefined, undefined);
+        if (res.status === 200) {
             setCorpDepList(res.data);
-            setIsLoading(false);
-        });
+        } else {
+            setCorpDepList([]);
+        }
+
+        setIsLoading(false);
+        ;
     };
 
     // 조직도 그리드 클릭 시
@@ -111,7 +113,7 @@ const OrgChartBox = () => {
                                 corpDep={corpDep && corpDep}
                                 search={search}
                                 keyword={keyword}
-                                setDepGrp={setDepGrp} 
+                                setDepGrp={setDepGrp}
                                 depGrp={depGrp} />
                         </GridItem>
 

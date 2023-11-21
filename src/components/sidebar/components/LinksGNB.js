@@ -59,7 +59,6 @@ export function SidebarLinks(props) {
                           ? activeIcon
                           : textColor
                       }
-                      me='18px'
                       w={'20px'}
                       h={'20px'}
                     >
@@ -81,7 +80,9 @@ export function SidebarLinks(props) {
                               activeRoute(route.path)
                                 ? "bold"
                                 : "normal"
-                            }>
+                            }
+                            ml={'10px'}
+                            >
                             {route.name}
                           </Text>
                         </>
@@ -128,7 +129,6 @@ export function SidebarLinks(props) {
                           ? activeIcon
                           : textColor
                       }
-                      me='18px'
                       w={'20px'}
                       h={'20px'}
                     >
@@ -150,7 +150,9 @@ export function SidebarLinks(props) {
                               activeRoute(route.path)
                                 ? "bold"
                                 : "normal"
-                            }>
+                            }
+                            ml={'10px'}
+                            >
                             {route.name}
                           </Text>
                           {route.items && <ChevronRightIcon/>}

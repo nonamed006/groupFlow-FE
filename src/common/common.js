@@ -34,7 +34,7 @@ export const setCookie = (cookie_name, value, time) => {
     // 설정 일수만큼 현재시간에 만료값으로 지정
   
     var cookie_value = escape(value) + ((time == null) ? '' : '; expires=' + exdate.toUTCString());
-    document.cookie = cookie_name + '=' + cookie_value + "; path=/";
+    document.cookie = cookie_name + '=' + cookie_value + "; path=/; max-age=3600";
   }
 
 //쿠키 get
@@ -54,6 +54,6 @@ export const getCookie = (cookie_name) => {
 
 //쿠키 삭제
 export const deleteCookie = (cookie_name) => {
-    document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+    document.cookie = cookie_name + '= ""; path=/; max-age=-1;';
 }
     

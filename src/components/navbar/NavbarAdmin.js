@@ -27,7 +27,7 @@ export default function AdminNavbar(props) {
     };
   });
 
-  const { secondary, message, brandText, location, pathText } = props;
+  const { secondary, message, brandText, location, pathText, routes } = props;
 
   //방문한 페이지 추가
   const updateHistory = () => {
@@ -39,10 +39,12 @@ export default function AdminNavbar(props) {
     // props가 중복되지 않으면 추가
     if (isUniqueProps(props)) {
       const newProps = { ...props };
-      // 최대 5개까지만 저장
+      
       if(newProps.location.pathname === '/MU000000') {
         return false;
       }
+
+      // 최대 5개까지만 저장
       if (history.length < 5) {
         setHistory([newProps, ...history]);
       } else {

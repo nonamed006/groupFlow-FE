@@ -7,13 +7,16 @@ import Navbar from "components/navbar/NavbarAdmin";
 import Sidebar from "components/sidebar/Sidebar.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-//import routes from "routes.js";
-import routes from "routes.js";
+//import routes from "routes";
+import RoleRoutes from "routes";
 import CommonAlert from "common/component/CommonAlert";
 import { SidebarContext } from "contexts/SidebarContext";
 import "../assets/css/Sidebar.css"
 import HomePage from "views/system/home";
 import RouteRole from "routeRole";
+import { getCookie } from "common/common";
+import { useSelector } from "react-redux";
+import ErrorPage from "views/system/error";
 
 /*
 layouts/admin/index.js
@@ -22,10 +25,34 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const [ dpGrpCd, setDpGrpCd ] = useState('');
+  // const routes = useMemo(async () => {
+  //   const menus =  await RoleRoutes();
+  //   if(menus) {
+  //     return menus;
+  //   } else {
+  //     return [];
+  //   }
+  // }, [dpGrpCd]);
+  const [ routes, setRoutes] = useState([]);
+  const loginEmpInfo = useSelector((state) => state.solution.empData);
+  
+  useEffect(() => {
+    setDpGrpCd(getCookie('Emp_Dp_Type'));
+  }, [])
+
+  const getRoleRoutes = async () => {
+    const route = await RoleRoutes();
+    setRoutes(route);
+  }
+
+  useEffect(async () => {
+    getRoleRoutes();
+  }, [loginEmpInfo])
+
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
-  
   // 사용자가 요청한 PATH를 찾아서 반환
   const findPath = (data, targetPath) => {
     for (const item of data) {
@@ -63,7 +90,6 @@ export default function Dashboard(props) {
     let pathNowName = ''; // 현재 path 이름
     let pathString = '';  // path 전체 이름
     let filtedRoutes = routes.filter((route) => route.code === (pathArray.length > 0 ? pathArray[0] : pathNow)); // 현재에 맞는 대메뉴만 들고옴
-    
     switch(gnb) {
       case 'pathText' :
           if(pathArray.length > 0) {
@@ -226,7 +252,7 @@ export default function Dashboard(props) {
 							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={"Horizon UI Dashboard PRO"}
+                  logoText={"GROUP FLOW"}
                   pathText={getLocationPath(routes, 'pathText')}
                   brandText={getLocationPath(routes, 'routeText')}////getActiveRoute(routes)
                   secondary={getActiveNavbar(routes)}
@@ -242,7 +268,10 @@ export default function Dashboard(props) {
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-						    <Redirect from="/MU000000" to="/MU000000/home" />
+                <Route path='*' component={ErrorPage} />
+                {/* <Redirect from="" to="/err/NotFound" />
+						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
+                {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
               {alertInfo.isOpen && (
                 <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
