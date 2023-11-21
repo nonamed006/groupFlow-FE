@@ -26,6 +26,7 @@ import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
 
 const DepBasic = (props) => {
+  console.log(props);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
   let recYN = new Boolean(
@@ -38,6 +39,9 @@ const DepBasic = (props) => {
   const onChange = (e) => {
     let { value, name } = e.target;
     if (e.target.name === "recYN") {
+      value = e.target.value.toLowerCase() === "true";
+    }
+    if (e.target.name === "useYN") {
       value = e.target.value.toLowerCase() === "true";
     }
     const updateData = {

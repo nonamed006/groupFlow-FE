@@ -124,21 +124,21 @@ const ChangeModifyTableTbody = ({ detail }) => {
           </Td>
         </Tr>
       )}
-      {detail.bsDiv1 !== undefined && (
+      {detail.bsCd1 !== undefined && (
         <Tr>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              사업자구분
+              회사구분
             </Text>
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.bsDiv1}
+              {detail.bsCd1 === "COA0001" ? "개인" : "법인"}
             </Text>
           </Td>
           <Td align="center">
             <Text color={textColor} fontSize="sm" fontWeight="600">
-              {detail.bsDiv2}
+              {detail.bsCd2 === "COA0001" ? "개인" : "법인"}
             </Text>
           </Td>
         </Tr>

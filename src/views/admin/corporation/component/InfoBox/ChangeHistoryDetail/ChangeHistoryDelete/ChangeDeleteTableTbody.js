@@ -85,12 +85,12 @@ const ChangeDeleteTableTbody = ({ detail }) => {
       <Tr>
         <Td align="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            사업자구분
+            회사구분
           </Text>
         </Td>
         <Td align="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            {detail.bsDiv}
+            {detail.bsCd === "COA0001" ? "개인" : "법인"}
           </Text>
         </Td>
       </Tr>

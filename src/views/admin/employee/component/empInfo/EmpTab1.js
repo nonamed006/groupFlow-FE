@@ -21,10 +21,14 @@ import FormInput from "common/component/FormInput";
 import FormRadio from "common/component/FormRadio";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
-
+import { PORT } from "set";
+import EmpIcon from "assets/img/gridIcon/employee.png";
 const EmpTab1 = (props) => {
+  console.log(props);
 
-  const useYN = new Boolean(props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN);
+  const useYN = new Boolean(
+    props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
+  );
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
@@ -54,12 +58,7 @@ const EmpTab1 = (props) => {
 
   return (
     <div>
-      <Grid
-        templateColumns="repeat(8, 1fr)"
-        gap={1}
-        w={"100%"}
-        pl={10}
-      >
+      <Grid templateColumns="repeat(8, 1fr)" gap={1} w={"100%"} pl={10}>
         <GridItem colSpan={1} rowSpan={1}>
           <Text fontSize="sm" fontWeight="600">
             사진
@@ -68,14 +67,23 @@ const EmpTab1 = (props) => {
         <GridItem colStart={2} colEnd={4} rowSpan={4}>
           <Box>
             <Stack direction="row">
-              <Image
-                w="150px"
-                h="200px"
-                fallbackSrc="https://via.placeholder.com/150"
-                src={props.imgBase64}
-                alt="사원사진"
-                border="1px solid lightgray"
-              />
+              {props.empDetail.empCd === undefined ? (
+                <Image
+                  w="150px"
+                  h="200px"
+                  src={EmpIcon}
+                  alt="사원사진"
+                  border="1px solid lightgray"
+                />
+              ) : (
+                <Image
+                  w="150px"
+                  h="200px"
+                  src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                  alt="사원사진"
+                  border="1px solid lightgray"
+                />
+              )}
 
               <IconButton
                 variant="outline"
@@ -101,7 +109,7 @@ const EmpTab1 = (props) => {
 
         <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
-            title={'개인메일'}
+            title={"개인메일"}
             name="psnMail"
             id="psnMail"
             placeholder="example@mail.com"
@@ -142,7 +150,7 @@ const EmpTab1 = (props) => {
             pk={props.empDetail?.empCd}
           />
         </GridItem>
-        
+
         <GridItem colStart={5} colEnd={8} colSpan={4}>
           <FormInput
             title={"최종퇴사일"}
@@ -174,16 +182,18 @@ const EmpTab1 = (props) => {
 
         <GridItem colStart={5} colEnd={8} colSpan={4}>
           <InputGroup>
-            <InputRightElement pointerEvents='none'>
-              <LockIcon color='gray.300' />
+            <InputRightElement pointerEvents="none">
+              <LockIcon color="gray.300" />
             </InputRightElement>
-            <FormInput 
+            <FormInput
               title={"로그인 비밀번호"}
               id="loginPw"
               name="loginPw"
               inputType="password"
-              readOnly={props.editState === "read" || props.editState === "update"}
-              onChange={props.handleChange} 
+              readOnly={
+                props.editState === "read" || props.editState === "update"
+              }
+              onChange={props.handleChange}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -191,7 +201,7 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
-        <FormRadio 
+          <FormRadio
             title={"성별"}
             name="gender"
             defaultValue={props.empDetail.gender ?? "M"}
@@ -201,32 +211,34 @@ const EmpTab1 = (props) => {
             isRequired={true}
             values={[
               {
-                value: 'M',
-                name: '남성'
+                value: "M",
+                name: "남성",
               },
               {
-                value: 'F',
-                name: '여성'
-              }]}
-
+                value: "F",
+                name: "여성",
+              },
+            ]}
           />
         </GridItem>
-        
+
         <GridItem colStart={5} colEnd={8} colSpan={4}>
           <InputGroup>
-            <InputRightElement pointerEvents='none'>
-              <LockIcon color='gray.300' />
+            <InputRightElement pointerEvents="none">
+              <LockIcon color="gray.300" />
             </InputRightElement>
             <FormInput
-            title={"결재 비밀번호"}
-            id="signPw"
-            name="signPw"
-            inputType="password"
-            readOnly={props.editState === "read" || props.editState === "update"}
-            onChange={props.handleChange}
-            isRequired={props.editState === "insert"}
-            pk={props.empDetail?.empCd}
-          />
+              title={"결재 비밀번호"}
+              id="signPw"
+              name="signPw"
+              inputType="password"
+              readOnly={
+                props.editState === "read" || props.editState === "update"
+              }
+              onChange={props.handleChange}
+              isRequired={props.editState === "insert"}
+              pk={props.empDetail?.empCd}
+            />
           </InputGroup>
         </GridItem>
 
@@ -247,7 +259,7 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-        <FormRadio 
+          <FormRadio
             title={"계정사용"}
             name="useYn"
             defaultValue={useYN.toString()}
@@ -258,13 +270,13 @@ const EmpTab1 = (props) => {
             values={[
               {
                 value: "true",
-                name: '사용'
+                name: "사용",
               },
               {
                 value: "false",
-                name: '미사용'
-              }]}
-
+                name: "미사용",
+              },
+            ]}
           />
         </GridItem>
 
@@ -299,12 +311,12 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <AddrBox
-        title={'회사주소'}
-        data={props.empDetail}
-        setData={props.setEmpDetail}
-        editState={props.editState != "read" && 'update'}
-        isRequired={true}
-      />
+          title={"회사주소"}
+          data={props.empDetail}
+          setData={props.setEmpDetail}
+          editState={props.editState != "read" && "update"}
+          isRequired={true}
+        />
       </Grid>
     </div>
   );
