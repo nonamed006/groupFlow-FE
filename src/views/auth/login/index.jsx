@@ -81,6 +81,7 @@ function SignIn(props) {
   }
 
   const empLogin = () => {
+    let status = "fail";
     fetch(`${PORT}/common/loginEmp`, {
       method: "POST",
       body: JSON.stringify(empInfo),
@@ -90,13 +91,21 @@ function SignIn(props) {
       credentials: 'include'
     }).then((res) => res.json())
     .then((res) => {
-      res.data.forEach(function(data) {
-        if(data.dpType == "DGB0001"){
-          setCookie("Emp_Dp_Type", data.dpGrpCd, 2);
-        }
-      });
+        if(res.status === 200){
+          setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
+          status="success";
+      }else{
+        setAlertInfo({
+          isOpen: true,
+          status: 'warning',
+          title: res.resultMsg,
+          width: 'fit-content',
+        })
+      }
     }).then(()=>{
-      window.location.replace("/MU000000/home");
+      if(status === "success"){
+        window.location.replace("/MU000000/home");
+      }
     });
   }
 

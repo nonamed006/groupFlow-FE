@@ -31,7 +31,7 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
             w={'100%'}
             boxShadow={'md'}
             pl={5}
-            borderRadius={'10px'}
+            borderRadius={'5px'}
         >
             <Box w={'40%'}>
                 <SearchBar

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "assets/css/App.css";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -15,8 +15,6 @@ import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import MU000000 from "layouts/MU000000"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
-import LoginPage from "views/auth/login";
-import HomePage from "views/system/home";
 
 const store = createStore(rootReducer);
 
@@ -33,7 +31,7 @@ ReactDOM.render(
 						{/* 타입에 따른 에러페이지 (NotFound/NoAccess/NotWorking) */}
 						<Route path={`/err/:type`} component={ErrorPage} />
 						{/* 로그인 안했을때 */}
-						<Redirect from='/' to='/MU000000' />
+						{/* {<Redirect from='/' to='/auth/login' />} */}
 						{/*없는 url 입력시 에러 페이지로(NotFound) */}
 						<Route component={ErrorPage} />
 					</Switch>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "routes.js";
 import LoginPage from "views/auth/login";
 
 // Chakra imports
@@ -8,39 +7,13 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 
 // Layout components
 import { SidebarContext } from "contexts/SidebarContext";
-import CommonAlert from "common/component/CommonAlert";
 
 // Custom Chakra theme
 export default function Auth() {
   // states and functions
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
-  const getRoute = () => {
-    return window.location.pathname !== "/auth/full-screen-maps";
-  };
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/auth") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      if (prop.collapse) {
-        return getRoutes(prop.items);
-      }
-      if (prop.category) {
-        return getRoutes(prop.items);
-      } else {
-        return null;
-      }
-    });
-  };
   const authBg = useColorModeValue("white", "navy.900");
-  document.documentElement.dir = "ltr";
   return (
     <Box>
       <SidebarContext.Provider
@@ -62,7 +35,6 @@ export default function Auth() {
           {
             <Box mx='auto' minH='100vh'>
               <Switch>
-                {/* {getRoutes(routes)} */}
                 <Route
                   path={'/auth/login'}
                   component={LoginPage}

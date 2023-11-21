@@ -15,9 +15,9 @@ const CardMenuBar = ({ title, count, handleOnClik, buttonType, btnText }) => {
       align={{ sm: "flex-start", lg: "center" }}
       justify="space-between"
       w="100%"
-      px="22px"
-      pb="20px"
+      px="10px"
       mb="10px"
+      h={'35px'}
     // boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
     >
       <Flex w="100%">

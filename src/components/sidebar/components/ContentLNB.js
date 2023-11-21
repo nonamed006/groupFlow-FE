@@ -49,13 +49,13 @@ function SidebarContentGNB(props) {
                 route.upper ? 
                 (//상위메뉴 코드 있으면 이동할 수 있도록
                   <>
-                    <ChevronLeftIcon/>
                     <Link
                       ml={'5px'}
                       color={'black'}
                       fontWeight={'bold'}
                       onClick={() => setLnbBack(routes)}
                     >
+                    <ChevronLeftIcon mr={'10px'}/>
                     {route.name}
                     </Link>
                   </>
