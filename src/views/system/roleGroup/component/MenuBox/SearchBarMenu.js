@@ -20,6 +20,8 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 	useEffect(() => {
 		if (rgCd !== undefined && rgCd !== 'undefined') {
 			fetchMenuList();
+		}else{
+			setValues([]);
 		}
 		onClearSelect();
 	}, [ code, rgCd, typeCd]);

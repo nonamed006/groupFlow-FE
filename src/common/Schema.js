@@ -1,7 +1,7 @@
 import { number, object, string, date, ref } from "yup";
 
 export const corpSchema = object().shape({
-  useYn: string().default("false").required("사용여부를 체크해주세요."),
+  useYn: string().default(true).required("사용여부를 체크해주세요."),
   coNm: string().required("회사명을 입력해주세요."),
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),

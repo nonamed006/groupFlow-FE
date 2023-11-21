@@ -103,7 +103,8 @@ const GroupBox = ({ setRgCd, rgCd, setAlertInfo, setIsLoading }) => {
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => { // 초기화 
         setPageNum(1);
-        setInit(!init);
+        setRgCd(undefined); 
+        setInit(!init); 
     };
 
     // 권한그룹 추가 등록 버튼 클릭 시

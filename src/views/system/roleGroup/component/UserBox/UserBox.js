@@ -21,11 +21,14 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     const [infiniteScrollRef, inView] = useInView();
 
     useEffect(() => {
+        console.log(rgCd);
         if (rgCd !== undefined && rgCd !== 'undefined') {
             initPageInfo();
-            onClearSelect();
+        }else{
+             initDataInfo();
         }
-        initDataInfo();
+        onClearSelect();
+       
     }, [rgCd]);
 
     useEffect(() => {
@@ -60,6 +63,7 @@ const UserBox = ({ rgCd, setIsLoading }) => {
                 setPageNum((prev) => prev + 1);
         } else {
             initDataInfo();
+            setTotalCount(0);
         }
         setIsLoading(false);
     };
