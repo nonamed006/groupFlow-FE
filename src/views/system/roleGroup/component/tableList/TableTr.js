@@ -13,7 +13,8 @@ const TableTr = ({ data, index }) => {
 
     return (
         <Tr
-            backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+            // backgroundColor={mouseOverIndex === index ? 'navy.50' : 'white'}
+            backgroundColor={ 'white'}
             onMouseOut={onMouseOut}
             onMouseOver={() => {
                 onMouseOver(index)

@@ -12,7 +12,7 @@ const DepGrpInfo = ({ depGrp }) => {
 
   return (
 
-    <Box boxShadow='lg' bg='white' borderRadius='lg' h={'650px'} p={2}>
+    <Box boxShadow='md' bg='white' borderRadius='5px' h={'650px'} p={2}>
       {depGrp ?
         <>
           <Box display={'flex'} justifyContent={"center"}>

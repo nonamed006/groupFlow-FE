@@ -16,9 +16,9 @@ function DepUpperCd(props) {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 300, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "명칭" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code", width: 150, header: { text: "code" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -61,6 +61,16 @@ function DepUpperCd(props) {
     //treeView.treeOptions.iconImagesRoot = `${process.env.PUBLIC_URL}/img/`;
     //treeView.treeOptions.iconImages = ["corporation.png", "department.png"];
 
+    
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if (depth === "0") {
+        return "gnb-column";
+      } else if (depth === "2") {
+        return "bottom-gnb-column";
+      }
+    });
+
     //src
     treeView.treeOptions.iconImages = [corImage, depImage];
 
@@ -77,7 +87,7 @@ function DepUpperCd(props) {
   }, [props]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "80%" }}></div>
+    <div ref={realgridElement} style={{ height: "500px", width: "100%" }}></div>
   );
 }
 

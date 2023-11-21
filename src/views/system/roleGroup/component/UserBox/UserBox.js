@@ -23,9 +23,11 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     useEffect(() => {
         if (rgCd !== undefined && rgCd !== 'undefined') {
             initPageInfo();
-            onClearSelect();
+        }else{
+             initDataInfo();
         }
-        initDataInfo();
+        onClearSelect();
+       
     }, [rgCd]);
 
     useEffect(() => {
@@ -60,6 +62,7 @@ const UserBox = ({ rgCd, setIsLoading }) => {
                 setPageNum((prev) => prev + 1);
         } else {
             initDataInfo();
+            setTotalCount(0);
         }
         setIsLoading(false);
     };
