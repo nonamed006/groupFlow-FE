@@ -85,18 +85,6 @@ const emp = {
       method: "POST",
       body: JSON.stringify(empDto),
     });
-  },
-
-  /**
-   * 사원 조직 정보 조회
-   * @param {string} empCd 사원 코드
-   * @returns
-   */
-  getDeptInfo: (empCd) => {
-    const promise = getPromise({
-      url: `emp/selectEmpDeptList/${empCd}`,
-      method: "GET",
-    });
     return promise.then((responseJson) => responseJson);
   },
 
