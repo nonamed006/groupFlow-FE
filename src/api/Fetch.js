@@ -9,12 +9,9 @@ import { getCookie } from "common/common";
 import roleEmp from "./roleEmp/RoleEmpApi";
 import menu from "./menu/MenuApi";
 import role from "./role/RoleApi";
-<<<<<<< HEAD
 import roleDep from "./roleDep/RoleDepApi";
-=======
 import emp from "./emp/EmpApi";
 
->>>>>>> jej
 // const header = {
 //   "Content-Type": "application/json; charset=utf-8",
 //   Authorization: getCookie("Authorization"),
@@ -35,7 +32,10 @@ export const getPromise = async ({ url, method, headers, body }) => {
     credentials: "include",
   })
     .then((response) => response.json())
-    .then((responseJson) => responseJson);
+    .then((responseJson) => responseJson)
+    .catch((error) => {
+      window.location.href = "/err/NotWorking";
+    });
 };
 
 const api = {
@@ -49,7 +49,7 @@ const api = {
   menu,
   role,
   roleDep,
-  emp
+  emp,
 };
 
 export default api;

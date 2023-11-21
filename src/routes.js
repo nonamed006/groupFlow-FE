@@ -44,20 +44,20 @@ import MU230035 from "views/routes/MU230035";
 import { useSelector } from "react-redux";
 
 const componentMap = {
-  'MU230005': MU230005,
-  'MU230006': MU230006,
-  'MU230007': MU230007,
-  'MU230008': MU230008,
-  'MU230009': MU230009,
-  'MU230010': MU230010,
-  'MU230011': MU230015,
-  'MU230012': MU230012,
-  'MU230013': MU230015,
-  'MU230014': MU230015,
-  'MU230015': MU230015,
-  'MU230032': MU230035,
-  'MU230035': MU230035,
-}
+  MU230005: MU230005,
+  MU230006: MU230006,
+  MU230007: MU230007,
+  MU230008: MU230008,
+  MU230009: MU230009,
+  MU230010: MU230010,
+  MU230011: MU230015,
+  MU230012: MU230012,
+  MU230013: MU230015,
+  MU230014: MU230015,
+  MU230015: MU230015,
+  MU230032: MU230035,
+  MU230035: MU230035,
+};
 // 원본 horizon-ui
 // https://horizon-ui.com/
 // 참고문서
@@ -78,132 +78,139 @@ const componentMap = {
 const component = {
   getRoute: async () => {
     const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd();
-    if(responseJson.status !== 200) {
+    if (responseJson.status !== 200) {
       return [];
     }
-    
+
     const data = responseJson.data;
     setComponent(data);
     const sys = {
-      code: 'MU230001',
-      name: '시스템 설정',
-      icon: <Image src={`/img/menu/FI230012.png`}/>,
-      layout: '/MU000000',
-      path: '/MU230001/',
-      upper: '',
+      code: "MU230001",
+      name: "시스템 설정",
+      icon: <Image src={`/img/menu/FI230012.png`} />,
+      layout: "/MU000000",
+      path: "/MU230001/",
+      upper: "",
       items: [
         {
-          code: 'MU230002',
-          name: '조직관리',
-          layout: '/MU000000',
-          path: '/MU230001/MU230002/',
-          upper: 'MU230001',
+          code: "MU230002",
+          name: "조직관리",
+          layout: "/MU000000",
+          path: "/MU230001/MU230002/",
+          upper: "MU230001",
           items: [
             {
-              code: 'MU230005',
-              name: '회사관리',
-              layout: '/MU000000',
-              path: '/MU230001/MU230002/MU230005/',
-              upper: 'MU230002',
-              component: componentMap['MU230005'],
-              items: []
+              code: "MU230005",
+              name: "회사관리",
+              layout: "/MU000000",
+              path: "/MU230001/MU230002/MU230005/",
+              upper: "MU230002",
+              component: componentMap["MU230005"],
+              items: [],
             },
             {
-              code: 'MU230006',
-              name: '부서관리',
-              layout: '/MU000000',
-              path: '/MU230001/MU230002/MU230006/',
-              upper: 'MU230002',
-              component: componentMap['MU230006'],
-              items: []
-            }
-          ]
+              code: "MU230006",
+              name: "부서관리",
+              layout: "/MU000000",
+              path: "/MU230001/MU230002/MU230006/",
+              upper: "MU230002",
+              component: componentMap["MU230006"],
+              items: [],
+            },
+          ],
         },
         {
-          code: 'MU230003',
-          name: '사원관리',
-          layout: '/MU000000',
-          path: '/MU230001/MU230003/',
-          upper: 'MU230001',
+          code: "MU230003",
+          name: "사원관리",
+          layout: "/MU000000",
+          path: "/MU230001/MU230003/",
+          upper: "MU230001",
           items: [
             {
-              code: 'MU230007',
-              name: '사원관리',
-              layout: '/MU000000',
-              path: '/MU230001/MU230003/MU230007/',
-              upper: 'MU230003',
-              component: componentMap['MU230007'],
-              items: []
+              code: "MU230007",
+              name: "사원관리",
+              layout: "/MU000000",
+              path: "/MU230001/MU230003/MU230007/",
+              upper: "MU230003",
+              component: componentMap["MU230007"],
+              items: [],
             },
-          ]
+          ],
         },
         {
-          code: 'MU230004',
-          name: '권한관리',
-          layout: '/MU000000',
-          path: '/MU230001/MU230004/',
-          upper: 'MU230001',
+          code: "MU230004",
+          name: "권한관리",
+          layout: "/MU000000",
+          path: "/MU230001/MU230004/",
+          upper: "MU230001",
           items: [
             {
-              code: 'MU230008',
-              name: '메뉴관리',
-              layout: '/MU000000',
-              path: '/MU230001/MU230004/MU230008/',
-              upper: 'MU230004',
-              component: componentMap['MU230008'],
-              items: []
+              code: "MU230008",
+              name: "메뉴관리",
+              layout: "/MU000000",
+              path: "/MU230001/MU230004/MU230008/",
+              upper: "MU230004",
+              component: componentMap["MU230008"],
+              items: [],
             },
             {
-              code: 'MU230009',
-              name: '권한그룹설정',
-              layout: '/MU000000',
-              path: '/MU230001/MU230004/MU230009/',
-              upper: 'MU230004',
-              component: componentMap['MU230009'],
-              items: []
+              code: "MU230009",
+              name: "권한그룹설정",
+              layout: "/MU000000",
+              path: "/MU230001/MU230004/MU230009/",
+              upper: "MU230004",
+              component: componentMap["MU230009"],
+              items: [],
             },
             {
-              code: 'MU230010',
-              name: '권한 설정',
-              layout: '/MU000000',
-              path: '/MU230001/MU230004/MU230010/',
-              upper: 'MU230004',
-              component: componentMap['MU230010'],
-              items: []
-            }
-          ]
-        }
-      ]
-    }
+              code: "MU230010",
+              name: "권한 설정",
+              layout: "/MU000000",
+              path: "/MU230001/MU230004/MU230010/",
+              upper: "MU230004",
+              component: componentMap["MU230010"],
+              items: [],
+            },
+          ],
+        },
+      ],
+    };
     data.push(sys);
     return data;
-  }
-}
+  },
+};
 const setComponent = (items) => {
-  items.forEach(item => {
+  items.forEach((item) => {
     item.code = item.menu_cd;
     item.name = item.menu_nm;
     item.path = item.menu_path;
     item.upper = item.upper_cd;
-    if(item.file_type) {
-      item.icon = <Image src={(item.file_type === 'FIA0001' ? item.file_path + '/' + item.modi_nm : `${PORT}/menu/icon-${item.fileCd}`)}/>;
+    if (item.file_type) {
+      item.icon = (
+        <Image
+          src={
+            item.file_type === "FIA0001"
+              ? item.file_path + "/" + item.modi_nm
+              : `${PORT}/menu/icon-${item.fileCd}`
+          }
+        />
+      );
     }
-    item.layout = '/MU000000';
-    if(componentMap[item.menu_cd]) {
+    item.layout = "/MU000000";
+    if (componentMap[item.menu_cd]) {
       item.component = componentMap[item.menu_cd];
     }
 
-    if(item.items.length > 0) {
+    if (item.items.length > 0) {
       setComponent(item.items);
     }
   });
-}
+};
 
 //getRoute();
-const Routes = await component.getRoute()
+const Routes = await component.getRoute();
 
 export default Routes;
-
 
 /*
 const routes = [
