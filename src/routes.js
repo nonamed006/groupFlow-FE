@@ -45,20 +45,20 @@ import { useSelector } from "react-redux";
 import { getCookie } from "common/common";
 
 const componentMap = {
-  'MU230005': MU230005,
-  'MU230006': MU230006,
-  'MU230007': MU230007,
-  'MU230008': MU230008,
-  'MU230009': MU230009,
-  'MU230010': MU230010,
-  'MU230011': MU230015,
-  'MU230012': MU230012,
-  'MU230013': MU230015,
-  'MU230014': MU230015,
-  'MU230015': MU230015,
-  'MU230032': MU230035,
-  'MU230035': MU230035,
-}
+  MU230005: MU230005,
+  MU230006: MU230006,
+  MU230007: MU230007,
+  MU230008: MU230008,
+  MU230009: MU230009,
+  MU230010: MU230010,
+  MU230011: MU230015,
+  MU230012: MU230012,
+  MU230013: MU230015,
+  MU230014: MU230015,
+  MU230015: MU230015,
+  MU230032: MU230035,
+  MU230035: MU230035,
+};
 // 원본 horizon-ui
 // https://horizon-ui.com/
 // 참고문서
@@ -79,10 +79,10 @@ const componentMap = {
 const component = {
   getRoute: async () => {
     const responseJson = await api.roleMenu.getRoleMenuListByDpGrpCd();
-    if(responseJson.status !== 200) {
+    if (responseJson.status !== 200) {
       return [];
     }
-    
+
     const data = responseJson.data;
     setComponent(data);
     // const sys = {
@@ -178,8 +178,8 @@ const component = {
     // }
     // data.push(sys);
     return data;
-  }
-}
+  },
+};
 const setComponent = (items) => {
   if(!items) {
     return false;
@@ -189,19 +189,28 @@ const setComponent = (items) => {
     item.name = item.menu_nm;
     item.path = item.menu_path;
     item.upper = item.upper_cd;
-    if(item.file_type) {
-      item.icon = <Image src={(item.file_type === 'FIA0001' ? item.file_path + '/' + item.modi_nm : `${PORT}/menu/icon-${item.fileCd}`)}/>;
+    if (item.file_type) {
+      item.icon = (
+        <Image
+          src={
+            item.file_type === "FIA0001"
+              ? item.file_path + "/" + item.modi_nm
+              : `${PORT}/menu/icon-${item.fileCd}`
+          }
+        />
+      );
     }
-    item.layout = '/MU000000';
-    if(componentMap[item.menu_cd]) {
+    item.layout = "/MU000000";
+    if (componentMap[item.menu_cd]) {
       item.component = componentMap[item.menu_cd];
     }
 
-    if(item.items.length > 0) {
+    if (item.items.length > 0) {
       setComponent(item.items);
     }
   });
-}
+};
+
 
 const RoleRoutes = async () => {
   const responseJson =  await api.roleMenu.getRoleMenuListByDpGrpCd();
@@ -216,4 +225,3 @@ const RoleRoutes = async () => {
 }
 
 export default RoleRoutes;
-

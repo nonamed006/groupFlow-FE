@@ -32,7 +32,10 @@ export const getPromise = async ({ url, method, headers, body }) => {
     credentials: "include",
   })
     .then((response) => response.json())
-    .then((responseJson) => responseJson);
+    .then((responseJson) => responseJson)
+    .catch((error) => {
+      window.location.href = "/err/NotWorking";
+    });
 };
 
 const api = {
@@ -46,7 +49,7 @@ const api = {
   menu,
   role,
   roleDep,
-  emp
+  emp,
 };
 
 export default api;
