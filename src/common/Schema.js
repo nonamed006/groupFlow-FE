@@ -1,3 +1,4 @@
+import { toInteger } from "lodash";
 import { number, object, string, date, ref } from "yup";
 
 export const corpSchema = object().shape({
@@ -111,7 +112,11 @@ export const depGrpSchema = object().shape({
 });
 
 export const menuSchema = object().shape({
-  upperCd: string().required("상위메뉴를 선택하세요"),
+  upperCd: string().when("depth", {
+    is: 1 > "depth",
+    then: (schema) => schema.required("상위메뉴를 선택하세요"),
+    otherwise: (schema) => schema.nullable(),
+  }),
   fileCd: string().when("upperCd", {
     is: "",
     then: (schema) => schema.required("아이콘을 선택해주세요."),

@@ -22,10 +22,32 @@ const Menu = () => {
     })
 
 	const [ selectGnbMenuCd, setSelectGnbMenuCd ] = useState('');	// GNB 선택
+	const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
+	const [ isSave, setIsSave ] = useState(false);
+
+	const reset = () => {
+		setMenuInfo({
+			menuCd: '',
+			upperCd: '',
+			fileCd: '',
+			menuNm: '',
+			useYn: true,
+			sort : '',
+			depth : '',
+			typeCd: '',
+			menuPath : '',
+			delYn : 0,
+		});
+	}
+
+	const isEditingReset = () => {
+		setIsEditing(false);
+		setSelectGnbMenuCd('');
+		reset();
+	}
 
 	useEffect(() => {
-		setMenuInfo({});
-		setSelectGnbMenuCd('');
+		isEditingReset();
 	}, [search.onSearchClick]);
 
 	useEffect(() => {
@@ -59,6 +81,8 @@ const Menu = () => {
 						setGnbMenuList={setGnbMenuList}
 						setSelectGnbMenuCd={setSelectGnbMenuCd}
 						search={search}
+						setAlertInfo={setAlertInfo}
+						isEditingReset={isEditingReset}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5}>
@@ -68,15 +92,20 @@ const Menu = () => {
 						setMenuInfo={setMenuInfo}
 						selectGnbMenuCd={selectGnbMenuCd}
 						search={search}
+						isSave={isSave}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5} >
 					<InfoBox
 						title={menuInfo.upperCd ? '메뉴 정보' : '대메뉴 정보'}
 						menuInfo={menuInfo}
-						selectGnbMenuCd={selectGnbMenuCd}
 						setMenuInfo={setMenuInfo}
 						setAlertInfo={setAlertInfo}
+						isEditing={isEditing}
+						setIsEditing={setIsEditing}
+						isEditingReset={isEditingReset}
+						isSave={isSave}
+						setIsSave={setIsSave}
 					/>
                 </GridItem>
 			</Grid>
