@@ -72,7 +72,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
         buttonType={true}
         btnText={'추가'} />
       {/* 목록 테이블 */}
-      <Box mt={-4} w={'100%'} display={'inline-block'} overflowX={"hidden"} overflowY={"auto"} h={'600px'} >
+      <Box w={'100%'} display={'inline-block'} overflowX={"hidden"} overflowY={"auto"} h={'600px'} >
         <Box minH={'560px'}>
           {
             corpList.length > 0 ? 

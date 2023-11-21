@@ -3,17 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 // chakra imports
 import {
   Box,
-  Flex,
-  Drawer,
-  DrawerBody,
-  Icon,
   useColorModeValue,
-  DrawerOverlay,
-  useDisclosure,
-  DrawerContent,
-  DrawerCloseButton,
 } from "@chakra-ui/react";
-import Content from "components/sidebar/components/Content";
 import ContentGNB from "./components/ContentGNB";
 import ContentLNB from "./components/ContentLNB";
 import {
@@ -25,7 +16,6 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import PropTypes from "prop-types";
 
 // Assets
-import { IoMenuOutline } from "react-icons/io5";
 import "../../assets/css/Sidebar.css";
 
 import { SidebarContext } from "contexts/SidebarContext";
@@ -39,22 +29,7 @@ import { SidebarContext } from "contexts/SidebarContext";
 
 function Sidebar(props) {
   const { routes } = props;
-  const { collapse } = props;
-  const { setCollapse } = props;
-  const [GNBcollapse, setGNBCollapse] = useState(collapse);
-  const [LNBcollapse, setLNBCollapse] = useState(false);
   const [route, setRoute] = useState();
-  // useEffect(() => {
-  //   return setGNBCollapse(collapse);
-  // }, [collapse]);
-
-  // useEffect(() => {
-  //   if (route != null && route.items.length > 0) {
-  //     return setLNBCollapse(true);
-  //   } else {
-  //     return setLNBCollapse(false);
-  //   }
-  // }, [route]);
 
   // Chakra Color Mode
   let sidebarBg = useColorModeValue("white", "navy.800");
@@ -66,17 +41,18 @@ function Sidebar(props) {
     if (flag) {
       document.querySelector(".box_GNB").classList.remove("non_active");
       document.querySelector(".box_GNB").classList.add("active");
-
-      // document.querySelector('.box_LNB').classList.remove('active')
-      // document.querySelector('.box_LNB').classList.add('non_active')
     } else {
       document.querySelector(".box_GNB").classList.remove("active");
       document.querySelector(".box_GNB").classList.add("non_active");
-      // document.querySelector('.box_LNB').classList.remove('non_active')
-      // document.querySelector('.box_LNB').classList.add('active')
     }
     context.setCollapse(flag);
   };
+
+  const onClickHandler = () => {
+    mouseEvent(false);
+    document.querySelector('.box_LNB').classList.remove('non_active')
+    document.querySelector('.box_LNB').classList.add('active')
+  }
 
   useEffect(() => {
     mouseEvent(false);
@@ -96,17 +72,13 @@ function Sidebar(props) {
     <Box display={{ sm: "none", xl: "block" }} w="fit-content" position='fixed' minH='100%' >
           <Box
             bg={sidebarBg}
-            // borderRight='1px'
-            // borderRightColor='gray'
 				    w={'300px'}
-            // maxW={LNBcollapse ? 300 : 70}
             className="box_LNB non_active"
             h='full'
             m={sidebarMargins}
             minH='100%'
             overflowX='hidden'
             position='absolute'
-            //display={!context.collapse ? 'block' : 'none'}
             onMouseOver={() => {
               document.querySelector('.box_LNB').classList.remove('non_active')
               document.querySelector('.box_LNB').classList.add('active')
@@ -114,7 +86,6 @@ function Sidebar(props) {
             onMouseLeave={() => {
               document.querySelector('.box_LNB').classList.remove('active')
               document.querySelector('.box_LNB').classList.add('non_active')
-              // context.setCollapse(false);
             }}
           >
             <Scrollbars
@@ -122,12 +93,6 @@ function Sidebar(props) {
               renderTrackVertical={renderTrack}
               renderThumbVertical={renderThumb}
               renderView={renderView}
-              // onClick={() => {
-              //     mouseEvent(false);
-              //       document.querySelector('.box_LNB').classList.remove('active')
-              //       document.querySelector('.box_LNB').classList.add('non_active')
-              //   }
-              // }
               >
               <ContentLNB routes={routes} route={route} LNBroute={setRoute}/>
             </Scrollbars>
@@ -155,16 +120,8 @@ function Sidebar(props) {
               renderThumbVertical={renderThumb}
               renderView={renderView}
               className="scrollbar"
-              onClick={() => {
-                  mouseEvent(false);
-                  document.querySelector('.box_LNB').classList.remove('non_active')
-                  document.querySelector('.box_LNB').classList.add('active')
-                }
-              }
-              // onMouseOver={() => setGNBCollapse(true)}
-              // onMouseLeave={() => setGNBCollapse(false)}
               >
-              <ContentGNB routes={routes} LNBroute={setRoute}/>
+              <ContentGNB routes={routes} LNBroute={setRoute} onClickHandler={onClickHandler} />
             </Scrollbars>
           </Box>
       {/* ! GNB 영역 추가 */}

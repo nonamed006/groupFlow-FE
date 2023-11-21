@@ -31,7 +31,12 @@ const EmpIdChg = (props) => {
         });
       }
     }else{
-        alert("ID를 입력해주세요.");
+      props.setAlertInfo({
+        isOpen: true,
+        status: "success",
+        title: "ID를 입력해주세요.",
+        width: "fit-content",
+      });
     }
   };
 

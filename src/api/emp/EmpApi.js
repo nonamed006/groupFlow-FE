@@ -32,6 +32,62 @@ const emp = {
   },
 
   /**
+   * 사원 ID 변경
+   * @param {empId} empId
+   * @param {empCd} empCd
+   * @param {modalTabStatus} modalTabStatus
+   * @returns
+   */
+  updateEmpID: (empId, empCd, modalTabStatus) => {
+    const promise = getPromise({
+      url: `emp/updateEmpId/${empId}/${empCd}/${modalTabStatus}`,
+      method: "GET",
+    });
+    return promise.then((responseJson) => responseJson);
+  },
+
+  /**
+   * 사원 비밀번호 변경
+   * @param {empPwd} empPwd
+   * @param {empCd} empCd
+   * @param {modalTabStatus} modalTabStatus
+   * @returns
+   */
+  resetPwd: (empPwd, empCd, modalTabStatus) => {
+    const promise = getPromise({
+      url: `emp/resetPwd/${empPwd}/${empCd}/${modalTabStatus}`,
+      method: "GET",
+    });
+    return promise.then((responseJson) => responseJson);
+  },
+
+  /**
+   * 사원 퇴사 처리
+   * @param {empCd} empCd 사원코드
+   * @returns
+   */
+  updateWorkType: (empCd) => {
+    const promise = getPromise({
+      url: `emp/updateWorkType/${empCd}`,
+      method: "GET",
+    });
+    return promise.then((responseJson) => responseJson);
+  },
+
+  /**
+   * 사원 조직 정보 추가
+   * @param {empDto} empDto
+   * @returns
+   */
+  insertEmpDep: (empDto) => {
+    const promise = getPromise({
+      url: `emp/insertEmpDep`,
+      method: "POST",
+      body: JSON.stringify(empDto),
+    });
+  },
+
+  /**
    * 사원 조직 정보 조회
    * @param {string} empCd 사원 코드
    * @returns
