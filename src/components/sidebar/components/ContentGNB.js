@@ -17,6 +17,7 @@ sidebar/components/ContentGNB.js
 function SidebarContentGNB(props) {
   const { routes } = props;
   const { LNBroute } = props;
+  const {onClickHandler} = props;
 
   const context = useContext(SidebarContext);
   // SIDEBAR
@@ -28,12 +29,15 @@ function SidebarContentGNB(props) {
         </Center>
         {
           context.collapse &&
-            <Center flex={1}>
+            <Center flex={1} onClick={() => {
+              document.querySelector(".box_GNB").classList.remove("active");
+              document.querySelector(".box_GNB").classList.add("non_active");
+            }}>
               <Brand/>
             </Center>
         }
       </Flex>
-      <Stack direction='column' mb='auto' mt='8px'>
+      <Stack direction='column' mb='auto' mt='8px' onClick={onClickHandler}>
         <Box pe={'5px'}>
             <LinksGNB routes={routes} LNBroute={LNBroute}/>
         </Box>

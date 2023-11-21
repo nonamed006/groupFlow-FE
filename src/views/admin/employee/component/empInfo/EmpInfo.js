@@ -80,33 +80,64 @@ const EmpInfo = (props) => {
 
   //사원 ID 변경
   const updateEmpID = async () => {
-    if(isIdChk){
-    const res = await api.emp.updateEmpID(empId, props.empDetail.empCd, modalTabStatus);
-    if (res.status === 200) {
-      props.setAlertInfo({
-        isOpen: true,
-        status: "success",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
-      onClose();
-      props.setIsReload(!props.isReload);
+    if (isIdChk) {
+      const res = await api.emp.updateEmpID(empId, props.empDetail.empCd, modalTabStatus);
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        props.setIsReload(!props.isReload);
+      } else {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
     } else {
       props.setAlertInfo({
         isOpen: true,
         status: "warning",
-        title: res.resultMsg,
+        title: "ID 중복확인을 해주세요.",
         width: "fit-content",
       });
     }
-  }else{
-    props.setAlertInfo({
-      isOpen: true,
-      status: "warning",
-      title: "ID 중복확인을 해주세요.",
-      width: "fit-content",
-    });
-  }
+  };
+
+  //사원 비밀번호 초기화
+  const resetPwd = async () => {
+    if (empPwd.length > 3) {
+      const res = await api.emp.resetPwd(empPwd, props.empDetail.empCd, modalTabStatus);
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        props.setIsReload(!props.isReload);
+      } else {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
+    } else {
+      props.setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: "비밀번호를 4자리 이상 입력해주세요.",
+        width: "fit-content",
+      });
+    }
   };
 
   //사원 퇴사처리
@@ -230,26 +261,26 @@ const EmpInfo = (props) => {
   };
   // 선택한 사원 조직 정보 삭제
   const deleteChkEmpDep = async () => {
-    const res = await api.emp.deleteChkEmpDep(delEmpDep);
+      const res = await api.emp.deleteChkEmpDep(delEmpDep);
 
-    if (res.status === 200) {
-      props.setAlertInfo({
-        isOpen: true,
-        status: "success",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
-      onClose();
-      getDeptInfo(props.empDetail.empCd);
-      props.setEditState("read");
-    } else {
-      props.setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
-    }
+      if (res.status === 200) {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        onClose();
+        getDeptInfo(props.empDetail.empCd);
+        props.setEditState("read");
+      } else {
+        props.setAlertInfo({
+          isOpen: true,
+          status: "warning",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
   };
 
   return (
@@ -300,6 +331,7 @@ const EmpInfo = (props) => {
                               });
                               return;
                             }
+                            setIsIdChk(false);
                             setModalType(1);
                             setModalTabStatus("type1");
                             onOpen();
@@ -417,16 +449,50 @@ const EmpInfo = (props) => {
                           setModalTabStatus("type4");
                           onOpen();
                         } else if (tabStatus === 2) {
-                          setModalType(5);
-                          setModalTabStatus("type5");
-                          onOpen();
+                          props.setEditState("deptDelete");
+                          // setModalType(5);
+                          // setModalTabStatus("type5");
+                          // onOpen();
                         }
                       }}
                     >
                       삭제
                     </Button>
                   </Stack>
-                ) : (
+                ) : props.editState === "deptDelete" ? (
+                  <Stack direction="row" spacing={4} align="center">
+                    <Button  variant="brand"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
+                      onClick={() => {
+                      if (delEmpDep.length > 0) {
+                        setModalType(5);
+                        setModalTabStatus("type5");
+                        onOpen();
+                      } else {
+                        props.setAlertInfo({
+                          isOpen: true,
+                          status: "warning",
+                          title: "삭제할 조직을 선택해주세요.",
+                          width: "fit-content",
+                        });
+                      }
+                    }}>
+                      삭제
+                    </Button>
+                    <Button
+                      variant="action"
+                      borderRadius={'10px'}
+                      fontWeight={'600'}
+                      onClick={() => {
+                        props.setEditState("read");
+                        props.resetInput();
+                        props.setSelectedIndex(undefined);
+                      }}
+                    >
+                      취소
+                    </Button>
+                  </Stack>) : (
                   <Stack direction="row" spacing={4} align="center">
                     <Button
                       variant="brand"
@@ -520,7 +586,7 @@ const EmpInfo = (props) => {
             modalType == 1
               ? updateEmpID
               : modalType == 2
-                ? ""
+                ? resetPwd
                 : modalType == 3
                   ? updateWorkType
                   : modalType == 4

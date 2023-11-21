@@ -37,6 +37,8 @@ import { PORT } from "set";
 import { setEmpData } from "redux/solution";
 import OrgChartModal from "views/system/orgChart/OrgChartModal";
 import { MdInfoOutline } from "react-icons/md";
+import { setCookie } from "common/common";
+import { deleteCookie } from "common/common";
 
 export default function HeaderLinks(props) {
 	const { secondary } = props;
@@ -99,6 +101,7 @@ export default function HeaderLinks(props) {
 		}).then((res) => res.json())
 		.then((res) => {
 			dispatch(setEmpData(res?.data[0]));
+			setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
 		})
 	  }
 
@@ -115,6 +118,8 @@ export default function HeaderLinks(props) {
 			.then((res) => res.json())
 			.then((res) => {
 				setDpGrpCd("");
+				deleteCookie("Emp_Dp_Type");
+				window.location.replace("/auth/login");
 			});
 	};
 

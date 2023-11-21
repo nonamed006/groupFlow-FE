@@ -88,6 +88,7 @@ const Employee = () => {
   const onClickRow = (empList) => {
     setEmpCdTmp(empList.empCd);
     resetInput();
+    setEditState("read");
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
   };
@@ -262,6 +263,7 @@ const Employee = () => {
         width: "fit-content",
       });
       setEditState("read");
+      setIsReload(!isReload);
     }else{
       setAlertInfo({
         isOpen: true,

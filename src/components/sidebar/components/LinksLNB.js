@@ -5,6 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { SidebarContext } from "contexts/SidebarContext";
+import { MdAlignVerticalBottom } from "react-icons/md";
 
 /**
  * sidebar/components/Links.js
@@ -20,6 +21,10 @@ export function SidebarLinks(props) {
   const { LNBroute } = props; //function setRoute 클릭 시 하나의 라우터 세팅
   const [routeStat, setRouteStat] = useState(window.location.pathname);
 
+  let activeIcon = useColorModeValue("brand.500", "white");
+  let activeColor = useColorModeValue("gray.700", "white");
+  let textColor = useColorModeValue("secondaryGray.500", "white");
+
   const context = useContext(SidebarContext);
 
   // verifies if routeName is the one active (in browser input)
@@ -27,6 +32,10 @@ export function SidebarLinks(props) {
   //   return routeStat === routeName;
   // };
 
+  const activeRoute = (routeName) => {
+    //return routeStat.indexOf(routeName) > -1;
+    return window.location.pathname.indexOf(routeName) > -1;
+  };
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (prop) => {
     return prop.map((route, index) => {
@@ -42,7 +51,7 @@ export function SidebarLinks(props) {
           >
             <HStack
               spacing={"22px"}
-              py="5px"
+              py="10px"
               ps="10px"
             >
               <Flex
@@ -51,7 +60,11 @@ export function SidebarLinks(props) {
                 justifyContent="center"
                 pl={"50px"}
               >
-                <Text me="auto" color="black" fontWeight="normal">
+                <Text
+                  me="auto"
+                  fontWeight={activeRoute() ? '600' : 'normal'}
+                  color={activeColor}
+                >
                   {route.name}
                 </Text>
                 {route.items.length > 0 && <ChevronRightIcon />}

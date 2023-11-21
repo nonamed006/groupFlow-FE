@@ -126,6 +126,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         onChange={(e) => {
           handleChangeChk(e);
         }}
+        style={{visibility: editState === "deptDelete" ? "visible" : "hidden"}}
       />
       <GridItem colStart={0} colEnd={2}>
         <Text fontSize="sm" fontWeight="600">
