@@ -11,6 +11,7 @@ import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
 import { depGrpSchema } from "common/Schema";
 
+
 const Employee = () => {
   //state
   const [empList, setEmpList] = useState([]);
@@ -43,7 +44,7 @@ const Employee = () => {
       delYn: "",
       dpCd: "",
       dpGrpNum: "",
-      dpGrpcd: "DGA0001",
+      dpGrpCd: "DGA0001",
       dpNm: "",
       dpType: "DGB0001",
       dpTypeNm: "",
@@ -60,7 +61,7 @@ const Employee = () => {
       pstnNm: "",
       rankCd: "",
       rankNm: "",
-      reDt: null,
+      reDt: "",
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
@@ -100,6 +101,7 @@ const Employee = () => {
 
   const resetEmpDetail = () => {
     setEmpDetail({
+      empCd: "",
       empNm: "",
       mailId: "",
       loginId: "",
@@ -132,7 +134,7 @@ const Employee = () => {
         delYn: 0,
         dpCd: "",
         dpGrpNum: "",
-        dpGrpcd: "",
+        dpGrpCd: "",
         dpNm: "",
         dpType: "DGB0001",
         dpTypeNm: "",
@@ -214,12 +216,32 @@ const Employee = () => {
     }
   };
 
-  //유효성 검사
+  //사원, 조직 수정 유효성 검사
   const handleUpdateCheck = () => {
+    let idx = 0;
     empUpdateSchema
       .validate(empDetail)
       .then(() => {
-        // 유효성 검사 통과한 데이터 처리
+        empDept.map((data, index)=>{
+          // 유효성 검사 통과한 데이터 처리
+          depGrpSchema.validate(data)
+          .then(() => {
+            // 유효성 검사 통과한 데이터 처리
+            //updateEmpInfo();
+          })
+          .catch((errors) => {
+            idx++;
+            // 유효성 검사 실패한 경우 에러 메세지
+            setAlertInfo({
+              isOpen: true,
+              status: "warning",
+              title: "조직 정보 입력값을 확인해주세요.",
+              detail: errors.message,
+              width: "fit-content",
+            });
+          });
+        })
+      }).then(()=>{
         updateEmpInfo();
       })
       .catch((errors) => {
@@ -227,7 +249,7 @@ const Employee = () => {
         setAlertInfo({
           isOpen: true,
           status: "warning",
-          title: "입력값을 확인해주세요.",
+          title: "사원 정보 입력값을 확인해주세요.",
           detail: errors.message,
           width: "fit-content",
         });
@@ -265,7 +287,7 @@ const Employee = () => {
     fd.append("depGrpDtoList[0].delYn", empDept[0].delYn);
     fd.append("depGrpDtoList[0].dpCd", empDept[0].dpCd);
     fd.append("depGrpDtoList[0].dpGrpNum", empDept[0].dpGrpNum);
-    fd.append("depGrpDtoList[0].dpGrpcd", empDept[0].dpGrpcd);
+    fd.append("depGrpDtoList[0].dpGrpCd", empDept[0].dpGrpCd);
     fd.append("depGrpDtoList[0].dpNm", empDept[0].dpNm);
     fd.append("depGrpDtoList[0].dpType", empDept[0].dpType);
     fd.append("depGrpDtoList[0].dpTypeNm", empDept[0].dpTypeNm);
@@ -312,25 +334,87 @@ const Employee = () => {
 
    //사원 정보 수정
    const updateEmpInfo = async() =>{
-    const res = await api.emp.updateEmpInfo(empDetail);
+     empDetail.depGrpDtoList = empDept;
+    //const res = await api.emp.updateEmpInfo(empDetail); 
 
-    if(res.status === 200){
-      setAlertInfo({
-        isOpen: true,
-        status: "success",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
-      setEditState("read");
-      setIsReload(!isReload);
-    }else{
-      setAlertInfo({
-        isOpen: true,
-        status: "error",
-        title: res.resultMsg,
-        width: "fit-content",
-      });
+    const fd = new FormData();
+    if(imgFile != null){
+      Object.values(imgFile).forEach((file) => fd.append("file", file));
     }
+
+    fd.append("empCd", empDetail.empCd)
+    fd.append("empNm", empDetail.empNm);
+    fd.append("mailId", empDetail.mailId);
+    fd.append("loginId", empDetail.loginId);
+    fd.append("loginPw", empDetail.loginPw);
+    fd.append("signPw", empDetail.signPw);
+    fd.append("gender", empDetail.gender);
+    fd.append("psnMail", empDetail.psnMail);
+    fd.append("payMail", empDetail.payMail);
+    fd.append("empTel", empDetail.empTel);
+    fd.append("postNum", empDetail.postNum);
+    fd.append("addr", empDetail.addr);
+    fd.append("addrDetail", empDetail.addrDetail);
+    fd.append("joinDt", empDetail.joinDt);
+    fd.append("workTypeCd", empDetail.workTypeCd);
+    fd.append("useYn", empDetail.useYn);
+
+    //조직정보 추가
+    empDept.map((data, i)=>{
+    fd.append("depGrpDtoList["+i+"].addr", data.addr);
+    fd.append("depGrpDtoList["+i+"].addrDetail", data.addrDetail);
+    fd.append("depGrpDtoList["+i+"].coCd", data.coCd);
+    fd.append("depGrpDtoList["+i+"].coNm", data.coNm);
+    fd.append("depGrpDtoList["+i+"].coType", data.coType);
+    fd.append("depGrpDtoList["+i+"].coTypeNm", data.coTypeNm);
+    fd.append("depGrpDtoList["+i+"].delYn", data.delYn);
+    fd.append("depGrpDtoList["+i+"].dpCd", data.dpCd);
+    fd.append("depGrpDtoList["+i+"].dpGrpNum", data.dpGrpNum);
+    fd.append("depGrpDtoList["+i+"].dpGrpCd", data.dpGrpCd);
+    fd.append("depGrpDtoList["+i+"].dpNm", data.dpNm);
+    fd.append("depGrpDtoList["+i+"].dpType", data.dpType);
+    fd.append("depGrpDtoList["+i+"].dpTypeNm", data.dpTypeNm);
+    fd.append("depGrpDtoList["+i+"].empTypeCd", data.empTypeCd);
+    fd.append("depGrpDtoList["+i+"].empTypeNm", data.empTypeNm);
+    fd.append("depGrpDtoList["+i+"].fax", data.fax);
+    fd.append("depGrpDtoList["+i+"].jobCd", data.jobCd);
+    fd.append("depGrpDtoList["+i+"].jobDetail", data.jobDetail);
+    fd.append("depGrpDtoList["+i+"].joinDt", data.joinDt);
+    fd.append("depGrpDtoList["+i+"].postNum", data.postNum);
+    fd.append("depGrpDtoList["+i+"].pstnCd", data.pstnCd);
+    fd.append("depGrpDtoList["+i+"].rankCd", data.rankCd);
+    fd.append("depGrpDtoList["+i+"].reDt", data.reDt);
+    fd.append("depGrpDtoList["+i+"].telNum", data.telNum);
+    fd.append("depGrpDtoList["+i+"].workTypeCd", data.workTypeCd);
+    fd.append("depGrpDtoList["+i+"].empCd", data.empCd);
+    });
+
+    fetch(`${PORT}/emp/updateEmpInfo`, {
+      method: "POST",
+      body: fd,
+      credentials: "include",
+      // res에 결과가 들어옴
+    }).then((res) => res.json())
+    .then((res) => {
+      if(res.status === 200){
+        setAlertInfo({
+          isOpen: true,
+          status: "success",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+        setEditState("read");
+        setIsReload(!isReload);
+      }else{
+        setAlertInfo({
+          isOpen: true,
+          status: "error",
+          title: res.resultMsg,
+          width: "fit-content",
+        });
+      }
+
+    });
   };
 
   useEffect(() => {

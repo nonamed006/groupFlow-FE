@@ -31,26 +31,29 @@ export default function AdminNavbar(props) {
 
   //방문한 페이지 추가
   const updateHistory = () => {
-    const isUniqueProps = (newProps) => {
-      return !history.some(
-        (item) => item.location.pathname === newProps.location.pathname
-      );
-    };
-    // props가 중복되지 않으면 추가
-    if (isUniqueProps(props)) {
-      const newProps = { ...props };
-      
-      if(newProps.location.pathname === '/MU000000') {
-        return false;
-      }
+    if (props.brandText !== "") {
+      const isUniqueProps = (newProps) => {
+        return !history.some(
+          (item) => item.location.pathname === newProps.location.pathname
+        );
+      };
+      // props가 중복되지 않으면 추가
+      if (isUniqueProps(props)) {
+        const newProps = { ...props };
 
-      // 최대 5개까지만 저장
-      if (history.length < 5) {
-        setHistory([newProps, ...history]);
-      } else {
-        // 5개가 넘으면 가장 오래된 것 삭제
-        history.pop();
-        setHistory([newProps, ...history]);
+        if (newProps.location.pathname === "/MU000000") {
+          return false;
+        }
+
+        // 최대 5개까지만 저장
+        if (history.length < 5) {
+          console.log(history);
+          setHistory([newProps, ...history]);
+        } else {
+          // 5개가 넘으면 가장 오래된 것 삭제
+          history.pop();
+          setHistory([newProps, ...history]);
+        }
       }
     }
   };
@@ -96,7 +99,7 @@ export default function AdminNavbar(props) {
   };
   useEffect(() => {
     updateHistory();
-  }, [props.location.pathname]);
+  }, [props]);
 
   return (
     <Box
@@ -127,15 +130,17 @@ export default function AdminNavbar(props) {
         mb={gap}
       >
         <Box mr={"10px"} mb={{ sm: "8px", md: "0px" }} w={"220px"}>
-          <Text w={'100%'} fontSize={'12px'}>{pathText}</Text>
+          <Text w={"100%"} fontSize={"12px"}>
+            {pathText}
+          </Text>
           {/* <Breadcrumb> */}
-            {/* <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
+          {/* <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
               </BreadcrumbLink>
             </BreadcrumbItem> */}
 
-            {/* <BreadcrumbItem color={secondaryText} fontSize="sm">
+          {/* <BreadcrumbItem color={secondaryText} fontSize="sm">
               <BreadcrumbLink href="#" color={secondaryText}>
                 {/* {brandText}}
                 {pathText}
@@ -144,14 +149,14 @@ export default function AdminNavbar(props) {
           </Breadcrumb> */}
           {/* Here we create navbar brand, based on route name */}
           <Link
-            display={'block'}
-            w={'100%'}
+            display={"block"}
+            w={"100%"}
             color={mainText}
             href={location.pathname}
             bg="inherit"
             borderRadius="inherit"
             fontWeight="bold"
-            fontSize={brandText.length > 7 ? '17px' : '25px'}//"34px"
+            fontSize={brandText.length > 7 ? "17px" : "25px"} //"34px"
             textOverflow={"ellipsis"}
             _hover={{ color: { mainText } }}
             _active={{
@@ -225,9 +230,8 @@ export default function AdminNavbar(props) {
                         mb="5px"
                         ml="10px"
                         fontWeight={700}
-                        overflow={"hidden"}
                         whiteSpace={"nowrap"}
-                        textOverflow={"ellipsis"}
+                        textOverflow={"ellipsis"} 
                       >
                         {item.brandText}
                       </Text>

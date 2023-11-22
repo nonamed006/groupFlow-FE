@@ -198,7 +198,7 @@ const EmpInfo = (props) => {
       getDeptInfo(props.empDept[0].empCd);
     } else {
       props.setAlertInfo({
-        isOpen: true,
+        isOpen: true, 
         status: "warning",
         title: res.resultMsg,
         width: "fit-content",
@@ -208,8 +208,7 @@ const EmpInfo = (props) => {
 
   //사원 조직 정보 수정
   const updateEmpDep = async () => {
-    console.log("=====😣", props.empDept);
-    const res = await api.emp.updateEmpDep(props.empDept);
+    const res = await api.emp.updateEmpDep(props.empDept); 
 
     if (res.status === 200) {
       props.setAlertInfo({
@@ -426,11 +425,11 @@ const EmpInfo = (props) => {
                           });
                           return;
                         }
-                        if (tabStatus === 1) {
-                          props.setEditState("update");
-                        } else if (tabStatus === 2) {
-                          props.setEditState("deptUpdate");
-                        }
+                        props.setEditState("update");
+                        // if (tabStatus === 1) {
+                        // } else if (tabStatus === 2) {
+                        //   props.setEditState("deptUpdate");
+                        // }
                       }}
                     >
                       수정
@@ -510,9 +509,10 @@ const EmpInfo = (props) => {
                           props.updateEmpInfo();
                         } else if (props.editState === "deptInsert") {
                           handleInsertCheck();
-                        } else if (props.editState === "deptUpdate") {
-                          updateEmpDep();
-                        }
+                        } 
+                        // else if (props.editState === "deptUpdate") {
+                        //   updateEmpDep();
+                        // }
                       }}
                     >
                       저장

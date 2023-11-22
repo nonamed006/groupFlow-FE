@@ -212,7 +212,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={true}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
         />
       </GridItem>
 
@@ -221,7 +221,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           title={'회사구분'}
           name={'coType'}
           defaultValue={column?.coType}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
           onChange={(e) => handleChange(e, index)}
           readOnly={editState === "read"}
           isRequired={true}
@@ -242,7 +242,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           title={'부서구분'}
           name={'dpType'}
           defaultValue={column?.dpType}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
           onChange={(e) => handleChange(e, index)}
           readOnly={editState === "read"}
           isRequired={true}
@@ -317,7 +317,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
         />
       </GridItem>
 
@@ -364,7 +364,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
 
         />
       </GridItem>
@@ -379,7 +379,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           isRequired={false}
-          pk={column?.dpGrpcd}
+          pk={column?.dpGrpCd}
         />
       </GridItem>
 
