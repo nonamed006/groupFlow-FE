@@ -60,7 +60,7 @@ const DepInfo = ({
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "error",
+        status: "warning",
         width: "fit-content",
       });
     } else {
@@ -110,10 +110,6 @@ const DepInfo = ({
       .then(() => {
         //  // 유효성 검사 통과한 데이터 처리
         isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-        setDpCd(0);
-        setDepDto([]);
-        setTabStatus(1);
-        setEditState("read");
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지

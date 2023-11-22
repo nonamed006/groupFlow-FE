@@ -210,7 +210,7 @@ const ChangeInsertTableTbody = ({ detail }) => {
         </Td>
         <Td textAlign="center">
           <Text color={textColor} fontSize="sm" fontWeight="600">
-            {detail.useYN === "1" ? "사용" : "미사용"}
+            {detail.useYn === "1" ? "사용" : "미사용"}
           </Text>
         </Td>
       </Tr>
