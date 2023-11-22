@@ -6,7 +6,6 @@ import InfoBox from "./component/InfoBox/InfoBox";
 import CommonAlert from "common/component/CommonAlert";
 import api from "api/Fetch";
 
-
 const Corporation = () => {
 	const [keyword, setKeyword] = useState(""); // 검색어
 	const [useYn, setUseYn] = useState(""); // 사용여부
@@ -37,11 +36,10 @@ const Corporation = () => {
 	};
 
 	return (
-		<Box h={'full'}>{/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
+		<Box h={'full'} >{/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
 			<Grid
-				//h="1000px"
 				h="full" // 혜윤 수정
-				templateRows="repeat(11, 1fr)"
+				templateRows="repeat(9, 1fr)"
 				templateColumns="repeat(6, 1fr)"
 				gap={3}
 			>
