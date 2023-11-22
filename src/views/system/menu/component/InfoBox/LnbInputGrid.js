@@ -30,7 +30,6 @@ import { PORT } from "set";
 import RealGrid from "./UpperRealGrid";
 import api from "api/Fetch";
 import FormInput from "common/component/FormInput";
-import FormRadio from "common/component/FormRadio";
 
 const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -276,7 +275,8 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
         </GridItem>
 
         <GridItem colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title='사용여부'
             name='useYn'
             defaultValue={useYn.toString()}

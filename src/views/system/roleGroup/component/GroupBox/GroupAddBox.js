@@ -1,6 +1,5 @@
 import { Box, Grid, GridItem, useColorModeValue, Select, FormControl, FormLabel } from "@chakra-ui/react";
 import FormInput from "common/component/FormInput";
-import FormRadio from "common/component/FormRadio";
 import React, { useEffect } from "react";
 
 
@@ -60,7 +59,8 @@ const GroupAddBox = ({ corps, setRoleGrp, roleGrp }) => {
                     />
                 </GridItem>
                 <GridItem colSpan={8} colEnd={8} m={'1'}>
-                    <FormRadio
+                    <FormInput
+                        type={'radio'}
                         title={'사용여부'}
                         name={"useYn"}
                         defaultValue={roleGrp?roleGrp.useYn:true}

@@ -19,7 +19,6 @@ import {
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
-import FormRadio from "common/component/FormRadio";
 import SelectCommon from "common/component/SelectCommon";
 import React, { useEffect, useState } from "react";
 import api from "api/Fetch";
@@ -217,7 +216,8 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       </GridItem>
 
       <GridItem colStart={1} colEnd={7}>
-        <FormRadio
+        <FormInput
+            type={'radio'}
           title={'회사구분'}
           name={'coType'}
           defaultValue={column?.coType}
@@ -238,7 +238,8 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       </GridItem>
 
       <GridItem colStart={8} colEnd={14}>
-        <FormRadio
+        <FormInput
+          type={'radio'}
           title={'부서구분'}
           name={'dpType'}
           defaultValue={column?.dpType}

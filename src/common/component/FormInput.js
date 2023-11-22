@@ -2,13 +2,16 @@ import {
   Input,
   FormControl,
   FormLabel,
+  HStack,
+  Radio,
+  RadioGroup,
+  Select,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 
 import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
-import Accounting from "./../../views/system/accounting/index";
 
 const FormInput = ({
   title,
@@ -20,22 +23,31 @@ const FormInput = ({
   isRequired,
   inputType,
   placeholder,
+  type,
+  searchBar,
+  values,
+  defaultValue
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
-    <FormControl display={"flex"} w={"100%"} isRequired={isRequired}>
+    <FormControl display={"flex"} w={"100%"} h={'fit-content'} isRequired={isRequired}>
       {title && (
         <FormLabel
           color={textColor}
-          fontSize="md"
-          fontWeight="600"
-          w={"40%"}
+          fontSize={searchBar? '16px' : "md"}
+          fontWeight={searchBar ? '400' : "600"}
+          w={searchBar ? '18%' : "40%"}
+          whiteSpace={searchBar? "nowrap" : 'normal'}
           lineHeight={"40px"}
+          textAlign="left"
         >
           {title}
         </FormLabel>
       )}
-      <Input
+      
+       {
+        !type  ?
+    <Input
         name={name}
         w={"100%"}
         fontSize={"14px"}
@@ -46,7 +58,43 @@ const FormInput = ({
         readOnly={readOnly}
         type={inputType}
         placeholder={placeholder}
-      />
+      />:
+      type !== 'select' ? 
+      <RadioGroup name={name} value={defaultValue} key={pk}>
+      <HStack spacing="24px">
+        {values.map((value) => {
+          return (
+            <Radio
+              name={name}
+              value={value.value}
+              onChange={onChange}
+              isReadOnly={readOnly}
+            >
+              {value.name}
+            </Radio>
+          );
+        })}
+      </HStack>
+    </RadioGroup>
+      :
+      <Select
+      w={"102%"}
+      name={name}
+      value={defaultValue}
+      key={pk}
+      onChange={onChange}
+      placeholder={placeholder}
+      disabled={readOnly}
+    >
+      {values.map((value) => {
+        return (
+          <option name={name} value={value.value}>
+            {value.name}
+          </option>
+        );
+      })}
+    </Select>
+}
     </FormControl>
   );
 };

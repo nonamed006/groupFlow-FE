@@ -5,7 +5,7 @@ import GroupCardList from "views/system/roleGroup/component/GroupBox/GroupCardLi
 import api from "api/Fetch";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import BottomDrawer from "common/component/BottomDrawer";
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
 
 const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
     const [ roleList, setRoleList ] = useState([]);
@@ -100,7 +100,7 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
         {/* 메뉴상단 */}
         <CardMenuBar title={'권한그룹'} count={total} buttonType={false} />
         {/* 검색바 */}
-        <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
+        <FormInput searchBar={true}  setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
         <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
             <Box minH={'510px'}>
                 {

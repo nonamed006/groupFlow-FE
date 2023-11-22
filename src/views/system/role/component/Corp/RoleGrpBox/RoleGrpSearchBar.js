@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
 
 
 const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
@@ -20,7 +20,7 @@ const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
 
     return (
         <form ref={formInputRef}>
-            <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
+            <FormInput searchBar={true}  setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
         </form>
     );
 };

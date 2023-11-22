@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 import React from "react";
-import SearchBar from "common/component/SearchBar";
+import FormInput from 'common/component/FormInput';
 const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
     const values = [
         {
@@ -34,7 +34,8 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
             borderRadius={'5px'}
         >
             <Box w={'40%'}>
-                <SearchBar
+            <FormInput
+                type={'searchBar'}
                     setKeyword={setSearch}
                     textLabel={'검색기준'}
                     placeholder={'전체'}
@@ -44,7 +45,8 @@ const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
                 />
             </Box>
             <Box w={'40%'}>
-                <SearchBar
+            <FormInput
+                type={'searchBar'}
                     setKeyword={setKeyword}
                     textLabel={'검색어'}
                     placeholder={'검색어를 입력하세요.'}

@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
 
 const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
 	let [values, setValues] = useState();
@@ -41,8 +41,8 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 			<form ref={formInputRef}>
 				<Flex justifyContent={"space-around"}>
 					<Box w={'50%'}>
-						<SearchBar
-							textLabel={'대메뉴'}
+					<FormInput searchBar={true} 
+							title={'대메뉴'}
 							setKeyword={setSelectedMenu}
 							placeholder={'전체'}
 							isSelect={true}
@@ -52,8 +52,8 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 						/>
 					</Box>
 					<Box w={'50%'}>
-						<SearchBar
-							textLabel={'메뉴명'}
+					<FormInput searchBar={true}
+							title={'메뉴명'}
 							setKeyword={setKeyword}
 							handleSearchBtn={handleSearchBtn}
 							placeholder={'검색어를 입력하세요'}

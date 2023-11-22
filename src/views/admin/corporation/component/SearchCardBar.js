@@ -1,52 +1,39 @@
 import React from 'react';
-import { Box, Button, Flex } from '@chakra-ui/react';
-import SearchBar from 'common/component/SearchBar';
+import { Box } from '@chakra-ui/react';
+import CommonSearchBar from 'common/component/CommonSearchBar';
+import FormInput from 'common/component/FormInput';
 
-const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
+const SearchCardBar = ({ setUseYn,useYn, setKeyword, handleSearchBtn }) => {
 
 	return (
+			<CommonSearchBar handleSearchBtn={()=>handleSearchBtn()} btnText={'검색'} >
 
-		<Flex
-			bg="white"
-			justifyContent={"space-around"}
-			w={'100%'}
-			pl={5}
-			p={1}
-			borderRadius={'5px'}
-			pt={5}
-			>
-			<Box w={'30%'} >
-				<SearchBar
-					textLabel={'회사명'}
-					placeholder="검색어를 입력하세요."
-					name='keyword'
-					setKeyword={setKeyword}
-				/>
-			</Box>
-			<Box w={'30%'} >
-				<SearchBar
-					textLabel={'사용여부'}
-					placeholder="전체"
-					name='useYn'
-					setKeyword={setUseYn}
-					isSelect={true}
-					defaultValue={''}
-					values={[
-						{ code: 1, name: '사용' },
-						{ code: 0, name: '미사용' },
-					]}
-				/>
-			</Box>
-			<Box w={'30%'}>
-				<Button 
-					float={'right'} 
-					variant="brand" 
-              		borderRadius={"10px"}
-              		fontWeight={"600"}
-              		m={1}
-					onClick={() => { handleSearchBtn() }}>검색</Button>
-			</Box>
-		</Flex>
+				<Box w={'30%'} marginRight={'10'} >
+					<FormInput
+						searchBar={true}
+						title={'회사명'}
+						placeholder="검색어를 입력하세요."
+						name='keyword'
+						onChange={(e)=>setKeyword(e.target.value)}
+					/>	</Box>
+				<Box w={'30%'} >
+					<FormInput
+            			type={'select'}
+						searchBar={true}
+						title={'사용여부'}
+						placeholder="전체"
+						name='useYn'
+						onChange={(e)=>setUseYn(e.target.value)}
+						pk={1}
+						defaultValue={useYn}
+						readOnly={false}
+						values={[
+							{ value: 1, name: '사용' },
+							{ value: 0, name: '미사용' },
+						]}
+					/>
+				</Box>
+			</CommonSearchBar>
 	)
 };
 

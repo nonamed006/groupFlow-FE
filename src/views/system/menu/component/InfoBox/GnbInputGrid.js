@@ -6,7 +6,6 @@ import { MdHome } from 'react-icons/md';
 import { AttachmentIcon } from '@chakra-ui/icons';
 import { PORT } from 'set';
 import FormInput from 'common/component/FormInput';
-import FormRadio from 'common/component/FormRadio';
 import api from 'api/Fetch';
 import Upload from 'common/component/Upload';
 
@@ -187,7 +186,8 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         </GridItem>
 
         <GridItem colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title='사용여부'
             name='useYn'
             defaultValue={useYn.toString()}

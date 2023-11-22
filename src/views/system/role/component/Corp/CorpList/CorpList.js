@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import CardMenuBar from "common/component/CardMenuBar";
 import ListCardTable from "views/admin/corporation/component/ListCard/ListCardTable";
-import SearchBar from "common/component/SearchBar";
+
 import { useInView } from 'react-intersection-observer';
 import api from "api/Fetch";
+import FormInput from "common/component/FormInput";
 
 const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
 
@@ -66,7 +67,7 @@ const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
         count={totalCount}
         buttonType={false}
       />
-      <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
+       <FormInput searchBar={true}  setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
 
       {/* 목록 테이블 */}
       <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >

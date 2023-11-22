@@ -118,4 +118,3 @@ const SearchCardBar = ({search, setSearch}) => {
 export default SearchCardBar;
 
 
-

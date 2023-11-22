@@ -1,6 +1,6 @@
 import { Select, Box } from "@chakra-ui/react";
 import React from "react";
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
 
 const SearchBarRoleGrp = ({ setSearchCorp, placeholder, setKeyword, handleSearchBtn, corps }) => {
 
@@ -19,7 +19,8 @@ const SearchBarRoleGrp = ({ setSearchCorp, placeholder, setKeyword, handleSearch
                     })};
             </Select>
 
-            <SearchBar
+            <FormInput
+                searchBar={true}
                 setKeyword={setKeyword}
                 handleSearchBtn={handleSearchBtn}
                 placeholder={placeholder?placeholder:'검색어를 입력하세요'}
