@@ -184,6 +184,7 @@ const EmpInfo = (props) => {
 
   //사원 조직 정보 추가
   const insertEmpDep = async () => {
+
     const res = await api.emp.insertEmpDep(props.empDept);
 
     if (res.status === 200) {
@@ -207,6 +208,7 @@ const EmpInfo = (props) => {
 
   //사원 조직 정보 수정
   const updateEmpDep = async () => {
+    console.log("=====😣", props.empDept);
     const res = await api.emp.updateEmpDep(props.empDept);
 
     if (res.status === 200) {
@@ -261,26 +263,26 @@ const EmpInfo = (props) => {
   };
   // 선택한 사원 조직 정보 삭제
   const deleteChkEmpDep = async () => {
-      const res = await api.emp.deleteChkEmpDep(delEmpDep);
+    const res = await api.emp.deleteChkEmpDep(delEmpDep);
 
-      if (res.status === 200) {
-        props.setAlertInfo({
-          isOpen: true,
-          status: "success",
-          title: res.resultMsg,
-          width: "fit-content",
-        });
-        onClose();
-        getDeptInfo(props.empDetail.empCd);
-        props.setEditState("read");
-      } else {
-        props.setAlertInfo({
-          isOpen: true,
-          status: "warning",
-          title: res.resultMsg,
-          width: "fit-content",
-        });
-      }
+    if (res.status === 200) {
+      props.setAlertInfo({
+        isOpen: true,
+        status: "success",
+        title: res.resultMsg,
+        width: "fit-content",
+      });
+      onClose();
+      getDeptInfo(props.empDetail.empCd);
+      props.setEditState("read");
+    } else {
+      props.setAlertInfo({
+        isOpen: true,
+        status: "warning",
+        title: res.resultMsg,
+        width: "fit-content",
+      });
+    }
   };
 
   return (
@@ -464,23 +466,23 @@ const EmpInfo = (props) => {
                   </Stack>
                 ) : props.editState === "deptDelete" ? (
                   <Stack direction="row" spacing={4} align="center">
-                    <Button  variant="brand"
+                    <Button variant="brand"
                       borderRadius={'10px'}
                       fontWeight={'600'}
                       onClick={() => {
-                      if (delEmpDep.length > 0) {
-                        setModalType(5);
-                        setModalTabStatus("type5");
-                        onOpen();
-                      } else {
-                        props.setAlertInfo({
-                          isOpen: true,
-                          status: "warning",
-                          title: "삭제할 조직을 선택해주세요.",
-                          width: "fit-content",
-                        });
-                      }
-                    }}>
+                        if (delEmpDep.length > 0) {
+                          setModalType(5);
+                          setModalTabStatus("type5");
+                          onOpen();
+                        } else {
+                          props.setAlertInfo({
+                            isOpen: true,
+                            status: "warning",
+                            title: "삭제할 조직을 선택해주세요.",
+                            width: "fit-content",
+                          });
+                        }
+                      }}>
                       삭제
                     </Button>
                     <Button
@@ -502,14 +504,14 @@ const EmpInfo = (props) => {
                       borderRadius={'10px'}
                       fontWeight={'600'}
                       onClick={() => {
-                          if (props.editState === "insert") {
-                            props.onSaveEmpDetail();
-                          } else if (props.editState === "update") {
-                            props.updateEmpInfo();
-                          }else if (props.editState === "deptInsert") {
-                            handleInsertCheck();
-                          } else if (props.editState === "deptUpdate") {
-                            updateEmpDep();
+                        if (props.editState === "insert") {
+                          props.onSaveEmpDetail();
+                        } else if (props.editState === "update") {
+                          props.updateEmpInfo();
+                        } else if (props.editState === "deptInsert") {
+                          handleInsertCheck();
+                        } else if (props.editState === "deptUpdate") {
+                          updateEmpDep();
                         }
                       }}
                     >
@@ -594,8 +596,8 @@ const EmpInfo = (props) => {
           }
           children={
             modalType == 1 ? (
-              <EmpIdChg 
-              empCdTmp={props.empCdTmp}
+              <EmpIdChg
+                empCdTmp={props.empCdTmp}
                 empDetail={props.empDetail}
                 setEmpId={setEmpId}
                 empId={empId}
