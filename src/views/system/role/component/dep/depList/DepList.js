@@ -6,7 +6,7 @@ import SearchBarRoleGrp from 'views/system/roleGroup/component/GroupBox/SearchBa
 import api from "api/Fetch";
 import DepRealGrid from './DepRealGrid';
 
-const DepList = ({ setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
+const DepList = ({ tab, setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [corps, setCorps] = useState([]); // 회사 코드 및 명 목록 (셀렉트박스에서 사용됨)
     const [searchCoCd, setSearchCoCd] = useState(); // 검색바에서 선택된 회사 코드
@@ -14,9 +14,11 @@ const DepList = ({ setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
     const [totalCount, setTotalCount] = useState(0); // 총 데이터 갯수
 
     useEffect(() => {
-        fetchCorpsNm();
-        fetchOrg();
-    }, []);
+        if(tab === 'dep') {
+            fetchCorpsNm();
+            fetchOrg();
+        }
+    }, [tab]);
 
     // 회사명/회사코드 목록 조회
     const fetchCorpsNm = async () => {
@@ -31,6 +33,7 @@ const DepList = ({ setDpCd, setCoCd, setDpCdList, setRgCd, setIsLoading }) => {
         let res = await api.roleEmp.getEmpListByParamApi('N', searchCoCd, keyword, 'dep');
         if (res.status === 200 && res.data) {
             setOrg(res.data);
+            setTotalCount(res.voData.depCount);
         }
         else setOrg([]);
         setRgCd(undefined);
