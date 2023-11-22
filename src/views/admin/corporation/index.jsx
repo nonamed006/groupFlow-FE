@@ -18,10 +18,6 @@ const Corporation = () => {
 		isOpen: false
 	});
 
-	useEffect(() => {
-		fetchMaxSort();
-	}, []);
-
 	useEffect(() => { // 저장, 삭제, 수정 등의 이벤트가 있을 때 다시 값 가져오기
 		fetchMaxSort();
 	}, [changeYn]);
