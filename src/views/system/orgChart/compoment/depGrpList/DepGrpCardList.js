@@ -74,7 +74,7 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
             <Box minH={'600px'}>
               {depGrpList.length > 0 ?
                 depGrpList.map((depGrpData) => {
-                  return <DepGrpCard depGrpInfo={depGrp} depGrp={depGrpData} key={depGrpData.dpGrpcd} setDepGrp={setDepGrp} />
+                  return <DepGrpCard depGrpInfo={depGrp} depGrp={depGrpData} key={depGrpData.dpGrpCd} setDepGrp={setDepGrp} />
                 })
                 :
                 <Text
