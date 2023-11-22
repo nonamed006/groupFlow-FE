@@ -10,6 +10,7 @@ import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
 import { depGrpSchema } from "common/Schema";
+import EmpIcon from "assets/img/gridIcon/employee.png";
 
 const Employee = () => {
   //state
@@ -17,7 +18,7 @@ const Employee = () => {
   const [empNum, setEmpNum] = useState();
   const [empDetail, setEmpDetail] = useState({});
   const [imgFile, setImgFile] = useState(null); //파일
-  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
+  const [imgBase64, setImgBase64] = useState(EmpIcon); // 파일 base64
   const [empCdTmp, setEmpCdTmp] = useState("");
   const [empTmp, setEmpTmp] = useState({});
 

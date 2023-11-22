@@ -72,7 +72,7 @@ const EmpTab1 = (props) => {
                 <Image
                   w="150px"
                   h="200px"
-                  src={EmpIcon}
+                  src={props.imgBase64}
                   alt="사원사진"
                   border="1px solid lightgray"
                 />

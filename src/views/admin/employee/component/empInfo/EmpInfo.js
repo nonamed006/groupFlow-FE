@@ -208,7 +208,6 @@ const EmpInfo = (props) => {
 
   //사원 조직 정보 수정
   const updateEmpDep = async () => {
-    console.log("=====😣", props.empDept);
     const res = await api.emp.updateEmpDep(props.empDept);
 
     if (res.status === 200) {
