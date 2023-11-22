@@ -9,6 +9,7 @@ import CommonAlert from "common/component/CommonAlert";
 import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
+import { depGrpSchema } from "common/Schema";
 
 const Employee = () => {
   //state
@@ -128,7 +129,7 @@ const Employee = () => {
         coNm: "",
         coType: "DGA0001",
         coTypeNm: "",
-        delYn: "",
+        delYn: 0,
         dpCd: "",
         dpGrpNum: "",
         dpGrpcd: "",
@@ -141,7 +142,6 @@ const Employee = () => {
         fax: "",
         jobCd: "",
         jobDetail: "",
-        jobNm: "",
         joinDt: "",
         postNum: "",
         pstnCd: "",
@@ -164,21 +164,40 @@ const Employee = () => {
     resetEmpDept();
   };
 
-  //유효성 검사
+  //사원, 조직정보 등록 유효성 검사
   const handleInsertCheck = () => {
     if (imgFile != null) {
+      //사원 정보 유효성
       empSchema
         .validate(empDetail)
         .then(() => {
           // 유효성 검사 통과한 데이터 처리
-          onSaveEmpDetail();
+          //onSaveEmpDetail();
+
+          //조직정보 유효성
+          depGrpSchema.validate(empDept[0])
+          .then(() => {
+            // 유효성 검사 통과한 데이터 처리
+            onSaveEmpDetail();
+          })
+          .catch((errors) => {
+            // 유효성 검사 실패한 경우 에러 메세지
+            setAlertInfo({
+              isOpen: true,
+              status: "warning",
+              title: "조직 정보 입력값을 확인해주세요.",
+              detail: errors.message,
+              width: "fit-content",
+            });
+          });
+
         })
         .catch((errors) => {
           // 유효성 검사 실패한 경우 에러 메세지
           setAlertInfo({
             isOpen: true,
             status: "warning",
-            title: "입력값을 확인해주세요.",
+            title: "기본 정보 입력값을 확인해주세요.",
             detail: errors.message,
             width: "fit-content",
           });
@@ -188,7 +207,7 @@ const Employee = () => {
       setAlertInfo({
         isOpen: true,
         status: "warning",
-        title: "입력값을 확인해주세요.",
+        title: "기본 정보 입력값을 확인해주세요.",
         detail: "사진을 등록해주세요.",
         width: "fit-content",
       });
@@ -235,6 +254,33 @@ const Employee = () => {
     fd.append("joinDt", empDetail.joinDt);
     fd.append("workTypeCd", empDetail.workTypeCd);
     fd.append("useYn", empDetail.useYn);
+
+    //조직정보 추가
+    fd.append("depGrpDtoList[0].addr", empDept[0].addr);
+    fd.append("depGrpDtoList[0].addrDetail", empDept[0].addrDetail);
+    fd.append("depGrpDtoList[0].coCd", empDept[0].coCd);
+    fd.append("depGrpDtoList[0].coNm", empDept[0].coNm);
+    fd.append("depGrpDtoList[0].coType", empDept[0].coType);
+    fd.append("depGrpDtoList[0].coTypeNm", empDept[0].coTypeNm);
+    fd.append("depGrpDtoList[0].delYn", empDept[0].delYn);
+    fd.append("depGrpDtoList[0].dpCd", empDept[0].dpCd);
+    fd.append("depGrpDtoList[0].dpGrpNum", empDept[0].dpGrpNum);
+    fd.append("depGrpDtoList[0].dpGrpcd", empDept[0].dpGrpcd);
+    fd.append("depGrpDtoList[0].dpNm", empDept[0].dpNm);
+    fd.append("depGrpDtoList[0].dpType", empDept[0].dpType);
+    fd.append("depGrpDtoList[0].dpTypeNm", empDept[0].dpTypeNm);
+    fd.append("depGrpDtoList[0].empTypeCd", empDept[0].empTypeCd);
+    fd.append("depGrpDtoList[0].empTypeNm", empDept[0].empTypeNm);
+    fd.append("depGrpDtoList[0].fax", empDept[0].fax);
+    fd.append("depGrpDtoList[0].jobCd", empDept[0].jobCd);
+    fd.append("depGrpDtoList[0].jobDetail", empDept[0].jobDetail);
+    fd.append("depGrpDtoList[0].joinDt", empDept[0].joinDt);
+    fd.append("depGrpDtoList[0].postNum", empDept[0].postNum);
+    fd.append("depGrpDtoList[0].pstnCd", empDept[0].pstnCd);
+    fd.append("depGrpDtoList[0].rankCd", empDept[0].rankCd);
+    fd.append("depGrpDtoList[0].reDt", empDept[0].reDt);
+    fd.append("depGrpDtoList[0].telNum", empDept[0].telNum);
+    fd.append("depGrpDtoList[0].workTypeCd", empDept[0].workTypeCd);
 
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
@@ -291,9 +337,6 @@ const Employee = () => {
     getEmpList("", "", "");
   }, [isReload]);
 
-  const tabClick = () => {
-    document.getElementById("tabs-44--tab-0").click();
-  };
 
   return (
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
@@ -317,7 +360,6 @@ const Employee = () => {
               editState={editState}
               setSelectedIndex={setSelectedIndex}
               selectedIndex={selectedIndex}
-              tabClick={tabClick}
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>

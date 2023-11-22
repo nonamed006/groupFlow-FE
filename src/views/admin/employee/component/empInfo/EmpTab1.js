@@ -185,7 +185,7 @@ const EmpTab1 = (props) => {
               inputType="password"
               readOnly={props.editState === "read" || props.editState === "update"}
               onChange={props.handleChange} 
-              value={props.empDetail?.empPw}
+              value={props.editState === "insert" ? props.empDetail?.loginPw : props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -226,7 +226,7 @@ const EmpTab1 = (props) => {
             inputType="password"
             readOnly={props.editState === "read" || props.editState === "update"}
             onChange={props.handleChange}
-            value={props.empDetail?.empPw}
+            value={props.editState === "insert" ? props.empDetail?.signPw : props.empDetail?.empPw}
             isRequired={props.editState === "insert"}
             pk={props.empDetail?.empCd}
           />

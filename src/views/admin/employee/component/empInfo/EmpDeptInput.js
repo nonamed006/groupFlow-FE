@@ -186,7 +186,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           fontWeight={600}
           id="postNumBtn"
           onClick={() => {
-            if (editState === "deptInsert" || editState === "deptUpdate") {
+            if (editState !== "read") {
               if (column.coCd != "") {
                 getOrg();
                 onOpen();

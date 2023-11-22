@@ -71,7 +71,6 @@ const EmpCard = (props) => {
             borderRadius={'10px'} 
             fontWeight={'600'}
             onClick={() => {
-              props.tabClick();
               props.setEditState("insert");
               props.resetInput();
             }}

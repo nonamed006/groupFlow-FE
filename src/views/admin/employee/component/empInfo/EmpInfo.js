@@ -294,9 +294,9 @@ const EmpInfo = (props) => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={(e) => {
-                  props.resetInput();
-                  props.setEmpDetail(props.empTmp);
-                  props.setEditState("read");
+                  //props.resetInput();
+                  //props.setEmpDetail(props.empTmp);
+                  //props.setEditState("read");
                   setTabStatus(1);
                 }}
               >
@@ -307,8 +307,8 @@ const EmpInfo = (props) => {
                 fontWeight="700"
                 lineHeight="100%"
                 onClick={(e) => {
-                  getDeptInfo(props.empCdTmp);
-                  props.setEditState("read");
+                  //getDeptInfo(props.empCdTmp);
+                  //props.setEditState("read");
                   setTabStatus(2);
                 }}
               >
@@ -502,18 +502,14 @@ const EmpInfo = (props) => {
                       borderRadius={'10px'}
                       fontWeight={'600'}
                       onClick={() => {
-                        if (tabStatus === 1) {
                           if (props.editState === "insert") {
                             props.onSaveEmpDetail();
                           } else if (props.editState === "update") {
                             props.updateEmpInfo();
-                          }
-                        } else if (tabStatus === 2) {
-                          if (props.editState === "deptInsert") {
+                          }else if (props.editState === "deptInsert") {
                             handleInsertCheck();
                           } else if (props.editState === "deptUpdate") {
                             updateEmpDep();
-                          }
                         }
                       }}
                     >
