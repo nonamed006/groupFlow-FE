@@ -80,7 +80,7 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     };
 
     return (
-        <Box borderRadius="5px" bg="white" h="780px" p="6" backgroundColor="white" display={'inline-block'} w={'480px'}>
+        <Box borderRadius="5px" bg="white" h="780px" p="6" backgroundColor="white" display={'inline-block'} w={'500px'}>
             {/* 상단 */}
             <CardMenuBar title={'사용자 목록'} count={totalCount} buttonType={false} />
             {/* 검색바 */}

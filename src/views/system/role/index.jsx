@@ -14,7 +14,7 @@ const Role = () => {
 
 	return (
         <Box borderRadius="lg" h="full">
-            <Tabs colorScheme="brandScheme">
+            <Tabs colorScheme="brandScheme" >
                 <TabList>
                     <Flex align={{ sm: "flex-start", lg: "center" }} w="100%">
                         <Tab
