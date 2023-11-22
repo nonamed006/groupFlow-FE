@@ -92,7 +92,7 @@ const OrgChartBox = () => {
 
                     <Grid
                         templateColumns='repeat(4, 1fr)'
-                        gap={4}
+                        gap={2}
                     >
                         {/* 검색바 */}
                         <GridItem colSpan={4}   >

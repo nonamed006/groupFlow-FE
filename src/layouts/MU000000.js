@@ -17,6 +17,7 @@ import RouteRole from "routeRole";
 import { getCookie } from "common/common";
 import { useSelector } from "react-redux";
 import ErrorPage from "views/system/error";
+import Loading from "common/Loading";
 
 /*
 layouts/admin/index.js
@@ -25,6 +26,7 @@ layouts/admin/index.js
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const [isLoading, setIsLoading] = useState(true);
   const [ dpGrpCd, setDpGrpCd ] = useState('');
   // const routes = useMemo(async () => {
   //   const menus =  await RoleRoutes();
@@ -42,8 +44,10 @@ export default function Dashboard(props) {
   }, [])
 
   const getRoleRoutes = async () => {
+    setIsLoading(true);
     const route = await RoleRoutes();
     setRoutes(route);
+    setIsLoading(false);
   }
 
   useEffect(async () => {
@@ -219,7 +223,7 @@ export default function Dashboard(props) {
   const [collapse, setCollapse] = useState(false);
 
   return (
-    <Box h={'1000px'}>
+    <Box h={'full'}>
 			<Box>
 				<SidebarContext.Provider
 					value={{
@@ -242,12 +246,13 @@ export default function Dashboard(props) {
 					<Box
 						float='right'
 						w={'calc( 100% - 70px )' }
-						h={'1000px'}
+						h={'content-fit'}
 						overflow='auto'
 						position='relative'
 						maxHeight='100%'
 						as="main"
             p={'30px'}
+            pb={0}
           >
 							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
                 <Navbar
@@ -268,11 +273,14 @@ export default function Dashboard(props) {
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-                <Route path='*' component={ErrorPage} />
+                { isLoading ?
+                 <Loading /> 
+                : <Route path='*' component={ErrorPage} />}
                 {/* <Redirect from="" to="/err/NotFound" />
 						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
+             
               {alertInfo.isOpen && (
                 <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
               )}

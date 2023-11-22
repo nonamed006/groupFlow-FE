@@ -54,7 +54,7 @@ const ChangeMenuBar = ({
             textAlign: "center",
           }}
         >
-          <Text color="while" fontSize="sm" fontWeight="700">
+          <Text color="while" fontSize="15px" fontWeight="600">
             변경일자
           </Text>
         </div>
@@ -85,14 +85,14 @@ const ChangeMenuBar = ({
             textAlign: "center",
           }}
         >
-          <Text color="while" fontSize="sm" fontWeight="700">
+          <Text color="while" fontSize="15px" fontWeight="600">
             변경구분
           </Text>
         </div>
       </GridItem>
-      <GridItem colStart={8} colEnd={11}>
+      <GridItem colStart={8} colEnd={12}>
         <Select
-          borderRadius="14px"
+          borderRadius={'5px'}
           name="chDiv"
           placeholder="전체"
           value={chSearch.chDiv}
@@ -116,7 +116,7 @@ const ChangeMenuBar = ({
             textAlign: "center",
           }}
         >
-          <Text color="while" fontSize="sm" fontWeight="700">
+          <Text color="while" fontSize="15px" fontWeight="600">
             변경자(ID)
           </Text>
         </div>
@@ -128,10 +128,12 @@ const ChangeMenuBar = ({
           name="cid"
           value={chSearch.cid}
           onChange={onChange}
+          
         />
       </GridItem>
       <GridItem colStart={20} colEnd={22}>
         <Button
+         borderRadius={'10px'}
           variant="brand"
           onClick={() => {
             handelChangeHistoryBtn();

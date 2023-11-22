@@ -9,7 +9,7 @@ const TotalMenuBox = ({ rgCd, setCheckedMenuCd, typeCd }) => {
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         fetchMenuList();
-    }, [])
+    }, [rgCd])
 
     // 메뉴 전체 조회 + 권한그룹의 메뉴일 경우 체크여부 포함
     const fetchMenuList = async () => {

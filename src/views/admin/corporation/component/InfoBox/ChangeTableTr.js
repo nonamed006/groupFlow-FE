@@ -64,27 +64,27 @@ const ListCardTableTr = ({ data, index }) => {
           )}
         </ModalLayout>
       )}
-      <Td align="center">
+      <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.chCd}
         </Text>
       </Td>
-      <Td align="center">
+      <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.cdt}
         </Text>
       </Td>
-      <Td align="center">
+      <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.chDiv}
         </Text>
       </Td>
-      <Td align="center">
+      <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.coNm}
         </Text>
       </Td>
-      <Td align="center">
+      <Td textAlign="center">
         <Text color={textColor} fontSize="sm" fontWeight="500">
           {data.empNm}({data.loginId})
         </Text>

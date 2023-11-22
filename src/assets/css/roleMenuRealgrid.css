@@ -421,5 +421,8 @@
 }
 
 .rg-focused-cell {
-  background: #ebebeb;
+  background: #f5f5f5;
+  border: 2px solid;
+  border-radius: 3px;
+  border-color: rgb(142, 194, 237);
 }

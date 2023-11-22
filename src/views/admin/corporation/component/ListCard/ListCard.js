@@ -23,7 +23,7 @@ const ListCard = ({ keyword, useYn, title, setCoCd, changeYn, coCd }) => {
   }, [changeYn]);
 
   useEffect(() => {
-    fetchCorpList();
+    init !== undefined && fetchCorpList();
   }, [init]);
 
   // 검색 버튼 클릭 시
