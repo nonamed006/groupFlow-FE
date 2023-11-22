@@ -20,7 +20,7 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                 />
             </Box>
             {/* 권한그룹 목록 */}
-            <Box w={'420px'} mr={3}>
+            <Box w={'440px'} mr={3}>
                 <RoleGrpBox
                     keyword={keyword}
                     setKeyword={setKeyword}
@@ -32,7 +32,7 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                 />
             </Box>
             {/* 메뉴 목록 */}
-            <Box w={'700px'} >
+            <Box w={'800px'} >
                 <MenuBox
                     rgCd={rgCd} // 선택되는 권한그룹 코드
                     type={'corp'}   // 권한맵핑 기준
