@@ -60,8 +60,9 @@ const EmpTab1 = (props) => {
     <div>
       <Grid templateColumns="repeat(8, 1fr)" gap={1} w={"100%"} pl={10}>
         <GridItem colSpan={1} rowSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
+          <Text fontSize="md" fontWeight="600">
             사진
+            <span style={{color:"#e03131", margin:"5px" }}>*</span>
           </Text>
         </GridItem>
         <GridItem colStart={2} colEnd={4} rowSpan={4}>
@@ -190,10 +191,9 @@ const EmpTab1 = (props) => {
               id="loginPw"
               name="loginPw"
               inputType="password"
-              readOnly={
-                props.editState === "read" || props.editState === "update"
-              }
-              onChange={props.handleChange}
+              readOnly={props.editState === "read" || props.editState === "update"}
+              onChange={props.handleChange} 
+              value={props.editState === "insert" ? props.empDetail?.loginPw : props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -228,17 +228,16 @@ const EmpTab1 = (props) => {
               <LockIcon color="gray.300" />
             </InputRightElement>
             <FormInput
-              title={"결재 비밀번호"}
-              id="signPw"
-              name="signPw"
-              inputType="password"
-              readOnly={
-                props.editState === "read" || props.editState === "update"
-              }
-              onChange={props.handleChange}
-              isRequired={props.editState === "insert"}
-              pk={props.empDetail?.empCd}
-            />
+            title={"결재 비밀번호"}
+            id="signPw"
+            name="signPw"
+            inputType="password"
+            readOnly={props.editState === "read" || props.editState === "update"}
+            onChange={props.handleChange}
+            value={props.editState === "insert" ? props.empDetail?.signPw : props.empDetail?.empPw}
+            isRequired={props.editState === "insert"}
+            pk={props.empDetail?.empCd}
+          />
           </InputGroup>
         </GridItem>
 
@@ -311,12 +310,12 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <AddrBox
-          title={"회사주소"}
-          data={props.empDetail}
-          setData={props.setEmpDetail}
-          editState={props.editState != "read" && "update"}
-          isRequired={true}
-        />
+        title={'회사주소'}
+        data={props.empDetail}
+        setData={props.setEmpDetail}
+        editState={props.editState != "read" && 'update'}
+        isRequired={false}
+      />
       </Grid>
     </div>
   );
