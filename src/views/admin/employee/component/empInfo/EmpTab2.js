@@ -15,7 +15,7 @@ const EmpTab2 = (props) => {
         p={3}
       >
         {props.empDept?.map((column, index) => {
-          if (column.dpGrpcd != "" || props.editState === "deptUpdate" || props.editState === "deptInsert") {
+          if (column.dpGrpcd != "" || props.editState === "update" || props.editState === "deptInsert" || props.editState === "insert") {
             return <EmpDeptInput
               column={column}
               setAlertInfo={props.setAlertInfo}

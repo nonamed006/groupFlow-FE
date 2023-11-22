@@ -22,9 +22,7 @@ import FormRadio from "common/component/FormRadio";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
-import EmpIcon from "assets/img/gridIcon/employee.png";
 const EmpTab1 = (props) => {
-  console.log(props);
 
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
@@ -55,13 +53,14 @@ const EmpTab1 = (props) => {
       }
     }
   };
-
-  return (
+  if (props.empDetail.empCd !== undefined || props.editState === "update" || props.editState === "insert" || props.editState === "deptInsert") {
+    return (
     <div>
       <Grid templateColumns="repeat(8, 1fr)" gap={1} w={"100%"} pl={10}>
         <GridItem colSpan={1} rowSpan={1}>
-          <Text fontSize="sm" fontWeight="600">
+          <Text fontSize="md" fontWeight="600">
             사진
+            <span style={{ color: "#e03131", margin: "5px" }}>*</span>
           </Text>
         </GridItem>
         <GridItem colStart={2} colEnd={4} rowSpan={4}>
@@ -80,7 +79,7 @@ const EmpTab1 = (props) => {
                 <Image
                   w="150px"
                   h="200px"
-                  src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                 // src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
                   alt="사원사진"
                   border="1px solid lightgray"
                 />
@@ -191,10 +190,9 @@ const EmpTab1 = (props) => {
               id="loginPw"
               name="loginPw"
               inputType="password"
-              readOnly={
-                props.editState === "read" || props.editState === "update"
-              }
+              readOnly={props.editState === "read" || props.editState === "update"}
               onChange={props.handleChange}
+              value={props.editState === "insert" ? props.empDetail?.loginPw : props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -233,10 +231,9 @@ const EmpTab1 = (props) => {
               id="signPw"
               name="signPw"
               inputType="password"
-              readOnly={
-                props.editState === "read" || props.editState === "update"
-              }
+              readOnly={props.editState === "read" || props.editState === "update"}
               onChange={props.handleChange}
+              value={props.editState === "insert" ? props.empDetail?.signPw : props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
               pk={props.empDetail?.empCd}
             />
@@ -312,15 +309,26 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <AddrBox
-          title={"회사주소"}
+          title={'회사주소'}
           data={props.empDetail}
           setData={props.setEmpDetail}
-          editState={props.editState != "read" && "update"}
-          isRequired={true}
+          editState={props.editState != "read" && 'update'}
+          isRequired={false}
         />
       </Grid>
     </div>
-  );
+    )
+  } else if (props.editState === "read") {
+    return <Text
+      pt={200}
+      align={'center'}
+      fontWeight={600}
+      color={'lightgray'}
+      fontSize={'18px'}
+    >
+      사원을 선택해 주세요.
+    </Text>
+  }
 };
 
 export default EmpTab1;

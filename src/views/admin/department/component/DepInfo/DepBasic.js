@@ -26,7 +26,6 @@ import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
 
 const DepBasic = (props) => {
-  console.log(props);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [org, setOrg] = useState([]);
   let recYN = new Boolean(
