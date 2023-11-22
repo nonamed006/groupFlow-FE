@@ -15,14 +15,13 @@ const RealGrid = ({ org, getValue }) => {
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: 300,
+      width: 380,
       header: { text: "menuNm" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
     {
       fieldName: "menuCd",
       name: "menuCd",
-      width: 70,
       header: { text: "menuCd" },
     },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
@@ -80,6 +79,16 @@ const RealGrid = ({ org, getValue }) => {
         // }
       }
     };
+
+    // depth에 따른 색상 추가 - 안은비...
+    treeView.setRowStyleCallback(function (grid, item, fixed) {
+      var depth = grid.getValue(item.index, "depth");
+      if (depth === "1") {
+        return "gnb-column";
+      } else if (depth === "2") {
+        return "bottom-gnb-column";
+      }
+    });
 
     treeView.expandAll();
     return () => {

@@ -56,6 +56,7 @@ const Department = () => {
       >
         <GridItem colSpan={7} rowSpan={1}>
           <SearchCardBar
+            setDpCd={setDpCd}
             setSearchText={setSearchText}
             setSelectedCoCd={setSelectedCoCd}
             handleSearchBtn={handleSearchBtn}

@@ -110,6 +110,10 @@ const DepInfo = ({
       .then(() => {
         //  // 유효성 검사 통과한 데이터 처리
         isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
+        setDpCd(0);
+        setDepDto([]);
+        setTabStatus(1);
+        setEditState("read");
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지
@@ -151,7 +155,19 @@ const DepInfo = ({
       getDepGroup();
       setIsEditing(true);
     } else {
-      setDepDto({ stnd: "", recYN: true, typeCd: "" });
+      setDepDto({
+        dpNm: "",
+        addr: "",
+        upperCd: "",
+        upperName: "",
+        sort: "",
+        stnd: "",
+        recYN: true,
+        typeCd: "",
+        useYN: true,
+        dpAbb: "",
+        reqNm: "",
+      });
       setDg([]);
       setIsEditing(false);
     }

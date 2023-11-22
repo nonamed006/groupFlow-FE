@@ -9,6 +9,7 @@ import CommonAlert from "common/component/CommonAlert";
 import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
+import { depGrpSchema } from "common/Schema";
 
 const Employee = () => {
   //state
@@ -18,6 +19,7 @@ const Employee = () => {
   const [imgFile, setImgFile] = useState(null); //파일
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [empCdTmp, setEmpCdTmp] = useState("");
+  const [empTmp, setEmpTmp] = useState({});
 
   const [editState, setEditState] = useState("read");
   const [isReload, setIsReload] = useState(false);
@@ -41,9 +43,9 @@ const Employee = () => {
       delYn: "",
       dpCd: "",
       dpGrpNum: "",
-      dpGrpcd: "",
+      dpGrpcd: "DGA0001",
       dpNm: "",
-      dpType: "",
+      dpType: "DGB0001",
       dpTypeNm: "",
       empCd: empCdTmp,
       empTypeCd: "",
@@ -70,8 +72,10 @@ const Employee = () => {
     const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm);
 
     if(res.status === 200){
+      resetInput();
       setEmpList(res.data);
       setEmpNum(res.strData);
+      setSelectedIndex(undefined);
     }
   };
 
@@ -91,12 +95,10 @@ const Employee = () => {
     setEditState("read");
     getDeptInfo(empList.empCd);
     setEmpDetail(empList);
+    setEmpTmp(empList);
   };
 
-  // input 값 초기화
-  const resetInput = () => {
-    setImgBase64([]);
-
+  const resetEmpDetail = () => {
     setEmpDetail({
       empNm: "",
       mailId: "",
@@ -114,21 +116,25 @@ const Employee = () => {
       workTypeCd: "",
       useYn: "1",
       gender: "M",
+      empPw: "",
     });
+  }
+
+  const resetEmpDept = () => {
     setEmpDept([
       {
         addr: "",
         addrDetail: "",
         coCd: "",
         coNm: "",
-        coType: "",
+        coType: "DGA0001",
         coTypeNm: "",
-        delYn: "",
+        delYn: 0,
         dpCd: "",
         dpGrpNum: "",
         dpGrpcd: "",
         dpNm: "",
-        dpType: "",
+        dpType: "DGB0001",
         dpTypeNm: "",
         empCd: empCdTmp, //수정필요
         empTypeCd: "",
@@ -136,7 +142,6 @@ const Employee = () => {
         fax: "",
         jobCd: "",
         jobDetail: "",
-        jobNm: "",
         joinDt: "",
         postNum: "",
         pstnCd: "",
@@ -149,23 +154,50 @@ const Employee = () => {
         workTypeNm: "",
       },
     ]);
+  }
+
+  // input 값 초기화
+  const resetInput = () => {
+    setImgBase64([]);
+
+    resetEmpDetail();
+    resetEmpDept();
   };
 
-  //유효성 검사
+  //사원, 조직정보 등록 유효성 검사
   const handleInsertCheck = () => {
     if (imgFile != null) {
+      //사원 정보 유효성
       empSchema
         .validate(empDetail)
         .then(() => {
           // 유효성 검사 통과한 데이터 처리
-          onSaveEmpDetail();
+          //onSaveEmpDetail();
+
+          //조직정보 유효성
+          depGrpSchema.validate(empDept[0])
+          .then(() => {
+            // 유효성 검사 통과한 데이터 처리
+            onSaveEmpDetail();
+          })
+          .catch((errors) => {
+            // 유효성 검사 실패한 경우 에러 메세지
+            setAlertInfo({
+              isOpen: true,
+              status: "warning",
+              title: "조직 정보 입력값을 확인해주세요.",
+              detail: errors.message,
+              width: "fit-content",
+            });
+          });
+
         })
         .catch((errors) => {
           // 유효성 검사 실패한 경우 에러 메세지
           setAlertInfo({
             isOpen: true,
             status: "warning",
-            title: "입력값을 확인해주세요.",
+            title: "기본 정보 입력값을 확인해주세요.",
             detail: errors.message,
             width: "fit-content",
           });
@@ -175,7 +207,7 @@ const Employee = () => {
       setAlertInfo({
         isOpen: true,
         status: "warning",
-        title: "입력값을 확인해주세요.",
+        title: "기본 정보 입력값을 확인해주세요.",
         detail: "사진을 등록해주세요.",
         width: "fit-content",
       });
@@ -223,6 +255,33 @@ const Employee = () => {
     fd.append("workTypeCd", empDetail.workTypeCd);
     fd.append("useYn", empDetail.useYn);
 
+    //조직정보 추가
+    fd.append("depGrpDtoList[0].addr", empDept[0].addr);
+    fd.append("depGrpDtoList[0].addrDetail", empDept[0].addrDetail);
+    fd.append("depGrpDtoList[0].coCd", empDept[0].coCd);
+    fd.append("depGrpDtoList[0].coNm", empDept[0].coNm);
+    fd.append("depGrpDtoList[0].coType", empDept[0].coType);
+    fd.append("depGrpDtoList[0].coTypeNm", empDept[0].coTypeNm);
+    fd.append("depGrpDtoList[0].delYn", empDept[0].delYn);
+    fd.append("depGrpDtoList[0].dpCd", empDept[0].dpCd);
+    fd.append("depGrpDtoList[0].dpGrpNum", empDept[0].dpGrpNum);
+    fd.append("depGrpDtoList[0].dpGrpcd", empDept[0].dpGrpcd);
+    fd.append("depGrpDtoList[0].dpNm", empDept[0].dpNm);
+    fd.append("depGrpDtoList[0].dpType", empDept[0].dpType);
+    fd.append("depGrpDtoList[0].dpTypeNm", empDept[0].dpTypeNm);
+    fd.append("depGrpDtoList[0].empTypeCd", empDept[0].empTypeCd);
+    fd.append("depGrpDtoList[0].empTypeNm", empDept[0].empTypeNm);
+    fd.append("depGrpDtoList[0].fax", empDept[0].fax);
+    fd.append("depGrpDtoList[0].jobCd", empDept[0].jobCd);
+    fd.append("depGrpDtoList[0].jobDetail", empDept[0].jobDetail);
+    fd.append("depGrpDtoList[0].joinDt", empDept[0].joinDt);
+    fd.append("depGrpDtoList[0].postNum", empDept[0].postNum);
+    fd.append("depGrpDtoList[0].pstnCd", empDept[0].pstnCd);
+    fd.append("depGrpDtoList[0].rankCd", empDept[0].rankCd);
+    fd.append("depGrpDtoList[0].reDt", empDept[0].reDt);
+    fd.append("depGrpDtoList[0].telNum", empDept[0].telNum);
+    fd.append("depGrpDtoList[0].workTypeCd", empDept[0].workTypeCd);
+
     fetch(`${PORT}/emp/insertEmp`, {
       method: "POST",
       body: fd,
@@ -263,6 +322,7 @@ const Employee = () => {
         width: "fit-content",
       });
       setEditState("read");
+      setIsReload(!isReload);
     }else{
       setAlertInfo({
         isOpen: true,
@@ -274,10 +334,9 @@ const Employee = () => {
   };
 
   useEffect(() => {
-    resetInput();
-    setSelectedIndex(undefined);
     getEmpList("", "", "");
   }, [isReload]);
+
 
   return (
       <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
@@ -289,7 +348,7 @@ const Employee = () => {
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} /> 
+            <SearchCardBar getEmpList={getEmpList} setSelectedIndex={setSelectedIndex}/> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -324,6 +383,9 @@ const Employee = () => {
               selectedIndex={selectedIndex}
               setIsLoading={setIsLoading}
               isLoading={isLoading}
+              empCdTmp={empCdTmp}
+              empTmp={empTmp}
+              getDeptInfo={getDeptInfo}
             />
           </GridItem>
         </Grid>

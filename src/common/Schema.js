@@ -1,8 +1,7 @@
-import { toInteger } from "lodash";
-import { number, object, string, date, ref } from "yup";
+import { number, object, string, date, ref, boolean } from "yup";
 
 export const corpSchema = object().shape({
-  useYn: string().default("false").required("사용여부를 체크해주세요."),
+  useYn: boolean().default(true).required("사용여부를 체크해주세요."),
   coNm: string().required("회사명을 입력해주세요."),
   ceoNm: string().required("대표자명을 입력해주세요."),
   postNum: string().required("우편번호를 선택해주세요."),
@@ -30,8 +29,8 @@ export const depSchema = object().shape({
   upperCd: string().required("상위부서를 선택해주세요."),
   typeCd: string().required("부서유형을 선택해주세요."),
   dpNm: string().required("부서명을 입력해주세요."),
-  recYn: string().default("false").required("대내외 수신여부를 선택해주세요."),
-  useYn: string().default("false").required("사용여부를 선택해주세요."),
+  recYn: string().default("true").required("대내외 수신여부를 선택해주세요."),
+  useYn: string().default("true").required("사용여부를 선택해주세요."),
   sort: number()
   .required("정렬값을 입력해주세요.")
   .positive("정렬값은 1 이상의 숫자를 입력해주세요.")
