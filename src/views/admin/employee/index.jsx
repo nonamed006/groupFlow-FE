@@ -423,9 +423,9 @@ const Employee = () => {
 
 
   return (
-      <Box h={'full'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
+      <Box h={'full'}  overflowY={'hidden'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
         <Grid
-          //h="1000px"
+          //h="100px"
           h={'full'} // 혜윤 수정
           templateRows="repeat(11, 1fr)"
           templateColumns="repeat(6, 1fr)"
