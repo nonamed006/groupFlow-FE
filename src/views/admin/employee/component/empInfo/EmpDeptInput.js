@@ -146,7 +146,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           id="coCd"
           name="coCd"
           placeholder="전체"
-          value={column?.coCd}
+          defaultValue={column?.coCd}
           readOnly={editState === "read"}
           onChange={(e) => handleChange(e, index)}
           values={corpNm}

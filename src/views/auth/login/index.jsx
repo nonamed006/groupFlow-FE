@@ -92,7 +92,7 @@ function SignIn(props) {
     }).then((res) => res.json())
     .then((res) => {
         if(res.status === 200){
-          setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
+          setCookie("Emp_Dp_Type", res.voData.dpGrpCd, 2);
           status="success";
       }else{
         setAlertInfo({

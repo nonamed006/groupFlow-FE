@@ -289,7 +289,7 @@ const EmpInfo = (props) => {
       <Box borderRadius="lg" bg="white" h="700px" p="6">
         <Tabs colorScheme="brandScheme">
           <TabList>
-            <Flex align={{ sm: "flex-start", lg: "center" }} w="100%">
+            <Flex >
               <Tab
                 fontSize="22px"
                 fontWeight="700"
@@ -315,8 +315,10 @@ const EmpInfo = (props) => {
               >
                 조직정보
               </Tab>
+            </Flex>
+
               <Spacer />
-              <Flex>
+              <Flex marginBottom={3}>
                 {props.editState === "read" ? (
                   <Stack direction="row" spacing={4} align="center">
                     {tabStatus == 1 ? (
@@ -403,7 +405,8 @@ const EmpInfo = (props) => {
                               return;
                             }
                             setEmpDeptTmp(props.empDept);
-                            props.resetInput();
+                            //props.resetInput();
+                            props.resetEmpDept();
                             props.setEditState("deptInsert");
                           }}
                         >
@@ -454,9 +457,7 @@ const EmpInfo = (props) => {
                           onOpen();
                         } else if (tabStatus === 2) {
                           props.setEditState("deptDelete");
-                          // setModalType(5);
-                          // setModalTabStatus("type5");
-                          // onOpen();
+                          setDelEmpDep([]);
                         }
                       }}
                     >
@@ -532,7 +533,6 @@ const EmpInfo = (props) => {
                   </Stack>
                 )}
               </Flex>
-            </Flex>
           </TabList>
           <TabPanels>
             <TabPanel>
