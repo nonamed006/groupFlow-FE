@@ -4,8 +4,7 @@ import SearchCardBar from "./component/SearchCardBar";
 import ListCard from "./component/ListCard";
 import InfoBox from "./component/InfoBox";
 
-const Approval = () => {
-  useEffect(() => {}, []);
+const Approval = (props) => {
 
   return (
     <Box h={"full"}>
@@ -19,7 +18,7 @@ const Approval = () => {
       >
         {/* 검색창 */}
         <GridItem colSpan={6} rowSpan={1}>
-          <SearchCardBar />
+          <SearchCardBar {...props}/>
         </GridItem>
         {/* 회사목록 */}
         <GridItem colSpan={2} rowSpan={5}>
