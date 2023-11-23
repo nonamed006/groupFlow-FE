@@ -62,7 +62,7 @@ const RoleGrpBox = ({ setRgCd, rgCd, coCd, keyword, setKeyword, setAlertInfo, se
     const handleSearchBtn = () => {
         // 검색 내용에 따른 목록 조회
         if (coCd !== undefined && coCd !== 'undefined') {
-            initPageInfo(); // 권한그룹 목록 조회
+            setInit(!init); // 권한그룹 목록 조회
         } else {
             setAlertInfo({
                 isOpen: true,

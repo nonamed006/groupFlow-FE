@@ -5,7 +5,7 @@ import FormInput from "common/component/FormInput";
 const SearchBarRoleGrp = ({ setSearchCorp, placeholder, setKeyword, handleSearchBtn, corps }) => {
 
     return (
-        <Box >
+        <Box mb={3}>
             <Select
                 name='coCd'
                 borderRadius="5px"

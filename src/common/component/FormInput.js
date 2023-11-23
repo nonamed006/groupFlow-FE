@@ -40,7 +40,8 @@ const FormInput = ({
           fontSize={searchBar ? '16px' : "md"}
           fontWeight={searchBar ? '400' : "600"}
           w={searchBar ? '18%' : "40%"}
-          whiteSpace={searchBar ? "nowrap" : 'normal'}
+          // whiteSpace={searchBar ? "nowrap" : 'normal'}
+          whiteSpace={ "nowrap"}
           lineHeight={"40px"}
           textAlign="left"
         >
@@ -49,58 +50,72 @@ const FormInput = ({
       )}
 
       {
-        !type &&
-        <Input
-          name={name}
-          w={"100%"}
-          fontSize={"14px"}
-          borderRadius="5px"
-          value={value}
-          key={pk}
-          onChange={onChange}
-          readOnly={readOnly}
-          type={inputType}
-          placeholder={placeholder}
-        />}
-      {
-        type === 'select' &&
-        <Select
-          w={"102%"}
-          name={name}
-          value={defaultValue}
-          key={pk}
-          onChange={onChange}
-          placeholder={placeholder}
-          disabled={readOnly}
-        >
-          {values &&
-          values.map((value) => {
-            return (
-              <option name={name} value={value.value}>
-                {value.name}
-              </option>
-            );
-          })}
-        </Select>
-      }
-      {
-        type === 'radio' &&
-        <RadioGroup name={name} value={defaultValue} key={pk}>
-          <HStack spacing="24px">
-            {values.map((value) => {
-              return (
-                <Radio
-                  name={name}
-                  value={value.value}
-                  onChange={onChange}
-                  isReadOnly={readOnly}
-                >
-                  {value.name}
-                </Radio>
-              );
-            })}
-          </HStack>
-        </RadioGroup>
+        (type !== 'select' && type !== 'radio') ?
+          inputType === 'date' ?
+            <Input
+              name={name}
+              w={"100%"}
+              fontSize={"14px"}
+              borderRadius="5px"
+              defaultValue={value}
+              key={pk}
+              onChange={onChange}
+              readOnly={readOnly}
+              type={inputType}
+              placeholder={placeholder}
+            />
+            :
+            <Input
+              name={name}
+              w={"100%"}
+              fontSize={"14px"}
+              borderRadius="5px"
+              defaultValue={value}
+              key={pk}
+              onKeyUp={onChange}
+              readOnly={readOnly}
+              type={inputType}
+              placeholder={placeholder}
+            />
+          :
+          type === 'select' ?
+            <Select
+              w={"102%"}
+              name={name}
+              value={defaultValue}
+              key={pk}
+              onChange={onChange}
+              placeholder={placeholder}
+              disabled={readOnly}
+            >
+              {values &&
+                values.map((value) => {
+                  return (
+                    <option name={name} value={value.value}>
+                      {value.name}
+                    </option>
+                  );
+                })}
+            </Select>
+            :
+            type === 'radio' ?
+              <RadioGroup name={name} value={defaultValue} key={pk} w={'100%'}>
+                <HStack spacing="25px" >
+                  {values.map((value) => {
+                    return (
+                      <Radio
+                        name={name}
+                        value={value.value}
+                        onChange={onChange}
+                        isReadOnly={readOnly}
+                      >
+                        {value.name}
+                      </Radio>
+                    );
+                  })}
+                </HStack>
+              </RadioGroup>
+              : <></>
       }
       {
         btnText &&
@@ -114,7 +129,6 @@ const FormInput = ({
           onClick={handleSearchBtn}
         >{btnText}</Button>
       }
-
     </FormControl>
   );
 };
