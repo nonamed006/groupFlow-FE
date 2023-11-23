@@ -22,6 +22,7 @@ import FormRadio from "common/component/FormRadio";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
+import EmpIcon from "assets/img/profile/employee.png";
 const EmpTab1 = (props) => {
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
@@ -70,7 +71,8 @@ const EmpTab1 = (props) => {
           <GridItem colStart={2} colEnd={4} rowSpan={4}>
             <Box>
               <Stack direction="row">
-                {props.empDetail.empCd === undefined ? (
+                {props.empDetail.empCd === undefined ||
+                props.empDetail.empCd === "" ? (
                   <Image
                     w="150px"
                     h="200px"
@@ -83,7 +85,7 @@ const EmpTab1 = (props) => {
                   <Image
                     w="150px"
                     h="200px"
-                    // src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                    src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
                     alt="사원사진"
                     border="1px solid lightgray"
                   />

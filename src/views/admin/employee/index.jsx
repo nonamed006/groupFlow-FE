@@ -10,7 +10,7 @@ import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
 import { depGrpSchema } from "common/Schema";
-import EmpIcon from "assets/img/profile/employee.png";
+
 
 const Employee = () => {
   //state
@@ -44,7 +44,7 @@ const Employee = () => {
       delYn: "",
       dpCd: "",
       dpGrpNum: "",
-      dpGrpcd: "DGA0001",
+      dpGrpCd: "DGA0001",
       dpNm: "",
       dpType: "DGB0001",
       dpTypeNm: "",
@@ -61,7 +61,7 @@ const Employee = () => {
       pstnNm: "",
       rankCd: "",
       rankNm: "",
-      reDt: null,
+      reDt: "",
       telNum: "",
       workTypeCd: "",
       workTypeNm: "",
@@ -134,7 +134,7 @@ const Employee = () => {
         delYn: 0,
         dpCd: "",
         dpGrpNum: "",
-        dpGrpcd: "",
+        dpGrpCd: "",
         dpNm: "",
         dpType: "DGB0001",
         dpTypeNm: "",
@@ -287,7 +287,7 @@ const Employee = () => {
     fd.append("depGrpDtoList[0].delYn", empDept[0].delYn);
     fd.append("depGrpDtoList[0].dpCd", empDept[0].dpCd);
     fd.append("depGrpDtoList[0].dpGrpNum", empDept[0].dpGrpNum);
-    fd.append("depGrpDtoList[0].dpGrpcd", empDept[0].dpGrpcd);
+    fd.append("depGrpDtoList[0].dpGrpCd", empDept[0].dpGrpCd);
     fd.append("depGrpDtoList[0].dpNm", empDept[0].dpNm);
     fd.append("depGrpDtoList[0].dpType", empDept[0].dpType);
     fd.append("depGrpDtoList[0].dpTypeNm", empDept[0].dpTypeNm);
@@ -335,13 +335,14 @@ const Employee = () => {
    //사원 정보 수정
    const updateEmpInfo = async() =>{
      empDetail.depGrpDtoList = empDept;
-    const res = await api.emp.updateEmpInfo(empDetail); 
+    //const res = await api.emp.updateEmpInfo(empDetail); 
 
     const fd = new FormData();
     if(imgFile != null){
       Object.values(imgFile).forEach((file) => fd.append("file", file));
     }
 
+    fd.append("empCd", empDetail.empCd)
     fd.append("empNm", empDetail.empNm);
     fd.append("mailId", empDetail.mailId);
     fd.append("loginId", empDetail.loginId);
@@ -369,7 +370,7 @@ const Employee = () => {
     fd.append("depGrpDtoList["+i+"].delYn", data.delYn);
     fd.append("depGrpDtoList["+i+"].dpCd", data.dpCd);
     fd.append("depGrpDtoList["+i+"].dpGrpNum", data.dpGrpNum);
-    fd.append("depGrpDtoList["+i+"].dpGrpcd", data.dpGrpcd);
+    fd.append("depGrpDtoList["+i+"].dpGrpCd", data.dpGrpCd);
     fd.append("depGrpDtoList["+i+"].dpNm", data.dpNm);
     fd.append("depGrpDtoList["+i+"].dpType", data.dpType);
     fd.append("depGrpDtoList["+i+"].dpTypeNm", data.dpTypeNm);
@@ -385,6 +386,7 @@ const Employee = () => {
     fd.append("depGrpDtoList["+i+"].reDt", data.reDt);
     fd.append("depGrpDtoList["+i+"].telNum", data.telNum);
     fd.append("depGrpDtoList["+i+"].workTypeCd", data.workTypeCd);
+    fd.append("depGrpDtoList["+i+"].empCd", data.empCd);
     });
 
     fetch(`${PORT}/emp/updateEmpInfo`, {

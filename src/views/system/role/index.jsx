@@ -12,6 +12,8 @@ const Role = () => {
     // 로딩
     const [isLoading, setIsLoading] = useState();
 
+    const [tab, setTab] = useState('emp');
+
 	return (
         <Box borderRadius="lg" h="full">
             <Tabs colorScheme="brandScheme" >
@@ -21,7 +23,10 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
-                            onClick={(e) => e.target.blur()}
+                            onClick={(e) => {
+                                e.target.blur()
+                                setTab('emp')
+                            }}
                         >
                             사용자 기준
                         </Tab>
@@ -29,7 +34,10 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
-                            onClick={(e) => e.target.blur()}
+                            onClick={(e) => {
+                                e.target.blur()
+                                setTab('dep')
+                            }}
                         >
                             부서 기준
                         </Tab>
@@ -37,7 +45,7 @@ const Role = () => {
                             fontSize="22px"
                             fontWeight="700"
                             lineHeight="100%"
-                            onClick={(e) => e.target.blur()}
+                            onClick={(e) => {e.target.blur()}}
                         >
                             회사 기준
                         </Tab>
@@ -46,13 +54,14 @@ const Role = () => {
                 <TabPanels>
                     {/* 권한-사용자기준 */}
                     <TabPanel>
-                        <RoleEmp 
+                        <RoleEmp
+                        tab={tab}
                         setIsLoading={setIsLoading} // menuBox 변경에 따른 안은비 수정
                         />
                     </TabPanel>
                     {/* 권한-부서기준 */}
                     <TabPanel>
-                        <RoleDep setAlertInfo={setAlertInfo} setIsLoading={setIsLoading}/>
+                        <RoleDep tab={tab} setAlertInfo={setAlertInfo} setIsLoading={setIsLoading}/>
                     </TabPanel>
                     {/* 권한-회사기준 */}
                     <TabPanel>

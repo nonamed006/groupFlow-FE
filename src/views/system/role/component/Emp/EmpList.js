@@ -5,7 +5,7 @@ import RealGrid from "./RealGrid";
 import CardMenuBar from "common/component/CardMenuBar";
 import Loading from "common/Loading";
 
-const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
+const EmpList = ({tab, setDpGrpCd}) => { //setCoCd, setEmpCd
     const [ searchCoCd, setSearchCoCd ] = useState('');         // 회사 카테고리 코드
     const [ searchCorpList, setSearchCorpList ] = useState([]); // 회사 카테고리 목록
     const [ keyword, setKeyword ] = useState('');               // 검색어
@@ -30,9 +30,11 @@ const EmpList = ({setDpGrpCd}) => { //setCoCd, setEmpCd
     }
 
     useEffect(() => {
-        getCorpList();
-        getEmpList();
-    }, [])
+        if(tab === 'emp') {
+            getCorpList();
+            getEmpList();
+        }
+    }, [tab])
 
     return (
         <Box borderRadius="5px" bg="white" h="700px" p="6">

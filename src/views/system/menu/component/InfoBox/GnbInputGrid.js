@@ -9,42 +9,42 @@ import FormInput from 'common/component/FormInput';
 import FormRadio from 'common/component/FormRadio';
 import api from 'api/Fetch';
 import Upload from 'common/component/Upload';
+import { menuSchema } from 'common/Schema';
 
-const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) => {
+const GnbInputGrid = ({
+  title,
+  menuInfo,
+  setMenuInfo,
+  setAlertInfo,
+  isEditing,
+  setIsEditing,
+  isEditingReset,
+  isSave,
+  setIsSave
+}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [ onDrag, setOnDrag ] = useState(false); // 파일 드래그드롭 관련
   const [ icons, setIcons ] = useState([]);
-  const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
   const [menuInputData, setMenuInputData] = useState({
     menuCd: '',
     upperCd: '',
     fileCd: '',
     menuNm: '',
-    useYn: 'true',
+    useYn: undefined,
     sort : '',
     depth : '',
     typeCd: '',
     menuPath : '',
     delYn : 0,
   });
-  const useYn = new Boolean(menuInfo.useYn);
-  const reset = () => {
-    setMenuInfo({
-      menuCd: '',
-      upperCd: '',
-      fileCd: '',
-      menuNm: '',
-      useYn: 'true',
-      sort : '',
-      depth : '',
-      typeCd: '',
-      menuPath : '',
-      delYn : 0,
-    });
-  }
+  const useYn = new Boolean(menuInputData.useYn === undefined ? true : menuInputData.useYn);
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+
+    if(name === 'useYn') {
+      value = JSON.parse(value.toLowerCase());
+    }
     setMenuInputData({
       ...menuInputData,
       [name]: value // name 키를 가진 값을 value 로
@@ -57,6 +57,24 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
     });
   }
 
+  // 유효성 검사
+  const menuValidation = () => {
+    menuSchema.validate(menuInputData).then(res => {
+      if(res.menuCd) {
+        modifyGnb();
+      }
+    }).catch(err => {
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: '입력값을 확인해주세요.',
+        detail: err.message,
+        width: 'fit-content',
+      })
+    })
+  }
+
+  // 수정
   const modifyGnb = async () => {
     if(!menuInputData.menuCd) {
       setAlertInfo({
@@ -69,7 +87,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
       return false;
     }
 
-    menuInputData.useYn = menuInputData.useYn === 'true' ? 1 : 0
+    menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyGnb(menuInputData);
 
     if(responseJson.status === 200) {
@@ -80,6 +98,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         width: 'fit-content',
       });
       setMenuInfo(responseJson.voData);
+      setIsSave(!isSave)
     } else {
       setAlertInfo({
         isOpen: true,
@@ -151,7 +170,10 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         <Flex>
             {
               isEditing ? 
-                <Button variant="action" onClick={modifyGnb}>저장 {isEditing.current}</Button>
+                <>
+                  <Button variant="action" onClick={menuValidation}>저장</Button>
+                  <Button onClick={() => isEditingReset()}>취소</Button>
+                </>
               :
               <Button variant="action" onClick={() => {
                 if(menuInfo.menuCd) {
@@ -197,11 +219,11 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
             isRequired={true}
             values={[
               {
-                value: 'true',
+                value: "true",
                 name: '사용',
               },
               {
-                value: 'false',
+                value: "false",
                 name: '미사용',
               },
             ]}
