@@ -27,7 +27,7 @@ const EmpCard = (props) => {
   const headerColor = useColorModeValue("#8F9BBA", "white");
 
   //테이블 헤더
-  const headerGroups = ["이름", "ID", "최초입사일"];
+  const headerGroups = ["이름", "ID", "최초입사일", "재직상태"];
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   return (
@@ -121,6 +121,13 @@ const EmpCard = (props) => {
                   <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="500">
                       {minTimeDate(column.joinDt)}
+                    </Text>
+                  </Flex>
+                </Td>
+                <Td fontWeight="500" fontSize={"sm"} textAlign="center">
+                  <Flex align="center">
+                    <Text color={textColor} fontSize="sm" fontWeight="500" >
+                      {column.workTypeCd === "EMC0001" ? "재직" : "퇴사" }
                     </Text>
                   </Flex>
                 </Td>
