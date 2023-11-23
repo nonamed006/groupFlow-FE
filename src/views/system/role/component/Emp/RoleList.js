@@ -6,8 +6,9 @@ import api from "api/Fetch";
 import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import BottomDrawer from "common/component/BottomDrawer";
 import SearchBar from "common/component/SearchBar";
+import RoleGrpSearchBar from "../Corp/RoleGrpBox/RoleGrpSearchBar";
 
-const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
+const RoleList = ({dpGrpCd, defaultCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
     const [ roleList, setRoleList ] = useState([]);
     const [ total, setTotal ] = useState(0);
 
@@ -32,10 +33,28 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
     const setEmpRole = async () => {
         const response = await api.roleEmp.mappingEmpRoleApi(dpGrpCd, checkedList);
         if(response.status === 200) {
-            alert(response.resultMsg);
-            getRoleList();
+            setAlertInfo({
+                isOpen: true,
+                status: 'success',
+                title: response.resultMsg,
+                width: 'fit-content',
+            })
+            //getRoleList();
+        } else if(response.status === 400) {
+            setAlertInfo({
+                isOpen: true,
+                status: 'error',
+                title: response.resultMsg,
+                width: 'fit-content',
+            })
         } else {
-            alert(response.resultMsg);
+            setAlertInfo({
+                isOpen: true,
+                status: 'error',
+                title: response.error,
+                detail: response.message,
+                width: 'fit-content',
+            })
         }
     }
 
@@ -88,11 +107,7 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
 
     // 체크리스트 변화에 따라 하단 설정란 표시
     useEffect(() => {
-        if(checkedList.length > 0) {
-            isDrawerOpen();
-        } else {
-            isDrawerClose();
-        }
+        checkedList.length  > 0 && isDrawerOpen();
     }, [checkedList]);
   
   return (
@@ -100,7 +115,8 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
         {/* 메뉴상단 */}
         <CardMenuBar title={'권한그룹'} count={total} buttonType={false} />
         {/* 검색바 */}
-        <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
+        <RoleGrpSearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} code={dpGrpCd ? dpGrpCd : defaultCd}/>
+        {/* <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} defaultValue={keyword} name='keyword'/> */}
         <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'} >
             <Box minH={'510px'}>
                 {

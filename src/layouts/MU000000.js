@@ -8,7 +8,9 @@ import Sidebar from "components/sidebar/Sidebar.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 //import routes from "routes";
+
 import RoleRoutes from "routes";
+
 import CommonAlert from "common/component/CommonAlert";
 import { SidebarContext } from "contexts/SidebarContext";
 import "../assets/css/Sidebar.css"
@@ -38,10 +40,6 @@ export default function Dashboard(props) {
   // }, [dpGrpCd]);
   const [ routes, setRoutes] = useState([]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
-  
-  useEffect(() => {
-    setDpGrpCd(getCookie('Emp_Dp_Type'));
-  }, [])
 
   const getRoleRoutes = async () => {
     setIsLoading(true);
@@ -208,7 +206,7 @@ export default function Dashboard(props) {
       if (prop.items.length > 0) {
         return getRoutes(prop.items);
       }
-      
+
       return (
         <RouteRole
           path={prop.layout + prop.path}
@@ -219,6 +217,7 @@ export default function Dashboard(props) {
       );
     });
   };
+
   const { onOpen } = useDisclosure();
   const [collapse, setCollapse] = useState(false);
 
@@ -270,6 +269,7 @@ export default function Dashboard(props) {
 						<Box
               h={'800px'}
             >
+              {/* {props.children} */}
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
