@@ -99,7 +99,7 @@ const SearchCardBar = (props) => {
               id="searchNm"
               placeholder="검색어를 입력하세요."
               size="md"
-              borderRadius="14px"
+              borderRadius="5px"
               onChange={(e) => setSrhNm(e.target.value)}
             />
           </GridItem>

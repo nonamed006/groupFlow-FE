@@ -121,8 +121,8 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
 
   return (
     <Grid
-      templateColumns="repeat(13, 1fr)"
-      templateRows="repeat(10, 1fr)"
+      templateColumns="repeat(8, 1fr)"
+      templateRows="repeat(11, 1fr)"
       gap={1}
     >
       <GridItem colStart={0} colSpan={13}>
@@ -138,38 +138,32 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         style={{visibility: editState === "deptDelete" ? "visible" : "hidden"}}
       />
       </GridItem>
-      <GridItem colSpan={2}>
-        <Text fontSize="md" fontWeight="600">
-          회사/부서
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={3} colEnd={6}>
-        <Select
-          isDisabled={editState === "read"}
-          value={column?.coCd}
-          placeholder="전체"
+
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
+      <FormInput
+          title={"회사/부서"}
+          type="select"
+          id="coCd"
           name="coCd"
-          onChange={(e) => {
-            handleChange(e, index);
-          }}
-        >
-          {corpNm.map((item, index) => (
-            <option key={index} name="coCd" value={item.coCd}>
-              {item.coNm}
-            </option>
-          ))}
-        </Select>
+          placeholder="전체"
+          value={column?.coCd}
+          readOnly={editState === "read"}
+          onChange={(e) => handleChange(e, index)}
+          values={corpNm}
+          isRequired={true}
+          pk={column?.dpGrpCd}
+        />
       </GridItem>
-      <GridItem colStart={6} colEnd={13}>
-        <Input
-          name="dpNm"
+      <GridItem colStart={4} colEnd={7} colSpan={3}>
+      <FormInput
           id="dpNm"
-          value={column?.dpNm}
+          name="dpNm"
           placeholder="부서명"
-          size="md"
-          borderRadius="14px"
-          isReadOnly={true}
+          value={column?.dpNm}
+          readOnly={editState === "read"}
+          onChange={(e) => handleChange(e, index)}
+          isRequired={true}
+          pk={column?.dpGrpCd}
         />
         <Input
           name="dpCd"
@@ -179,7 +173,8 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           display="none"
         />
       </GridItem>
-      <GridItem colStart={13} colEnd={14}>
+
+      <GridItem colStart={7} colEnd={8}>
         <Button bg={'#E2E8F0'}
           borderRadius={'10px'}
           fontWeight={600}
@@ -201,7 +196,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
           }}>부서 조회</Button>
       </GridItem>
 
-      <GridItem colStart={1} colEnd={7}>
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
         <FormInput
           title={"사번"}
           id="dpGrpNum"
@@ -215,7 +210,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <GridItem colStart={1} colEnd={7}>
+      <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
         <FormInput
             type={'radio'}
           title={'회사구분'}
@@ -237,7 +232,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <GridItem colStart={8} colEnd={14}>
+      <GridItem colStart={5} colEnd={8} colSpan={4} lineHeight="40px">
         <FormInput
           type={'radio'}
           title={'부서구분'}
@@ -259,57 +254,27 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <GridItem>
-        <Text fontSize="md" fontWeight="600">
-          직급
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"} />
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직급"} isRequired={false}/>
       </GridItem>
 
-      <GridItem colStart={8} colEnd={10}>
-        <Text fontSize="md" fontWeight="600">
-          직책
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={10} colEnd={14}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"} />
+      <GridItem colStart={5} colEnd={8} colSpan={4}>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직책"} isRequired={false}/>
       </GridItem>
 
-      <GridItem colSpan={2}>
-        <Text fontSize="md" fontWeight="600">
-          재직구분
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"} />
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"재직구분"} isRequired={false}/>
       </GridItem>
 
-      <GridItem colStart={8} colEnd={10}>
-        <Text fontSize="md" fontWeight="600">
-          고용구분
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={10} colEnd={14}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"} />
+      <GridItem colStart={5} colEnd={8} colSpan={4}>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"고용구분"} isRequired={false}/>
       </GridItem>
 
-      <GridItem colSpan={2}>
-        <Text fontSize="md" fontWeight="600">
-          직무
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={3} colEnd={7}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} />
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직무"} isRequired={false}/>
       </GridItem>
 
-      <GridItem colStart={8} colEnd={14}>
+      <GridItem colStart={5} colEnd={8} colSpan={4}>
         <FormInput
           title={"상세업무"}
           placeholder="상세업무를 입력하세요."
@@ -322,40 +287,38 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <GridItem colSpan={2}>
-        <Text fontSize="md" fontWeight="600">
-          입사일 / 퇴사일
-          <span style={{color:"#e03131", margin:"5px" }}>*</span>
-        </Text>
-      </GridItem>
-      <GridItem colStart={3} colEnd={5}>
-        <Input
-          id="joinDt"
-          name="joinDt"
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
-          style={{ color: "gray" }}
-          value={minTimeDate(column?.joinDt)}
-          isReadOnly={editState === "read"}
-          onChange={(e) => handleChange(e, index)}
-        />
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
+      <FormInput
+            title={"입사일"}
+            name="joinDt"
+            id="joinDt"
+            inputType="date"
+            placeholder="Select Date and Time"
+            style={{ color: "gray" }}
+            value={minTimeDate(column?.joinDt)}
+            readOnly={editState === "read"}
+            onChange={(e) => handleChange(e, index)}
+            isRequired={true}
+            pk={column?.dpGrpCd}
+          />
       </GridItem>
 
-      <GridItem colStart={5} colEnd={7}>
-        <Input
-          id="reDt"
-          name="reDt"
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
-          style={{ color: "gray" }}
-          value={minTimeDate(column?.reDt)}
-          isReadOnly={true}
-        />
+      <GridItem colStart={5} colEnd={8} colSpan={4}>
+      <FormInput
+            title={"퇴사일"}
+            name="reDt"
+            id="reDt"
+            inputType="date"
+            placeholder="Select Date and Time"
+            style={{ color: "gray" }}
+            value={minTimeDate(column?.reDt)}
+            readOnly={editState === "read"}
+            onChange={(e) => handleChange(e, index)}
+            pk={column?.dpGrpCd}
+          />
       </GridItem>
 
-      <GridItem colStart={8} colEnd={14}>
+      <GridItem colStart={1} colEnd={4} colSpan={4}>
         <FormInput
           title={"팩스번호"}
           id="fax"
@@ -370,7 +333,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      <GridItem colStart={1} colEnd={7}>
+      <GridItem colStart={5} colEnd={8} colSpan={4}>
         <FormInput
           title={"전화번호"}
           name="telNum"
@@ -384,14 +347,6 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
         />
       </GridItem>
 
-      {/* <AddrBox
-        title={'회사주소'}
-        data={column}
-        //setData={setCorp}
-        //dataPk={coCd}
-        editState={editState != "read" && 'update'}
-        isRequired={true}
-      /> */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
