@@ -24,7 +24,8 @@ const SearchCardBar = ({search, setSearch}) => {
 	const getLnbCategoryList = async () => {
 		const responseJson = await api.menu.getLnbCategoryList(search.searchGnbMenuCd);
 		
-		if(responseJson.result === 'EMPTY') {
+		if(!responseJson.data) {
+			setLnbCategoryList([]);
 			return false;
 		}
 		const data = responseJson.data.map(value => {
