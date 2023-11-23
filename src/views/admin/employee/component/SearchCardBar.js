@@ -40,7 +40,7 @@ const SearchCardBar = (props) => {
                 textAlign: "center",
               }}
             >
-              <Text color={textColor} fontSize="sm" fontWeight="600">
+              <Text color={textColor} fontSize="md" >
                 회사
               </Text>
             </div>
@@ -67,7 +67,7 @@ const SearchCardBar = (props) => {
                 textAlign: "center",
               }}
             >
-              <Text color={textColor} fontSize="sm" fontWeight="600">
+              <Text color={textColor} fontSize="md" >
                 재직구분
               </Text>
             </div>
@@ -86,8 +86,7 @@ const SearchCardBar = (props) => {
             >
               <Text
                 color={textColor}
-                fontSize="sm"
-                fontWeight="600"
+                fontSize="md"
                 id="searchNm"
               >
                 이름/ID
@@ -105,7 +104,7 @@ const SearchCardBar = (props) => {
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
             <Button
-              variant="brand"
+              variant="brand" borderRadius="10px" w={'80px'}
               onClick={() => {props.getEmpList(srhCorp, srhWorkType, srhNm);}}
             >
               검색

@@ -46,8 +46,9 @@ const EmpCard = (props) => {
             fontSize="22px"
             fontWeight="700"
             lineHeight="100%"
+            marginRight={2}
           >
-            사용자
+            사용자 
           </Text>
           <Text
             color={textNumColor}

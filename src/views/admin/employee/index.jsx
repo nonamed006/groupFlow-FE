@@ -470,6 +470,7 @@ const Employee = () => {
               empCdTmp={empCdTmp}
               empTmp={empTmp}
               getDeptInfo={getDeptInfo}
+              resetEmpDept={resetEmpDept}
             />
           </GridItem>
         </Grid>
