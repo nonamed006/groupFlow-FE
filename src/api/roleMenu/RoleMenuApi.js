@@ -116,10 +116,9 @@ const roleMenu = {
    * 안은비
    *
    */
-  getRoleMenuBySearch: (keyword) => {
-    let dpGrpCd = getCookie("Emp_Dp_Type");
+  getRoleMenuBySearch: (empDpType, keyword) => {
     const promise = getPromise({
-      url: `roleMenu/${dpGrpCd}?keyword=${keyword}`,
+      url: `roleMenu/${empDpType}?keyword=${keyword}`,
       method: "GET",
     });
     return promise.then((responseJson) => responseJson);
