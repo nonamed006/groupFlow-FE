@@ -38,7 +38,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
         <Box w={'90px'} display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Image
              src={depGrp.empDto.fileCd?`${PORT}/menu/icon-${depGrp.empDto.fileCd}`:defaultProfile}
-            alt='Dan Abramov'
+            alt='프로필 사진'
             boxSize={depGrp.empDto.fileCd?'90px':'40px'}
             objectFit='cover'
             rounded='md' />

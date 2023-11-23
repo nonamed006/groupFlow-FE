@@ -1,70 +1,58 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React from "react";
 import FormInput from 'common/component/FormInput';
-const SearchBarOrga = ({ setKeyword, setSearch, handleSearchBtn }) => {
+import CommonSearchBar from 'common/component/CommonSearchBar';
+const SearchBarOrga = ({ search, setKeyword, setSearch, handleSearchBtn }) => {
     const values = [
         {
-            code: 'corp',
+            value: 'corp',
             name: '회사명',
         },
         {
-            code: 'dep',
+            value: 'dep',
             name: '부서명',
         },
         {
-            code: 'empNm',
+            value: 'empNm',
             name: '사원명',
         },
         {
-            code: 'empId',
+            value: 'empId',
             name: '메일ID',
         },
         {
-            code: 'rank',
+            value: 'rank',
             name: '직급',
         }
     ];
     return (
-        <Flex
-            bg="white"
-            justifyContent={"space-around"}
-            w={'100%'}
-            boxShadow={'md'}
-            pl={5}
-            borderRadius={'5px'}
+        <CommonSearchBar 
+            handleSearchBtn={handleSearchBtn}
+            btnText={'검색'}
         >
-            <Box w={'40%'}>
+            <Box w={'40%'} mr={10}>
             <FormInput
-                type={'searchBar'}
-                    setKeyword={setSearch}
-                    textLabel={'검색기준'}
+                searchBar={true}
+                type={'select'}
+                    onChange={(e)=>setSearch(e.target.value)}
+                    title={'검색기준'}
                     placeholder={'전체'}
-                    isSelect={true}
+
                     values={values}
-                    defaultValue={''}
+                    defaultValue={search}
                 />
             </Box>
             <Box w={'40%'}>
             <FormInput
-                type={'searchBar'}
-                    setKeyword={setKeyword}
-                    textLabel={'검색어'}
+                searchBar={true}
+                onChange={(e)=>setKeyword(e.target.value)}
+                title={'검색어'}
                     placeholder={'검색어를 입력하세요.'}
                     defaultValue={''}
                     name={'keyword'}
                 />        
             </Box>
-            <Box w={'10%'}>
-                <Button 
-                    variant="brand" 
-              		borderRadius={"10px"}
-              		fontWeight={"600"} 
-                    onClick={() => handleSearchBtn()}>{'검색'}</Button>
-            </Box>
-
-        </Flex>
-
-
+        </CommonSearchBar>
     );
 };
 

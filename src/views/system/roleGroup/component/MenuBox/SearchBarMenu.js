@@ -3,14 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 
 import FormInput from "common/component/FormInput";
 
-const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
+const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, selectedMenu, setKeyword, setSelectedMenu }) => {
 	let [values, setValues] = useState();
 	const formInputRef = useRef(null);
 
 	useEffect(() => {
 		if (menuList) {
 			const updatedValues = menuList.map(menu => ({
-				code: menu.menuCd,
+				value: menu.menuCd,
 				name: menu.menuNm
 			}));
 			setValues(updatedValues);
@@ -20,11 +20,11 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 	useEffect(() => {
 		if (rgCd !== undefined && rgCd !== 'undefined') {
 			fetchMenuList();
-		}else{
+		} else {
 			setValues([]);
 		}
 		onClearSelect();
-	}, [ code, rgCd, typeCd]);
+	}, [code, rgCd, typeCd]);
 
 
 	const onClearSelect = () => {
@@ -40,22 +40,24 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 		>
 			<form ref={formInputRef}>
 				<Flex justifyContent={"space-around"}>
-					<Box w={'50%'}>
-					<FormInput searchBar={true} 
+					<Box w={'50%'} mr={10}>
+						<FormInput
+							type={'select'}
+							searchBar={true}
 							title={'대메뉴'}
-							setKeyword={setSelectedMenu}
+							onChange={e => setSelectedMenu(e.target.value)}
 							placeholder={'전체'}
-							isSelect={true}
-							values={values}
+							values={values&&values}
 							name={'gnbMenu'}
-							defaultValue={'undefined'}
+							defaultValue={selectedMenu}
 						/>
 					</Box>
 					<Box w={'50%'}>
-					<FormInput searchBar={true}
+						<FormInput
+							searchBar={true}
 							title={'메뉴명'}
-							setKeyword={setKeyword}
-							handleSearchBtn={handleSearchBtn}
+							onChange={e => setKeyword(e.target.value)}
+							handleSearchBtn={()=>handleSearchBtn()}
 							placeholder={'검색어를 입력하세요'}
 							btnText={'검색'}
 							name={'keyword'}

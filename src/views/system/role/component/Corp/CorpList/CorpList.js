@@ -67,7 +67,16 @@ const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
         count={totalCount}
         buttonType={false}
       />
-       <FormInput searchBar={true}  setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'회사명 입력하세요'} btnText={'검색'} />
+      <Box mb={3}>
+        <FormInput
+          searchBar={true}
+          onChange={(e) => setKeyword(e.target.value)}
+          handleSearchBtn={() => handleSearchBtn()}
+          placeholder={'회사명 입력하세요'}
+          btnText={'검색'}
+        />
+      </Box>
+
 
       {/* 목록 테이블 */}
       <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >

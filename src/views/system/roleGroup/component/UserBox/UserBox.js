@@ -23,11 +23,11 @@ const UserBox = ({ rgCd, setIsLoading }) => {
     useEffect(() => {
         if (rgCd !== undefined && rgCd !== 'undefined') {
             initPageInfo();
-        }else{
-             initDataInfo();
+        } else {
+            initDataInfo();
         }
         onClearSelect();
-       
+
     }, [rgCd]);
 
     useEffect(() => {
@@ -85,7 +85,15 @@ const UserBox = ({ rgCd, setIsLoading }) => {
             <CardMenuBar title={'사용자 목록'} count={totalCount} buttonType={false} />
             {/* 검색바 */}
             <form ref={formInputRef}>
-                <FormInput searchBar={true} init={rgCd} title={'이름'} setKeyword={setKeyword} handleSearchBtn={initPageInfo} placeholder={'검색어를 입력하세요'} btnText={'검색'} />
+                <FormInput
+                    searchBar={true}
+                    init={rgCd}
+                    title={'이름'}
+                    onChange={e => setKeyword(e.target.value)}
+                    handleSearchBtn={() => initPageInfo()}
+                    placeholder={'검색어를 입력하세요'}
+                    btnText={'검색'}
+                />
             </form>
             {/* 목록 */}
             <Box overflowY={userList.length > 0 ? 'auto' : 'hidden'} mt={4} height={'550px'} w={'430px'} display={'block'} >

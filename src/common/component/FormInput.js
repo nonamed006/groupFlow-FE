@@ -7,6 +7,7 @@ import {
   RadioGroup,
   Select,
   useColorModeValue,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -26,7 +27,9 @@ const FormInput = ({
   type,
   searchBar,
   values,
-  defaultValue
+  defaultValue,
+  btnText,
+  handleSearchBtn
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
@@ -34,67 +37,84 @@ const FormInput = ({
       {title && (
         <FormLabel
           color={textColor}
-          fontSize={searchBar? '16px' : "md"}
+          fontSize={searchBar ? '16px' : "md"}
           fontWeight={searchBar ? '400' : "600"}
           w={searchBar ? '18%' : "40%"}
-          whiteSpace={searchBar? "nowrap" : 'normal'}
+          whiteSpace={searchBar ? "nowrap" : 'normal'}
           lineHeight={"40px"}
           textAlign="left"
         >
           {title}
         </FormLabel>
       )}
-      
-       {
-        !type  ?
-    <Input
-        name={name}
-        w={"100%"}
-        fontSize={"14px"}
-        borderRadius="5px"
-        value={value}
-        key={pk}
-        onChange={onChange}
-        readOnly={readOnly}
-        type={inputType}
-        placeholder={placeholder}
-      />:
-      type !== 'select' ? 
-      <RadioGroup name={name} value={defaultValue} key={pk}>
-      <HStack spacing="24px">
-        {values.map((value) => {
-          return (
-            <Radio
-              name={name}
-              value={value.value}
-              onChange={onChange}
-              isReadOnly={readOnly}
-            >
-              {value.name}
-            </Radio>
-          );
-        })}
-      </HStack>
-    </RadioGroup>
-      :
-      <Select
-      w={"102%"}
-      name={name}
-      value={defaultValue}
-      key={pk}
-      onChange={onChange}
-      placeholder={placeholder}
-      disabled={readOnly}
-    >
-      {values.map((value) => {
-        return (
-          <option name={name} value={value.value}>
-            {value.name}
-          </option>
-        );
-      })}
-    </Select>
-}
+
+      {
+        !type &&
+        <Input
+          name={name}
+          w={"100%"}
+          fontSize={"14px"}
+          borderRadius="5px"
+          value={value}
+          key={pk}
+          onChange={onChange}
+          readOnly={readOnly}
+          type={inputType}
+          placeholder={placeholder}
+        />}
+      {
+        type === 'select' &&
+        <Select
+          w={"102%"}
+          name={name}
+          value={defaultValue}
+          key={pk}
+          onChange={onChange}
+          placeholder={placeholder}
+          disabled={readOnly}
+        >
+          {values &&
+          values.map((value) => {
+            return (
+              <option name={name} value={value.value}>
+                {value.name}
+              </option>
+            );
+          })}
+        </Select>
+      }
+      {
+        type === 'radio' &&
+        <RadioGroup name={name} value={defaultValue} key={pk}>
+          <HStack spacing="24px">
+            {values.map((value) => {
+              return (
+                <Radio
+                  name={name}
+                  value={value.value}
+                  onChange={onChange}
+                  isReadOnly={readOnly}
+                >
+                  {value.name}
+                </Radio>
+              );
+            })}
+          </HStack>
+        </RadioGroup>
+      }
+      {
+        btnText &&
+        <Button
+          ml={2}
+          float={"right"}
+          w={'80px'}
+          variant="brand"
+          borderRadius="10px"
+          fontWeight={600}
+          onClick={handleSearchBtn}
+        >{btnText}</Button>
+      }
+
     </FormControl>
   );
 };

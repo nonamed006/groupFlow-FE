@@ -20,7 +20,12 @@ const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
 
     return (
         <form ref={formInputRef}>
-            <FormInput searchBar={true}  setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
+            <FormInput
+                searchBar={true}
+                onChange={(e) => setKeyword(e.target.value)}
+                handleSearchBtn={() => handleSearchBtn()}
+                placeholder={'권한명을 입력하세요'}
+                btnText={'검색'} />
         </form>
     );
 };

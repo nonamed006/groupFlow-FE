@@ -21,8 +21,8 @@ const SearchBarRoleGrp = ({ setSearchCorp, placeholder, setKeyword, handleSearch
 
             <FormInput
                 searchBar={true}
-                setKeyword={setKeyword}
-                handleSearchBtn={handleSearchBtn}
+                onChange={(e)=>setKeyword(e.target.value)}
+                handleSearchBtn={()=>handleSearchBtn()}
                 placeholder={placeholder?placeholder:'검색어를 입력하세요'}
                 btnText={'검색'}
             />
