@@ -20,9 +20,7 @@ import DepUpperCd from "./DepUpperCd";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { PORT } from "set";
 import AddrBox from "common/addressAPI/AddrBox";
-import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
-import FormSelect from "common/component/FormSelect";
 import Loading from "common/Loading";
 
 const DepBasic = (props) => {
@@ -213,7 +211,8 @@ const DepBasic = (props) => {
           />
         </GridItem>
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormSelect
+        <FormInput
+            type={'select'}
             title={"부서유형"}
             name={"typeCd"}
             defaultValue={props.depDto?.typeCd}
@@ -261,7 +260,8 @@ const DepBasic = (props) => {
           />
         </GridItem>
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormRadio
+        <FormInput
+            type={'radio'} 
             title={"대내외 수신여부"}
             name={"recYN"}
             defaultValue={recYN.toString()}
@@ -288,7 +288,8 @@ const DepBasic = (props) => {
           editState={props.editState}
         ></AddrBox>
         <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormRadio
+        <FormInput
+            type={'radio'}
             title={"사용여부"}
             name={"useYN"}
             defaultValue={useYN.toString()}

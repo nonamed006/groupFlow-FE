@@ -46,6 +46,7 @@ const Corporation = () => {
 				{/* 검색창 */}
 				<GridItem colSpan={6} rowSpan={1}>
 					<SearchCardBar
+						useYn={useYn}
 						setKeyword={setKeyword}
 						setUseYn={setUseYn}
 						handleSearchBtn={handleSearchBtn}

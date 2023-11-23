@@ -18,7 +18,6 @@ import {
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
-import FormRadio from "common/component/FormRadio";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
@@ -202,7 +201,8 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title={"성별"}
             name="gender"
             defaultValue={props.empDetail.gender ?? "M"}
@@ -259,7 +259,8 @@ const EmpTab1 = (props) => {
         </GridItem>
 
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title={"계정사용"}
             name="useYn"
             defaultValue={useYN.toString()}
