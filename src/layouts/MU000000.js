@@ -29,7 +29,7 @@ layouts/admin/index.js
 // Custom Chakra theme
 export default function Dashboard(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [ dpGrpCd, setDpGrpCd ] = useState('');
+  //const [ dpGrpCd, setDpGrpCd ] = useState('');
   // const routes = useMemo(async () => {
   //   const menus =  await RoleRoutes();
   //   if(menus) {
@@ -40,6 +40,7 @@ export default function Dashboard(props) {
   // }, [dpGrpCd]);
   const [ routes, setRoutes] = useState([]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
+  const dpGrpCd = getCookie('Emp_Dp_Type');
 
   const getRoleRoutes = async () => {
     setIsLoading(true);
@@ -49,7 +50,11 @@ export default function Dashboard(props) {
   }
 
   useEffect(async () => {
+    if(!dpGrpCd) {
+      window.location.href = '/auth/login?status=401'
+    }
     getRoleRoutes();
+    console.log(dpGrpCd);
   }, [loginEmpInfo])
 
   const [alertInfo, setAlertInfo] = useState({
@@ -212,7 +217,7 @@ export default function Dashboard(props) {
           path={prop.layout + prop.path}
           component={prop.component}
           key={key}
-          setAlertInfo={setAlertInfo}
+          name={prop.name}
         />
       );
     });
@@ -273,11 +278,15 @@ export default function Dashboard(props) {
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-                { isLoading ?
-                 <Loading /> 
-                : <Route path='*' component={ErrorPage} />}
+                {/* <Redirect from="/MU000000" to="/MU000000/home" /> */}
+                {
+                  isLoading ?
+                    <Loading /> 
+                  :
+                    // <Route path='*' component={ErrorPage} />
+                    <Redirect from="*" to="/err/NotFound"/>
+                }
                 {/* <Redirect from="" to="/err/NotFound" />
-						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
              

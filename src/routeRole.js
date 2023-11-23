@@ -46,13 +46,17 @@ const RouteRole = ({component: Component, ...rest}) => {
     return (
             resp.status === 200 ?
                 (
-                    
+                    Component ?
                         <Route
                             {...rest}
                             render={props => {
-                                return Component ? <Component {...props}/> : <ErrorPage {...props}/>
+                                return <Component {...props} {...rest}/>
                             }}
                         />
+                    :
+                    <Route
+                        component={ErrorPage}
+                    />
                 )
                 
             :

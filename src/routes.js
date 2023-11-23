@@ -51,13 +51,32 @@ const componentMap = {
   MU230008: MU230008,
   MU230009: MU230009,
   MU230010: MU230010,
-  MU230011: MU230015,
-  MU230012: MU230012,
-  MU230013: MU230015,
-  MU230014: MU230015,
-  MU230015: MU230015,
+  MU230011: MU230035,
+  MU230012: MU230035,
+  MU230013: MU230035,
+  MU230014: MU230035,
+  MU230015: MU230035,
+  MU230016: MU230035,
+  MU230017: MU230035,
+  MU230018: MU230035,
+  MU230019: MU230035,
+  MU230020: MU230035,
+  MU230021: MU230035,
+  MU230022: MU230035,
+  MU230023: MU230035,
+  MU230024: MU230035,
+  MU230025: MU230035,
+  MU230026: MU230035,
+  MU230027: MU230035,
+  MU230028: MU230035,
+  MU230029: MU230035,
+  MU230030: MU230035,
+  MU230031: MU230035,
   MU230032: MU230035,
+  MU230033: MU230035,
+  MU230034: MU230035,
   MU230035: MU230035,
+  MU230036: MU230035,
 };
 // 원본 horizon-ui
 // https://horizon-ui.com/
@@ -85,98 +104,6 @@ const component = {
 
     const data = responseJson.data;
     setComponent(data);
-    // const sys = {
-    //   code: 'MU230001',
-    //   name: '시스템 설정',
-    //   icon: <Image src={`/img/menu/FI230012.png`}/>,
-    //   layout: '/MU000000',
-    //   path: '/MU230001/',
-    //   upper: '',
-    //   items: [
-    //     {
-    //       code: 'MU230002',
-    //       name: '조직관리',
-    //       layout: '/MU000000',
-    //       path: '/MU230001/MU230002/',
-    //       upper: 'MU230001',
-    //       items: [
-    //         {
-    //           code: 'MU230005',
-    //           name: '회사관리',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230002/MU230005/',
-    //           upper: 'MU230002',
-    //           component: componentMap['MU230005'],
-    //           items: []
-    //         },
-    //         {
-    //           code: 'MU230006',
-    //           name: '부서관리',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230002/MU230006/',
-    //           upper: 'MU230002',
-    //           component: componentMap['MU230006'],
-    //           items: []
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       code: 'MU230003',
-    //       name: '사원관리',
-    //       layout: '/MU000000',
-    //       path: '/MU230001/MU230003/',
-    //       upper: 'MU230001',
-    //       items: [
-    //         {
-    //           code: 'MU230007',
-    //           name: '사원관리',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230003/MU230007/',
-    //           upper: 'MU230003',
-    //           component: componentMap['MU230007'],
-    //           items: []
-    //         },
-    //       ]
-    //     },
-    //     {
-    //       code: 'MU230004',
-    //       name: '권한관리',
-    //       layout: '/MU000000',
-    //       path: '/MU230001/MU230004/',
-    //       upper: 'MU230001',
-    //       items: [
-    //         {
-    //           code: 'MU230008',
-    //           name: '메뉴관리',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230004/MU230008/',
-    //           upper: 'MU230004',
-    //           component: componentMap['MU230008'],
-    //           items: []
-    //         },
-    //         {
-    //           code: 'MU230009',
-    //           name: '권한그룹설정',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230004/MU230009/',
-    //           upper: 'MU230004',
-    //           component: componentMap['MU230009'],
-    //           items: []
-    //         },
-    //         {
-    //           code: 'MU230010',
-    //           name: '권한 설정',
-    //           layout: '/MU000000',
-    //           path: '/MU230001/MU230004/MU230010/',
-    //           upper: 'MU230004',
-    //           component: componentMap['MU230010'],
-    //           items: []
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
-    // data.push(sys);
     return data;
   },
 };
