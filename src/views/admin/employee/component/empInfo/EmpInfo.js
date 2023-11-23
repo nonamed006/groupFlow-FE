@@ -404,6 +404,15 @@ const EmpInfo = (props) => {
                               });
                               return;
                             }
+                            if(props.empDetail.workTypeCd === "EM230005"){
+                              props.setAlertInfo({
+                                isOpen: true,
+                                status: "warning",
+                                title: "퇴사한 사원의 조직정보를 추가할 수 없습니다.",
+                                width: "fit-content",
+                              });
+                              return;
+                            }
                             setEmpDeptTmp(props.empDept);
                             //props.resetInput();
                             props.resetEmpDept();
