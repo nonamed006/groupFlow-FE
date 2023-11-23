@@ -4,9 +4,6 @@ import {
   Input,
   GridItem,
   Text,
-  RadioGroup,
-  HStack,
-  Radio,
   Flex,
   Button,
   useColorModeValue,
@@ -23,49 +20,47 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { React, useState, useEffect } from "react";
-import { MdHome } from "react-icons/md";
-import { AttachmentIcon, DragHandleIcon } from "@chakra-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { PORT } from "set";
+import { DragHandleIcon } from "@chakra-ui/icons";
 import RealGrid from "./UpperRealGrid";
 import api from "api/Fetch";
 import FormInput from "common/component/FormInput";
+import { menuSchema } from "common/Schema";
 
-const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
+
+const LnbInputGrid = ({
+  title,
+  menuInfo,
+  setMenuInfo,
+  setAlertInfo,
+  isEditing,
+  setIsEditing,
+  isEditingReset,
+  isSave,
+  setIsSave
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [category, setCategory] = useState([]);
-  const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
   const [menuInputData, setMenuInputData] = useState({
     menuCd: "",
     upperCd: "",
     fileCd: "",
     menuNm: "",
-    useYn: "true",
+    useYn: true,
     sort: "",
     depth: "",
     typeCd: "",
     menuPath: "",
     delYn: 0,
   });
-  const useYn = new Boolean(menuInfo.useYn);
-  const reset = () => {
-    setMenuInfo({
-      menuCd: "",
-      upperCd: "",
-      fileCd: "",
-      menuNm: "",
-      useYn: "true",
-      sort: "",
-      depth: "",
-      typeCd: "",
-      menuPath: "",
-      delYn: 0,
-    });
-  };
+  const useYn = new Boolean(menuInputData.useYn === undefined ? true : menuInputData.useYn);
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+    
+    if(name === 'useYn') {
+      value = JSON.parse(value.toLowerCase());
+    }
     setMenuInputData({
       ...menuInputData,
       [name]: value, // name 키를 가진 값을 value 로
@@ -83,7 +78,25 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
     updateData = data;
   };
 
-  const modifyGnb = async () => {
+  // 유효성 검사
+  const menuValidation = () => {
+    menuSchema.validate(menuInputData).then(res => {
+      if(res.menuCd) {
+        modifyLnb();
+      }
+    }).catch(err => {
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: '입력값을 확인해주세요.',
+        detail: err.message,
+        width: 'fit-content',
+      })
+    })
+  }
+
+  // 수정
+  const modifyLnb = async () => {
     if (!menuInputData.menuCd) {
       setAlertInfo({
         isOpen: true,
@@ -94,7 +107,8 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
 
       return false;
     }
-    menuInputData.useYn = menuInputData.useYn === "true" ? 1 : 0;
+
+    menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyLnb(menuInputData);
 
     if(responseJson.status === 200) {
@@ -105,6 +119,7 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
         width: 'fit-content',
       });
       setMenuInfo(responseJson.voData);
+      setIsSave(!isSave);
     } else {
       setAlertInfo({
         isOpen: true,
@@ -115,17 +130,31 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
     }
   };
 
-  const getCategory = (cd) => {
+  const getCategory = async() => {
     const resultTag = null;
-    fetch(`${PORT}/menu/`, {method: 'GET'})//category-${cd}
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setCategory(responseJson.data);
-      });
+
+    const responseJson = await api.menu.getLnbMenuList();
+    setCategory(responseJson.data);
+    // fetch(`${PORT}/menu/`, {method: 'GET'})//category-${cd}
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     setCategory(responseJson.data);
+    //   });
     return resultTag;
   };
 
   const click = () => {
+    // console.log(updateData);
+    if(!updateData) {
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: '상위 메뉴를 선택해주세요.',
+        width: 'fit-content',
+      })
+      return false;
+    }
+    
     const clickData = {
       ...menuInputData,
       upperCd: updateData._values[2],
@@ -138,7 +167,6 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
 
   useEffect(() => {
     setMenuInputData(menuInfo);
-    getCategory(menuInfo.upperCd);
     setIsEditing(false);
   }, [menuInfo]);
 
@@ -164,7 +192,10 @@ const LnbInputGrid = ({ title, menuInfo, setMenuInfo, setAlertInfo }) => {
         <Flex>
           {
             isEditing ? 
-              <Button variant="action" onClick={modifyGnb}>저장 {isEditing.current}</Button>
+              <>
+              <Button variant="action" onClick={menuValidation}>저장</Button>
+              <Button onClick={() => isEditingReset()}>취소</Button>
+              </>
             :
             <Button variant="action" onClick={() => {
               if(menuInfo.menuCd) {

@@ -5,7 +5,7 @@ import MenuBox from "views/system/roleGroup/component/MenuBox/MenuBox";
 import { useState } from "react";
 import CommonAlert from "common/component/CommonAlert";
 
-const RoleEmp = ({setIsLoading}) => {
+const RoleEmp = ({tab, setIsLoading}) => {
     const [ dpGrpCd, setDpGrpCd] = useState('');
     const [ rgCd, setRgCd] = useState('');
     const [ roleKeyword, setRoleKeyword ] = useState('');
@@ -24,6 +24,7 @@ const RoleEmp = ({setIsLoading}) => {
         >
             <GridItem colSpan={2} rowSpan={5} >
                 <EmpList
+                    tab={tab}
                     setDpGrpCd={setDpGrpCd}
                 />
             </GridItem>
