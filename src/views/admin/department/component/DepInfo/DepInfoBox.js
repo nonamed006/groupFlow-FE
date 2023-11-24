@@ -22,7 +22,7 @@ const InfoBox = ({
 
   useEffect(() => {});
   return (
-    <Flex marginBottom={5}>
+    <Flex marginBottom={3}>
       {tabStatus === 1 ? (
         <Stack direction="row" spacing={4}>
           <Button

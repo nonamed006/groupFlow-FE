@@ -8,7 +8,9 @@ import Sidebar from "components/sidebar/Sidebar.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 //import routes from "routes";
+
 import RoleRoutes from "routes";
+
 import CommonAlert from "common/component/CommonAlert";
 import { SidebarContext } from "contexts/SidebarContext";
 import "../assets/css/Sidebar.css"
@@ -27,7 +29,7 @@ layouts/admin/index.js
 // Custom Chakra theme
 export default function Dashboard(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [ dpGrpCd, setDpGrpCd ] = useState('');
+  //const [ dpGrpCd, setDpGrpCd ] = useState('');
   // const routes = useMemo(async () => {
   //   const menus =  await RoleRoutes();
   //   if(menus) {
@@ -38,10 +40,7 @@ export default function Dashboard(props) {
   // }, [dpGrpCd]);
   const [ routes, setRoutes] = useState([]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
-  
-  useEffect(() => {
-    setDpGrpCd(getCookie('Emp_Dp_Type'));
-  }, [])
+  const dpGrpCd = getCookie('Emp_Dp_Type');
 
   const getRoleRoutes = async () => {
     setIsLoading(true);
@@ -51,7 +50,11 @@ export default function Dashboard(props) {
   }
 
   useEffect(async () => {
+    if(!dpGrpCd) {
+      window.location.href = '/auth/login?status=401'
+    }
     getRoleRoutes();
+    console.log(dpGrpCd);
   }, [loginEmpInfo])
 
   const [alertInfo, setAlertInfo] = useState({
@@ -208,17 +211,18 @@ export default function Dashboard(props) {
       if (prop.items.length > 0) {
         return getRoutes(prop.items);
       }
-      
+
       return (
         <RouteRole
           path={prop.layout + prop.path}
           component={prop.component}
           key={key}
-          setAlertInfo={setAlertInfo}
+          name={prop.name}
         />
       );
     });
   };
+
   const { onOpen } = useDisclosure();
   const [collapse, setCollapse] = useState(false);
 
@@ -270,14 +274,19 @@ export default function Dashboard(props) {
 						<Box
               h={'800px'}
             >
+              {/* {props.children} */}
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-                { isLoading ?
-                 <Loading /> 
-                : <Route path='*' component={ErrorPage} />}
+                {/* <Redirect from="/MU000000" to="/MU000000/home" /> */}
+                {
+                  isLoading ?
+                    <Loading /> 
+                  :
+                    // <Route path='*' component={ErrorPage} />
+                    <Redirect from="*" to="/err/NotFound"/>
+                }
                 {/* <Redirect from="" to="/err/NotFound" />
-						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
              

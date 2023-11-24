@@ -5,7 +5,7 @@ import RealGrid from "./RealGrid";
 import CardMenuBar from "common/component/CardMenuBar";
 import Loading from "common/Loading";
 
-const EmpList = ({tab, setDpGrpCd}) => { //setCoCd, setEmpCd
+const EmpList = ({tab, realGridHandler}) => { //setCoCd, setEmpCd
     const [ searchCoCd, setSearchCoCd ] = useState('');         // 회사 카테고리 코드
     const [ searchCorpList, setSearchCorpList ] = useState([]); // 회사 카테고리 목록
     const [ keyword, setKeyword ] = useState('');               // 검색어
@@ -15,7 +15,7 @@ const EmpList = ({tab, setDpGrpCd}) => { //setCoCd, setEmpCd
 
     // 회사 + 부서 + 사용자 목록 조회
     const getEmpList = async() => {
-        setDpGrpCd('');
+        realGridHandler('', '');
         setIsLoading(true);
         const response = await api.roleEmp.getEmpListApi(searchCoCd, keyword);
         setIsLoading(false);
@@ -71,7 +71,7 @@ const EmpList = ({tab, setDpGrpCd}) => { //setCoCd, setEmpCd
                     isLoading ?
                         <Loading/>
                     :
-                        <RealGrid org={list} setListDetail={setDpGrpCd}/>
+                        <RealGrid org={list} setListDetail={realGridHandler}/>
                 }
             </Box>
         </Box>

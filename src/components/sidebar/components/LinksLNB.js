@@ -6,6 +6,7 @@ import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { SidebarContext } from "contexts/SidebarContext";
 import { MdAlignVerticalBottom } from "react-icons/md";
+import { UseMouseOver } from "hook/UseMouseOver";
 
 /**
  * sidebar/components/Links.js
@@ -24,6 +25,7 @@ export function SidebarLinks(props) {
   let activeIcon = useColorModeValue("brand.500", "white");
   let activeColor = useColorModeValue("gray.700", "white");
   let textColor = useColorModeValue("secondaryGray.500", "white");
+  const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   const context = useContext(SidebarContext);
 
@@ -48,6 +50,12 @@ export function SidebarLinks(props) {
             }}
             cursor={"pointer"}
             key={index}
+            w={'100%'}
+            px={'10px'}
+            onMouseOut={onMouseOut}
+            onMouseOver={() => {
+              onMouseOver(index);
+            }}
           >
             <HStack
               spacing={"22px"}
@@ -58,12 +66,13 @@ export function SidebarLinks(props) {
                 w="100%"
                 alignItems="center"
                 justifyContent="center"
-                pl={"50px"}
+                pl={"40px"}
               >
                 <Text
                   me="auto"
-                  fontWeight={activeRoute() ? '600' : 'normal'}
-                  color={activeColor}
+                  fontWeight={activeRoute(route.path) ? '600' : 'normal'}
+                  fontSize={'17px'}
+                  color={activeRoute(route.path) || mouseOverIndex === index ? activeColor : textColor}
                 >
                   {route.name}
                 </Text>

@@ -7,7 +7,7 @@ import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import BottomDrawer from "common/component/BottomDrawer";
 import FormInput from "common/component/FormInput";
 
-const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
+const RoleList = ({dpGrpCd, defaultCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) => {//coCd, empCd
     const [ roleList, setRoleList ] = useState([]);
     const [ total, setTotal ] = useState(0);
 
@@ -32,10 +32,28 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
     const setEmpRole = async () => {
         const response = await api.roleEmp.mappingEmpRoleApi(dpGrpCd, checkedList);
         if(response.status === 200) {
-            alert(response.resultMsg);
-            getRoleList();
+            setAlertInfo({
+                isOpen: true,
+                status: 'success',
+                title: response.resultMsg,
+                width: 'fit-content',
+            })
+            //getRoleList();
+        } else if(response.status === 400) {
+            setAlertInfo({
+                isOpen: true,
+                status: 'error',
+                title: response.resultMsg,
+                width: 'fit-content',
+            })
         } else {
-            alert(response.resultMsg);
+            setAlertInfo({
+                isOpen: true,
+                status: 'error',
+                title: response.error,
+                detail: response.message,
+                width: 'fit-content',
+            })
         }
     }
 
@@ -88,11 +106,7 @@ const RoleList = ({dpGrpCd, rgCd, setRgCd, keyword, setKeyword, setAlertInfo}) =
 
     // 체크리스트 변화에 따라 하단 설정란 표시
     useEffect(() => {
-        if(checkedList.length > 0) {
-            isDrawerOpen();
-        } else {
-            isDrawerClose();
-        }
+        checkedList.length  > 0 && isDrawerOpen();
     }, [checkedList]);
   
   return (
