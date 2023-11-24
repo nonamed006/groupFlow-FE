@@ -92,10 +92,9 @@ export const empSchema = object().shape({
   signPw: string()
     .required("결재 비밀번호를 입력해주세요.")
     .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, {
-      message: "결재 비밀번호는 8자리 이상, 영문과 숫자로 입력해주세요.",
+      message: "결재 비밀번호는 8자리 이상, 영문과 숫자로 입력해주세요.", 
     })
     .max(30, "결재 비밀번호는 30자리 이내로 입력해주세요."),
-  fileCd: string().required("사진을 등록해주세요.").typeError('올바른 사진을 등록해주세요.'),
   empNm: string().required("사원 이름을 입력해주세요.").max(10, "사원 이름은 20자리 이내로 입력해주세요."),
   mailId: string().required("메일ID를 입력해주세요.")
     .min(4, "메일 ID는 4자리 이상 입력해주세요")
@@ -132,7 +131,6 @@ export const empSchema = object().shape({
 });
 
 export const empUpdateSchema = object().shape({
-  fileCd: string().required("사진을 등록해주세요.").typeError('올바른 사진을 등록해주세요.'),
   empNm: string().required("사원 이름을 입력해주세요.").max(10, "사원 이름은 20자리 이내로 입력해주세요."),
   mailId: string().required("메일ID를 입력해주세요.")
     .min(4, "메일 ID는 4자리 이상 입력해주세요")
