@@ -59,7 +59,7 @@ const GnbCard = ({
   }, [menuInfo, search.onSearchClick]);//onSearchClick
 
   return (
-      <Box borderRadius="lg" bg="white" h='700px'  p="6" overflowY={"auto"}>
+      <Box borderRadius="5px" bg="white" h='700px'  p="6" overflowY={"auto"}>
           {/* 목록 상단 */}
         <GnbCardBar title={title} count={list&&list.length}/>
           {/* 목록 테이블(카드형식) */}
