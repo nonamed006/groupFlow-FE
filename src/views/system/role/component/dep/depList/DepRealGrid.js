@@ -20,7 +20,7 @@ const DepRealGrid = ({ org, handleClick }) => {
 
   var columns = [
     { fieldName: "path", name: "path",  header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 376, header: { text: "name" } },
+    { fieldName: "name", name: "name", width: 376, header: { text: " " } },
     { fieldName: "code", name: "code",  header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "type", name: "type", header: { text: "type" } },
@@ -72,6 +72,11 @@ const DepRealGrid = ({ org, handleClick }) => {
         return "bottom-gnb-column";
       }
     });
+
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
 
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {

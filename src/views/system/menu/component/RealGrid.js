@@ -8,7 +8,7 @@ const setUseName = (items) => {
   items.forEach((item) => {
     item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
 
-    if(item.rows != null) {
+    if (item.rows != null) {
       setUseName(item.rows);
     }
   });
@@ -100,6 +100,11 @@ const RealGrid = ({ org, setMenuDetail }) => {
         return "bottom-gnb-column";
       }
     });
+
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
 
     treeView.expandAll();
     return () => {

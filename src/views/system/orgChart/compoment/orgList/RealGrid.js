@@ -18,7 +18,7 @@ const RealGrid = ({ org, handleGrid }) => {
 
   var columns = [
     { fieldName: "path", name: "path", width: 50, header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 300, header: { text: "name" } },
+    { fieldName: "name", name: "name", width: 300, header: { text: " " } },
     { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
     { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
@@ -54,7 +54,7 @@ const RealGrid = ({ org, handleGrid }) => {
     treeView.columnByName("code").visible = false;
     treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
-    
+
     treeView.treeOptions.iconImages = [corpIcon, depIcon];
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
@@ -65,7 +65,12 @@ const RealGrid = ({ org, handleGrid }) => {
         return "bottom-gnb-column";
       }
     });
-    
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
+
+
     treeView.onCellClicked = function (grid, clickData) {
       if (clickData.cellType !== "gridEmpty") {
         // let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
