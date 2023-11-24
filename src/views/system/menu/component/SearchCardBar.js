@@ -24,7 +24,8 @@ const SearchCardBar = ({search, setSearch}) => {
 	const getLnbCategoryList = async () => {
 		const responseJson = await api.menu.getLnbCategoryList(search.searchGnbMenuCd);
 		
-		if(responseJson.result === 'EMPTY') {
+		if(!responseJson.data) {
+			setLnbCategoryList([]);
 			return false;
 		}
 		const data = responseJson.data.map(value => {
@@ -48,7 +49,7 @@ const SearchCardBar = ({search, setSearch}) => {
 			w={'100%'}
 			pl={5}
 			p={1}
-			borderRadius={'10px'}
+			borderRadius={'5px'}
 			pt={5}
 		>
 			<Box w={'30%'} >
@@ -116,6 +117,5 @@ const SearchCardBar = ({search, setSearch}) => {
 };
 
 export default SearchCardBar;
-
 
 

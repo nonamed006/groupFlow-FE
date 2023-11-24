@@ -18,6 +18,7 @@ import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
 import api from "api/Fetch";
 import { set } from "lodash";
+import dep from "api/dep/DepApi";
 
 const DepInfo = ({
   org,
@@ -33,7 +34,7 @@ const DepInfo = ({
   isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
-  const [depDto, setDepDto] = useState({});
+  const [depDto, setDepDto] = useState({ dpCd: "" });
   const [dg, setDg] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   //부서 상세조회
@@ -60,7 +61,7 @@ const DepInfo = ({
       setAlertInfo({
         isOpen: true,
         title: response.resultMsg,
-        status: "error",
+        status: "warning",
         width: "fit-content",
       });
     } else {
@@ -110,10 +111,6 @@ const DepInfo = ({
       .then(() => {
         //  // 유효성 검사 통과한 데이터 처리
         isEditing ? fetchUpdateDep() : fetchSaveDep(); // isEditing: true => 수정 / false => 저장
-        setDpCd(0);
-        setDepDto([]);
-        setTabStatus(1);
-        setEditState("read");
       })
       .catch((errors) => {
         // 유효성 검사 실패한 경우 에러 메세지
@@ -172,14 +169,11 @@ const DepInfo = ({
       setIsEditing(false);
     }
   }, [dpCd]);
-  useEffect(() => {
-    setDepDto([]);
-    setDg([]);
-  }, [org]);
+
   return (
     <>
       <Box
-        borderRadius="lg"
+        borderRadius="5px"
         bg="white"
         h="700px"
         p="6"

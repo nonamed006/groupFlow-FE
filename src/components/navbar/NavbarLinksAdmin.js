@@ -81,10 +81,10 @@ export default function HeaderLinks(props) {
 			}
 		).then((res) => res.json())
 			.then((res) => {
-				if(res.status !== 200) {
-					return window.location.href = '/auth/login?status='+res.status;
+				if (res.status !== 200) {
+					return window.location.href = '/auth/login?status=' + res.status;
 				}
-				dispatch(setEmpData(res?.data[0]));
+				dispatch(setEmpData(res?.voData));
 				setEmpInfo(res.data);
 			});
 	}
@@ -92,18 +92,18 @@ export default function HeaderLinks(props) {
 	//부서 변경하면 재로그인
 	const empLogin = (data) => {
 		fetch(`${PORT}/emp/getLoginEmp`, {
-		  method: "POST",
-		  body: JSON.stringify(data),
-		  headers: {
-			'Content-Type': "application/json; charset=utf-8"
-		  },
-		  credentials: 'include'
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': "application/json; charset=utf-8"
+			},
+			credentials: 'include'
 		}).then((res) => res.json())
-		.then((res) => {
-			dispatch(setEmpData(res?.data[0]));
-			setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
-		})
-	  }
+			.then((res) => {
+				dispatch(setEmpData(res?.data[0]));
+				setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
+			})
+	}
 
 	//사원 로그아웃
 	const logoutemp = () => {
@@ -112,7 +112,7 @@ export default function HeaderLinks(props) {
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
-				credentials: 'include'
+			credentials: 'include'
 			// res에 결과가 들어옴
 		})
 			.then((res) => res.json())
@@ -186,16 +186,16 @@ export default function HeaderLinks(props) {
 			<SidebarResponsive routes={routes} /> */}
 
 			<Menu>
-				<MenuButton p="0px" onClick={() => { setDpGrpCd(loginEmpInfo.dpGrpCd);}}>
+				<MenuButton p="0px" onClick={() => { setDpGrpCd(loginEmpInfo.dpGrpCd); }}>
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
 							color="white"
-							name="Adela Parkson"
 							bg="#11047A"
 							size="sm"
 							w="40px"
-							h="40px"
+							h="40px" 
+							fallbackSrc={`${PORT}/emp/display/${loginEmpInfo?.modiNm}`}
 						/>
 						<Flex direction={"column"} p="0px 10px">
 							<Text
@@ -206,8 +206,17 @@ export default function HeaderLinks(props) {
 							>
 								{loginEmpInfo?.empNm}
 							</Text>
-							<Text fontSize="sm" fontWeight="600" color={textColor}>
-								{loginEmpInfo?.coNm} | {loginEmpInfo?.dpNm}
+							<Text fontSize="sm" fontWeight="600" color={textColor} display="flex">
+								<Text >
+									<Text textOverflow={"ellipsis"} overflow={"hidden"} whiteSpace={"nowrap"} textAlign={"left"}> 
+										{loginEmpInfo?.coNm}
+									</Text>
+								</Text> <Text marginLeft={"5px"} marginRight={"5px"}> | </Text>
+								<Text width={"70px"}>
+									<Text textOverflow={"ellipsis"} overflow={"hidden"} whiteSpace={"nowrap"} textAlign={"left"}>
+										{loginEmpInfo?.dpNm}
+									</Text>
+								</Text>
 							</Text>
 						</Flex>
 						<ChevronDownIcon />
@@ -246,6 +255,7 @@ export default function HeaderLinks(props) {
 							borderColor={borderColor}
 							fontSize="sm"
 							color="red"
+							fontWeight={600}
 							_hover={{ cursor: 'pointer' }}
 							onClick={() => { logoutemp() }}
 						>LogOut</Text>
@@ -279,7 +289,7 @@ export default function HeaderLinks(props) {
 						</TableContainer>
 					</Flex>
 					<Flex p="5px" justifyContent="center">
-						<Button variant="brand" w="80px" size='sm' onClick={clickHandle}>확인</Button>
+						<Button variant="brand" borderRadius={"10px"} w="80px" size='sm' onClick={clickHandle}>확인</Button>
 					</Flex>
 				</MenuList>
 			</Menu>
@@ -298,70 +308,6 @@ export default function HeaderLinks(props) {
 				</MenuButton>
 			</Menu>
 
-			<Menu>
-				<MenuButton p="0px">
-					<Icon
-						mt="6px"
-						as={MdInfoOutline}
-						color={navbarIcon}
-						w="18px"
-						h="18px"
-						me="10px"
-					/>
-				</MenuButton>
-				<MenuList
-					boxShadow={shadow}
-					p="20px"
-					me={{ base: "30px", md: "unset" }}
-					borderRadius="20px"
-					bg={menuBg}
-					border="none"
-					mt="22px"
-					minW={{ base: "unset" }}
-					maxW={{ base: "360px", md: "unset" }}
-				>
-					<Image src={navImage} borderRadius="16px" mb="28px" />
-					<Flex flexDirection="column">
-						<Link
-							w="100%"
-							href="https://horizon-ui.com/pro?ref=horizon-chakra-free"
-						>
-							<Button w="100%" h="44px" mb="10px" variant="brand">
-								Buy Horizon UI PRO
-							</Button>
-						</Link>
-						<Link
-							w="100%"
-							href="https://horizon-ui.com/documentation/docs/introduction?ref=horizon-chakra-free"
-						>
-							<Button
-								w="100%"
-								h="44px"
-								mb="10px"
-								border="1px solid"
-								bg="transparent"
-								borderColor={borderButton}
-							>
-								See Documentation
-							</Button>
-						</Link>
-						<Link
-							w="100%"
-							href="https://github.com/horizon-ui/horizon-ui-chakra"
-						>
-							<Button
-								w="100%"
-								h="44px"
-								variant="no-hover"
-								color={textColor}
-								bg="transparent"
-							>
-								Try Horizon Free
-							</Button>
-						</Link>
-					</Flex>
-				</MenuList>
-			</Menu>
 			{/* 조직도 */}
 			{isOpen ? (
 				<OrgChartModal isOpen={isOpen} onClose={() => setIsOpen(false)} />

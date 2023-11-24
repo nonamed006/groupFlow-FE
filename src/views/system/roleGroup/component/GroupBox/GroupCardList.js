@@ -18,8 +18,8 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
             bg='white'
             borderRadius='lg'
             h={'100%'}
-            px={5}>
-
+            px={2}
+            >
             {total &&
                 <Card
                     index={coCd}
@@ -49,10 +49,9 @@ const GroupCardList = ({ checkedList, checkHandler, roleGrpList, setRgCd, rgCd, 
                         textAlign={'left'}>
                         {'적용된 권한그룹'}</Text>
                     </Box>
-                    
                 </Card>
-
             }
+            
             {roleGrpList &&
                 roleGrpList.map((group, index) => {
                     return (

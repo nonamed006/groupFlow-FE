@@ -6,24 +6,21 @@ import CardMenuBar from "common/component/CardMenuBar";
 
 const LnbGrid = ({
   title,
-  //gnbMenuInfo,
-  //lnbMenuInfo,
   menuInfo,
   setMenuInfo,
-  //setLnbMenuInfo,
-  //setLnbMenuList,
   selectGnbMenuCd,
   search,
-  // searchGnbMenuCd,
-  // searchLnbMenuCd,
-  // searchMenuNm,
-  // onSearchClick
+  isSave
 }) => {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
 
   /* 메뉴 목록 조회 */
   const lnbMenuList = async () => {
+    search = {
+      ...search,
+      searchGnbMenuCd: search.searchGnbMenuCd ? search.searchGnbMenuCd : selectGnbMenuCd
+    }
     const responseJson = await api.menu.getLnbMenuList(search);
 
     if (responseJson.status === 200) {
@@ -47,13 +44,13 @@ const LnbGrid = ({
 
   useEffect(() => {
     lnbMenuList();
-  }, [selectGnbMenuCd, search.onSearchClick, menuInfo]);
+  }, [selectGnbMenuCd, search.onSearchClick, isSave]);
 
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6">
+    <Box borderRadius="5px" bg="white" h="700px" p="6">
       <CardMenuBar
         title={title}
-        count={0}
+        count={count}
         buttonType={false}
       />
       <LnbGridList list={list} setMenuDetail={setMenuDetail} />

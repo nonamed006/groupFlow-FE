@@ -11,7 +11,7 @@ const MenuList = ({ fetchRoleMenu, roleMenu, rgCd,  changeEdit, setChangeEdit })
     }, [changeEdit]);
 
     return (
-        <Box borderRadius="lg" bg="white" h="fit-content" px={9} >
+        <Box borderRadius="lg" bg="white" h="fit-content" px={9}  >
             {
                 (roleMenu !== undefined && roleMenu !== 'undefined' && roleMenu.length > 0) ?
                     <RealGrid org={roleMenu} />

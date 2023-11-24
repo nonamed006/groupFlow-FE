@@ -8,10 +8,12 @@ import Sidebar from "components/sidebar/Sidebar.js";
 import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 //import routes from "routes";
+
 import RoleRoutes from "routes";
+
 import CommonAlert from "common/component/CommonAlert";
 import { SidebarContext } from "contexts/SidebarContext";
-import "../assets/css/Sidebar.css"
+import "../assets/css/Sidebar.css";
 import HomePage from "views/system/home";
 import RouteRole from "routeRole";
 import { getCookie } from "common/common";
@@ -27,7 +29,7 @@ layouts/admin/index.js
 // Custom Chakra theme
 export default function Dashboard(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [ dpGrpCd, setDpGrpCd ] = useState('');
+  //const [ dpGrpCd, setDpGrpCd ] = useState('');
   // const routes = useMemo(async () => {
   //   const menus =  await RoleRoutes();
   //   if(menus) {
@@ -36,23 +38,24 @@ export default function Dashboard(props) {
   //     return [];
   //   }
   // }, [dpGrpCd]);
-  const [ routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState([]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
-  
-  useEffect(() => {
-    setDpGrpCd(getCookie('Emp_Dp_Type'));
-  }, [])
+  const dpGrpCd = getCookie("Emp_Dp_Type");
 
   const getRoleRoutes = async () => {
     setIsLoading(true);
     const route = await RoleRoutes();
     setRoutes(route);
     setIsLoading(false);
-  }
+  };
 
   useEffect(async () => {
+    if (!dpGrpCd) {
+      window.location.href = "/auth/login?status=401";
+    }
     getRoleRoutes();
-  }, [loginEmpInfo])
+    console.log(dpGrpCd);
+  }, [loginEmpInfo]);
 
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
@@ -84,48 +87,54 @@ export default function Dashboard(props) {
 
   // 페이지 경로 이름 리턴
   const getLocationPath = (routes, gnb) => {
-    let pathArray = window.location.pathname.split('/').filter((path) => path !== ''); // 공백 제거한 path 배열
+    let pathArray = window.location.pathname
+      .split("/")
+      .filter((path) => path !== ""); // 공백 제거한 path 배열
     pathArray.shift(); // 첫번째는 레이아웃이라 삭제
     let pathNow = pathArray.pop(); // 현재 path 코드(상단에 보여줄 경로에서는 빼고 리턴값으로 받아 현재 페이지 이름 보여주기 위해 pop)
-    if(pathNow === 'home') {
-      return 'HOME';
+    if (pathNow === "home") {
+      return "HOME";
     }
 
-    let pathNowName = ''; // 현재 path 이름
-    let pathString = '';  // path 전체 이름
-    let filtedRoutes = routes.filter((route) => route.code === (pathArray.length > 0 ? pathArray[0] : pathNow)); // 현재에 맞는 대메뉴만 들고옴
-    switch(gnb) {
-      case 'pathText' :
-          if(pathArray.length > 0) {
-            pathArray.forEach((path) => { // MU230001/MU230002
-                pathString += addRoutesPath(filtedRoutes, path, pathString) + ' > ';
-            })
-          } else {
-            pathString += addRoutesPath(filtedRoutes, pathNow, pathString) + ' > ';
-          }
-        
+    let pathNowName = ""; // 현재 path 이름
+    let pathString = ""; // path 전체 이름
+    let filtedRoutes = routes.filter(
+      (route) => route.code === (pathArray.length > 0 ? pathArray[0] : pathNow)
+    ); // 현재에 맞는 대메뉴만 들고옴
+    switch (gnb) {
+      case "pathText":
+        if (pathArray.length > 0) {
+          pathArray.forEach((path) => {
+            // MU230001/MU230002
+            pathString += addRoutesPath(filtedRoutes, path, pathString) + " > ";
+          });
+        } else {
+          pathString +=
+            addRoutesPath(filtedRoutes, pathNow, pathString) + " > ";
+        }
+
         return pathString;
-      case 'routeText' :
+      case "routeText":
         pathNowName = addRoutesPath(filtedRoutes, pathNow, pathNowName);
         return pathNowName;
     }
     //return pathString;
-  }
+  };
 
   // 하위 라우터들 돌며 경로 이름 추가
   const addRoutesPath = (routes, path, pathString) => {
     routes.forEach((route) => {
-      if(route.code === path) {
+      if (route.code === path) {
         pathString = route.name;
       } else {
-        if(route.items.length > 0) {
+        if (route.items.length > 0) {
           pathString = addRoutesPath(route.items, path, pathString);
         }
       }
-    })
+    });
 
     return pathString;
-  }
+  };
 
   // const getActiveRoute = (routes) => {
   //   let activeRoute = "";
@@ -208,86 +217,94 @@ export default function Dashboard(props) {
       if (prop.items.length > 0) {
         return getRoutes(prop.items);
       }
-      
+
       return (
         <RouteRole
           path={prop.layout + prop.path}
           component={prop.component}
           key={key}
-          setAlertInfo={setAlertInfo}
+          name={prop.name}
         />
       );
     });
   };
+
   const { onOpen } = useDisclosure();
   const [collapse, setCollapse] = useState(false);
 
   return (
-    <Box h={'full'}>
-			<Box>
-				<SidebarContext.Provider
-					value={{
-						collapse,
-						setCollapse
-					}}>
+    <Box h={"full"}>
+      <Box>
+        <SidebarContext.Provider
+          value={{
+            collapse,
+            setCollapse,
+          }}
+        >
           <Box
             className="box non_active"
-            w={'70px'}
+            w={"70px"}
             h="full"
-            position={'absolute'}
+            position={"absolute"}
             zIndex={1}
-            overflowX={'hidden'}
+            overflowX={"hidden"}
           >
-            <Sidebar
-              routes={routes}
-              display='none'
-              {...rest} />
+            <Sidebar routes={routes} display="none" {...rest} />
           </Box>
-					<Box
-						float='right'
-						w={'calc( 100% - 70px )' }
-						h={'content-fit'}
-						overflow='auto'
-						position='relative'
-						maxHeight='100%'
-						as="main"
-            p={'30px'}
+          <Box
+            float="right"
+            w={"calc( 100% - 70px )"}
+            h={"content-fit"}
+            overflow="auto"
+            position="relative"
+            maxHeight="100%"
+            as="main"
+            p={"30px"}
             pb={0}
           >
-							<Box w={'100%'} h={'fit-content'} pb={'20px'}>
-                <Navbar
-                  onOpen={onOpen}
-                  logoText={"GROUP FLOW"}
-                  pathText={getLocationPath(routes, 'pathText')}
-                  brandText={getLocationPath(routes, 'routeText')}////getActiveRoute(routes)
-                  secondary={getActiveNavbar(routes)}
-                  message={getActiveNavbarText(routes)}
-                  setAlertInfo={setAlertInfo}
-                  routes={routes}
-                  {...rest}
-                />
-							</Box>
-						<Box
-              h={'800px'}
-            >
+            <Box w={"100%"} h={"fit-content"} pb={"20px"}>
+              <Navbar
+                onOpen={onOpen}
+                logoText={"GROUP FLOW"}
+                pathText={getLocationPath(routes, "pathText")}
+                brandText={getLocationPath(routes, "routeText")} ////getActiveRoute(routes)
+                secondary={getActiveNavbar(routes)}
+                message={getActiveNavbarText(routes)}
+                setAlertInfo={setAlertInfo}
+                routes={routes}
+                {...rest}
+              />
+            </Box>
+            <Box h={"800px"}>
+              {/* {props.children} */}
               <Switch>
                 {getRoutes(routes)}
-                <RouteRole path='/MU000000/home' component={HomePage} setAlertInfo={setAlertInfo}/>
-                { isLoading ?
-                 <Loading /> 
-                : <Route path='*' component={ErrorPage} />}
+                <RouteRole
+                  path="/MU000000/home"
+                  component={HomePage}
+                  setAlertInfo={setAlertInfo}
+                />
+                {/* <Redirect from="/MU000000" to="/MU000000/home" /> */}
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  // <Route path='*' component={ErrorPage} />
+                  <Redirect from="*" to="/err/NotFound" />
+                )}
                 {/* <Redirect from="" to="/err/NotFound" />
-						    <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
-             
+
               {alertInfo.isOpen && (
-                <CommonAlert alertInfo={alertInfo} setAlertInfo={setAlertInfo} />
+                <CommonAlert
+                  alertInfo={alertInfo}
+                  setAlertInfo={setAlertInfo}
+                />
               )}
             </Box>
-					</Box>
-				</SidebarContext.Provider>
-			</Box>
-		</Box>
+          </Box>
+        </SidebarContext.Provider>
+      </Box>
+    </Box>
   );
 }

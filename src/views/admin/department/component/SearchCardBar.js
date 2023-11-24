@@ -19,7 +19,7 @@ const SearchCardBar = ({
   }, []);
 
   return (
-    <Box borderRadius="lg" bg="white" p="3" pt={5}>
+    <Box borderRadius="5px" bg="white" p="3" pt={5}>
       {" "}
       {/*  w={"93%"} 혜윤 수정 */}
       <Grid templateColumns="repeat(14, 1fr)" gap={2}>

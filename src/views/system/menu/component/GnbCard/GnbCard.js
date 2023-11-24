@@ -7,17 +7,14 @@ import api from 'api/Fetch';
 
 const GnbCard = ({
   title,
-  //gnbMenuInfo,
   menuInfo,
-  //setGnbMenuInfo,
   selectGnbMenuCd,
   setMenuInfo,
   setGnbMenuList,
   setSelectGnbMenuCd,
   search,
-  // searchGnbMenuCd,
-  // searchMenuNm,
-  // onSearchClick
+  setAlertInfo,
+  isEditingReset
 }) => {
   const [ list, setList ] = useState([]); //조회한 메뉴 목록
 
@@ -37,8 +34,7 @@ const GnbCard = ({
   /* 선택한 메뉴 정보 조회 */
   const setGnbMenuDetail = async (menuCd) => {
     if(menuCd === menuInfo.menuCd) {  // 같은 GNB 선택했을 때
-      setMenuInfo({});                //선택한 메뉴 정보 초기화
-      setSelectGnbMenuCd('')          //선택한 GNB menuCd 초기화
+      isEditingReset();
 
       return false;
     }
@@ -49,7 +45,12 @@ const GnbCard = ({
     if(responseJson.result.toUpperCase() === 'SUCCESS') {
       setMenuInfo(responseJson.voData);
     } else {
-      alert(responseJson.resultMsg);
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: responseJson.resultMsg,
+        width: 'fit-content',
+      })
     }
   }
 
@@ -58,7 +59,7 @@ const GnbCard = ({
   }, [menuInfo, search.onSearchClick]);//onSearchClick
 
   return (
-      <Box borderRadius="lg" bg="white" h='700px'  p="6">
+      <Box borderRadius="5px" bg="white" h='700px'  p="6" overflowY={"auto"}>
           {/* 목록 상단 */}
         <GnbCardBar title={title} count={list&&list.length}/>
           {/* 목록 테이블(카드형식) */}

@@ -5,9 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import "assets/css/MiniCalendar.css";
 import { formatDate } from "common/common";
 import AddrBox from "common/addressAPI/AddrBox";
-import FormRadio from "common/component/FormRadio";
 import FormInput from "common/component/FormInput";
-import FormSelect from "common/component/FormSelect";
 
 const InputGrid = ({ corp, setCorp, isEditing }) => {
   const {
@@ -64,7 +62,8 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
         </GridItem>
 
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title={"사용여부"}
             name={"useYn"}
             defaultValue={useYn.toString()}
@@ -197,7 +196,8 @@ const InputGrid = ({ corp, setCorp, isEditing }) => {
         </GridItem>
 
         <GridItem colStart={1} colEnd={4}>
-          <FormSelect
+        <FormInput
+            type={'select'}
             title={"회사구분"}
             name={"bsCd"}
             defaultValue={bsCd === "COA0001" || bsCd === "COA0002" ? bsCd : ''}

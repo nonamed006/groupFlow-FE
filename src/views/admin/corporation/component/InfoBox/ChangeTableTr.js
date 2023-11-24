@@ -12,11 +12,13 @@ import ChangeInsertTable from "./ChangeHistoryDetail/ChangeHistoryInsert/ChangeI
 import ChangeModifyTable from "./ChangeHistoryDetail/ChangeHistoryModify/ChangeModifyTable";
 import ChangeDeleteTable from "./ChangeHistoryDetail/ChangeHistoryDelete/ChangeDeleteTable";
 import { PORT } from "set";
+import { set } from "lodash";
 const ListCardTableTr = ({ data, index }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [isOpen, setIsOpen] = React.useState(false);
   const [chDiv, setChDiv] = React.useState("");
   const [detail, setDetail] = React.useState({});
+  const [chCd, setChCd] = React.useState("");
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
   //변경이력 상세조회
   const handelChangeHistoryDetailBtn = () => {
@@ -29,7 +31,7 @@ const ListCardTableTr = ({ data, index }) => {
   };
   return (
     <Tr
-      backgroundColor={mouseOverIndex === index ? "navy.50" : "white"}
+      backgroundColor={mouseOverIndex === index ? "gray.200" : "white"}
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);
@@ -43,7 +45,10 @@ const ListCardTableTr = ({ data, index }) => {
       {isOpen && (
         <ModalLayout
           title={"변경이력"}
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            onMouseOut();
+          }}
           buttonYn={false}
           size={"3xl"}
         >

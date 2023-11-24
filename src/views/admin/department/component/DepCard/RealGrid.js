@@ -15,9 +15,9 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 380, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "조직" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code",  header: { text: "code" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -54,11 +54,11 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
 
     //treeView.orderBy("path", "depth");
     treeView.onCellClicked = function (grid, clickData) {
-      if (clickData.cellType !== "gridEmpty") {
-        let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
+      let value = grid._dataProvider._rowMap[clickData.dataRow];
+      if (clickData.cellType !== "gridEmpty" && value !== undefined) {
+        let depth = value._values[3];
         if (depth !== "0") {
-          let dpCdData =
-            grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+          let dpCdData = value._values[2];
           setDpCd(dpCdData);
           setTabStatus(1);
           setEditState("read");
@@ -69,8 +69,13 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
         }
       }
     };
-
-    
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
+    // row별 색상 추가
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
       if (depth === "0") {
@@ -79,8 +84,9 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
         return "bottom-gnb-column";
       }
     });
-
+    // 모두 열기
     treeView.expandAll();
+    
     return () => {
       treeProvider.clearRows();
       treeView.destroy();
@@ -88,7 +94,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{  width: "100%" }}></div>
+    <div ref={realgridElement} style={{ width: "100%" }}></div>
   );
 };
 

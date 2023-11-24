@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
+import { Box } from "@chakra-ui/react";
 
 
 const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
@@ -19,9 +20,19 @@ const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
     };
 
     return (
-        <form ref={formInputRef}>
-            <SearchBar setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} placeholder={'권한명을 입력하세요'} btnText={'검색'} />
-        </form>
+        <Box mb={3}>
+            <form ref={formInputRef} >
+                <FormInput
+                    inputType={'roleGroup'}
+                    searchBar={true}
+                    onChange={(e) => { console.log('onChange: value ==> ', e.target.value); setKeyword(e.target.value) }}
+                    name={'keyword'}
+                    handleSearchBtn={() => handleSearchBtn()}
+                    placeholder={'권한명을 입력하세요'}
+                    btnText={'검색'} />
+            </form>
+        </Box>
+
     );
 };
 

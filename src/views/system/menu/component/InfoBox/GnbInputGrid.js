@@ -6,45 +6,44 @@ import { MdHome } from 'react-icons/md';
 import { AttachmentIcon } from '@chakra-ui/icons';
 import { PORT } from 'set';
 import FormInput from 'common/component/FormInput';
-import FormRadio from 'common/component/FormRadio';
 import api from 'api/Fetch';
 import Upload from 'common/component/Upload';
+import { menuSchema } from 'common/Schema';
 
-const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) => {
+const GnbInputGrid = ({
+  title,
+  menuInfo,
+  setMenuInfo,
+  setAlertInfo,
+  isEditing,
+  setIsEditing,
+  isEditingReset,
+  isSave,
+  setIsSave
+}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [ onDrag, setOnDrag ] = useState(false); // 파일 드래그드롭 관련
   const [ icons, setIcons ] = useState([]);
-  const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
   const [menuInputData, setMenuInputData] = useState({
     menuCd: '',
     upperCd: '',
     fileCd: '',
     menuNm: '',
-    useYn: 'true',
+    useYn: undefined,
     sort : '',
     depth : '',
     typeCd: '',
     menuPath : '',
     delYn : 0,
   });
-  const useYn = new Boolean(menuInfo.useYn);
-  const reset = () => {
-    setMenuInfo({
-      menuCd: '',
-      upperCd: '',
-      fileCd: '',
-      menuNm: '',
-      useYn: 'true',
-      sort : '',
-      depth : '',
-      typeCd: '',
-      menuPath : '',
-      delYn : 0,
-    });
-  }
+  const useYn = new Boolean(menuInputData.useYn === undefined ? true : menuInputData.useYn);
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    let { value, name } = e.target;
+
+    if(name === 'useYn') {
+      value = JSON.parse(value.toLowerCase());
+    }
     setMenuInputData({
       ...menuInputData,
       [name]: value // name 키를 가진 값을 value 로
@@ -57,6 +56,24 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
     });
   }
 
+  // 유효성 검사
+  const menuValidation = () => {
+    menuSchema.validate(menuInputData).then(res => {
+      if(res.menuCd) {
+        modifyGnb();
+      }
+    }).catch(err => {
+      setAlertInfo({
+        isOpen: true,
+        status: 'error',
+        title: '입력값을 확인해주세요.',
+        detail: err.message,
+        width: 'fit-content',
+      })
+    })
+  }
+
+  // 수정
   const modifyGnb = async () => {
     if(!menuInputData.menuCd) {
       setAlertInfo({
@@ -69,7 +86,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
       return false;
     }
 
-    menuInputData.useYn = menuInputData.useYn === 'true' ? 1 : 0
+    menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyGnb(menuInputData);
 
     if(responseJson.status === 200) {
@@ -80,6 +97,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         width: 'fit-content',
       });
       setMenuInfo(responseJson.voData);
+      setIsSave(!isSave)
     } else {
       setAlertInfo({
         isOpen: true,
@@ -92,7 +110,7 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
 
   // 아이콘 목록 조회
   const getIcons = async () => {
-    const responseJson = await api.menu.getIcons();
+    const responseJson = await api.menu.getIcons(); 
 
     setIcons(responseJson.data);
   }
@@ -151,7 +169,10 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         <Flex>
             {
               isEditing ? 
-                <Button variant="action" onClick={modifyGnb}>저장 {isEditing.current}</Button>
+                <>
+                  <Button variant="action" onClick={menuValidation}>저장</Button>
+                  <Button onClick={() => isEditingReset()}>취소</Button>
+                </>
               :
               <Button variant="action" onClick={() => {
                 if(menuInfo.menuCd) {
@@ -187,7 +208,8 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         </GridItem>
 
         <GridItem colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title='사용여부'
             name='useYn'
             defaultValue={useYn.toString()}
@@ -197,11 +219,11 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
             isRequired={true}
             values={[
               {
-                value: 'true',
+                value: "true",
                 name: '사용',
               },
               {
-                value: 'false',
+                value: "false",
                 name: '미사용',
               },
             ]}
@@ -238,33 +260,16 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
                 readOnly='readOnly'
                 placeholder='마우스로 파일을 끌어오세요.'
                 onClick={(e) => {
-                  setOnDrag(true);
-                  e.target.blur();
+                  if(isEditing) {
+                    setOnDrag(true);
+                    e.target.blur();
+                  }
                 }}
               />
             </InputGroup>
             <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" onChange={onChange} type='file' display={'none'}/>
           </FormControl>
         </GridItem>
-        {/* <GridItem colSpan={3}>
-          <InputGroup>
-            <InputLeftAddon children={<AttachmentIcon/>} />
-            <Input
-              id="fileInput"
-              name="fileInput"
-              size="md"
-              boarder="1"
-              borderRadius="14px"
-              value=''
-              readOnly='readOnly'
-              placeholder='마우스로 파일을 끌어오세요.'
-              onClick={() => {
-                document.getElementById('file').click();
-              }}
-            />
-          </InputGroup>
-          <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" onChange={onChange} type='file' display={'none'}/>
-        </GridItem> */}
         <GridItem colSpan={4} borderWidth={1} rowSpan={4} h={'200px'} overflowY={'scroll'}>
           <Stack
             // divider={<StackDivider borderColor='gray.200' />}
@@ -315,8 +320,8 @@ const GnbInputGrid = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenu
         h={'100%'}
         left={0}
         top={0}
-        display={onDrag ? 'block' : 'none'}
-        onClick={() => onDrag && setOnDrag(false)}
+        display={onDrag && isEditing ? 'block' : 'none'}
+        onClick={() => (onDrag && isEditing) && setOnDrag(false)}
       >
         <Upload
           gridArea={{

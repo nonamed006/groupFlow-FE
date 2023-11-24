@@ -2,13 +2,22 @@ import {Box} from "@chakra-ui/react/dist/chakra-ui-react.cjs";
 import React, { useState } from 'react';
 import GnbInputGrid from "./GnbInputGrid";
 import LnbInputGrid from "./LnbInputGrid";
-import CommonAlert from "common/component/CommonAlert";
 
-const InfoBox = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) => {
+const InfoBox = ({
+    title,
+    menuInfo,
+    setMenuInfo,
+    setAlertInfo,
+    isEditing,
+    setIsEditing,
+    isEditingReset,
+    setIsSave,
+    isSave
+}) => {
 
     return (
         <Box
-            borderRadius="lg"
+            borderRadius="5px"
             bg="white"
             h="700px"
             p="6"
@@ -23,6 +32,11 @@ const InfoBox = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) 
                         menuInfo={menuInfo}
                         setMenuInfo={setMenuInfo}
                         setAlertInfo={setAlertInfo}
+						isEditing={isEditing}
+						setIsEditing={setIsEditing}
+						isEditingReset={isEditingReset}
+                        isSave={isSave}
+                        setIsSave={setIsSave}
                     />
                     :
                     <GnbInputGrid
@@ -30,7 +44,11 @@ const InfoBox = ({title, menuInfo, setMenuInfo, setAlertInfo, selectGnbMenuCd}) 
                         menuInfo={menuInfo}
                         setMenuInfo={setMenuInfo}
                         setAlertInfo={setAlertInfo}
-                        selectGnbMenuCd={selectGnbMenuCd}
+						isEditing={isEditing}
+						setIsEditing={setIsEditing}
+						isEditingReset={isEditingReset}
+                        isSave={isSave}
+                        setIsSave={setIsSave}
                     />
                 }
             </Box>

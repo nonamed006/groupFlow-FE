@@ -17,9 +17,9 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
 
   var columns = [
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 380, header: { text: "name" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: " " } },
     { fieldName: "code", name: "code", header: { text: "code" } },
-    { fieldName: "depth", name: "depth",  header: { text: "depth" } },
+    { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
 
@@ -55,7 +55,7 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("name").editable = false;
     treeView.columnByName("iconField").visible = false;
-  
+
     treeView.treeOptions.iconImages = [corpIcon, depIcon, empIcon];
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
@@ -67,16 +67,25 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
         return "bottom-gnb-column";
       }
     });
+
     treeView.onCellClicked = function (grid, clickData) {
-      if (clickData.cellType !== "gridEmpty") {
-        let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
-        if(cd.indexOf('DG') > -1) {
-          setListDetail(cd);
+      let value = grid._dataProvider._rowMap[clickData.dataRow];
+      if (clickData.cellType !== "gridEmpty" && value !== undefined) {
+        let cd = value._values[0];
+        if (cd.indexOf('DG') > -1) {
+          setListDetail(cd, '');
         } else {
-          setListDetail('');
+          setListDetail('', cd);
         }
       }
     };
+
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
 
     treeView.expandAll();
     return () => {
