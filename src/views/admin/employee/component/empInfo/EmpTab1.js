@@ -23,7 +23,6 @@ import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
 import EmpIcon from "assets/img/profile/employee.png";
 const EmpTab1 = (props) => {
-  console.log(props.empDetail);
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
   );
@@ -53,9 +52,8 @@ const EmpTab1 = (props) => {
       }
     }
   };
-<<<<<<< HEAD
   if (
-    props.empDetail.empCd !== undefined ||
+    props.empDetail.empCd !== "" ||
     props.editState === "update" ||
     props.editState === "insert" ||
     props.editState === "deptInsert"
@@ -99,7 +97,12 @@ const EmpTab1 = (props) => {
                   borderRadius="5px"
                   aria-label="Call Fred"
                   fontSize="20px"
-                  visibility={props.editState === "read" ? "hidden" : "show"}
+                  visibility={
+                    props.editState === "read" ||
+                    props.editState === "deptInsert"
+                      ? "hidden"
+                      : "show"
+                  }
                   icon={<MdAttachFile />}
                   onClick={() => fileUploadBtn()}
                 />
@@ -122,7 +125,9 @@ const EmpTab1 = (props) => {
               id="psnMail"
               placeholder="example@mail.com"
               value={props.empDetail?.psnMail}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               onChange={props.handleChange}
               isRequired={false}
               pk={props.empDetail?.empCd}
@@ -136,7 +141,9 @@ const EmpTab1 = (props) => {
               id="payMail"
               placeholder="example@mail.com"
               value={props.empDetail?.payMail}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               onChange={props.handleChange}
               isRequired={false}
               pk={props.empDetail?.empCd}
@@ -152,7 +159,9 @@ const EmpTab1 = (props) => {
               placeholder="Select Date and Time"
               style={{ color: "gray" }}
               value={minTimeDate(props.empDetail?.joinDt)}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               onChange={props.handleChange}
               isRequired={true}
               pk={props.empDetail?.empCd}
@@ -181,7 +190,9 @@ const EmpTab1 = (props) => {
               id="empNm"
               placeholder="이름"
               value={props.empDetail?.empNm}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               onChange={props.handleChange}
               isRequired={true}
               pk={props.empDetail?.empCd}
@@ -199,7 +210,9 @@ const EmpTab1 = (props) => {
                 name="loginPw"
                 inputType="password"
                 readOnly={
-                  props.editState === "read" || props.editState === "update"
+                  props.editState === "read" ||
+                  props.editState === "update" ||
+                  props.editState === "deptInsert"
                 }
                 onChange={props.handleChange}
                 value={
@@ -209,64 +222,21 @@ const EmpTab1 = (props) => {
                 }
                 isRequired={props.editState === "insert"}
                 pk={props.empDetail?.empCd}
-=======
-  if (props.empDetail.empCd !== "" || props.editState === "update" || props.editState === "insert" || props.editState === "deptInsert") {
-    return (
-    <div>
-      <Grid templateColumns="repeat(8, 1fr)" gap={1} w={"100%"} pl={10}>
-        <GridItem colSpan={1} rowSpan={1}>
-          <Text fontSize="md" fontWeight="600">
-            사진
-            <span style={{ color: "#e03131", margin: "5px" }}>*</span>
-          </Text>
-        </GridItem>
-        <GridItem colStart={2} colEnd={4} rowSpan={4}>
-          <Box>
-            <Stack direction="row">
-              {props.empDetail.empCd === undefined ||
-              props.empDetail.empCd === "" ? (
-                <Image
-                  w="150px"
-                  h="200px"
-                  fallbackSrc={EmpIcon}
-                  src={props.imgBase64}
-                  alt="사원사진"
-                  border="1px solid lightgray"
-                />
-              ) : (
-                <Image
-                  w="150px"
-                  h="200px"
-                  fallbackSrc={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
-                  src={props.imgBase64}
-                  alt="사원사진"
-                  border="1px solid lightgray"
-                />
-              )}
-
-              <IconButton
-                variant="outline"
-                colorScheme="brand"
-                borderRadius="5px"
-                aria-label="Call Fred"
-                fontSize="20px"
-                visibility={props.editState === "read" || props.editState === "deptInsert" ? "hidden" : "show"}
-                icon={<MdAttachFile />}
-                onClick={() => fileUploadBtn()}
->>>>>>> origin/dev
               />
             </InputGroup>
           </GridItem>
 
-<<<<<<< HEAD
           <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
-            <FormRadio
+            <FormInput
+              type={"radio"}
               title={"성별"}
               name="gender"
               defaultValue={props.empDetail.gender ?? "M"}
               pk={props.empDetail?.empCd}
               onChange={props.handleRadioChange}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               isRequired={true}
               values={[
                 {
@@ -314,109 +284,27 @@ const EmpTab1 = (props) => {
               placeholder="메일ID"
               value={props.empDetail?.mailId}
               readOnly={
-                props.editState === "read" || props.editState === "update"
+                props.editState === "read" ||
+                props.editState === "update" ||
+                props.editState === "deptInsert"
               }
-=======
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"개인메일"}
-            name="psnMail"
-            id="psnMail"
-            placeholder="example@mail.com"
-            value={props.empDetail?.psnMail}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            onChange={props.handleChange}
-            isRequired={false}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"급여메일"}
-            name="payMail"
-            id="payMail"
-            placeholder="example@mail.com"
-            value={props.empDetail?.payMail}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            onChange={props.handleChange}
-            isRequired={false}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"최초입사일"}
-            name="joinDt"
-            id="joinDt"
-            inputType="date"
-            placeholder="Select Date and Time"
-            style={{ color: "gray" }}
-            value={minTimeDate(props.empDetail?.joinDt)}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            title={"최종퇴사일"}
-            id="reDt"
-            placeholder="Select Date and Time"
-            inputType="date"
-            style={{ color: "gray" }}
-            value={minTimeDate(props.empDetail?.reDt)}
-            readOnly={true}
-            isRequired={false}
-            onChange={props.handleChange}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormInput
-            title={"이름"}
-            name="empNm"
-            id="empNm"
-            placeholder="이름"
-            value={props.empDetail?.empNm}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <InputGroup>
-            <InputRightElement pointerEvents="none">
-              <LockIcon color="gray.300" />
-            </InputRightElement>
-            <FormInput
-              title={"로그인 비밀번호"}
-              id="loginPw"
-              name="loginPw"
-              inputType="password"
-              readOnly={props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"}
->>>>>>> origin/dev
               onChange={props.handleChange}
               isRequired={true}
               pk={props.empDetail?.empCd}
             />
           </GridItem>
 
-<<<<<<< HEAD
           <GridItem colStart={5} colEnd={8} colSpan={4}>
-            <FormRadio
+            <FormInput
+              type={"radio"}
               title={"계정사용"}
               name="useYn"
               defaultValue={useYN.toString()}
               pk={props.empDetail?.empCd}
               onChange={props.handleRadioChange}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               isRequired={true}
               values={[
                 {
@@ -430,30 +318,6 @@ const EmpTab1 = (props) => {
               ]}
             />
           </GridItem>
-=======
-        <GridItem colStart={1} colEnd={4} colSpan={4} lineHeight="40px">
-          <FormInput
-            type={'radio'}
-            title={"성별"}
-            name="gender"
-            defaultValue={props.empDetail.gender ?? "M"}
-            pk={props.empDetail?.empCd}
-            onChange={props.handleRadioChange}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            isRequired={true}
-            values={[
-              {
-                value: "M",
-                name: "남성",
-              },
-              {
-                value: "F",
-                name: "여성",
-              },
-            ]}
-          />
-        </GridItem>
->>>>>>> origin/dev
 
           <GridItem colStart={1} colEnd={4} colSpan={4}>
             <FormInput
@@ -463,7 +327,9 @@ const EmpTab1 = (props) => {
               placeholder="로그인ID"
               value={props.empDetail?.loginId}
               readOnly={
-                props.editState === "read" || props.editState === "update"
+                props.editState === "read" ||
+                props.editState === "update" ||
+                props.editState === "deptInsert"
               }
               onChange={props.handleChange}
               isRequired={true}
@@ -471,7 +337,6 @@ const EmpTab1 = (props) => {
             />
           </GridItem>
 
-<<<<<<< HEAD
           <GridItem colStart={1} colEnd={4} colSpan={4}>
             <FormInput
               title={"휴대전화"}
@@ -479,7 +344,9 @@ const EmpTab1 = (props) => {
               name="empTel"
               placeholder="000-0000-0000"
               value={props.empDetail?.empTel}
-              readOnly={props.editState === "read"}
+              readOnly={
+                props.editState === "read" || props.editState === "deptInsert"
+              }
               onChange={props.handleChange}
               isRequired={true}
               pk={props.empDetail?.empCd}
@@ -490,93 +357,12 @@ const EmpTab1 = (props) => {
             title={"회사주소"}
             data={props.empDetail}
             setData={props.setEmpDetail}
-            editState={props.editState != "read" && "update"}
+            editState={props.editState != "read" && "update" && "deptInsert"}
             isRequired={false}
           />
         </Grid>
       </div>
     );
-=======
-        <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormInput
-            title={"메일ID"}
-            name="mailId"
-            id="mailId"
-            placeholder="메일ID"
-            value={props.empDetail?.mailId}
-            readOnly={
-              props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"
-            }
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={5} colEnd={8} colSpan={4}>
-          <FormInput
-            type={'radio'}
-            title={"계정사용"}
-            name="useYn"
-            defaultValue={useYN.toString()}
-            pk={props.empDetail?.empCd}
-            onChange={props.handleRadioChange}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            isRequired={true}
-            values={[
-              {
-                value: "true",
-                name: "사용",
-              },
-              {
-                value: "false",
-                name: "미사용",
-              },
-            ]}
-          />
-        </GridItem>
-
-        <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormInput
-            title={"로그인ID"}
-            name="loginId"
-            id="loginId"
-            placeholder="로그인ID"
-            value={props.empDetail?.loginId}
-            readOnly={
-              props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"
-            }
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <GridItem colStart={1} colEnd={4} colSpan={4}>
-          <FormInput
-            title={"휴대전화"}
-            id="empTel"
-            name="empTel"
-            placeholder="000-0000-0000"
-            value={props.empDetail?.empTel}
-            readOnly={props.editState === "read" || props.editState === "deptInsert"}
-            onChange={props.handleChange}
-            isRequired={true}
-            pk={props.empDetail?.empCd}
-          />
-        </GridItem>
-
-        <AddrBox
-          title={'회사주소'}
-          data={props.empDetail}
-          setData={props.setEmpDetail}
-          editState={props.editState != "read" && 'update' && 'deptInsert'}
-          isRequired={false}
-        />
-      </Grid>
-    </div>
-    )
->>>>>>> origin/dev
   } else if (props.editState === "read") {
     return (
       <Text
