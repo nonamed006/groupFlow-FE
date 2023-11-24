@@ -4,34 +4,36 @@ import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
 import ResultList from '../ReultList/ResultList';
-
-import { getCookie } from "common/common";
+import { useSelector } from "react-redux"
 
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
     const [gnbNmList, setGnbNmList] = useState([]);
     const formInputRef = useRef(null);
-    let empDpType = getCookie('Emp_Dp_Type');
+    const empDpType = useSelector(state => state.solution.empData.dpGrpCd);
 
     useEffect(()=>{
+        // 초기화
         onClearSelect();
+        setResultMenuList([]);
+        setGnbNmList([]);
     },[empDpType]);
 
     const handleChange = (e) => {
         setKeyword(e.target.value);
-        delayedSearch(e.target.value);
+        delayedSearch(empDpType, e.target.value);
     };
 
     const delayedSearch = useCallback(
-        debounce(async (keyword) => fetchMenuList(keyword), 500),
-        []
-    );
+        debounce(async (empDpType, keyword) => fetchMenuList(empDpType, keyword), 500),
+    []);
 
-    const fetchMenuList = async (keyword) => {
+    const fetchMenuList = async (empDpType, keyword) => {
         if (keyword === undefined || keyword === 'undefined' || keyword === '') {
             setGnbNmList([]);
-            return setResultMenuList([]);
+            setResultMenuList([]);
+            return;
         }
         let res = await api.roleMenu.getRoleMenuBySearch(empDpType, keyword);
         if (res.status === 200) {
@@ -53,7 +55,6 @@ const SearchBox = () => {
             setKeyword();
         }
     };
-
 
     return (
         <Box

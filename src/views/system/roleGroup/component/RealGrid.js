@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 
 import depIcon from "assets/img/gridIcon/department.png";
 
-const RealGrid = ({ org, type, setCheckedMenuCd }) => {
+const RealGrid = ({ org, type, setCheckedMenuCd }) => {  
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
@@ -13,6 +13,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
     { fieldName: "state", dataType: "boolean" },
+    { fieldName: "useYn", name: "useYn" },
     { fieldName: "type", dataType: "text" },
     { fieldName: "iconField", dataType: "text" },
   ];
@@ -21,16 +22,18 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: type === "modify" ? 410 : 500,
+      width: type === "modify" ? 310 : 520,
       header: { text: "메뉴" },
     },
-    { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
-    { fieldName: "menuCd", name: "menuCd", header: { text: "menuCd" } },
-    { fieldName: "depth", name: "depth", header: { text: "depth" } },
-    { fieldName: "state", name: "state", header: { text: "Boolean" } },
+    { fieldName: "menuPath", name: "menuPath"},
+    { fieldName: "menuCd", name: "menuCd" },
+    { fieldName: "depth", name: "depth" },
+    { fieldName: "state", name: "state" },
+    { fieldName: "useYn", name: "useYn", header: { text: "사용여부" } },
     { fieldName: "type", name: "type", header: { text: "메뉴타입" } },
     { fieldName: "iconField", name: "iconField" },
   ];
+
 
   var treeProvider, treeView;
 
@@ -61,6 +64,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.columnByName("menuCd").visible = false;
     treeView.columnByName("state").visible = false;
     treeView.columnByName("iconField").visible = false;
+    treeView.columnByName("type").visible = type === "modify" ;
     
     treeView.treeOptions.iconImages = [depIcon];
 
@@ -69,6 +73,10 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
+      var useYn = grid.getValue(item.index, "useYn");
+      if (useYn === "미사용") {
+        return "not-useMenu-column";
+      } 
       if (depth === "1") {
         return "gnb-column";
       } else if (depth === "2") {
@@ -143,7 +151,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     if (parent > -1) checkSiblingNode(grid, parent, checked);
   }
 
-  return <Box ref={realgridElement} w="100%" h="500px" />;
+  return <Box ref={realgridElement} ml={type === "modify"?0:2} w="100%" h="500px" />;
 };
 
 export default RealGrid;

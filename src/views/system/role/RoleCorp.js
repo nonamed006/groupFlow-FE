@@ -7,7 +7,7 @@ import CorpList from "./component/Corp/CorpList/CorpList";
 const RoleCorp = ({setAlertInfo, setIsLoading}) => {
     const [rgCd, setRgCd] = useState(); // 선택한 권한그룹 코드
     const [coCd, setCoCd] = useState(); // 선택한 회사코드
-    const [keyword, setKeyword] = useState();   // 권한그룹 검색어
+    const [keyword, setKeyword] = useState('');   // 권한그룹 검색어
 
     return (
         <Flex>

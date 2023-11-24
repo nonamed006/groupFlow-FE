@@ -2,12 +2,13 @@
 
 #realgrid {
   width: 100%;
-  height: 390px;
+  /* height: 390px; */
 }
 
 .rg-root {
   font-family: "Malgun Gothic", "맑은 고딕", AppleSDGothicNeo-Light, sans-serif;
   font-size: 16px;
+  text-align: center;
   color: #000000;
   -webkit-appearance: none;
   outline: none;
@@ -18,6 +19,11 @@
   user-select: none;
   touch-action: none;
   -ms-touch-action: none;
+}
+.not-useMenu-column {
+  color: #979797a8;
+  font-weight: 500;
+  /* background: rgba(226, 232, 240); */
 }
 
 .gnb-column {
@@ -164,11 +170,11 @@
   font-weight: bold;
   color: #4e545f;
   /* 헤더의 색깔 변경 */
-  background: #0000ff;
+  background: #ffffff;
 }
 .rg-header .rg-table tr td {
   border-top: none;
-  border-right: 1px solid #bcc0c8;
+  /* border-right: 1px solid #bcc0c8; */
   border-bottom: 1px solid #bcc0c8;
   border-left: none;
   overflow: hidden;
@@ -178,7 +184,7 @@
 }
 
 .rg-header-cell {
-  text-align: center;
+  text-align: left;
 }
 
 .rg-header-group-cell {
@@ -190,11 +196,11 @@
   padding: 0 4px;
 }
 
-.rg-header-focus {
+/* .rg-header-focus {
   /* 포커스 헤더의 색깔 변경 */
-  background: #000000;
+  /* background: #000000;
   color: #3b2f14;
-}
+} */ 
 
 .rg-header-select {
   background-color: #fdf0e8;
@@ -276,7 +282,7 @@
 }
 
 .rg-header-summary-cell {
-  text-align: right;
+  text-align: center;
 }
 
 .rg-header-summary-renderer {

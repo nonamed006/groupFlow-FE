@@ -116,7 +116,7 @@ const roleMenu = {
    * 안은비
    *
    */
-  getRoleMenuBySearch: (empDpType, keyword) => {
+  getRoleMenuBySearch: ( empDpType, keyword ) => {
     const promise = getPromise({
       url: `roleMenu/${empDpType}?keyword=${keyword}`,
       method: "GET",
