@@ -3,7 +3,7 @@ import {
 } from "@chakra-ui/react"
 import React, { useEffect } from "react";
 import { PORT } from 'set';
-import defaultProfile from "assets/img/profile/defaultProfile.png";
+import defaultProfile from "assets/img/profile/employee.png";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -23,7 +23,7 @@ const DepGrpInfo = ({ depGrp }) => {
                   objectFit='cover'
                   borderRadius='lg'
                   mb={4}
-                  boxSize={depGrp.empDto.fileCd ? '120px' : '70px'}
+                  boxSize={'120px'}
                   src={depGrp.empDto.fileCd ? `${PORT}/menu/icon-${depGrp.empDto.fileCd}` : defaultProfile}
                   alt='사원사진'
                 />
