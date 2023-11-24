@@ -15,9 +15,9 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 380, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "조직" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code",  header: { text: "code" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -70,7 +70,6 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
       }
     };
 
-    
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
       if (depth === "0") {
@@ -87,9 +86,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     };
   }, [org]);
 
-  return (
-    <div ref={realgridElement} style={{  width: "100%" }}></div>
-  );
+  return <div ref={realgridElement} style={{ width: "100%" }}></div>;
 };
 
 export default RealGrid;

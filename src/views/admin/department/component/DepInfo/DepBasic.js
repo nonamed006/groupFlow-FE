@@ -211,8 +211,8 @@ const DepBasic = (props) => {
           />
         </GridItem>
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-        <FormInput
-            type={'select'}
+          <FormInput
+            type={"select"}
             title={"부서유형"}
             name={"typeCd"}
             defaultValue={props.depDto?.typeCd}
@@ -260,8 +260,8 @@ const DepBasic = (props) => {
           />
         </GridItem>
         <GridItem colStart={5} colEnd={8} colSpan={4}>
-        <FormInput
-            type={'radio'} 
+          <FormInput
+            type={"radio"}
             title={"대내외 수신여부"}
             name={"recYN"}
             defaultValue={recYN.toString()}
@@ -288,8 +288,8 @@ const DepBasic = (props) => {
           editState={props.editState}
         ></AddrBox>
         <GridItem colStart={1} colEnd={4} colSpan={4}>
-        <FormInput
-            type={'radio'}
+          <FormInput
+            type={"radio"}
             title={"사용여부"}
             name={"useYN"}
             defaultValue={useYN.toString()}
