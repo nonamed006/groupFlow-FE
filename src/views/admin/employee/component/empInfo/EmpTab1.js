@@ -24,6 +24,7 @@ import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
 import EmpIcon from "assets/img/profile/employee.png";
 const EmpTab1 = (props) => {
+  console.log(props.empDetail);
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
   );
@@ -85,7 +86,8 @@ const EmpTab1 = (props) => {
                   <Image
                     w="150px"
                     h="200px"
-                    src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                    fallbackSrc={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                    src={props.imgBase64}
                     alt="사원사진"
                     border="1px solid lightgray"
                   />

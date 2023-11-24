@@ -6,8 +6,9 @@ import { useEffect } from "react";
 import { corpSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
 import api from "api/Fetch";
+import { getCookie } from "common/common";
 import _ from "lodash"; // Lodash 라이브러리를 가져옴
-
+import { useSelector } from "react-redux";
 const InfoBox = ({
   coCd,
   setCoCd,
@@ -22,15 +23,15 @@ const InfoBox = ({
   const [temp, setTemp] = useState();
 
   useEffect(async () => {
-    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0){
+    if (coCd !== "undefined" && coCd !== undefined && coCd !== 0) {
       fetchCorp(coCd); // coCd로 회사 조회
-    }
-    else {
+    } else {
       await onReset();
-    } 
+    }
     await setIsEditing(coCd === 0 ? true : false);
   }, [coCd, sortValue]);
-
+  const loginEmpInfo = useSelector((state) => state.solution.empData);
+  console.log(loginEmpInfo);
   const onReset = () => {
     setCorp({
       // 기본값 세팅
@@ -67,7 +68,11 @@ const InfoBox = ({
 
   // 회사 저장
   const fetchCorpSave = async () => {
-    let res = await api.corp.postCorpInfo(corp);
+    const updateCorp = {
+      ...corp,
+      empCd: loginEmpInfo.empCd,
+    };
+    let res = await api.corp.postCorpInfo(updateCorp);
     if (res.status === 200) {
       setAlertInfo({
         isOpen: true,
@@ -99,7 +104,13 @@ const InfoBox = ({
       });
       return 0;
     }
-    let res = await api.corp.putCorpInfo(corp);
+
+    setTemp(corp);
+    const updateCorp = {
+      ...corp,
+      empCd: loginEmpInfo.empCd,
+    };
+    let res = await api.corp.putCorpInfo(updateCorp);
     if (res.status === 200) {
       setAlertInfo({
         isOpen: true,
@@ -121,7 +132,7 @@ const InfoBox = ({
 
   // 회사 삭제
   const fetchCorpDelete = async () => {
-    let res = await api.corp.deleteCorpInfo(coCd);
+    let res = await api.corp.deleteCorpInfo(coCd, loginEmpInfo.empCd);
     if (res.status === 200) {
       setAlertInfo({
         isOpen: true,
@@ -146,11 +157,11 @@ const InfoBox = ({
     coCd !== "undefined" && coCd !== undefined
       ? fetchCorpDelete(coCd)
       : setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "선택된 회사가 없습니다.",
-        width: "fit-content",
-      });
+          isOpen: true,
+          status: "warning",
+          title: "선택된 회사가 없습니다.",
+          width: "fit-content",
+        });
     onClose();
   };
 
@@ -212,7 +223,7 @@ const InfoBox = ({
         />
         <Box w={"100%"} justifyContent={"center"} alignContent={"center"}>
           <InputGrid
-            corp={(corp !== undefined && corp !== "undefined") && corp}
+            corp={corp !== undefined && corp !== "undefined" && corp}
             setCorp={setCorp}
             isEditing={isEditing}
           />

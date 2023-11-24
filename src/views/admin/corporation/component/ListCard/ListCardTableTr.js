@@ -15,7 +15,13 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
 
   return (
     <Tr
-      backgroundColor={(mouseOverIndex === index) ?  "gray.200" : (coCd === data.coCd) ? 'navy.50' :'white' }
+      backgroundColor={
+        mouseOverIndex === index
+          ? "gray.200"
+          : coCd === data.coCd
+          ? "navy.50"
+          : "white"
+      }
       onMouseOut={onMouseOut}
       onMouseOver={() => {
         onMouseOver(index);
@@ -23,30 +29,58 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
       onClick={() => {
         setCoCd(data.coCd);
       }}
-      cursor={'pointer'}
-      >
-      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'} >
+      cursor={"pointer"}
+    >
+      <Td textAlign="center" fontWeight={500} fontSize={"sm"}>
+        <Text
+          fontSize={"sm"}
+          color={data.useYn ? textColor : unusedTextColor}
+          textOverflow={"ellipsis"}
+          whiteSpace={"nowrap"}
+          w={"80px"}
+          overflow={"hidden"}
+        >
           {data.coNm}
         </Text>
       </Td>
-      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+      <Td textAlign="center" fontWeight={500} fontSize={"sm"}>
+        <Text
+          fontSize={"sm"}
+          color={data.useYn ? textColor : unusedTextColor}
+          textOverflow={"ellipsis"}
+          whiteSpace={"nowrap"}
+          w={"80px"}
+          overflow={"hidden"}
+        >
           {data.ceoNm}
         </Text>
       </Td>
-      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Text fontSize={'sm'} color={data.useYn?textColor:unusedTextColor} textOverflow={'ellipsis'} whiteSpace={"nowrap"} w={'80px'} overflow={'hidden'}>
+      <Td textAlign="center" fontWeight={500} fontSize={"sm"}>
+        <Text
+          fontSize={"sm"}
+          color={data.useYn ? textColor : unusedTextColor}
+          textOverflow={"ellipsis"}
+          whiteSpace={"nowrap"}
+          w={"80px"}
+          overflow={"hidden"}
+        >
           {data.ccNm}
         </Text>
       </Td>
 
-      <Td textAlign="center" fontWeight={500} fontSize={'sm'} >
-        <Box color={data.useYn?textColor:unusedTextColor} fontSize="sm" fontWeight="500" textOverflow={'ellipsis'} whiteSpace={"nowrap"}  w={'80px'} overflow={'hidden'}>
-          {data.useYn ? '사용' : '미사용'}
+      <Td textAlign="center" fontWeight={500} fontSize={"sm"}>
+        <Box
+          color={data.useYn ? textColor : unusedTextColor}
+          fontSize="sm"
+          fontWeight="500"
+          textOverflow={"ellipsis"}
+          whiteSpace={"nowrap"}
+          w={"80px"}
+          overflow={"hidden"}
+        >
+          {data.useYn ? "사용" : "미사용"}
         </Box>
       </Td>
-
     </Tr>
   );
 };

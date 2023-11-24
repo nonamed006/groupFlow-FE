@@ -34,6 +34,7 @@ const FormRadio = ({
               <Radio
                 name={name}
                 value={value.value}
+                key={value.value}
                 onChange={onChange}
                 isReadOnly={readOnly}
               >
