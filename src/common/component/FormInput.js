@@ -29,19 +29,24 @@ const FormInput = ({
   values,
   defaultValue,
   btnText,
-  handleSearchBtn
+  handleSearchBtn,
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
-    <FormControl display={"flex"} w={"100%"} h={'fit-content'} isRequired={isRequired}>
+    <FormControl
+      display={"flex"}
+      w={"100%"}
+      h={"fit-content"}
+      isRequired={isRequired}
+    >
       {title && (
         <FormLabel
           color={textColor}
-          fontSize={searchBar ? '16px' : "md"}
-          fontWeight={searchBar ? '400' : "600"}
-          w={searchBar ? '18%' : "40%"}
+          fontSize={searchBar ? "16px" : "md"}
+          fontWeight={searchBar ? "400" : "600"}
+          w={searchBar ? "18%" : "40%"}
           // whiteSpace={searchBar ? "nowrap" : 'normal'}
-          whiteSpace={ "nowrap"}
+          whiteSpace={"nowrap"}
           lineHeight={"40px"}
           textAlign="left"
         >
@@ -120,13 +125,15 @@ const FormInput = ({
         <Button
           ml={2}
           float={"right"}
-          w={'80px'}
+          w={"80px"}
           variant="brand"
           borderRadius="10px"
           fontWeight={600}
           onClick={handleSearchBtn}
-        >{btnText}</Button>
-      }
+        >
+          {btnText}
+        </Button>
+      )}
     </FormControl>
   );
 };

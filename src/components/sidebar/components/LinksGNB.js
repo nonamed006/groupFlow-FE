@@ -10,8 +10,8 @@ import { UseMouseOver } from "hook/UseMouseOver";
 /**
  * sidebar/components/Links.js
  * - 왼쪽 고정 메뉴바 메뉴들 표시
- * @param {*} props 
- * @returns 
+ * @param {*} props
+ * @returns
  */
 
 export function SidebarLinks(props) {
@@ -23,7 +23,7 @@ export function SidebarLinks(props) {
 
   const { routes } = props;
   const { LNBroute } = props;
-  const [ routeStat, setRouteStat ] = useState(window.location.pathname);
+  const [routeStat, setRouteStat] = useState(window.location.pathname);
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
 
   const context = useContext(SidebarContext);
@@ -34,94 +34,89 @@ export function SidebarLinks(props) {
   };
 
   const checkRouterDepth = (route) => {
-    return route.path && route.items.length <= 0 // 하위메뉴가 없는 LNB
-  }
+    return route.path && route.items.length <= 0; // 하위메뉴가 없는 LNB
+  };
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes) => {
     return routes.map((route, index) => {
-        return (
-          (<NavLink key={index} to={checkRouterDepth(route) && route.layout + route.path}>
-              <Box
-                h={'60px'}
-                onClick={() => {
-                  setRouteStat(
-                    checkRouterDepth(route) ?
-                      route.layout.toLowerCase() + route.path.toLowerCase()
-                    :
-                      route.layout.toLowerCase()
-                  );
-                  LNBroute(route);
-                }}
-                cursor={'pointer'}
-                key={index}
-                onMouseOut={onMouseOut}
-                onMouseOver={() => {
-                  onMouseOver(index);
-                }}
-              >
-                <HStack
-                  spacing={
-                    //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase()) ? "22px" : "26px"
-                    activeRoute(route.path) ? "22px" : "26px"
+      return (
+        <NavLink
+          key={index}
+          to={checkRouterDepth(route) && route.layout + route.path}
+        >
+          <Box
+            h={"60px"}
+            onClick={() => {
+              setRouteStat(
+                checkRouterDepth(route)
+                  ? route.layout.toLowerCase() + route.path.toLowerCase()
+                  : route.layout.toLowerCase()
+              );
+              LNBroute(route);
+            }}
+            cursor={"pointer"}
+            key={index}
+            onMouseOut={onMouseOut}
+            onMouseOver={() => {
+              onMouseOver(index);
+            }}
+          >
+            <HStack
+              spacing={
+                //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase()) ? "22px" : "26px"
+                activeRoute(route.path) ? "22px" : "26px"
+              }
+              // py='5px'
+              ps="10px"
+            >
+              <Flex w="100%" alignItems="center" justifyContent="center">
+                <Box
+                  color={
+                    //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
+                    activeRoute(route.path) ? activeColor : textColor
                   }
-                  // py='5px'
-                  ps='10px'>
-                  <Flex w='100%' alignItems='center' justifyContent='center'>
-                    <Box
+                  w={"20px"}
+                  h={"20px"}
+                  style={{ filter: !activeRoute(route.path) && "opacity(0.5)" }}
+                >
+                  {route.icon}
+                </Box>
+                {context.collapse && (
+                  <>
+                    <Text
+                      me="auto"
                       color={
                         //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
-                        activeRoute(route.path)
-                          ? activeIcon
+                        activeRoute(route.path) || mouseOverIndex === index
+                          ? activeColor
                           : textColor
                       }
-                      w={'20px'}
-                      h={'20px'}
-                      style={{filter: !activeRoute(route.path) && 'opacity(0.5)'}}
+                      fontSize={"17px"}
+                      fontWeight={
+                        //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
+                        activeRoute(route.path) ? "bold" : "normal"
+                      }
+                      ml={"15px"}
                     >
-                      {route.icon}
-                    </Box>
-                    {
-                      context.collapse &&
-                        <>
-                          <Text
-                            me='auto'
-                            color={
-                              //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
-                              activeRoute(route.path) || mouseOverIndex === index
-                                ? activeColor
-                                : textColor
-                            }
-                            fontSize={"17px"}
-                            fontWeight={
-                              //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
-                              activeRoute(route.path)
-                                ? "bold"
-                                : "normal"
-                            }
-                            ml={'15px'}
-                            >
-                            {route.name}
-                          </Text>
-                          {route.items.length > 0 && <ChevronRightIcon/>}
-                        </>
-                    }
-                    
-                  </Flex>
-                  <Box
-                    h='36px'
-                    w='4px'
-                    bg={
-                      //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
-                      activeRoute(route.path)
-                        ? brandColor
-                        : "transparent"
-                    }
-                    borderRadius='5px'
-                  />
-                </HStack>
-              </Box>
-          </NavLink>)
-        );
+                      {route.name}
+                    </Text>
+                    {route.items.length > 0 && <ChevronRightIcon />}
+                  </>
+                )}
+              </Flex>
+              <Box
+                h="36px"
+                w="4px"
+                bg={
+                  //activeRoute(route.layout.toLowerCase() + route.path.toLowerCase())
+                  activeRoute(route.path) ? brandColor : "transparent"
+                }
+                borderRadius="5px"
+              />
+            </HStack>
+          </Box>
+        </NavLink>
+      );
     });
   };
   //  BRAND

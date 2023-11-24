@@ -1,4 +1,3 @@
-
 import {
   Grid,
   Input,
@@ -26,7 +25,6 @@ import api from "api/Fetch";
 import FormInput from "common/component/FormInput";
 import { menuSchema } from "common/Schema";
 
-
 const LnbInputGrid = ({
   title,
   menuInfo,
@@ -36,7 +34,7 @@ const LnbInputGrid = ({
   setIsEditing,
   isEditingReset,
   isSave,
-  setIsSave
+  setIsSave,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -53,12 +51,14 @@ const LnbInputGrid = ({
     menuPath: "",
     delYn: 0,
   });
-  const useYn = new Boolean(menuInputData.useYn === undefined ? true : menuInputData.useYn);
+  const useYn = new Boolean(
+    menuInputData.useYn === undefined ? true : menuInputData.useYn
+  );
 
   const onChange = (e) => {
     let { value, name } = e.target;
-    
-    if(name === 'useYn') {
+
+    if (name === "useYn") {
       value = JSON.parse(value.toLowerCase());
     }
     setMenuInputData({
@@ -80,30 +80,33 @@ const LnbInputGrid = ({
 
   // 유효성 검사
   const menuValidation = () => {
-    menuSchema.validate(menuInputData).then(res => {
-      if(res.menuCd) {
-        modifyLnb();
-      }
-    }).catch(err => {
-      setAlertInfo({
-        isOpen: true,
-        status: 'error',
-        title: '입력값을 확인해주세요.',
-        detail: err.message,
-        width: 'fit-content',
+    menuSchema
+      .validate(menuInputData)
+      .then((res) => {
+        if (res.menuCd) {
+          modifyLnb();
+        }
       })
-    })
-  }
+      .catch((err) => {
+        setAlertInfo({
+          isOpen: true,
+          status: "error",
+          title: "입력값을 확인해주세요.",
+          detail: err.message,
+          width: "fit-content",
+        });
+      });
+  };
 
   // 수정
   const modifyLnb = async () => {
     if (!menuInputData.menuCd) {
       setAlertInfo({
         isOpen: true,
-        status: 'warning',
-        title: '수정할 메뉴를 선택해주세요.',
-        width: 'fit-content',
-      })
+        status: "warning",
+        title: "수정할 메뉴를 선택해주세요.",
+        width: "fit-content",
+      });
 
       return false;
     }
@@ -111,26 +114,26 @@ const LnbInputGrid = ({
     menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyLnb(menuInputData);
 
-    if(responseJson.status === 200) {
+    if (responseJson.status === 200) {
       setAlertInfo({
         isOpen: true,
-        status: 'success',
+        status: "success",
         title: responseJson.resultMsg,
-        width: 'fit-content',
+        width: "fit-content",
       });
       setMenuInfo(responseJson.voData);
       setIsSave(!isSave);
     } else {
       setAlertInfo({
         isOpen: true,
-        status: 'error',
+        status: "error",
         title: responseJson.resultMsg,
-        width: 'fit-content',
+        width: "fit-content",
       });
     }
   };
 
-  const getCategory = async() => {
+  const getCategory = async () => {
     const resultTag = null;
 
     const responseJson = await api.menu.getLnbMenuList();
@@ -144,17 +147,16 @@ const LnbInputGrid = ({
   };
 
   const click = () => {
-    // console.log(updateData);
-    if(!updateData) {
+    if (!updateData) {
       setAlertInfo({
         isOpen: true,
-        status: 'error',
-        title: '상위 메뉴를 선택해주세요.',
-        width: 'fit-content',
-      })
+        status: "error",
+        title: "상위 메뉴를 선택해주세요.",
+        width: "fit-content",
+      });
       return false;
     }
-    
+
     const clickData = {
       ...menuInputData,
       upperCd: updateData._values[2],
@@ -162,8 +164,7 @@ const LnbInputGrid = ({
     };
     setMenuInputData(clickData);
     onClose();
-   };
-
+  };
 
   useEffect(() => {
     setMenuInputData(menuInfo);
@@ -190,26 +191,32 @@ const LnbInputGrid = ({
         </Text>
 
         <Flex>
-          {
-            isEditing ? 
-              <>
-              <Button variant="action" onClick={menuValidation}>저장</Button>
+          {isEditing ? (
+            <>
+              <Button variant="action" onClick={menuValidation}>
+                저장
+              </Button>
               <Button onClick={() => isEditingReset()}>취소</Button>
-              </>
-            :
-            <Button variant="action" onClick={() => {
-              if(menuInfo.menuCd) {
-                setIsEditing(true)
-              } else {
-                setAlertInfo({
-                  isOpen: true,
-                  status: 'warning',
-                  title: '수정할 메뉴를 선택해주세요.',
-                  width: 'fit-content',
-                });
-              }
-            }}>수정</Button>
-          }
+            </>
+          ) : (
+            <Button
+              variant="action"
+              onClick={() => {
+                if (menuInfo.menuCd) {
+                  setIsEditing(true);
+                } else {
+                  setAlertInfo({
+                    isOpen: true,
+                    status: "warning",
+                    title: "수정할 메뉴를 선택해주세요.",
+                    width: "fit-content",
+                  });
+                }
+              }}
+            >
+              수정
+            </Button>
+          )}
         </Flex>
       </Flex>
       <Grid
@@ -238,7 +245,7 @@ const LnbInputGrid = ({
             />
             <Button
               onClick={() => {
-                if(isEditing) {
+                if (isEditing) {
                   getCategory();
                   onOpen();
                 }
@@ -295,8 +302,8 @@ const LnbInputGrid = ({
 
         <GridItem colSpan={4}>
           <FormInput
-            title='메뉴명'
-            name='menuNm'
+            title="메뉴명"
+            name="menuNm"
             value={menuInputData.menuNm}
             pk={menuInfo.menuCd}
             onChange={onChange}
@@ -307,9 +314,9 @@ const LnbInputGrid = ({
 
         <GridItem colSpan={4}>
           <FormInput
-            type={'radio'}
-            title='사용여부'
-            name='useYn'
+            type={"radio"}
+            title="사용여부"
+            name="useYn"
             defaultValue={useYn.toString()}
             pk={menuInfo.menuCd}
             onChange={onChange}
@@ -317,12 +324,12 @@ const LnbInputGrid = ({
             isRequired={true}
             values={[
               {
-                value: 'true',
-                name: '사용',
+                value: "true",
+                name: "사용",
               },
               {
-                value: 'false',
-                name: '미사용',
+                value: "false",
+                name: "미사용",
               },
             ]}
           />
@@ -330,19 +337,19 @@ const LnbInputGrid = ({
 
         <GridItem colSpan={4}>
           <FormInput
-            title='정렬'
-            name='sort'
+            title="정렬"
+            name="sort"
             value={menuInputData.sort}
             pk={menuInfo.menuCd}
             readOnly={!isEditing}
             isRequired={true}
-            inputType='number'
+            inputType="number"
             onChange={(e) => onChange(e)}
           />
         </GridItem>
       </Grid>
     </>
-  )
+  );
 };
 
 export default LnbInputGrid;
