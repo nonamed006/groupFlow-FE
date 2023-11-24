@@ -50,13 +50,13 @@ const FormInput = ({
       )}
       {
         (type !== 'select' && type !== 'radio') ?
-          inputType === 'date' ?
+          inputType !== 'roleGroup' ?
             <Input
               name={name}
               w={"100%"}
               fontSize={"14px"}
               borderRadius="5px"
-              defaultValue={value}
+              value={value}
               key={pk}
               onChange={onChange}
               readOnly={readOnly}
@@ -69,11 +69,10 @@ const FormInput = ({
               w={"100%"}
               fontSize={"14px"}
               borderRadius="5px"
-              defaultValue={value}
+              value={value}
               key={pk}
               onKeyUp={onChange}
               readOnly={readOnly}
-              type={inputType}
               placeholder={placeholder}
             />
           :
