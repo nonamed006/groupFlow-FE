@@ -15,7 +15,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 380, header: { text: " " } },
+    { fieldName: "name", name: "name", width: 380, header: { text: "조직" } },
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },

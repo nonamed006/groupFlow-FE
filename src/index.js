@@ -36,7 +36,7 @@ ReactDOM.render(
             {/*없는 url 입력시 에러 페이지로(NotFound) */}
             {/*<Route path='/test' exact component={Test} />*/}
             {getCookie("Emp_Dp_Type") ? (
-              <Redirect from="/" to="/MU000000" />
+              <Redirect from="/" to="/MU000000/home" />
             ) : (
               <Redirect from="/" to="/auth/login" />
             )}
