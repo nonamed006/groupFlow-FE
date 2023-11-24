@@ -53,7 +53,7 @@ const FormInput = ({
           {title}
         </FormLabel>
       )}
-      {type !== "select" && type !== "radio" ? (
+      {type !== "select" && type !== "radio" && type !== "selectEmp" ? (
         inputType !== "roleGroup" ? (
           <Input
             name={name}

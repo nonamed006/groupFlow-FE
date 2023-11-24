@@ -255,23 +255,23 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       </GridItem>
 
       <GridItem colStart={1} colEnd={4} colSpan={4}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직급"} isRequired={false}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="rankCd" values={column?.rankCd} ccNum="EM" ccType="A" defaultMsg="선택없음" isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직급"} isRequired={true}/>
       </GridItem>
 
       <GridItem colStart={5} colEnd={8} colSpan={4}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직책"} isRequired={false}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="pstnCd" ccNum="EM" ccType="B" defaultMsg="선택없음" values={column?.pstnCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직책"} isRequired={true}/>
       </GridItem>
 
       <GridItem colStart={1} colEnd={4} colSpan={4}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"재직구분"} isRequired={false}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="workTypeCd" ccNum="EM" ccType="C" defaultMsg="선택없음" values={column?.workTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"재직구분"} isRequired={true}/>
       </GridItem>
 
       <GridItem colStart={5} colEnd={8} colSpan={4}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"고용구분"} isRequired={false}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="empTypeCd" ccNum="EM" ccType="D" defaultMsg="선택없음" values={column?.empTypeCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"고용구분"} isRequired={true}/>
       </GridItem>
 
       <GridItem colStart={1} colEnd={4} colSpan={4}>
-        <SelectCommon handleChange={(e) => handleChange(e, index)} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직무"} isRequired={false}/>
+        <SelectCommon handleChange={(e) => handleChange(e, index)} name="jobCd" ccNum="EM" ccType="E" defaultMsg="선택없음" values={column?.jobCd} isReadOnly={editState === "read"} pk={column?.dpGrpCd} title={"직무"} isRequired={true}/>
       </GridItem>
 
       <GridItem colStart={5} colEnd={8} colSpan={4}>
