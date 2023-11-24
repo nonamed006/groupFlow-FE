@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 
 import depIcon from "assets/img/gridIcon/department.png";
 
-const RealGrid = ({ org, type, setCheckedMenuCd }) => {  
+const RealGrid = ({ org, type, setCheckedMenuCd }) => {
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
@@ -22,10 +22,10 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: type === "modify" ? 310 : 520,
+      width: type === "modify" ? 310 : 410,
       header: { text: "메뉴" },
     },
-    { fieldName: "menuPath", name: "menuPath"},
+    { fieldName: "menuPath", name: "menuPath" },
     { fieldName: "menuCd", name: "menuCd" },
     { fieldName: "depth", name: "depth" },
     { fieldName: "state", name: "state" },
@@ -33,6 +33,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     { fieldName: "type", name: "type", header: { text: "메뉴타입" } },
     { fieldName: "iconField", name: "iconField" },
   ];
+
 
 
   var treeProvider, treeView;
@@ -59,13 +60,13 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.setRowIndicator({ visible: false }); //인디케이터 표시X
 
     //해당 컬럼 표시X
-    treeView.columnByName("menuPath").visible =false;
+    treeView.columnByName("menuPath").visible = false;
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("menuCd").visible = false;
     treeView.columnByName("state").visible = false;
     treeView.columnByName("iconField").visible = false;
-    treeView.columnByName("type").visible = type === "modify" ;
-    
+    // treeView.columnByName("type").visible = type === "modify" ;
+
     treeView.treeOptions.iconImages = [depIcon];
 
     // //옵션설정
@@ -76,13 +77,20 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
       var useYn = grid.getValue(item.index, "useYn");
       if (useYn === "미사용") {
         return "not-useMenu-column";
-      } 
+      }
       if (depth === "1") {
         return "gnb-column";
       } else if (depth === "2") {
         return "bottom-gnb-column";
       }
     });
+
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
 
     //자식노드들이 모두 체크되었을때 부모노드도 체크되게
     treeView.onItemChecked = function (grid, itemIndex, checked) {
@@ -151,7 +159,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     if (parent > -1) checkSiblingNode(grid, parent, checked);
   }
 
-  return <Box ref={realgridElement} ml={type === "modify"?0:2} w="100%" h="500px" />;
+  return <Box ref={realgridElement} ml={type === "modify" ? 0 : 2} w="100%" h="600px" />;
 };
 
 export default RealGrid;

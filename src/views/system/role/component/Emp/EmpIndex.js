@@ -9,7 +9,7 @@ const EmpIndex = () => {
 			<Grid
 				h='700px'
 				templateColumns='repeat(7, 1fr)'
-				gap={5}
+				gap={3}
 			>
 				<GridItem colSpan={3} h={'full'}>
                     <EmpList/>

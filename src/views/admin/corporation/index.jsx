@@ -39,7 +39,7 @@ const Corporation = () => {
 		<Box h={'full'} >{/* pt={{ base: "130px", md: "80px", xl: "80px" }} 혜윤 수정 */}
 			<Grid
 				h="full" // 혜윤 수정
-				templateRows="repeat(9, 1fr)"
+				templateRows="repeat(14, 1fr)"
 				templateColumns="repeat(6, 1fr)"
 				gap={3}
 			>
