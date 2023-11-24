@@ -110,7 +110,7 @@ const GnbInputGrid = ({
 
   // 아이콘 목록 조회
   const getIcons = async () => {
-    const responseJson = await api.menu.getIcons();
+    const responseJson = await api.menu.getIcons(); 
 
     setIcons(responseJson.data);
   }
