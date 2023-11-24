@@ -48,7 +48,6 @@ const FormInput = ({
           {title}
         </FormLabel>
       )}
-
       {
         (type !== 'select' && type !== 'radio') ?
           inputType === 'date' ?
