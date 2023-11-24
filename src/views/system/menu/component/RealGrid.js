@@ -78,8 +78,9 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.treeOptions.defaultIcon = 0;
 
     treeView.onCellClicked = function (grid, clickData) {
-      if (clickData.cellType !== "gridEmpty") {
-        let menuCd = grid._dataProvider._rowMap[clickData.dataRow]._values[2];
+      let value = grid._dataProvider._rowMap[clickData.dataRow];
+      if (clickData.cellType !== "gridEmpty" && value !== undefined) {
+        let menuCd = value._values[2];
         setMenuDetail(menuCd);
         // let depth = grid._dataProvider._rowMap[clickData.dataRow]._values[3];
         // if (depth !== "0") {
@@ -101,6 +102,8 @@ const RealGrid = ({ org, setMenuDetail }) => {
       }
     });
 
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
     // 헤더 정렬 불가
     treeView.sortingOptions.enabled = false;
     // 헤더 이동 불가
