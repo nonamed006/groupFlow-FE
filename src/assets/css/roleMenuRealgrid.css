@@ -165,7 +165,7 @@
 }
 
 .rg-header {
-  visibility: hidden;
+  /* visibility: hidden; */
   text-align: center;
   font-weight: bold;
   color: #4e545f;
@@ -179,12 +179,12 @@
   border-left: none;
   overflow: hidden;
 }
-.rg-header .rg-table tr td:hover {
+/* .rg-header .rg-table tr td:hover {
   background: #cdd2d9;
-}
+} */
 
 .rg-header-cell {
-  text-align: left;
+  text-align: center;
 }
 
 .rg-header-group-cell {
@@ -317,13 +317,13 @@
 
 .rg-footer .rg-table tr td {
   border-bottom: none;
-  border-right: 1px solid #bcc0c8;
-  border-top: 1px solid #bcc0c8;
+  border-right: 1px solid #ffffff;
+  border-top: 1px solid #ffffff;
   border-left: none;
 }
 
 .rg-fixed-footer .rg-table tr td {
-  background: #e4e7eb;
+  background: #ffffff;
   border-bottom: none;
   border-right: 1px solid #bcc0c8;
   border-top: 1px solid #bcc0c8;
@@ -351,6 +351,7 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFF6F6F8', EndColorStr='#FFF6F6F8')";
 }
 .rg-foot .rg-table tr td {
+  
   border-bottom: none;
   border-right: 1px solid #bcc0c8;
   border-top: 1px solid #bcc0c8;

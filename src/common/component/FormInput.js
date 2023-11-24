@@ -131,7 +131,7 @@ const FormInput = ({
         >
           {btnText}
         </Button>
-      )}
+    }
     </FormControl>
   );
 };

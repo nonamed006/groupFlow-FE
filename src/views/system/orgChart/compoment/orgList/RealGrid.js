@@ -18,7 +18,7 @@ const RealGrid = ({ org, handleGrid }) => {
 
   var columns = [
     { fieldName: "path", name: "path", width: 50, header: { text: "path" } },
-    { fieldName: "name", name: "name", width: 300, header: { text: "name" } },
+    { fieldName: "name", name: "name", width: 300, header: { text: " " } },
     { fieldName: "code", name: "code", width: 70, header: { text: "code" } },
     { fieldName: "depth", name: "depth", width: 70, header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
@@ -54,9 +54,11 @@ const RealGrid = ({ org, handleGrid }) => {
     treeView.columnByName("code").visible = false;
     treeView.columnByName("iconField").visible = false;
     treeView.columnByName("name").editable = false;
-    
+
+    // 아이콘
     treeView.treeOptions.iconImages = [corpIcon, depIcon];
 
+    // row별 색상 변경
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
       if (depth === "0") {
@@ -65,18 +67,27 @@ const RealGrid = ({ org, handleGrid }) => {
         return "bottom-gnb-column";
       }
     });
-    
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
+
+    // 클릭 이벤트
     treeView.onCellClicked = function (grid, clickData) {
-      if (clickData.cellType !== "gridEmpty") {
-        // let dpCdData = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
+      let value = grid._dataProvider._rowMap[clickData.dataRow];
+      if (clickData.cellType !== "gridEmpty" && value !== undefined) {
         handleGrid({
-          code: grid._dataProvider._rowMap[clickData.dataRow]._values[0],
-          name: grid._dataProvider._rowMap[clickData.dataRow]._values[1],
+          code: value._values[0],
+          name: value._values[1],
         });
       }
     };
 
+    // 모두 열기
     treeView.expandAll();
+
     return () => {
       treeProvider.clearRows();
       treeView.destroy();

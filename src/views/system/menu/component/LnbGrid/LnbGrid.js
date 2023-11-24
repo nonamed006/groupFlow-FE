@@ -47,7 +47,7 @@ const LnbGrid = ({
   }, [selectGnbMenuCd, search.onSearchClick, isSave]);
 
   return (
-    <Box borderRadius="lg" bg="white" h="700px" p="6">
+    <Box borderRadius="5px" bg="white" h="700px" p="6">
       <CardMenuBar
         title={title}
         count={count}

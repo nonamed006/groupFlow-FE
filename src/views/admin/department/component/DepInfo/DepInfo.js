@@ -173,7 +173,7 @@ const DepInfo = ({
   return (
     <>
       <Box
-        borderRadius="lg"
+        borderRadius="5px"
         bg="white"
         h="700px"
         p="6"
