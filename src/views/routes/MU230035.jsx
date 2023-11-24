@@ -3,9 +3,9 @@ import Approval from "views/system/approval";
 /**
  * 전자결재
  */
-const MU230035 = () => {
+const MU230035 = (props) => {
     return (
-        <Approval/>
+        <Approval {...props}/>
     )
 }
 

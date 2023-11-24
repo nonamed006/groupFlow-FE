@@ -27,11 +27,12 @@ export default function Upload(props) {
               {/* <Icon as={MdUpload} w='80px' h='80px' color={brandColor} /> */}
               <Flex justify='center' mx='auto' mb='12px'>
                 <Text fontSize='lg' fontWeight='500' color={brandColor}>
+                  이곳을 클릭하거나,<br/>
                   파일을 드래그하여 이곳에 놓아주세요.
                 </Text>
               </Flex>
               <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-                PNG, JPG 파일만 업로드 가능합니다.
+                PNG, JPG, GIF 파일만 업로드 가능합니다.
               </Text>
             </Box>
           }

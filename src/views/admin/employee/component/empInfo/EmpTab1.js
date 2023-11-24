@@ -53,7 +53,7 @@ const EmpTab1 = (props) => {
       }
     }
   };
-  if (props.empDetail.empCd !== undefined || props.editState === "update" || props.editState === "insert" || props.editState === "deptInsert") {
+  if (props.empDetail.empCd !== "" || props.editState === "update" || props.editState === "insert" || props.editState === "deptInsert") {
     return (
     <div>
       <Grid templateColumns="repeat(8, 1fr)" gap={1} w={"100%"} pl={10}>
@@ -80,7 +80,8 @@ const EmpTab1 = (props) => {
                 <Image
                   w="150px"
                   h="200px"
-                  src={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                  fallbackSrc={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                  src={props.imgBase64}
                   alt="사원사진"
                   border="1px solid lightgray"
                 />
@@ -92,7 +93,7 @@ const EmpTab1 = (props) => {
                 borderRadius="5px"
                 aria-label="Call Fred"
                 fontSize="20px"
-                visibility={props.editState === "read" ? "hidden" : "show"}
+                visibility={props.editState === "read" || props.editState === "deptInsert" ? "hidden" : "show"}
                 icon={<MdAttachFile />}
                 onClick={() => fileUploadBtn()}
               />
@@ -115,7 +116,7 @@ const EmpTab1 = (props) => {
             id="psnMail"
             placeholder="example@mail.com"
             value={props.empDetail?.psnMail}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             onChange={props.handleChange}
             isRequired={false}
             pk={props.empDetail?.empCd}
@@ -129,7 +130,7 @@ const EmpTab1 = (props) => {
             id="payMail"
             placeholder="example@mail.com"
             value={props.empDetail?.payMail}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             onChange={props.handleChange}
             isRequired={false}
             pk={props.empDetail?.empCd}
@@ -145,7 +146,7 @@ const EmpTab1 = (props) => {
             placeholder="Select Date and Time"
             style={{ color: "gray" }}
             value={minTimeDate(props.empDetail?.joinDt)}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             onChange={props.handleChange}
             isRequired={true}
             pk={props.empDetail?.empCd}
@@ -174,7 +175,7 @@ const EmpTab1 = (props) => {
             id="empNm"
             placeholder="이름"
             value={props.empDetail?.empNm}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             onChange={props.handleChange}
             isRequired={true}
             pk={props.empDetail?.empCd}
@@ -191,7 +192,7 @@ const EmpTab1 = (props) => {
               id="loginPw"
               name="loginPw"
               inputType="password"
-              readOnly={props.editState === "read" || props.editState === "update"}
+              readOnly={props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"}
               onChange={props.handleChange}
               value={props.editState === "insert" ? props.empDetail?.loginPw : props.empDetail?.empPw}
               isRequired={props.editState === "insert"}
@@ -208,7 +209,7 @@ const EmpTab1 = (props) => {
             defaultValue={props.empDetail.gender ?? "M"}
             pk={props.empDetail?.empCd}
             onChange={props.handleRadioChange}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             isRequired={true}
             values={[
               {
@@ -250,7 +251,7 @@ const EmpTab1 = (props) => {
             placeholder="메일ID"
             value={props.empDetail?.mailId}
             readOnly={
-              props.editState === "read" || props.editState === "update"
+              props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"
             }
             onChange={props.handleChange}
             isRequired={true}
@@ -266,7 +267,7 @@ const EmpTab1 = (props) => {
             defaultValue={useYN.toString()}
             pk={props.empDetail?.empCd}
             onChange={props.handleRadioChange}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             isRequired={true}
             values={[
               {
@@ -289,7 +290,7 @@ const EmpTab1 = (props) => {
             placeholder="로그인ID"
             value={props.empDetail?.loginId}
             readOnly={
-              props.editState === "read" || props.editState === "update"
+              props.editState === "read" || props.editState === "update" || props.editState === "deptInsert"
             }
             onChange={props.handleChange}
             isRequired={true}
@@ -304,7 +305,7 @@ const EmpTab1 = (props) => {
             name="empTel"
             placeholder="000-0000-0000"
             value={props.empDetail?.empTel}
-            readOnly={props.editState === "read"}
+            readOnly={props.editState === "read" || props.editState === "deptInsert"}
             onChange={props.handleChange}
             isRequired={true}
             pk={props.empDetail?.empCd}
@@ -315,7 +316,7 @@ const EmpTab1 = (props) => {
           title={'회사주소'}
           data={props.empDetail}
           setData={props.setEmpDetail}
-          editState={props.editState != "read" && 'update'}
+          editState={props.editState != "read" && 'update' && 'deptInsert'}
           isRequired={false}
         />
       </Grid>

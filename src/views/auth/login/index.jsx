@@ -92,7 +92,7 @@ function SignIn(props) {
     }).then((res) => res.json())
     .then((res) => {
         if(res.status === 200){
-          setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
+          setCookie("Emp_Dp_Type", res.data[0]?.dpGrpCd, 2);
           status="success";
       }else{
         setAlertInfo({
@@ -146,7 +146,8 @@ function SignIn(props) {
             color={textColorSecondary}
             fontWeight='400'
             fontSize='md'>
-            Enter your email and password to sign in!
+            {/* Enter your email and password to sign in! */}
+            등록된 로그인 ID와 비밀번호를 입력해주세요.
           </Text>
         </Box>
         <Flex
@@ -197,7 +198,7 @@ function SignIn(props) {
                 isRequired={true}
                 fontSize='sm'
                 placeholder='비밀번호를 입력하세요.'
-                mb='24px'
+                mb='10px'
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
@@ -212,7 +213,7 @@ function SignIn(props) {
                 />
               </InputRightElement>
             </InputGroup>
-            <Flex justifyContent='space-between' align='center' mb='24px'>
+            {/* <Flex justifyContent='space-between' align='center' mb='24px'>
               <FormControl display='flex' alignItems='center'>
                 <Checkbox
                   id='remember-login'
@@ -237,7 +238,16 @@ function SignIn(props) {
                   비밀번호 찾기
                 </Text>
               </NavLink>
-            </Flex>
+            </Flex> */}
+            <Text
+              mb='35px'
+              ms='4px'
+              color={textColorSecondary}
+              fontWeight='400'
+              fontSize='sm'
+            >
+            * ID 변경 및 비밀번호 변경은 관리자에게 문의해주세요.
+            </Text>
             <Button
               onClick={empLogin}
               fontSize='sm'

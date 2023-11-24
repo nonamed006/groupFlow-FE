@@ -2,6 +2,7 @@ import api from "api/Fetch";
 import { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
+import ErrorPage from "views/system/error";
 
 const RouteRole = ({component: Component, ...rest}) => {
     const [ resp, setResp ] = useState({
@@ -45,15 +46,17 @@ const RouteRole = ({component: Component, ...rest}) => {
     return (
             resp.status === 200 ?
                 (
-                    Component ? 
+                    Component ?
                         <Route
                             {...rest}
                             render={props => {
-                                return <Component {...props}/>
+                                return <Component {...props} {...rest}/>
                             }}
                         />
                     :
-                        <Redirect to='/err/NotFound'/>
+                    <Route
+                        component={ErrorPage}
+                    />
                 )
                 
             :

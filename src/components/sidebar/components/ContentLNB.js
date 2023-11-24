@@ -53,6 +53,7 @@ function SidebarContentGNB(props) {
                       ml={'5px'}
                       color={'black'}
                       fontWeight={'bold'}
+                      fontSize={'17px'}
                       onClick={() => setLnbBack(routes)}
                     >
                     <ChevronLeftIcon mr={'10px'}/>
@@ -64,6 +65,7 @@ function SidebarContentGNB(props) {
                   <Text
                     me='auto'
                     color={'black'}
+                    fontSize={'17px'}
                     fontWeight={'bold'}>
                     {route.name}
                   </Text>
