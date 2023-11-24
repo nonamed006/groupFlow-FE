@@ -8,11 +8,17 @@ import CommonAlert from "common/component/CommonAlert";
 const RoleEmp = ({tab, setIsLoading}) => {
     const [ dpGrpCd, setDpGrpCd] = useState('');
     const [ rgCd, setRgCd] = useState('');
-    const [ roleKeyword, setRoleKeyword ] = useState('');
+    const [ defaultCd, setDefaultCd ] = useState('');
+    const [ roleKeyword, setRoleKeyword ] = useState();
 
     const [ alertInfo, setAlertInfo ] = useState({
         isOpen: false
     })
+
+    const realGridHandler = (dpGrpCd, defaultCd) => {
+        setDpGrpCd(dpGrpCd);
+        setDefaultCd(defaultCd);
+    }
 
     return (
         <>
@@ -25,12 +31,13 @@ const RoleEmp = ({tab, setIsLoading}) => {
             <GridItem colSpan={2} rowSpan={5} >
                 <EmpList
                     tab={tab}
-                    setDpGrpCd={setDpGrpCd}
+                    realGridHandler={realGridHandler}
                 />
             </GridItem>
             <GridItem colSpan={2} rowSpan={5}>
                 <RoleList
                     dpGrpCd={dpGrpCd}
+                    defaultCd={defaultCd}
                     rgCd={rgCd}
                     setRgCd={setRgCd}
                     keyword={roleKeyword}

@@ -71,9 +71,9 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
       if (clickData.cellType !== "gridEmpty") {
         let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
         if(cd.indexOf('DG') > -1) {
-          setListDetail(cd);
+          setListDetail(cd, '');
         } else {
-          setListDetail('');
+          setListDetail('', cd);
         }
       }
     };

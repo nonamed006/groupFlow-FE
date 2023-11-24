@@ -81,6 +81,7 @@ const MenuBox = ({ rgCd, type, modify, code, grpNm, setAlertInfo, h, setIsLoadin
                 fetchMenuList={fetchMenuList}
                 rgCd={rgCd}
                 code={code}
+                selectedMenu={selectedMenu}
                 typeCd={typeCd}
                 handleSearchBtn={handleSearchBtn}
                 setKeyword={setKeyword}

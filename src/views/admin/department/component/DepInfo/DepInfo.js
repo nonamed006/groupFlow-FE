@@ -189,7 +189,7 @@ const DepInfo = ({
               </Tab>
               <Tab fontSize="22px" fontWeight="700" lineHeight="100%">
                 부서원 정보
-              </Tab>
+              </Tab> 
             </Flex>
             <Spacer />
             <DepInfoBox

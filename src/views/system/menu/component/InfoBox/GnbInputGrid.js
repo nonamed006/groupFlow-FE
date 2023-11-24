@@ -6,7 +6,6 @@ import { MdHome } from 'react-icons/md';
 import { AttachmentIcon } from '@chakra-ui/icons';
 import { PORT } from 'set';
 import FormInput from 'common/component/FormInput';
-import FormRadio from 'common/component/FormRadio';
 import api from 'api/Fetch';
 import Upload from 'common/component/Upload';
 import { menuSchema } from 'common/Schema';
@@ -209,7 +208,8 @@ const GnbInputGrid = ({
         </GridItem>
 
         <GridItem colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={'radio'}
             title='사용여부'
             name='useYn'
             defaultValue={useYn.toString()}
@@ -260,33 +260,16 @@ const GnbInputGrid = ({
                 readOnly='readOnly'
                 placeholder='마우스로 파일을 끌어오세요.'
                 onClick={(e) => {
-                  setOnDrag(true);
-                  e.target.blur();
+                  if(isEditing) {
+                    setOnDrag(true);
+                    e.target.blur();
+                  }
                 }}
               />
             </InputGroup>
             <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" onChange={onChange} type='file' display={'none'}/>
           </FormControl>
         </GridItem>
-        {/* <GridItem colSpan={3}>
-          <InputGroup>
-            <InputLeftAddon children={<AttachmentIcon/>} />
-            <Input
-              id="fileInput"
-              name="fileInput"
-              size="md"
-              boarder="1"
-              borderRadius="14px"
-              value=''
-              readOnly='readOnly'
-              placeholder='마우스로 파일을 끌어오세요.'
-              onClick={() => {
-                document.getElementById('file').click();
-              }}
-            />
-          </InputGroup>
-          <Input id="file" name="file" size="md" boarder="1" borderRadius="14px" onChange={onChange} type='file' display={'none'}/>
-        </GridItem> */}
         <GridItem colSpan={4} borderWidth={1} rowSpan={4} h={'200px'} overflowY={'scroll'}>
           <Stack
             // divider={<StackDivider borderColor='gray.200' />}
@@ -337,8 +320,8 @@ const GnbInputGrid = ({
         h={'100%'}
         left={0}
         top={0}
-        display={onDrag ? 'block' : 'none'}
-        onClick={() => onDrag && setOnDrag(false)}
+        display={onDrag && isEditing ? 'block' : 'none'}
+        onClick={() => (onDrag && isEditing) && setOnDrag(false)}
       >
         <Upload
           gridArea={{

@@ -26,7 +26,6 @@ const OrgChartBox = () => {
         fetchCorpDepList(); // 회사 및 부서 목록 조회
     }, []);
 
-
     // 검색 버튼 클릭 시
     const handleSearchBtn = () => {
         if ((search === '') && !(keyword === undefined || keyword === 'undefined' || keyword === '')) {
@@ -52,7 +51,7 @@ const OrgChartBox = () => {
             setDepGrp();
             return;
         }
-    }
+    };
 
     // 회사 및 부서 목록 조회
     const fetchCorpDepList = async () => {
@@ -63,9 +62,7 @@ const OrgChartBox = () => {
         } else {
             setCorpDepList([]);
         }
-
         setIsLoading(false);
-        ;
     };
 
     // 조직도 그리드 클릭 시
@@ -89,16 +86,16 @@ const OrgChartBox = () => {
                 {isLoading ?
                     <Loading />
                     :
-
                     <Grid
                         templateColumns='repeat(4, 1fr)'
                         gap={2}
                     >
                         {/* 검색바 */}
                         <GridItem colSpan={4}   >
-                            <form ref={formInputRef}>
-                                <SearchBarOrga corpDep={corpDep} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
+                            <form ref={formInputRef} >
+                                <SearchBarOrga search={search} setSearch={setSearch} setKeyword={setKeyword} handleSearchBtn={handleSearchBtn} />
                             </form>
+                            <Box borderBottom={'1px'}  borderColor={'lightgray'} />
                         </GridItem>
                         {/* 조직도 그리드 */}
                         <GridItem colSpan={1} rowSpan={5} >

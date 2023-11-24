@@ -23,7 +23,6 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import RealGrid from "./UpperRealGrid";
 import api from "api/Fetch";
 import FormInput from "common/component/FormInput";
-import FormRadio from "common/component/FormRadio";
 import { menuSchema } from "common/Schema";
 
 const LnbInputGrid = ({
@@ -314,7 +313,8 @@ const LnbInputGrid = ({
         </GridItem>
 
         <GridItem colSpan={4}>
-          <FormRadio
+          <FormInput
+            type={"radio"}
             title="사용여부"
             name="useYn"
             defaultValue={useYn.toString()}

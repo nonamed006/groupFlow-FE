@@ -1,31 +1,41 @@
 import { Box, Input } from '@chakra-ui/react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import ResultCard from '../ReultList/ResultCard';
 import { debounce } from 'lodash';
 import api from 'api/Fetch';
 import ResultList from '../ReultList/ResultList';
+import { useSelector } from "react-redux"
 
 const SearchBox = () => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [resultMenuList, setResultMenuList] = useState([]);
     const [gnbNmList, setGnbNmList] = useState([]);
+    const formInputRef = useRef(null);
+    const empDpType = useSelector(state => state.solution.empData.dpGrpCd);
+
+    useEffect(()=>{
+        // 초기화
+        onClearSelect();
+        setResultMenuList([]);
+        setGnbNmList([]);
+    },[empDpType]);
 
     const handleChange = (e) => {
         setKeyword(e.target.value);
-        delayedSearch(e.target.value);
+        delayedSearch(empDpType, e.target.value);
     };
 
     const delayedSearch = useCallback(
-        debounce(async (keyword) => fetchMenuList(keyword), 500),
-        []
-    );
+        debounce(async (empDpType, keyword) => fetchMenuList(empDpType, keyword), 500),
+    []);
 
-    const fetchMenuList = async (keyword) => {
+    const fetchMenuList = async (empDpType, keyword) => {
         if (keyword === undefined || keyword === 'undefined' || keyword === '') {
             setGnbNmList([]);
-            return setResultMenuList([]);
+            setResultMenuList([]);
+            return;
         }
-        let res = await api.roleMenu.getRoleMenuBySearch(keyword);
+        let res = await api.roleMenu.getRoleMenuBySearch(empDpType, keyword);
         if (res.status === 200) {
             setResultMenuList(res.data);
             let temp = [];
@@ -39,12 +49,20 @@ const SearchBox = () => {
         }
     };
 
+    const onClearSelect = () => {
+        if (formInputRef.current) {
+            formInputRef.current.reset();
+            setKeyword();
+        }
+    };
+
     return (
         <Box
             w={'32%'}
             mb={'10%'}
             position={'absolute'}
         >
+   <form ref={formInputRef} >
             <Input
                 borderRadius="5px"
                 placeholder='메뉴통합검색'
@@ -59,6 +77,7 @@ const SearchBox = () => {
                 onChange={(e) => handleChange(e)}
                 name={'keyword'}
             />
+            </form>
             {
                 keyword &&
                 <Box

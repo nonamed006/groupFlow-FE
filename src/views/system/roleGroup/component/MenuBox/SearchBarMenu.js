@@ -1,16 +1,16 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 
-import SearchBar from "common/component/SearchBar";
+import FormInput from "common/component/FormInput";
 
-const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, setKeyword, setSelectedMenu }) => {
+const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSearchBtn, selectedMenu, setKeyword, setSelectedMenu }) => {
 	let [values, setValues] = useState();
 	const formInputRef = useRef(null);
 
 	useEffect(() => {
 		if (menuList) {
 			const updatedValues = menuList.map(menu => ({
-				code: menu.menuCd,
+				value: menu.menuCd,
 				name: menu.menuNm
 			}));
 			setValues(updatedValues);
@@ -20,11 +20,11 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 	useEffect(() => {
 		if (rgCd !== undefined && rgCd !== 'undefined') {
 			fetchMenuList();
-		}else{
+		} else {
 			setValues([]);
 		}
 		onClearSelect();
-	}, [ code, rgCd, typeCd]);
+	}, [code, rgCd, typeCd]);
 
 
 	const onClearSelect = () => {
@@ -40,22 +40,24 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 		>
 			<form ref={formInputRef}>
 				<Flex justifyContent={"space-around"}>
-					<Box w={'50%'}>
-						<SearchBar
-							textLabel={'대메뉴'}
-							setKeyword={setSelectedMenu}
+					<Box w={'50%'} mr={10}>
+						<FormInput
+							type={'select'}
+							searchBar={true}
+							title={'대메뉴'}
+							onChange={e => setSelectedMenu(e.target.value)}
 							placeholder={'전체'}
-							isSelect={true}
-							values={values}
+							values={values&&values}
 							name={'gnbMenu'}
-							defaultValue={'undefined'}
+							defaultValue={selectedMenu}
 						/>
 					</Box>
 					<Box w={'50%'}>
-						<SearchBar
-							textLabel={'메뉴명'}
-							setKeyword={setKeyword}
-							handleSearchBtn={handleSearchBtn}
+						<FormInput
+							searchBar={true}
+							title={'메뉴명'}
+							onChange={e => setKeyword(e.target.value)}
+							handleSearchBtn={()=>handleSearchBtn()}
 							placeholder={'검색어를 입력하세요'}
 							btnText={'검색'}
 							name={'keyword'}

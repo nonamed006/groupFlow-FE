@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Button, Select, Grid, Text, GridItem } from "@chakra-ui/react";
-import SearchBar from "common/component/SearchBar";
 
 const SearchCardBar = ({ setUseYn, setKeyword, handleSearchBtn }) => {
   return (

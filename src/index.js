@@ -15,6 +15,8 @@ import SystemLayout from "layouts/system"; //이혜윤 - 추가
 import MU000000 from "layouts/MU000000"; //이혜윤 - 추가
 import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 import ErrorPage from "views/system/error";
+import { getCookie } from "common/common";
+import Test from "layouts/test";
 
 const store = createStore(rootReducer);
 
@@ -33,6 +35,13 @@ ReactDOM.render(
 						{/* 로그인 안했을때 */}
 						{/* {<Redirect from='/' to='/auth/login' />} */}
 						{/*없는 url 입력시 에러 페이지로(NotFound) */}
+						<Route path='/test' exact component={Test} />
+						{
+							getCookie('Emp_Dp_Type') ?
+							<Redirect from='/' to='/MU000000' />
+							:
+							<Redirect from='/' to='/auth/login' />
+						}
 						<Route component={ErrorPage} />
 					</Switch>
 				</BrowserRouter>
