@@ -18,6 +18,7 @@ import { depSchema } from "common/Schema";
 import DeleteModal from "common/modal/DeleteModal";
 import api from "api/Fetch";
 import { set } from "lodash";
+import dep from "api/dep/DepApi";
 
 const DepInfo = ({
   org,
@@ -33,7 +34,7 @@ const DepInfo = ({
   isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false); // 저장 및 수정 상태 (기본값 false - 저장)
-  const [depDto, setDepDto] = useState({});
+  const [depDto, setDepDto] = useState({ dpCd: "" });
   const [dg, setDg] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 관련
   //부서 상세조회
@@ -168,10 +169,7 @@ const DepInfo = ({
       setIsEditing(false);
     }
   }, [dpCd]);
-  useEffect(() => {
-    setDepDto([]);
-    setDg([]);
-  }, [org]);
+
   return (
     <>
       <Box
