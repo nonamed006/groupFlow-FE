@@ -281,7 +281,7 @@ const EmpTab1 = (props) => {
               title={"메일ID"}
               name="mailId"
               id="mailId"
-              placeholder="메일ID" 
+              placeholder="메일ID"
               value={props.empDetail?.mailId}
               readOnly={
                 props.editState === "read" ||
@@ -357,7 +357,7 @@ const EmpTab1 = (props) => {
             title={"회사주소"}
             data={props.empDetail}
             setData={props.setEmpDetail}
-            editState={props.editState === "read" || props.editState === "deptInsert" ? "read" : "update"}
+            editState={props.editState != "read" && "update" && "deptInsert"}
             isRequired={false}
           />
         </Grid>
