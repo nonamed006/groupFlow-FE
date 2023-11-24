@@ -142,7 +142,7 @@ const EmpDeptInput = ({ column, handleChange, editState, index, setIsLoading, is
       <GridItem colStart={1} colEnd={4} colSpan={4}>
       <FormInput
           title={"회사/부서"}
-          type="select"
+          type="selectEmp"
           id="coCd"
           name="coCd"
           placeholder="전체"

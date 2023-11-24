@@ -116,7 +116,26 @@ const FormInput = ({
             })}
           </HStack>
         </RadioGroup>
-      ) : (
+      ) : type === "selectEmp" ? (
+        <Select
+          w={"102%"}
+          name={name}
+          value={defaultValue}
+          key={pk}
+          onChange={onChange}
+          placeholder={placeholder}
+          disabled={readOnly}
+        >
+          {values &&
+            values.map((value) => {
+              return (
+                <option name={name} value={value.coCd}>
+                  {value.coNm}
+                </option>
+              );
+            })}
+        </Select>
+      ) :(
         <></>
       )}
       {btnText && (
