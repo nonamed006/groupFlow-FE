@@ -50,8 +50,11 @@ const corp = {
    * @param {string} coCd 회사코드
    * @returns
    */
-  deleteCorpInfo: (coCd) => {
-    const promise = getPromise({ url: `corp/${coCd}`, method: "PUT" });
+  deleteCorpInfo: (coCd, empCd) => {
+    const promise = getPromise({
+      url: `corp?coCd=${coCd}&empCd=${empCd}`,
+      method: "DELETE",
+    });
     return promise.then((responseJson) => responseJson);
   },
 

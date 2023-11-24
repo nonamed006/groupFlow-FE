@@ -42,26 +42,28 @@ export function SidebarLinks(props) {
   const createLinks = (prop) => {
     return prop.map((route, index) => {
       //return route.path && route.items.length <= 0 ? ( //path가 있을때(하위메뉴가 없는 메뉴)
-      
-      return <NavLink key={index} to={(route.path && route.items.length <= 0) && route.layout + route.path}>
+
+      return (
+        <NavLink
+          key={index}
+          to={
+            route.path && route.items.length <= 0 && route.layout + route.path
+          }
+        >
           <Box
             onClick={() => {
               LNBroute(route);
             }}
             cursor={"pointer"}
             key={index}
-            w={'100%'}
-            px={'10px'}
+            w={"100%"}
+            px={"10px"}
             onMouseOut={onMouseOut}
             onMouseOver={() => {
               onMouseOver(index);
             }}
           >
-            <HStack
-              spacing={"22px"}
-              py="10px"
-              ps="10px"
-            >
+            <HStack spacing={"22px"} py="10px" ps="10px">
               <Flex
                 w="100%"
                 alignItems="center"
@@ -70,9 +72,13 @@ export function SidebarLinks(props) {
               >
                 <Text
                   me="auto"
-                  fontWeight={activeRoute(route.path) ? '600' : 'normal'}
-                  fontSize={'17px'}
-                  color={activeRoute(route.path) || mouseOverIndex === index ? activeColor : textColor}
+                  fontWeight={activeRoute(route.path) ? "600" : "normal"}
+                  fontSize={"17px"}
+                  color={
+                    activeRoute(route.path) || mouseOverIndex === index
+                      ? activeColor
+                      : textColor
+                  }
                 >
                   {route.name}
                 </Text>
@@ -81,6 +87,7 @@ export function SidebarLinks(props) {
             </HStack>
           </Box>
         </NavLink>
+      );
       // ) : (
       //   //path 없을때(하위 메뉴 있는 메뉴)
       //   <Box
