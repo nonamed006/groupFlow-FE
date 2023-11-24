@@ -67,9 +67,11 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
         return "bottom-gnb-column";
       }
     });
+
     treeView.onCellClicked = function (grid, clickData) {
-      if (clickData.cellType !== "gridEmpty") {
-        let cd = grid._dataProvider._rowMap[clickData.dataRow]._values[0];
+      let value = grid._dataProvider._rowMap[clickData.dataRow];
+      if (clickData.cellType !== "gridEmpty" && value !== undefined) {
+        let cd = value._values[0];
         if (cd.indexOf('DG') > -1) {
           setListDetail(cd, '');
         } else {
@@ -78,6 +80,8 @@ const RealGrid = ({ org, setListDetail }) => { //setListDetail=[]
       }
     };
 
+    // 더블 클릭 시, 수정 불가 설정
+    treeView.editOptions.editable = false;
     // 헤더 정렬 불가
     treeView.sortingOptions.enabled = false;
     // 헤더 이동 불가

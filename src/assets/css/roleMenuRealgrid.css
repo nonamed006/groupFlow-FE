@@ -317,13 +317,13 @@
 
 .rg-footer .rg-table tr td {
   border-bottom: none;
-  border-right: 1px solid #bcc0c8;
-  border-top: 1px solid #bcc0c8;
+  border-right: 1px solid #ffffff;
+  border-top: 1px solid #ffffff;
   border-left: none;
 }
 
 .rg-fixed-footer .rg-table tr td {
-  background: #e4e7eb;
+  background: #ffffff;
   border-bottom: none;
   border-right: 1px solid #bcc0c8;
   border-top: 1px solid #bcc0c8;
@@ -351,6 +351,7 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFF6F6F8', EndColorStr='#FFF6F6F8')";
 }
 .rg-foot .rg-table tr td {
+  
   border-bottom: none;
   border-right: 1px solid #bcc0c8;
   border-top: 1px solid #bcc0c8;
