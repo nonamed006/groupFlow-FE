@@ -15,9 +15,9 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 380, header: { text: "명칭" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: " " } },
     { fieldName: "path", name: "path", header: { text: "path" } },
-    { fieldName: "code", name: "code",  header: { text: "code" } },
+    { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
     { fieldName: "iconField", name: "iconField" },
   ];
@@ -70,7 +70,10 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
       }
     };
 
-    
+    // 헤더 정렬 불가
+    treeView.sortingOptions.enabled = false;
+    // 헤더 이동 불가
+    treeView.displayOptions.columnMovable = false;
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
       if (depth === "0") {
@@ -88,7 +91,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{  width: "100%" }}></div>
+    <div ref={realgridElement} style={{ width: "100%" }}></div>
   );
 };
 

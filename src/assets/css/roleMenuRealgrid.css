@@ -165,7 +165,7 @@
 }
 
 .rg-header {
-  visibility: hidden;
+  /* visibility: hidden; */
   text-align: center;
   font-weight: bold;
   color: #4e545f;
@@ -179,12 +179,12 @@
   border-left: none;
   overflow: hidden;
 }
-.rg-header .rg-table tr td:hover {
+/* .rg-header .rg-table tr td:hover {
   background: #cdd2d9;
-}
+} */
 
 .rg-header-cell {
-  text-align: left;
+  text-align: center;
 }
 
 .rg-header-group-cell {
