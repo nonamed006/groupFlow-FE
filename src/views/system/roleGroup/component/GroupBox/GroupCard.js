@@ -36,7 +36,7 @@ const GroupCard = ({ checkedList, checkHandler, rgCd, group, index, setRgCd, isT
                     mx='3'
                     borderColor={'secondaryGray.600'}
                     isChecked={checkedList.includes(group.rgCd) ? true : false}
-                    onChange={(e) => checkHandler(e, group.rgCd)}
+                    onChange={(e) => group.upper !== undefined? checkHandler(e, {'upper': group.upper, 'value': group.rgCd}): checkHandler(e, group.rgCd)}
                 />
 
                 <Heading flex={1} fontSize='xl'>

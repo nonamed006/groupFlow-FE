@@ -103,8 +103,12 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
 
     // 체크박스 핸들러
     const checkHandler = (e, value) => {
-        setIsChecked(!isChecked);
-        checkedItemHandler(value, e.target.checked);
+        console.log(value);
+        if ( value.upper !== 1) {
+            setIsChecked(!isChecked);
+            checkedItemHandler(value.value, e.target.checked);  
+            return;
+        }
     };
 
 
