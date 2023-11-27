@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import api from "api/Fetch";
 import FormInput from "common/component/FormInput";
 
-const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
+const CorpList = ({ type, setCoCd, coCd, setIsLoading }) => {
 
   const [corpList, setCorpList] = useState([]); // 회사데이터 목록
   const [keyword, setKeyword] = useState(); // 검색어
@@ -79,9 +79,9 @@ const CorpList = ({ setCoCd, coCd, setIsLoading }) => {
 
 
       {/* 목록 테이블 */}
-      <Box w={'100%'} overflowY={"auto"} overflowX={"hidden"} display={'block'} height={'550px'} >
+      <Box w={'100%'} overflowY={"auto"} overflowX={"auto"} display={'block'} height={'550px'} >
         <Box minH={'560px'} w={'100%'}  >
-          <ListCardTable listData={corpList} setCoCd={setCoCd} coCd={coCd} />
+          <ListCardTable type={true} listData={corpList} setCoCd={setCoCd} coCd={coCd} />
         </Box>
         <Box ref={infiniteScrollRef} h={'1px'} />
       </Box>

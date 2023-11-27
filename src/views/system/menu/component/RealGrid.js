@@ -12,7 +12,7 @@ const setUseName = (items) => {
       setUseName(item.rows);
     }
   });
-}
+};
 
 const RealGrid = ({ org, setMenuDetail }) => {
   setUseName(org);

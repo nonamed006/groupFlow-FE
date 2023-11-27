@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { React, useState } from "react";
 import RoleGrpBox from "./component/Corp/RoleGrpBox/RoleGrpBox";
 import MenuBox from "views/system/roleGroup/component/MenuBox/MenuBox";
@@ -10,17 +10,22 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
     const [keyword, setKeyword] = useState('');   // 권한그룹 검색어
 
     return (
-        <Flex>
-            {/* 회사 목록 */}
-            <Box w={'580px'} mr={3}>
+        <>
+        <Grid
+            h='500px'
+            templateRows="repeat(11, 1fr)"
+            templateColumns="repeat(7, 1fr)"
+            gap={3}
+        >
+            <GridItem colSpan={2} rowSpan={5}>
                 <CorpList
                     setCoCd={setCoCd}
                     coCd={coCd}
                     setIsLoading={setIsLoading}
                 />
-            </Box>
+            </GridItem>
             {/* 권한그룹 목록 */}
-            <Box w={'440px'} mr={3}>
+            <GridItem colSpan={2} rowSpan={5}>
                 <RoleGrpBox
                     keyword={keyword}
                     setKeyword={setKeyword}
@@ -30,9 +35,9 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                     setAlertInfo={setAlertInfo}
                     setIsLoading={setIsLoading}
                 />
-            </Box>
+            </GridItem>
             {/* 메뉴 목록 */}
-            <Box w={'800px'} >
+            <GridItem colSpan={3} rowSpan={5}>
                 <MenuBox
                     rgCd={rgCd} // 선택되는 권한그룹 코드
                     type={'corp'}   // 권한맵핑 기준
@@ -42,9 +47,9 @@ const RoleCorp = ({setAlertInfo, setIsLoading}) => {
                     setAlertInfo={setAlertInfo}
                     setIsLoading={setIsLoading}
                 />
-            </Box>
-        </Flex>
-
+            </GridItem>
+        </Grid>
+</>
     );
 };
 

@@ -229,6 +229,7 @@ export default function AdminNavbar(props) {
                         mb="5px"
                         ml="10px"
                         fontWeight={700}
+                        overflow={"hidden"}
                         whiteSpace={"nowrap"}
                         textOverflow={"ellipsis"}
                       >
