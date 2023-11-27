@@ -4,15 +4,13 @@ import {
 import React from "react";
 
 import ListCardTableTbody from "./ListCardTableTbody";
-import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
+import ListCardHeader from "./ListCardHeader";
 
 const ListCardTable = ({ type, listData, setCoCd, coCd }) => {
-  const headerGroups = ["회사명", "대표자", "회사구분", "사용" ];
-
   return (
     <Table variant="simple" w={'100%'} colorScheme={'facebook'}>
       {/* Thead */}
-      <ListCardTableHeader headerGroups={headerGroups}/> 
+      <ListCardHeader type={type}/> 
       {/* Tbody */}
       <ListCardTableTbody type={type} listData={listData} setCoCd={setCoCd} coCd={coCd}/>
     </Table>
