@@ -92,7 +92,7 @@ const DepGrpInfo = ({ depGrp }) => {
                 <Text color={textColor}
                   fontSize="15px"
                   fontWeight="600"
-                  lineHeight="100%">전화번호</Text>
+                  lineHeight="100%">연락처</Text>
               </GridItem>
               <GridItem m={1} colSpan={2} colStart={3} colEnd={5}>
                 <Text
@@ -102,6 +102,23 @@ const DepGrpInfo = ({ depGrp }) => {
                   lineHeight="100%"
                 >{depGrp.telNum}</Text>
               </GridItem>
+
+              <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
+                <Text color={textColor}
+                  fontSize="15px"
+                  fontWeight="600"
+                  lineHeight="100%"
+                  whiteSpace={"nowrap"}>개인 연락처</Text>
+              </GridItem>
+              <GridItem m={1} colSpan={2} colStart={3} colEnd={5}>
+                <Text
+                  color={textColor}
+                  fontSize="15px"
+                  fontWeight="300"
+                  lineHeight="100%"
+                >{depGrp.empDto.empTel}</Text>
+              </GridItem>
+
 
               <GridItem m={1} colSpan={2} colStart={0} colEnd={2}>
                 <Text color={textColor}

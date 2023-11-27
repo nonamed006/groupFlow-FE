@@ -43,6 +43,7 @@ export default function Dashboard(props) {
   const dpGrpCd = getCookie("Emp_Dp_Type");
 
   const getRoleRoutes = async () => {
+    console.log('MU000000----------')
     setIsLoading(true);
     const route = await RoleRoutes();
     setRoutes(route);
@@ -54,8 +55,7 @@ export default function Dashboard(props) {
       window.location.href = "/auth/login?status=401";
     }
     getRoleRoutes();
-    console.log(dpGrpCd);
-  }, [loginEmpInfo]);
+  }, [loginEmpInfo])
 
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
@@ -134,37 +134,7 @@ export default function Dashboard(props) {
     });
 
     return pathString;
-  };
-
-  // const getActiveRoute = (routes) => {
-  //   let activeRoute = "";
-  //   for (let i = 0; i < routes.length; i++) {
-  //     if (routes[i].collapse) {
-  //       let collapseActiveRoute = getActiveRoute(routes[i].items);
-  //       if (collapseActiveRoute !== activeRoute) {
-  //         return collapseActiveRoute;
-  //       }
-  //     } else if (routes[i].category) {
-  //       let categoryActiveRoute = getActiveRoute(routes[i].items);
-  //       if (categoryActiveRoute !== activeRoute) {
-  //         return categoryActiveRoute;
-  //       }
-  //     } else {
-  //       if(findPath(routes, props.location.pathname) === null){
-  //         return ;
-  //       }else{
-  //          //찾은 PATH값의 NAME을 반환
-  //         activeRoute = findPath(routes, props.location.pathname).name;
-  //       }
-  //       if (
-  //         window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-  //       ) {
-  //         return routes[i].name;
-  //       }
-  //     }
-  //   }
-  //   return activeRoute;
-  // };
+  }
 
   const getActiveNavbar = (routes) => {
     let activeNavbar = false;
