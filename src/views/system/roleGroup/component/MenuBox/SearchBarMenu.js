@@ -54,6 +54,7 @@ const SearchBarMenu = ({ code, menuList, fetchMenuList, typeCd, rgCd, handleSear
 					</Box>
 					<Box w={'50%'}>
 						<FormInput
+							inputType={'roleGroup'}
 							searchBar={true}
 							title={'메뉴명'}
 							onChange={e => setKeyword(e.target.value)}

@@ -102,6 +102,7 @@ export default function HeaderLinks(props) {
 			.then((res) => {
 				dispatch(setEmpData(res?.data[0]));
 				setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
+				window.location.href = '/MU000000/home'
 			})
 	}
 
