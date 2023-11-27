@@ -99,7 +99,6 @@ const DepInfo = ({
         status: "success",
         width: "fit-content",
       });
-      window.location.href = "/MU000000/home";
     }
   };
   const change = (depDto) => {
