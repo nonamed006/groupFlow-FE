@@ -100,6 +100,7 @@ export default function HeaderLinks(props) {
 			credentials: 'include'
 		}).then((res) => res.json())
 			.then((res) => {
+				window.location.replace("/MU000000/home");
 				dispatch(setEmpData(res?.data[0]));
 				setCookie("Emp_Dp_Type", res.data[0].dpGrpCd, 2);
 				window.location.href = '/MU000000/home'
@@ -195,7 +196,7 @@ export default function HeaderLinks(props) {
 							bg="#11047A"
 							size="sm"
 							w="40px"
-							h="40px" 
+							h="40px"
 							fallbackSrc={`${PORT}/emp/display/${loginEmpInfo?.modiNm}`}
 						/>
 						<Flex direction={"column"} p="0px 10px">
@@ -208,8 +209,8 @@ export default function HeaderLinks(props) {
 								{loginEmpInfo?.empNm}
 							</Text>
 							<Text fontSize="sm" fontWeight="600" color={textColor} display="flex">
-								<Text >
-									<Text textOverflow={"ellipsis"} overflow={"hidden"} whiteSpace={"nowrap"} textAlign={"left"}> 
+								<Text width={"80px"}>
+									<Text textOverflow={"ellipsis"} overflow={"hidden"} whiteSpace={"nowrap"} textAlign={"left"}>
 										{loginEmpInfo?.coNm}
 									</Text>
 								</Text> <Text marginLeft={"5px"} marginRight={"5px"}> | </Text>
