@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
+import { Box } from "@chakra-ui/react";
+
 //import "assets/css/depRealGrid.css"; // RealGrid CSS 추가
 import corpIcon from "assets/img/gridIcon/corporation.png";
 import depIcon from "assets/img/gridIcon/department.png";
@@ -15,7 +17,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
   ];
 
   var columns = [
-    { fieldName: "name", name: "name", width: 380, header: { text: "조직" } },
+    { fieldName: "name", name: "name", width: 380, header: { text: " " } },
     { fieldName: "path", name: "path", header: { text: "path" } },
     { fieldName: "code", name: "code", header: { text: "code" } },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
@@ -37,6 +39,7 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 36;
+    treeView.stateBar.width = 30;
 
     treeView.displayOptions.useFocusClass = true; //클릭 시 색상
 
@@ -86,16 +89,14 @@ const RealGrid = ({ org, setDpCd, setEditState, setTabStatus }) => {
     });
     // 모두 열기
     treeView.expandAll();
-    
+
     return () => {
       treeProvider.clearRows();
       treeView.destroy();
     };
   }, [org]);
 
-  return (
-    <div ref={realgridElement} style={{ width: "100%" }}></div>
-  );
+  return <Box ref={realgridElement} w="100%" h="500px"></Box>;
 };
 
 export default RealGrid;

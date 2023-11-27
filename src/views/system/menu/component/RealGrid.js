@@ -6,13 +6,13 @@ import depIcon from "assets/img/gridIcon/department.png";
 
 const setUseName = (items) => {
   items.forEach((item) => {
-    item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
+    item.menuNm = item.useYn === 0 ? item.menuNm + " (미사용)" : item.menuNm;
 
     if (item.rows != null) {
       setUseName(item.rows);
     }
   });
-}
+};
 
 const RealGrid = ({ org, setMenuDetail }) => {
   setUseName(org);
@@ -30,7 +30,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
       fieldName: "menuNm",
       name: "menuNm",
       width: 300,
-      header: { text: "menuNm" },
+      header: { text: " " },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
     {
