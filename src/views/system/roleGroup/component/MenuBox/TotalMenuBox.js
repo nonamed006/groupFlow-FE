@@ -31,7 +31,7 @@ const TotalMenuBox = ({ rgCd, setCheckedMenuCd, typeCd }) => {
         setIsLoading(false);
     }
     return (
-        <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="9" minH={'500px'}>
+        <Box borderRadius="lg" bg="white" h="fit-content" display={'flex'} px="9" >
             {isLoading ?
                 <Loading />
                 :
