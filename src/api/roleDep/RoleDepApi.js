@@ -22,11 +22,11 @@ const roleDep = {
    * @param {*} roleCorpCd
    * @returns
    */
-  postRoleDepList: (dpCd, checkedList, dpPath) => {
+  postRoleDepList: (dpCd, checkedList) => {
     const promise = getPromise({
       url: `roleDep`,
       method: "post",
-      body: JSON.stringify({'dpCd': dpCd, 'rgCdList': checkedList, 'dpPath': dpPath}),
+      body: JSON.stringify({'dpCd': dpCd, 'rgCdList': checkedList}),
     });
     return promise.then((responseJson) => responseJson);
   },

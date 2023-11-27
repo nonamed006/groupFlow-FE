@@ -6,7 +6,7 @@ import SearchBarRoleGrp from 'views/system/roleGroup/component/GroupBox/SearchBa
 import api from "api/Fetch";
 import DepRealGrid from './DepRealGrid';
 
-const DepList = ({  tab, setDpCd, setCoCd, setDpPath, setRgCd, setIsLoading }) => {
+const DepList = ({  tab, setDpCd, setCoCd, setRgCd, setIsLoading }) => {
     const [keyword, setKeyword] = useState(); // 검색어
     const [corps, setCorps] = useState([]); // 회사 코드 및 명 목록 (셀렉트박스에서 사용됨)
     const [searchCoCd, setSearchCoCd] = useState(); // 검색바에서 선택된 회사 코드
@@ -48,8 +48,7 @@ const DepList = ({  tab, setDpCd, setCoCd, setDpPath, setRgCd, setIsLoading }) =
     };
 
     // 조직도 부서 클릭 시
-    const handleClickGrid = (dpCd, coCd, dpPath) => {
-        setDpPath(dpPath);
+    const handleClickGrid = (dpCd, coCd) => {
         setCoCd(coCd); 
         setDpCd(dpCd);
     }

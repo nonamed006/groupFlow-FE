@@ -87,7 +87,6 @@ const DepRealGrid = ({ org, handleClick }) => {
         let coCd = value._values[2].split("/")[0];
         if (value._values[3] !== '0') {
            let dpCd = value._values[0];
-           let dpPath = value._values[2];
           // let arr = [];
 
           // var dataRow = grid.getDataRow(clickData.itemIndex);
@@ -101,10 +100,10 @@ const DepRealGrid = ({ org, handleClick }) => {
           // const dpCdArr = arr.map((item) => {
           //   return provider.getValues(item)[0]
           // });
-          handleClick(dpCd, coCd, dpPath);
+          handleClick(dpCd, coCd);
         } else {
 
-          handleClick(undefined, coCd, []);
+          handleClick(undefined, coCd);
         }
       }
     };

@@ -7,7 +7,7 @@ import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';
 import api from 'api/Fetch';
 
-const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpPath, setIsLoading, setAlertInfo }) => {
+const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, setIsLoading, setAlertInfo }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
     const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
@@ -60,7 +60,7 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpPath, setIsLoading, setAlertIn
     // 권한-부서 맵핑 수정 시
     const fetchCheckedRoleGrp = async () => {
         setIsLoading(true);
-        let res = await api.roleDep.postRoleDepList(dpCd, checkedList, dpPath);
+        let res = await api.roleDep.postRoleDepList(dpCd, checkedList);
         if (res.status === 200) {
             checkedList.length === 0 && isDrawerClose();
             setAlertInfo({
