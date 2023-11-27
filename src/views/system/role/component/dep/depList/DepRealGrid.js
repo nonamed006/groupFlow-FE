@@ -86,21 +86,22 @@ const DepRealGrid = ({ org, handleClick }) => {
         var provider = grid.getDataSource();
         let coCd = value._values[2].split("/")[0];
         if (value._values[3] !== '0') {
-          let dpCd = value._values[0];
-          let arr = [];
+           let dpCd = value._values[0];
+           let dpPath = value._values[2];
+          // let arr = [];
 
-          var dataRow = grid.getDataRow(clickData.itemIndex);
-          var desRows = provider.getDescendants(dataRow);
-          if (desRows != null) {
-            desRows.push(dataRow);
-            arr = desRows;
-          } else {
-            arr.push(dataRow);
-          }
-          const dpCdArr = arr.map((item) => {
-            return provider.getValues(item)[0]
-          });
-          handleClick(dpCd, coCd, dpCdArr);
+          // var dataRow = grid.getDataRow(clickData.itemIndex);
+          // var desRows = provider.getDescendants(dataRow);
+          // if (desRows != null) {
+          //   desRows.push(dataRow);
+          //   arr = desRows;
+          // } else {
+          //   arr.push(dataRow);
+          // }
+          // const dpCdArr = arr.map((item) => {
+          //   return provider.getValues(item)[0]
+          // });
+          handleClick(dpCd, coCd, dpPath);
         } else {
 
           handleClick(undefined, coCd, []);

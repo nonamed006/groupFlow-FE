@@ -7,7 +7,7 @@ import { UseDrawerOpen } from 'hook/UseDrawerOpen';
 import BottomDrawer from 'common/component/BottomDrawer';
 import api from 'api/Fetch';
 
-const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlertInfo }) => {
+const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpPath, setIsLoading, setAlertInfo }) => {
     const [roleGrpList, setRoleGrpList] = useState([]); // 권한그룹 목록
     const [keyword, setKeyword] = useState();   // 권한그룹 검색어
     const [init, setInit] = useState(); // 첫로딩, 검색시 초기화
@@ -60,13 +60,7 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
     // 권한-부서 맵핑 수정 시
     const fetchCheckedRoleGrp = async () => {
         setIsLoading(true);
-        let arr = [];
-        let list = new Object();
-        list.rgCdList = checkedList;
-        list.dpCdList = dpCdList;
-        arr.push(list);
-
-        let res = await api.roleDep.postRoleDepList(list);
+        let res = await api.roleDep.postRoleDepList(dpCd, checkedList, dpPath);
         if (res.status === 200) {
             checkedList.length === 0 && isDrawerClose();
             setAlertInfo({
@@ -83,7 +77,6 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
                 detail: res.resultMsg,
                 width: 'fit-content'
             });
-            // setIsReload(!isReload);
         };
         setIsLoading(false);
     };
@@ -103,7 +96,6 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
 
     // 체크박스 핸들러
     const checkHandler = (e, value) => {
-        console.log(value);
         if ( value.upper !== 1) {
             setIsChecked(!isChecked);
             checkedItemHandler(value.value, e.target.checked);  
@@ -114,7 +106,7 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, dpCdList, setIsLoading, setAlert
 
     useEffect(async () => {
         roleGrpList.map(async (roleGrp) => {
-            if (roleGrp.state === 1) {
+            if (roleGrp.state === 1 || roleGrp.upper === 1 ) {
                 await checkedList.includes(roleGrp.rgCd);
                 await checkedItemHandler(roleGrp.rgCd, true);
             }
