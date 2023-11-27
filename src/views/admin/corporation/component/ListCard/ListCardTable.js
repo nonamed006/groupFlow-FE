@@ -6,7 +6,7 @@ import React from "react";
 import ListCardTableTbody from "./ListCardTableTbody";
 import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 
-const ListCardTable = ({ listData, setCoCd, coCd }) => {
+const ListCardTable = ({ type, listData, setCoCd, coCd }) => {
   const headerGroups = ["회사명", "대표자", "회사구분", "사용" ];
 
   return (
@@ -14,7 +14,7 @@ const ListCardTable = ({ listData, setCoCd, coCd }) => {
       {/* Thead */}
       <ListCardTableHeader headerGroups={headerGroups}/> 
       {/* Tbody */}
-      <ListCardTableTbody listData={listData} setCoCd={setCoCd} coCd={coCd}/>
+      <ListCardTableTbody type={type} listData={listData} setCoCd={setCoCd} coCd={coCd}/>
     </Table>
   );
 };
