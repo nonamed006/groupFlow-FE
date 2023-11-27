@@ -6,13 +6,13 @@ import depIcon from "assets/img/gridIcon/department.png";
 
 const setUseName = (items) => {
   items.forEach((item) => {
-    item.menuNm = item.useYn === 0 ? item.menuNm + ' (미사용)' : item.menuNm;
+    item.useYn = item.useYn === 1 ? '사용' : '미사용';
 
     if (item.rows != null) {
       setUseName(item.rows);
     }
   });
-}
+};
 
 const RealGrid = ({ org, setMenuDetail }) => {
   setUseName(org);
@@ -23,14 +23,15 @@ const RealGrid = ({ org, setMenuDetail }) => {
     { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
     { fieldName: "iconField", name: "iconField" },
+    { fieldName: "useYn", name: "text" },
   ];
 
   var columns = [
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: 300,
-      header: { text: "menuNm" },
+      width: 250,
+      header: { text: "메뉴명" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
     {
@@ -40,6 +41,12 @@ const RealGrid = ({ org, setMenuDetail }) => {
       header: { text: "menuCd" },
     },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
+    {
+      fieldName: "useYn",
+      name: "useYn",
+      width: 120,
+      header: { text: "사용여부" },
+    },
   ];
 
   var treeProvider, treeView;
@@ -72,6 +79,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("menuCd").visible = false;
     treeView.columnByName("menuNm").editable = false;
+    treeView.columnByName("useYn").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
     treeView.treeOptions.iconImages = [depIcon];
@@ -95,10 +103,15 @@ const RealGrid = ({ org, setMenuDetail }) => {
 
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
+      var useYn = grid.getValue(item.index, "useYn");
       if (depth === "1") {
         return "gnb-column";
       } else if (depth === "2") {
         return "bottom-gnb-column";
+      }
+
+      if (useYn === "미사용") {
+        return "not-useMenu-column";
       }
     });
 

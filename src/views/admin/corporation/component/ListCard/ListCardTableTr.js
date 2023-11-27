@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { UseMouseOver } from "hook/UseMouseOver";
 
-const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
+const ListCardTableTr = ({ type, data, index, setCoCd, coCd }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const unusedTextColor = "secondaryGray.700";
   const [mouseOverIndex, onMouseOver, onMouseOut] = UseMouseOver();
@@ -37,7 +37,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"80px"}
+          w={"70px"}
           overflow={"hidden"}
         >
           {data.coNm}
@@ -49,7 +49,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"80px"}
+          w={"70px"}
           overflow={"hidden"}
         >
           {data.ceoNm}
@@ -61,7 +61,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"80px"}
+          w={type?"40px":"70px"}
           overflow={"hidden"}
         >
           {data.ccNm}
@@ -75,7 +75,7 @@ const ListCardTableTr = ({ data, index, setCoCd, coCd }) => {
           fontWeight="500"
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"80px"}
+          w={"70px"}
           overflow={"hidden"}
         >
           {data.useYn ? "사용" : "미사용"}
