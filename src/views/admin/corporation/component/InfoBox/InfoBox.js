@@ -31,7 +31,6 @@ const InfoBox = ({
     await setIsEditing(coCd === 0 ? true : false);
   }, [coCd, sortValue]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
-  console.log(loginEmpInfo);
   const onReset = () => {
     setCorp({
       // 기본값 세팅

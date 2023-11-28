@@ -25,7 +25,7 @@ const RoleGrpSearchBar = ({ setKeyword, handleSearchBtn, code }) => {
                 <FormInput
                     inputType={'roleGroup'}
                     searchBar={true}
-                    onChange={(e) => { console.log('onChange: value ==> ', e.target.value); setKeyword(e.target.value) }}
+                    onChange={(e) => { setKeyword(e.target.value) }}
                     name={'keyword'}
                     handleSearchBtn={() => handleSearchBtn()}
                     placeholder={'권한명을 입력하세요'}
