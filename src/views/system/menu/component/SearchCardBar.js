@@ -100,8 +100,11 @@ const SearchCardBar = ({search, setSearch}) => {
 			</Box>
 			<Box w={'5%'} >
 				<Button
-					float={'right'}
+					float={"right"}
+					w={'80px'}
 					variant="brand"
+					borderRadius="10px"
+					fontWeight={600}
 					onClick={() => {
 						setSearch({
 							...search,

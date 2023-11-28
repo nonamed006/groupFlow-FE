@@ -155,7 +155,8 @@ const GnbInputGrid = ({
         w="100%"
         px="22px"
         pb="20px"
-        mb="10px"
+        mb="20px"
+        borderBottom={"1px"} color={'lightgray'}
       >
         <Text
           color={textColor}
@@ -170,22 +171,40 @@ const GnbInputGrid = ({
             {
               isEditing ? 
                 <>
-                  <Button variant="action" onClick={menuValidation}>저장</Button>
-                  <Button onClick={() => isEditingReset()}>취소</Button>
+                  <Button
+                    variant="brand"
+                    borderRadius={"10px"}
+                    fontWeight={"600"}
+                    m={1}
+                    onClick={menuValidation}
+                  >저장</Button>
+                  <Button
+                    variant="action"
+                    borderRadius={"10px"}
+                    fontWeight={"600"}
+                    m={1}
+                    onClick={() => isEditingReset()}
+                  >취소</Button>
                 </>
               :
-              <Button variant="action" onClick={() => {
-                if(menuInfo.menuCd) {
-                  setIsEditing(true)
-                } else {
-                  setAlertInfo({
-                    isOpen: true,
-                    status: 'warning',
-                    title: '수정할 메뉴를 선택해주세요.',
-                    width: 'fit-content',
-                  });
-                }
-              }}>수정</Button>
+              <Button
+                variant="brand"
+                borderRadius={"10px"}
+                fontWeight={"600"}
+                m={1}
+                onClick={() => {
+                  if(menuInfo.menuCd) {
+                    setIsEditing(true)
+                  } else {
+                    setAlertInfo({
+                      isOpen: true,
+                      status: 'warning',
+                      title: '수정할 메뉴를 선택해주세요.',
+                      width: 'fit-content',
+                    });
+                  }
+                }}
+              >수정</Button>
             }
         </Flex>
       </Flex>
@@ -244,7 +263,7 @@ const GnbInputGrid = ({
         </GridItem>
 
         <GridItem colSpan={4}>{/* colSpan={1} rowSpan={5}*/}
-            <FormControl display={"flex"} w={"100%"}>
+            <FormControl display={"flex"} w={"100%"} isRequired={true}>
               <FormLabel color={textColor} fontSize="md" fontWeight="600" w={"50%"} lineHeight={"40px"}>
                 아이콘
               </FormLabel>
