@@ -103,33 +103,27 @@ const EmpCard = (props) => {
                 }}
               >
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                  <Flex align="center">
+                  <Flex justifyContent={"center"} lineHeight={"9"}>
                     <Avatar src="" w="30px" h="30px" me="8px" />
-                    <Text color={textColor} fontSize="sm" fontWeight="500">
+                    <Text color={textColor} fontSize="sm" fontWeight="500" >
                       {column.empNm}
                     </Text>
                   </Flex>
                 </Td>
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                  <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.loginId}
                     </Text>
-                  </Flex>
                 </Td>
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                  <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="500">
                       {minTimeDate(column.joinDt)}
                     </Text>
-                  </Flex>
                 </Td>
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                  <Flex align="center">
                     <Text color={textColor} fontSize="sm" fontWeight="500" >
                       {column.workTypeCd === "EMC0001" ? "재직" : "퇴사" }
                     </Text>
-                  </Flex>
                 </Td>
               </Tr>
             ))}

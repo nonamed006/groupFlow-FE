@@ -30,7 +30,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: 250,
+      width: 300,
       header: { text: "메뉴명" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
@@ -44,7 +44,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     {
       fieldName: "useYn",
       name: "useYn",
-      width: 120,
+      width: 200,
       header: { text: "사용여부" },
     },
   ];
