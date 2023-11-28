@@ -156,7 +156,7 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, setIsLoading, setAlertInfo }) =>
                 code={dpCd ? dpCd : coCd}
             />
             {/* 목록 */}
-            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'500px'}>
+            <Box w={'100%'} display={'inline-block'} overflowX={"auto"} overflowY={"auto"} h={'550px'}>
                 {
                     roleGrpList.length > 0 ?
                         <GroupCardList
