@@ -103,14 +103,14 @@ const EmpCard = (props) => {
                 }}
               >
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                  <Flex justifyContent={"center"} lineHeight={"9"}>
+                  <Flex lineHeight={"9"}>
                     <Avatar src="" w="30px" h="30px" me="8px" />
                     <Text color={textColor} fontSize="sm" fontWeight="500" >
                       {column.empNm}
                     </Text>
                   </Flex>
                 </Td>
-                <Td fontWeight="500" fontSize={"sm"} textAlign="center">
+                <Td fontWeight="500" fontSize={"sm"} textAlign="center" >
                     <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.loginId}
                     </Text>
