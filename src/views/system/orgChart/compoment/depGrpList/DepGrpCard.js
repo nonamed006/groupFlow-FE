@@ -39,8 +39,8 @@ const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
           <Image
              src={depGrp.empDto.fileCd?`${PORT}/menu/icon-${depGrp.empDto.fileCd}`:defaultProfile}
             alt='프로필 사진'
-            boxSize={depGrp.empDto.fileCd?'90px':'40px'}
-            objectFit='cover'
+            boxSize={'90px'}
+            objectFit='fill'
             rounded='md' />
         </Box>
         {/* 정보 */}

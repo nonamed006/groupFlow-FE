@@ -66,7 +66,19 @@ const DepInfo = ({
       });
     } else {
       setTest(true);
-      setDepDto([]);
+      setDepDto({
+        dpNm: "",
+        addr: "",
+        upperCd: "",
+        upperName: "",
+        sort: "",
+        stnd: "",
+        recYN: true,
+        typeCd: "",
+        useYN: true,
+        dpAbb: "",
+        reqNm: "",
+      });
       setTabStatus(1);
       setEditState("read");
       setAlertInfo({
@@ -90,7 +102,21 @@ const DepInfo = ({
       });
     } else {
       setTest(true);
-      setDepDto([]);
+      setDepDto([
+        {
+          dpNm: "",
+          addr: "",
+          upperCd: "",
+          upperName: "",
+          sort: "",
+          stnd: "",
+          recYN: true,
+          typeCd: "",
+          useYN: true,
+          dpAbb: "",
+          reqNm: "",
+        },
+      ]);
       setTabStatus(1);
       setEditState("read");
       setAlertInfo({
@@ -134,7 +160,19 @@ const DepInfo = ({
         width: "fit-content",
       });
     } else {
-      setDepDto([]);
+      setDepDto({
+        dpNm: "",
+        addr: "",
+        upperCd: "",
+        upperName: "",
+        sort: "",
+        stnd: "",
+        recYN: true,
+        typeCd: "",
+        useYN: true,
+        dpAbb: "",
+        reqNm: "",
+      });
       setTest(true);
       setAlertInfo({
         isOpen: true,
