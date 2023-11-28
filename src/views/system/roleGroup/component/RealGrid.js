@@ -159,7 +159,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     if (parent > -1) checkSiblingNode(grid, parent, checked);
   }
 
-  return <Box ref={realgridElement} ml={type === "modify" ? 0 : 2} w="100%" h="600px" />
+  return <Box ref={realgridElement} ml={type === "modify" ? 0 : 2} w="100%" h={"550px"} />
 };
 
 export default RealGrid;
