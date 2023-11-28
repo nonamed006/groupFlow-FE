@@ -19,7 +19,8 @@ const GnbInputGrid = ({
   setIsEditing,
   isEditingReset,
   isSave,
-  setIsSave
+  setIsSave,
+  setIsLoading
 }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [ onDrag, setOnDrag ] = useState(false); // 파일 드래그드롭 관련
@@ -86,6 +87,7 @@ const GnbInputGrid = ({
       return false;
     }
 
+    setIsLoading(true);
     menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyGnb(menuInputData);
 
@@ -106,6 +108,7 @@ const GnbInputGrid = ({
         width: 'fit-content',
       });
     }
+    setIsLoading(false);
   }
 
   // 아이콘 목록 조회
@@ -117,6 +120,7 @@ const GnbInputGrid = ({
 
   // 아이콘(파일) 업로드
   const registIcon = async (files) => {
+    setIsLoading(true);
     const responseJson = await api.menu.registIcon(files);
 
     if(responseJson.status === 200) {
@@ -135,6 +139,7 @@ const GnbInputGrid = ({
         width: 'fit-content',
       });
     }
+    setIsLoading(false);
   }
 
   useEffect(()=> {

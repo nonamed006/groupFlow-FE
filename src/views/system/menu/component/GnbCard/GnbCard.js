@@ -14,12 +14,14 @@ const GnbCard = ({
   setSelectGnbMenuCd,
   search,
   setAlertInfo,
-  isEditingReset
+  isEditingReset,
+  setIsLoading
 }) => {
   const [ list, setList ] = useState([]); //조회한 메뉴 목록
 
   /* 메뉴 목록 조회 */
   const gnbMenuList = async () => {
+    setIsLoading(true);
     const responseJson = await api.menu.getGnbMenuList(search);
 
     if(responseJson.result.toUpperCase() === 'SUCCESS') {
@@ -29,6 +31,7 @@ const GnbCard = ({
       setList([]);
       setGnbMenuList([]);
     }
+    setIsLoading(false);
   }
 
   /* 선택한 메뉴 정보 조회 */

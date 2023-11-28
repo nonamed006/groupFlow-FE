@@ -35,6 +35,7 @@ const LnbInputGrid = ({
   isEditingReset,
   isSave,
   setIsSave,
+  setIsLoading
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -111,6 +112,7 @@ const LnbInputGrid = ({
       return false;
     }
 
+    setIsLoading(true);
     menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyLnb(menuInputData);
 
@@ -131,6 +133,7 @@ const LnbInputGrid = ({
         width: "fit-content",
       });
     }
+    setIsLoading(false);
   };
 
   const getCategory = async () => {
