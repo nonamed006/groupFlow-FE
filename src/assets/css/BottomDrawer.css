@@ -1,7 +1,8 @@
 .drawerBody{
+    margin: 0px;
     position: fixed;
     bottom: 0px;
-    right: 16px;
+    right: 0px;
     /* https://make.wordpress.org/core/files/2021/02/wordpress-admin-color-palette-WP57.png */
     background: #043959;
     width: 100%;

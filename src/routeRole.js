@@ -13,7 +13,6 @@ const RouteRole = ({component: Component, ...rest}) => {
     const loginEmpInfo = useSelector((state) => state.solution.empData);
 
     const CheckRole = async (loginEmpInfo) => {
-        console.log('routeRole----------')
         const pathArray = rest.path.split('/').filter(path => path !== '');
         const pathNow = pathArray.pop();
 

@@ -43,7 +43,6 @@ export default function Dashboard(props) {
   const dpGrpCd = getCookie("Emp_Dp_Type");
 
   const getRoleRoutes = async () => {
-    console.log('MU000000----------')
     setIsLoading(true);
     const route = await RoleRoutes();
     setRoutes(route);
