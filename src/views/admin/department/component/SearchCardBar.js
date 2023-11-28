@@ -57,10 +57,11 @@ const SearchCardBar = ({
         </GridItem>
         <GridItem colStart={14} colEnd={14}>
           <Button
+            float={"left"}
+            w={'80px'}
             variant="brand"
-            borderRadius={"10px"}
-            fontWeight={"600"}
-            m={1}
+            borderRadius="10px"
+            fontWeight={600}
             onClick={() => {
               handleSearchBtn();
               setDpCd(0);
