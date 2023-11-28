@@ -6,7 +6,7 @@ import { UseMouseOver } from "hook/UseMouseOver";
 import React, { useState } from "react";
 
 import { PORT } from 'set';
-import defaultProfile  from "assets/img/profile/employee.png";
+import defaultProfile  from "assets/img/profile/solutionapslfintek2352.png";
 
 const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");

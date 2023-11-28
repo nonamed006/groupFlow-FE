@@ -168,14 +168,13 @@ const Employee = () => {
 
   //사원, 조직정보 등록 유효성 검사
   const handleInsertCheck = () => {
-    if (imgFile != null) {
       //사원 정보 유효성
       empSchema
         .validate(empDetail)
         .then(() => {
           // 유효성 검사 통과한 데이터 처리
           //onSaveEmpDetail();
-
+          
           //조직정보 유효성
           depGrpSchema.validate(empDept[0])
           .then(() => {
@@ -204,16 +203,6 @@ const Employee = () => {
             width: "fit-content",
           });
         });
-    } else {
-      // 유효성 검사 실패한 경우 에러 메세지
-      setAlertInfo({
-        isOpen: true,
-        status: "warning",
-        title: "기본 정보 입력값을 확인해주세요.",
-        detail: "사진을 등록해주세요.",
-        width: "fit-content",
-      });
-    }
   };
 
   //사원, 조직 수정 유효성 검사
@@ -259,8 +248,10 @@ const Employee = () => {
   //사원 기본정보 저장
   const onSaveEmpDetail = () => {
     const fd = new FormData();
-    Object.values(imgFile).forEach((file) => fd.append("file", file));
-
+    if(imgFile != null){
+      Object.values(imgFile).forEach((file) => fd.append("file", file));
+    }
+    
     fd.append("empNm", empDetail.empNm);
     fd.append("mailId", empDetail.mailId);
     fd.append("loginId", empDetail.loginId);
