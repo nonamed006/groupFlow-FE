@@ -2,21 +2,33 @@ import { useEffect, useRef, useState } from "react";
 import { LocalTreeDataProvider, TreeView } from "realgrid";
 //import "assets/css/realgrid-style.css"; // RealGrid CSS 추가
 
+const setUseName = (items) => {
+  items.forEach((item) => {
+    item.useYn = item.useYn === 1 ? "사용" : "미사용";
+
+    if (item.rows != null) {
+      setUseName(item.rows);
+    }
+  });
+};
+
 const RealGrid = ({ org, getValue }) => {
+  setUseName(org);
   const realgridElement = useRef(null);
   var fields = [
     { fieldName: "menuPath", dataType: "text" },
     { fieldName: "menuNm", dataType: "text" },
     { fieldName: "menuCd", dataType: "text" },
     { fieldName: "depth", dataType: "text" },
+    { fieldName: "useYn", dataType: "text" },
   ];
 
   var columns = [
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: 380,
-      header: { text: "menuNm" },
+      width: 280,
+      header: { text: "메뉴명" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
     {
@@ -25,6 +37,12 @@ const RealGrid = ({ org, getValue }) => {
       header: { text: "menuCd" },
     },
     { fieldName: "depth", name: "depth", header: { text: "depth" } },
+    {
+      fieldName: "useYn",
+      name: "useYn",
+      width: 100,
+      header: { text: "사용여부" },
+    },
   ];
 
   var treeProvider, treeView;
@@ -57,6 +75,7 @@ const RealGrid = ({ org, getValue }) => {
     treeView.columnByName("depth").visible = false;
     treeView.columnByName("menuCd").visible = false;
     treeView.columnByName("menuNm").editable = false;
+    treeView.columnByName("useYn").editable = false;
     //treeView.columnByName("menuCd").editable = false;
 
     treeView.treeOptions.iconImagesRoot = "/img/";
@@ -83,6 +102,11 @@ const RealGrid = ({ org, getValue }) => {
     // depth에 따른 색상 추가 - 안은비...
     treeView.setRowStyleCallback(function (grid, item, fixed) {
       var depth = grid.getValue(item.index, "depth");
+      var useYn = grid.getValue(item.index, "useYn");
+      if (useYn === "미사용") {
+        return "not-useMenu-column";
+      }
+      
       if (depth === "1") {
         return "gnb-column";
       } else if (depth === "2") {

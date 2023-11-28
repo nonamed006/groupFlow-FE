@@ -12,7 +12,8 @@ const InfoBox = ({
     setIsEditing,
     isEditingReset,
     setIsSave,
-    isSave
+    isSave,
+    setIsLoading
 }) => {
 
     return (
@@ -37,6 +38,7 @@ const InfoBox = ({
 						isEditingReset={isEditingReset}
                         isSave={isSave}
                         setIsSave={setIsSave}
+                        setIsLoading={setIsLoading}
                     />
                     :
                     <GnbInputGrid
@@ -49,6 +51,7 @@ const InfoBox = ({
 						isEditingReset={isEditingReset}
                         isSave={isSave}
                         setIsSave={setIsSave}
+                        setIsLoading={setIsLoading}
                     />
                 }
             </Box>
