@@ -9,9 +9,9 @@ const ChangeTable = ({ chHistory, handelChangeHistoryBtn }) => {
 
   const headerGroups = ["번호", "변경일시", "변경구분", "회사", "변경자(ID)"];
   return (
-    <div>
+    <Box >
       <Text fontSize={'18px'} mt={'-2'} fontWeight={600} color={textColor} mb={3}>전체 데이터 : {chHistory.total}건</Text>
-      <Box minHeight={380}>
+      <Box minHeight={380} >
         <Table variant="simple" w={'100%'} colorScheme={'facebook'}>
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups} />
@@ -19,13 +19,13 @@ const ChangeTable = ({ chHistory, handelChangeHistoryBtn }) => {
           <ChangeTableTbody chHistory={chHistory} />
         </Table>
       </Box>
-      <Box>
+   
         <Paging
           chHistory={chHistory}
           handelChangeHistoryBtn={handelChangeHistoryBtn}
-        ></Paging>
-      </Box>
-    </div>
+        />
+      
+    </Box>
   );
 };
 
