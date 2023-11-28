@@ -39,7 +39,7 @@ import OrgChartModal from "views/system/orgChart/OrgChartModal";
 import { MdInfoOutline } from "react-icons/md";
 import { setCookie } from "common/common";
 import { deleteCookie } from "common/common";
-import EmpIcon from "assets/img/profile/employee.png";
+import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 
 export default function HeaderLinks(props) {
 	const { secondary } = props;
