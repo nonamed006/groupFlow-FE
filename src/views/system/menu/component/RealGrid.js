@@ -130,7 +130,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "100%" }}></div>
+    <div ref={realgridElement} style={{ height: "600px", width: "100%" }}></div>
   );
 };
 

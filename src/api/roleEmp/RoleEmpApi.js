@@ -68,7 +68,6 @@ const roleEmp = {
    * @returns
    */
   getRoleListApi: (dpGrpCd, keyword) => {
-    console.log(keyword);
     keyword = keyword === undefined || keyword === 'undefined' ? '' : keyword;
 
     const promise = getPromise({

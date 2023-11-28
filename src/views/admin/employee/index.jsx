@@ -120,7 +120,9 @@ const Employee = () => {
       gender: "M",
       empPw: "",
     });
+    setImgFile(null);
   }
+
 
   const resetEmpDept = () => {
     setEmpDept([
