@@ -96,6 +96,16 @@ const DepGrpBox = ({ setRgCd, coCd, rgCd, dpCd, setIsLoading, setAlertInfo }) =>
 
     // 체크박스 핸들러
     const checkHandler = (e, value) => {
+        if ( value.upper === 1) {
+            setAlertInfo({
+                isOpen: true,
+                status: 'warning',
+                title: '권한을 수정할 수 없습니다.',
+                detail: `상위부서에 적용된 권한입니다.\n상위부서에서 권한을 해제해주세요.`,
+                width: 'fit-content'
+            });
+            return;
+        }
         if ( value.upper !== 1) {
             setIsChecked(!isChecked);
             checkedItemHandler(value.value, e.target.checked);  

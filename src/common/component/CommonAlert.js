@@ -36,7 +36,7 @@ const CommonAlert = ({ alertInfo, setAlertInfo }) => {
         <Box w={"fit-content"} minW={"250px"}>
           <AlertTitle>{title}</AlertTitle>
           {detail !== undefined && detail !== "undefined" && (
-            <AlertDescription>{detail}</AlertDescription>
+            <AlertDescription  whiteSpace={'pre-wrap'} >{detail}</AlertDescription>
           )}
         </Box>
         <CloseButton
