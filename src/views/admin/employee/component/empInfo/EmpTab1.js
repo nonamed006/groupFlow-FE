@@ -23,9 +23,13 @@ import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
 import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 const EmpTab1 = (props) => {
+  console.log("asdsad", props);
   const useYN = new Boolean(
-    props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
+    props.empDetail?.useYn === undefined ? true : props.empDetail?.useYn
   );
+
+  console.log("usese", props.empDetail?.useYn);
+  console.log("useyn",useYN);
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
@@ -238,7 +242,7 @@ const EmpTab1 = (props) => {
             <FormInput
               type={"radio"}
               title={"성별"}
-              name="gender"
+              name={"gender"}
               defaultValue={props.empDetail.gender ?? "M"}
               pk={props.empDetail?.empCd}
               onChange={props.handleRadioChange}
