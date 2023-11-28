@@ -14,15 +14,16 @@ import {
   Stack,
   Text,
   color,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"; 
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
 import React, { useState } from "react";
 import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
-import EmpIcon from "assets/img/profile/employee.png";
+import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 const EmpTab1 = (props) => {
+  console.log(props);
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
   );
@@ -64,7 +65,6 @@ const EmpTab1 = (props) => {
           <GridItem colSpan={1} rowSpan={1}>
             <Text fontSize="md" fontWeight="600">
               사진
-              <span style={{ color: "#e03131", margin: "5px" }}>*</span>
             </Text>
           </GridItem>
           <GridItem colStart={2} colEnd={4} rowSpan={4}>
@@ -80,11 +80,20 @@ const EmpTab1 = (props) => {
                     alt="사원사진"
                     border="1px solid lightgray"
                   />
-                ) : (
+                ) : props.empDetail?.modiNm !== null ? (
                   <Image
                     w="150px"
                     h="200px"
                     fallbackSrc={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                    src={props.imgBase64}
+                    alt="사원사진"
+                    border="1px solid lightgray"
+                  />
+                ) : (
+                  <Image
+                    w="150px"
+                    h="200px"
+                    fallbackSrc={EmpIcon}
                     src={props.imgBase64}
                     alt="사원사진"
                     border="1px solid lightgray"
@@ -112,7 +121,7 @@ const EmpTab1 = (props) => {
                   id="fileUpBtn"
                   multiple
                   display="none"
-                  onChange={handleChangeFile} 
+                  onChange={handleChangeFile}
                 ></Input>
               </Stack>
             </Box>
@@ -357,7 +366,7 @@ const EmpTab1 = (props) => {
             title={"회사주소"}
             data={props.empDetail}
             setData={props.setEmpDetail}
-            editState={props.editState != "read" && "update" && "deptInsert"}
+            editState={props.editState === "insert"  && "update" || props.editState === "update"  && "update"}
             isRequired={false}
           />
         </Grid>

@@ -179,7 +179,8 @@ const LnbInputGrid = ({
         w="100%"
         px="22px"
         pb="20px"
-        mb="10px"
+        mb="20px"
+        borderBottom={"1px"} color={'lightgray'}
       >
         <Text
           color={textColor}
@@ -193,14 +194,29 @@ const LnbInputGrid = ({
         <Flex>
           {isEditing ? (
             <>
-              <Button variant="action" onClick={menuValidation}>
+              <Button
+                variant="brand"
+                borderRadius={"10px"}
+                fontWeight={"600"}
+                m={1}
+                onClick={menuValidation}
+              >
                 저장
               </Button>
-              <Button onClick={() => isEditingReset()}>취소</Button>
+              <Button
+                onClick={() => isEditingReset()}
+                variant="action"
+                borderRadius={"10px"}
+                fontWeight={"600"}
+                m={1}
+              >취소</Button>
             </>
           ) : (
             <Button
-              variant="action"
+              variant="brand"
+              borderRadius={"10px"}
+              fontWeight={"600"}
+              m={1}
               onClick={() => {
                 if (menuInfo.menuCd) {
                   setIsEditing(true);

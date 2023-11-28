@@ -37,7 +37,7 @@ const ListCardTableTr = ({ type, data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"70px"}
+          w={"80px"}
           overflow={"hidden"}
         >
           {data.coNm}
@@ -49,7 +49,7 @@ const ListCardTableTr = ({ type, data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"70px"}
+          w={"50px"}
           overflow={"hidden"}
         >
           {data.ceoNm}
@@ -61,7 +61,7 @@ const ListCardTableTr = ({ type, data, index, setCoCd, coCd }) => {
           color={data.useYn ? textColor : unusedTextColor}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={type?"40px":"70px"}
+          w={type?"35px":"60px"}
           overflow={"hidden"}
         >
           {data.ccNm}
@@ -75,7 +75,7 @@ const ListCardTableTr = ({ type, data, index, setCoCd, coCd }) => {
           fontWeight="500"
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          w={"70px"}
+          w={"50px"}
           overflow={"hidden"}
         >
           {data.useYn ? "사용" : "미사용"}

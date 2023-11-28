@@ -6,7 +6,7 @@ import depIcon from "assets/img/gridIcon/department.png";
 
 const setUseName = (items) => {
   items.forEach((item) => {
-    item.useYn = item.useYn === 1 ? '사용' : '미사용';
+    item.useYn = item.useYn === 1 ? "사용" : "미사용";
 
     if (item.rows != null) {
       setUseName(item.rows);
@@ -30,7 +30,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     {
       fieldName: "menuNm",
       name: "menuNm",
-      width: 250,
+      width: 300,
       header: { text: "메뉴명" },
     },
     { fieldName: "menuPath", name: "menuPath", header: { text: "menuPath" } },
@@ -44,7 +44,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
     {
       fieldName: "useYn",
       name: "useYn",
-      width: 120,
+      width: 200,
       header: { text: "사용여부" },
     },
   ];
@@ -130,7 +130,7 @@ const RealGrid = ({ org, setMenuDetail }) => {
   }, [org]);
 
   return (
-    <div ref={realgridElement} style={{ height: "500px", width: "100%" }}></div>
+    <div ref={realgridElement} style={{ height: "600px", width: "100%" }}></div>
   );
 };
 

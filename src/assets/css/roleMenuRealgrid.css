@@ -256,6 +256,7 @@
   background: #e4e7eb;
   color: #656d7b;
 }
+
 .rg-head .rg-table tr td {
   border-top: none;
   border-right: 1px solid #bcc0c8;
@@ -340,6 +341,7 @@
 }
 
 .rg-foot {
+  visibility: hidden;
   text-align: center;
   background: #f6f6f8;
   background: -webkit-linear-gradient(top, #f6f6f8, #f6f6f8);
@@ -351,7 +353,6 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFF6F6F8', EndColorStr='#FFF6F6F8')";
 }
 .rg-foot .rg-table tr td {
-  
   border-bottom: none;
   border-right: 1px solid #bcc0c8;
   border-top: 1px solid #bcc0c8;
@@ -360,7 +361,6 @@
 
 .rg-foot-cell {
   visibility: hidden;
-  text-align: center;
 }
 
 .rg-tree-expanded {

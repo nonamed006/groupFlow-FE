@@ -168,11 +168,7 @@ export const empSchema = object().shape({
   cdt: date().nullable(),
   mdt: date().nullable(),
   postNum: string().when("addrDetail", {
-    is: (addrDetail) =>
-      !(
-        addrDetail === "" ||
-        addrDetail === undefined ||
-        addrDetail === "undefined"
+    is:!("" ||undefined ||"undefined"
       ),
     then: (schema) => schema.required("우편번호를 선택해주세요."),
     otherwise: (schema) => schema.nullable(),
@@ -218,13 +214,9 @@ export const empUpdateSchema = object().shape({
   cdt: date().nullable(),
   mdt: date().nullable(),
   postNum: string().when("addrDetail", {
-    is: (addrDetail) =>
-      !(
-        addrDetail === "" ||
-        addrDetail === undefined ||
-        addrDetail === "undefined"
+    is: !( "" ||undefined ||"undefined"
       ),
-    then: (schema) => schema.required("우편번호를 선택해주세요."),
+    then: (schema) => schema.required("우편번호를 선택해주세요11."),
     otherwise: (schema) => schema.nullable(),
   }),
   addrDetail: string()
@@ -234,7 +226,6 @@ export const empUpdateSchema = object().shape({
 });
 
 export const depGrpSchema = object().shape({
-  dpGrpCd: string().nullable(),
   coCd: string().required("회사를 선택해주세요."),
   dpCd: string().required("부서를 선택해주세요."),
   dpGrpNum: string()

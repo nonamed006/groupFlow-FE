@@ -39,6 +39,7 @@ import OrgChartModal from "views/system/orgChart/OrgChartModal";
 import { MdInfoOutline } from "react-icons/md";
 import { setCookie } from "common/common";
 import { deleteCookie } from "common/common";
+import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 
 export default function HeaderLinks(props) {
 	const { secondary } = props;
@@ -192,12 +193,17 @@ export default function HeaderLinks(props) {
 					<Flex align="center" justify="center">
 						<Avatar
 							_hover={{ cursor: "pointer" }}
-							color="white"
-							bg="#11047A"
+							src={
+								loginEmpInfo.modiNm ? 
+									`${PORT}/emp/display/${loginEmpInfo.modiNm}`
+								:
+								EmpIcon
+							}
+							alt={loginEmpInfo.empNm ? loginEmpInfo.empNm : 'defaultIcon'}
+							bg="white"
 							size="sm"
 							w="40px"
 							h="40px"
-							fallbackSrc={`${PORT}/emp/display/${loginEmpInfo?.modiNm}`}
 						/>
 						<Flex direction={"column"} p="0px 10px">
 							<Text

@@ -6,6 +6,7 @@ import {
   import React from "react";
   const GnbCardBar = ({title, count }) => {
     const textColor = useColorModeValue("secondaryGray.900", "white");
+    const textNumColor = useColorModeValue("brand.500", "white");
   
     return (
           <Flex
@@ -29,7 +30,7 @@ import {
               &nbsp;
               {/* 검색 항목 수  */}
               <Text
-                color="#00AAFF"
+                color={textNumColor}
                 fontSize="22px"
                 fontWeight="700"
                 lineHeight="100%"

@@ -3,7 +3,7 @@ import {
 } from "@chakra-ui/react"
 import React, { useEffect } from "react";
 import { PORT } from 'set';
-import defaultProfile from "assets/img/profile/employee.png";
+import defaultProfile from "assets/img/profile/solutionapslfintek2352.png";
 
 const DepGrpInfo = ({ depGrp }) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
