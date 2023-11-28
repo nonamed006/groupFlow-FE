@@ -23,6 +23,7 @@ import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
 import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 const EmpTab1 = (props) => {
+  console.log(props);
   const useYN = new Boolean(
     props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
   );
@@ -79,11 +80,20 @@ const EmpTab1 = (props) => {
                     alt="사원사진"
                     border="1px solid lightgray"
                   />
-                ) : (
+                ) : props.empDetail?.modiNm !== null ? (
                   <Image
                     w="150px"
                     h="200px"
                     fallbackSrc={`${PORT}/emp/display/${props.empDetail?.modiNm}`}
+                    src={props.imgBase64}
+                    alt="사원사진"
+                    border="1px solid lightgray"
+                  />
+                ) : (
+                  <Image
+                    w="150px"
+                    h="200px"
+                    fallbackSrc={EmpIcon}
                     src={props.imgBase64}
                     alt="사원사진"
                     border="1px solid lightgray"
@@ -111,7 +121,7 @@ const EmpTab1 = (props) => {
                   id="fileUpBtn"
                   multiple
                   display="none"
-                  onChange={handleChangeFile} 
+                  onChange={handleChangeFile}
                 ></Input>
               </Stack>
             </Box>

@@ -6,7 +6,7 @@ import depIcon from "assets/img/gridIcon/department.png";
 
 const setUseName = (items) => {
   items.forEach((item) => {
-    item.useYn = item.useYn === 1 ? '사용' : '미사용';
+    item.useYn = item.useYn === 1 ? "사용" : "미사용";
 
     if (item.rows != null) {
       setUseName(item.rows);
