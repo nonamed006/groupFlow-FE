@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
   color,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"; 
 import AddrBox from "common/addressAPI/AddrBox";
 import { minTimeDate } from "common/common";
 import FormInput from "common/component/FormInput";
@@ -366,7 +366,7 @@ const EmpTab1 = (props) => {
             title={"회사주소"}
             data={props.empDetail}
             setData={props.setEmpDetail}
-            editState={props.editState != "read" && "update" && "deptInsert"}
+            editState={props.editState === "insert"  && "update" || props.editState === "update"  && "update"}
             isRequired={false}
           />
         </Grid>
