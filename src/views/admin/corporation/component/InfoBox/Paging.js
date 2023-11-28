@@ -37,8 +37,8 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
             selectedIndex === i
               ? "navy.50"
               : mouseOverIndex === i
-              ? "navy.50"
-              : "white"
+                ? "navy.50"
+                : "white"
           }
           onMouseOut={onMouseOut}
           onMouseOver={() => {
@@ -56,95 +56,113 @@ const Paging = ({ chHistory, handelChangeHistoryBtn }) => {
     return result;
   };
   return (
-    <div>
+    <Box  >
       {chHistory.list?.length > 0 && (
-        <Flex style={{ marginLeft: "250px" }}>
-          <Center>
-            <Button
-              onClick={() => {
-                test(1);
-                setSelectedIndex(1);
-              }}
-            >
-              {"<<"}
-            </Button>
-          </Center>
-          <Center>
-            <Button
-              onClick={() => {
-                if (chHistory.pageNum % navigatePages === 0) {
-                  test((Math.floor(chHistory.pageNum / navigatePages) - 1) * 5);
-                  setSelectedIndex(navigatePages);
-                  if (chHistory.pageNum <= navigatePages) {
-                    test(1);
-                    setSelectedIndex(1);
-                  }
-                } else {
-                  if (chHistory.pageNum <= navigatePages) {
-                    test(Math.floor(chHistory.pageNum / navigatePages) * 5);
-                    setSelectedIndex(1);
-                  } else {
-                    test(Math.floor(chHistory.pageNum / navigatePages) * 5);
-                    setSelectedIndex(navigatePages);
-                  }
-                }
-              }}
-            >
-              {"<"}
-            </Button>
-          </Center>
-          {rendering()}
-          <Center>
-            <Button
-              onClick={() => {
-                if (chHistory.pageNum % navigatePages === 0) {
-                  test(chHistory.nextPage);
+        <Box  >
+        <Flex w={'100%'} alignItems={"center"} justifyContent={"center"}>
+
+          <Flex>
+            <Center >
+              <Button
+              borderRadius={'5px'}
+              bg={'white'}
+              w={'50%'}
+                onClick={() => {
+                  test(1);
                   setSelectedIndex(1);
-                } else {
-                  if (chHistory.pageNum + navigatePages > chHistory.pages) {
-                    test(chHistory.pages);
-                    if (chHistory.pages % navigatePages === 0) {
-                      setSelectedIndex(navigatePages);
-                    } else {
-                      setSelectedIndex(chHistory.pages % navigatePages);
+                }}
+              >
+                {"<<"}
+              </Button>
+            </Center>
+            <Center>
+              <Button
+              borderRadius={'5px'}
+              bg={'white'}
+              w={'50%'}
+                onClick={() => {
+                  if (chHistory.pageNum % navigatePages === 0) {
+                    test((Math.floor(chHistory.pageNum / navigatePages) - 1) * 5);
+                    setSelectedIndex(navigatePages);
+                    if (chHistory.pageNum <= navigatePages) {
+                      test(1);
+                      setSelectedIndex(1);
                     }
                   } else {
-                    test(
-                      (Math.floor(chHistory.pageNum / navigatePages) + 1) *
+                    if (chHistory.pageNum <= navigatePages) {
+                      test(Math.floor(chHistory.pageNum / navigatePages) * 5);
+                      setSelectedIndex(1);
+                    } else {
+                      test(Math.floor(chHistory.pageNum / navigatePages) * 5);
+                      setSelectedIndex(navigatePages);
+                    }
+                  }
+                }}
+              >
+                {"<"}
+              </Button>
+            </Center>
+            {rendering()}
+            <Center>
+              <Button
+              borderRadius={'5px'}
+              bg={'white'}
+              w={'50%'}
+                onClick={() => {
+                  if (chHistory.pageNum % navigatePages === 0) {
+                    test(chHistory.nextPage);
+                    setSelectedIndex(1);
+                  } else {
+                    if (chHistory.pageNum + navigatePages > chHistory.pages) {
+                      test(chHistory.pages);
+                      if (chHistory.pages % navigatePages === 0) {
+                        setSelectedIndex(navigatePages);
+                      } else {
+                        setSelectedIndex(chHistory.pages % navigatePages);
+                      }
+                    } else {
+                      test(
+                        (Math.floor(chHistory.pageNum / navigatePages) + 1) *
                         navigatePages +
                         1
-                    );
-                    setSelectedIndex(1);
+                      );
+                      setSelectedIndex(1);
+                    }
                   }
-                }
-              }}
-            >
-              {">"}
-            </Button>
-          </Center>
-          <Center>
-            <Button
-              onClick={() => {
-                test(chHistory.pages);
-                if (chHistory.pages % navigatePages === 0) {
-                  setSelectedIndex(navigatePages);
-                } else {
-                  setSelectedIndex(chHistory.pages % navigatePages);
-                }
-              }}
-            >
-              {">>"}
-            </Button>
-          </Center>
-          <Spacer></Spacer>
-          <Center>
+                }}
+              >
+                {">"}
+              </Button>
+            </Center>
+            <Center>
+              <Button
+                borderRadius={'5px'}
+                bg={'white'}
+                w={'50%'}
+                onClick={() => {
+                  test(chHistory.pages);
+                  if (chHistory.pages % navigatePages === 0) {
+                    setSelectedIndex(navigatePages);
+                  } else {
+                    setSelectedIndex(chHistory.pages % navigatePages);
+                  }
+                }}
+              >
+                {">>"}
+              </Button>
+            </Center>
+          </Flex>
+        </Flex>
+        <Box float={"right"} mt={-7}>
+        <Center>
             <Text>
               1-{chHistory.pages}페이지/총{chHistory.total}개
             </Text>
           </Center>
-        </Flex>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
