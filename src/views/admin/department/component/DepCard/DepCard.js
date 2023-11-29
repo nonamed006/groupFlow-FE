@@ -11,7 +11,14 @@ import { useEffect, useState } from "react";
 import RealGrid from "./RealGrid";
 import Loading from "common/Loading";
 
-const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
+const DepCard = ({
+  org,
+  setDpCd,
+  setEditState,
+  setTabStatus,
+  isLoading,
+  dpCd,
+}) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   useEffect(() => {}, []);
@@ -34,7 +41,8 @@ const DepCard = ({ org, setDpCd, setEditState, setTabStatus, isLoading }) => {
           borderRadius={"10px"}
           fontWeight={"600"}
           onClick={() => {
-            setDpCd(undefined);
+            setDpCd(dpCd === undefined ? 0 : dpCd === 0 ? undefined : 0);
+            //setDepDto([]);
             setEditState("update");
             setTabStatus(2);
           }}

@@ -10,7 +10,8 @@ const LnbGrid = ({
   setMenuInfo,
   selectGnbMenuCd,
   search,
-  isSave
+  isSave,
+  setIsLoading
 }) => {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ const LnbGrid = ({
       ...search,
       searchGnbMenuCd: search.searchGnbMenuCd ? search.searchGnbMenuCd : selectGnbMenuCd
     }
+    setIsLoading(true);
     const responseJson = await api.menu.getLnbMenuList(search);
 
     if (responseJson.status === 200) {
@@ -29,6 +31,7 @@ const LnbGrid = ({
     } else {
       setList([]);
     }
+    setIsLoading(false);
   }
 
   /* 선택한 메뉴 정보 조회 */

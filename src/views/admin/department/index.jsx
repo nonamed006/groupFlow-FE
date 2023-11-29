@@ -69,6 +69,7 @@ const Department = () => {
             setEditState={setEditState}
             setTabStatus={setTabStatus}
             isLoading={isLoading}
+            dpCd={dpCd}
           />
         </GridItem>
         <GridItem colSpan={5} rowSpan={5}>
