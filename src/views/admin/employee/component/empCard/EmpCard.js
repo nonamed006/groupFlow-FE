@@ -13,12 +13,10 @@ import {
   Tr,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Loading from "common/Loading";
 import { minTimeDate } from "common/common";
-import BottomDrawer from "common/component/BottomDrawer";
-import { UseDrawerOpen } from "hook/UseDrawerOpen";
 import { UseMouseOver } from "hook/UseMouseOver";
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import ListCardTableHeader from "views/system/roleGroup/component/tableList/TableHeader";
 
 const EmpCard = (props) => {
@@ -32,7 +30,7 @@ const EmpCard = (props) => {
 
   return (
     <>
-      <Box borderRadius="lg" bg="white" h="700px" p="6">
+      <Box borderRadius="lg" bg="white" h="700px" p="6" >
         <Flex
           align={{ sm: "flex-start", lg: "center" }}
           w="100%"
@@ -79,7 +77,8 @@ const EmpCard = (props) => {
             추가
           </Button>
         </Flex>
-        <Table variant="simple" w={"100%"} colorScheme={"facebook"}>
+        <Box overflowY={"auto"} display={'inline-block'} h={'600px'}>
+        <Table variant="simple" w={"100%"} colorScheme={"facebook"} >
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups} />
           <Tbody>
@@ -135,6 +134,12 @@ const EmpCard = (props) => {
             ))}
           </Tbody>
         </Table>
+        {props.isLoading ?
+          <Loading />
+          :
+          <Box ref={props.infiniteScrollRef} h={'1px'} />
+        }
+        </Box>
       </Box>
     </>
   );

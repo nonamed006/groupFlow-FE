@@ -47,7 +47,6 @@ export default function AdminNavbar(props) {
 
         // 최대 5개까지만 저장
         if (history.length < 5) {
-          console.log(history);
           setHistory([newProps, ...history]);
         } else {
           // 5개가 넘으면 가장 오래된 것 삭제

@@ -144,7 +144,6 @@ const LnbInputGrid = ({
   };
 
   const click = () => {
-    // console.log(updateData);
     if(!updateData) {
       setAlertInfo({
         isOpen: true,

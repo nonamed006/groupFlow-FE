@@ -25,9 +25,11 @@ const SearchCardBar = (props) => {
     setCorpNm(response.data);
   };
 
-  useEffect(() => {
-    getCorpNmList();
-  }, []);
+  // 검색 버튼 클릭 시
+  const handleSearchBtn = () => { // 초기화 
+    props.setPageNum(1);
+    props.getEmpList(srhCorp, srhWorkType, srhNm)
+  };
 
   return (
     <div>
@@ -105,7 +107,7 @@ const SearchCardBar = (props) => {
           <GridItem colStart={14} colEnd={14}>
             <Button
               variant="brand" borderRadius="10px" w={'80px'}
-              onClick={() => {props.getEmpList(srhCorp, srhWorkType, srhNm);}}
+              onClick={handleSearchBtn}
             >
               검색
             </Button>
