@@ -85,7 +85,7 @@ const DepGrpCard = ({ depGrp, index, setDepGrp, depGrpInfo }) => {
             fontWeight="300"
             lineHeight="100%"
           >
-            <Text mr={2}>
+            <Text mr={2} whiteSpace={"nowrap"}>
               소속:
             </Text>
             <Text>
