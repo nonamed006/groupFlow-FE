@@ -46,7 +46,7 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
     setIsLoading(true);
     let corpDepCd = (corpDep !== undefined && corpDep !== 'undefined') ? corpDep.code : undefined
     let res = await api.depGrp.getDepGepList(corpDepCd, search, keyword, pageNum);
-    
+
     if (res.status === 200 && res.pageInfo) { // 성공일 때
       let { list, total, isLastPage, hasNextPage } = res.pageInfo;
       setDepGrpList(pageNum === 1 ? list : [...depGrpList, ...list]);
@@ -64,34 +64,32 @@ const DepGrpCardList = ({ changeYn, corpDep, setDepGrp, keyword, search, setChan
 
   return (
     <Box>
-
       <CardListTitle corpDepNm={corpDep && corpDep.name} totalCnt={totalCount ? totalCount : 0} />
-      {
-        isLoading ?
-          <Loading />
-          :
-          <Box overflowY={totalCount > 0 ? "auto" : "hidden"} overflowX={'hidden'} boxShadow='md' bg='white' borderRadius='5px' h={'590px'} p={2}>
-            <Box minH={'600px'}>
-              {depGrpList.length > 0 ?
-                depGrpList.map((depGrpData) => {
-                  return <DepGrpCard depGrpInfo={depGrp} depGrp={depGrpData} key={depGrpData.dpGrpCd} setDepGrp={setDepGrp} />
-                })
-                :
-                <Text
-                  pt={200}
-                  align={'center'}
-                  fontWeight={600}
-                  color={'lightgray'}
-                  fontSize={'18px'}
-                >
-                  검색된 데이터가 없습니다.
-                </Text>
-              }
-            </Box>
+      <Box overflowY={totalCount > 0 ? "auto" : "hidden"} overflowX={'hidden'} boxShadow='md' bg='white' borderRadius='5px' h={'590px'} p={2}>
+        <Box minH={'600px'}>
+          {depGrpList.length > 0 ?
+            depGrpList.map((depGrpData) => {
+              return <DepGrpCard depGrpInfo={depGrp} depGrp={depGrpData} key={depGrpData.dpGrpCd} setDepGrp={setDepGrp} />
+            })
+            :
+            <Text
+              pt={200}
+              align={'center'}
+              fontWeight={600}
+              color={'lightgray'}
+              fontSize={'18px'}
+            >
+              검색된 데이터가 없습니다.
+            </Text>
+          }
+        </Box>
+        {
+          isLoading ?
+            <Loading />
+            :
             <Box ref={infiniteScrollRef} h={'1px'} bg={'white'} />
-          </Box>
-      }
-
+        }
+      </Box>
     </Box>
   );
 };
