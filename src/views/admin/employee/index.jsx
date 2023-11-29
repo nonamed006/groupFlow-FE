@@ -35,6 +35,11 @@ const Employee = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [infiniteScrollRef, inView] = useInView();
 
+  //검색어
+  const [srhCorp, setSrhCorp] = useState("");
+  const [srhWorkType, setSrhWorkType] = useState("");
+  const [srhNm, setSrhNm] = useState("");
+
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
   });
@@ -75,8 +80,7 @@ const Employee = () => {
   ]);
 
   //사원 목록 조회
-  const getEmpList = async(srhCorp, srhWorkType, srhNm) => {
-    if(!isLastPage){
+  const getEmpList = async() => {
     await setIsLoading(true);
     const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm, pageNum);
     if(res.status === 200 && res.pageInfo){
@@ -97,7 +101,6 @@ const Employee = () => {
       }
     }
     await setIsLoading(false);
-  }
     return;
   };
 
@@ -181,6 +184,9 @@ const Employee = () => {
 
   // input 값 초기화
   const resetInput = () => {
+    setSrhCorp("");
+    setSrhWorkType("");
+    setSrhNm("");
     setImgBase64([]);
     resetEmpDetail();
     resetEmpDept();
@@ -437,13 +443,20 @@ const Employee = () => {
     });
   };
 
+   // 검색 버튼 클릭 시
+   const handleSearchBtn = () => { // 초기화 
+    setPageNum(1);
+    setIsLastPage(true)
+    setIsReload(!isReload);
+  };
+
   useEffect(() => {
-    getEmpList("", "", "");
+    isReload !== undefined && getEmpList()
   }, [isReload]);
 
   useEffect(async () => {
     if (inView && !isLastPage) {
-      getEmpList("","","");
+      getEmpList();
     }
   }, [inView]);
 
@@ -457,7 +470,12 @@ const Employee = () => {
           gap={5}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar setSelectedIndex={setSelectedIndex} setPageNum={setPageNum} getEmpList={getEmpList}/> 
+            <SearchCardBar setSelectedIndex={setSelectedIndex} 
+            handleSearchBtn={handleSearchBtn}
+            setSrhCorp={setSrhCorp}
+            setSrhWorkType={setSrhWorkType}
+            setSrhNm={setSrhNm}
+            /> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard

@@ -76,8 +76,8 @@ const FormInput = ({
           {values &&
           values.map((value) => {
             return (
-              <option name={name} value={value.coCd}>
-                {value.coNm}
+              <option name={name} value={value.value}>
+                {value.name}
               </option>
             );
           })}

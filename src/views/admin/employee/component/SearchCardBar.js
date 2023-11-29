@@ -16,19 +16,10 @@ const SearchCardBar = (props) => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   const [corpNm, setCorpNm] = useState([]);
-  const [srhCorp, setSrhCorp] = useState("");
-  const [srhWorkType, setSrhWorkType] = useState("");
-  const [srhNm, setSrhNm] = useState("");
 
   const getCorpNmList = async () => {
     const response = await api.dep.getCorpNmListApi();
     setCorpNm(response.data);
-  };
-
-  // 검색 버튼 클릭 시
-  const handleSearchBtn = () => { // 초기화 
-    props.setPageNum(1);
-    props.getEmpList(srhCorp, srhWorkType, srhNm)
   };
 
   return (
@@ -51,7 +42,7 @@ const SearchCardBar = (props) => {
             <Select
               placeholder="전체"
               onChange={(e) => {
-                setSrhCorp(e.target.value);
+                props.setSrhCorp(e.target.value);
               }}
             >
               {corpNm.map((item, index) => (
@@ -76,7 +67,7 @@ const SearchCardBar = (props) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" handleChange={(e)=>{setSrhWorkType(e.target.value)}}/>
+            <SelectCommon ccNum="EM" ccType="C" defaultMsg="전체" handleChange={(e)=>{props.setSrhWorkType(e.target.value)}}/>
           </GridItem>
           <GridItem colStart={9} colEnd={9}>
             <div
@@ -101,13 +92,13 @@ const SearchCardBar = (props) => {
               placeholder="검색어를 입력하세요."
               size="md"
               borderRadius="5px"
-              onChange={(e) => setSrhNm(e.target.value)}
+              onChange={(e) => props.setSrhNm(e.target.value)}
             />
           </GridItem>
           <GridItem colStart={14} colEnd={14}>
             <Button
               variant="brand" borderRadius="10px" w={'80px'}
-              onClick={handleSearchBtn}
+              onClick={props.handleSearchBtn}
             >
               검색
             </Button>
