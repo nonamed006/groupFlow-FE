@@ -8,7 +8,7 @@ const emp = {
    * @param {string} srhNm 이름/아이디 검색어
    * @returns
    */
-  getEmpList: (srhCorp, srhWorkType, srhNm) => {
+  getEmpList: (srhCorp, srhWorkType, srhNm, pageNum) => { 
     const params = new URLSearchParams();
     // 검색
     if (srhCorp !== "" && srhCorp !== undefined && srhCorp !== "undefined")
@@ -19,8 +19,11 @@ const emp = {
       srhWorkType !== "undefined"
     )
       params.append("srhWorkType", srhWorkType);
+      
     if (srhNm !== "" && srhNm !== undefined && srhNm !== "undefined")
       params.append("srhNm", srhNm);
+    // 페이지 요청
+    params.append("pageNum", pageNum); 
     // URL에 파라미터 추가
     const paramString = params.toString();
 
