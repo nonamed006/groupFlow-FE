@@ -77,7 +77,7 @@ const EmpCard = (props) => {
             추가
           </Button>
         </Flex>
-        <Box overflowY={"auto"} display={'inline-block'} h={'600px'}>
+        <Box overflowY={"auto"} display={'inline-block'} h={'600px'} w={'100%'}>
         <Table variant="simple" w={"100%"} colorScheme={"facebook"} >
           {/* Thead */}
           <ListCardTableHeader headerGroups={headerGroups} />

@@ -439,7 +439,7 @@ const Employee = () => {
    // 검색 버튼 클릭 시
    const handleSearchBtn = () => { // 초기화 
     setPageNum(1);
-    setIsLastPage(true)
+    setIsLastPage(true);
     setIsReload(!isReload);
   };
 
@@ -448,7 +448,7 @@ const Employee = () => {
   }, [isReload]);
 
   useEffect(async () => {
-    if (inView && !isLastPage) {
+        if (inView && !isLastPage) {
       getEmpList();
     }
   }, [inView]);
@@ -480,8 +480,6 @@ const Employee = () => {
               editState={editState}
               setSelectedIndex={setSelectedIndex}
               selectedIndex={selectedIndex}
-              inView={inView}
-              isLastPage={isLastPage}
               getEmpList={getEmpList}
               isLoading={isLoading}       
               infiniteScrollRef={infiniteScrollRef}       

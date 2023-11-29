@@ -33,7 +33,6 @@ const EmpInfo = (props) => {
   const [delEmpDep, setDelEmpDep] = useState([]);
   const [empDeptTmp, setEmpDeptTmp] = useState([]);
   const [isIdChk, setIsIdChk] = useState(false);
-  console.log("--------", props.empDetail);
   // empDetail input value값 받기 이벤트
   const handleChange = (e) => {
     props.setEmpDetail({ ...props.empDetail, [e.target.name]: e.target.value });
