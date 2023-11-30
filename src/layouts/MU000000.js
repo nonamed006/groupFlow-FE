@@ -239,7 +239,7 @@ export default function Dashboard(props) {
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  <Redirect from="*" to="/err/NotFound" />
+                  <Redirect from="*" to="/err/NoAccess" />
                 )}
               </Switch>
 
