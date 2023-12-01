@@ -303,7 +303,6 @@ const GnbInputGrid = ({
             spacing={0}
             align='baseline'
             p={3}
-            overflowY={'scroll'}
           >
           {
             icons &&
