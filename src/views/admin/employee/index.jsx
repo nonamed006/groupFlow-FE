@@ -10,6 +10,8 @@ import { empSchema } from "common/Schema";
 import { empUpdateSchema } from "common/Schema";
 import api from "api/Fetch";
 import { depGrpSchema } from "common/Schema";
+import Loading from "common/Loading";
+import { useInView } from 'react-intersection-observer';
 
 
 const Employee = () => {
@@ -26,8 +28,17 @@ const Employee = () => {
   const [isReload, setIsReload] = useState(false);
 
   const [selectedIndex, setSelectedIndex] = useState(undefined);
+  const [isLastPage, setIsLastPage] = useState(false);  // 마지막페이지 여부
+  const [pageNum, setPageNum] = useState(1);  // 요청할 페이지 번호
+  const [totalCount, setTotalCount] = useState(); // 총 데이터 갯수
 
   const [isLoading, setIsLoading] = useState(true);
+  const [infiniteScrollRef, inView] = useInView();
+
+  //검색어
+  const [srhCorp, setSrhCorp] = useState("");
+  const [srhWorkType, setSrhWorkType] = useState("");
+  const [srhNm, setSrhNm] = useState("");
 
   const [alertInfo, setAlertInfo] = useState({
     isOpen: false,
@@ -69,15 +80,28 @@ const Employee = () => {
   ]);
 
   //사원 목록 조회
-  const getEmpList = async(srhCorp, srhWorkType, srhNm) => {
-    const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm);
-
-    if(res.status === 200){
+  const getEmpList = async() => {
+    await setIsLoading(true);
+    const res = await api.emp.getEmpList(srhCorp, srhWorkType, srhNm, pageNum);
+    if(res.status === 200 && res.pageInfo){
       resetInput();
-      setEmpList(res.data);
-      setEmpNum(res.strData);
       setSelectedIndex(undefined);
+      let { list, total, isLastPage, hasNextPage } = res.pageInfo;
+      
+      setEmpNum(total);
+      setIsLastPage(isLastPage); 
+      setEmpList(pageNum === 1 ? list : [...empList, ...list]);
+      if (hasNextPage){
+        setPageNum((prev) => prev + 1);
+      } else {
+        if(!isLastPage){
+          setEmpList([]);
+          setTotalCount(0);
+        }
+      }
     }
+    await setIsLoading(false);
+    return;
   };
 
   // 사원의 조직 정보
@@ -99,7 +123,7 @@ const Employee = () => {
     setEmpTmp(empList);
   };
 
-  const resetEmpDetail = () => {
+  const resetEmpDetail = () => { 
     setEmpDetail({
       empCd: "",
       empNm: "",
@@ -162,8 +186,10 @@ const Employee = () => {
 
   // input 값 초기화
   const resetInput = () => {
+    setSrhCorp("");
+    setSrhWorkType("");
+    setSrhNm("");
     setImgBase64([]);
-
     resetEmpDetail();
     resetEmpDept();
   };
@@ -410,10 +436,22 @@ const Employee = () => {
     });
   };
 
+   // 검색 버튼 클릭 시
+   const handleSearchBtn = () => { // 초기화 
+    setPageNum(1);
+    setIsLastPage(true);
+    setIsReload(!isReload);
+  };
+
   useEffect(() => {
-    getEmpList("", "", "");
+    isReload !== undefined && getEmpList()
   }, [isReload]);
 
+  useEffect(async () => {
+        if (inView && !isLastPage) {
+      getEmpList();
+    }
+  }, [inView]);
 
   return (
       <Box h={'full'}  overflowY={'hidden'}>{/* pt={{ base: "150px", md: "100px", xl: "100px" }} 혜윤 수정 */}
@@ -425,7 +463,12 @@ const Employee = () => {
           gap={3}
         >
           <GridItem colSpan={6} rowSpan={1}>
-            <SearchCardBar getEmpList={getEmpList} setSelectedIndex={setSelectedIndex}/> 
+            <SearchCardBar setSelectedIndex={setSelectedIndex} 
+            handleSearchBtn={handleSearchBtn}
+            setSrhCorp={setSrhCorp}
+            setSrhWorkType={setSrhWorkType}
+            setSrhNm={setSrhNm}
+            /> 
           </GridItem>
           <GridItem colSpan={2} rowSpan={5}>
             <EmpCard
@@ -437,6 +480,9 @@ const Employee = () => {
               editState={editState}
               setSelectedIndex={setSelectedIndex}
               selectedIndex={selectedIndex}
+              getEmpList={getEmpList}
+              isLoading={isLoading}       
+              infiniteScrollRef={infiniteScrollRef}       
             />
           </GridItem>
           <GridItem colSpan={4} rowSpan={5}>

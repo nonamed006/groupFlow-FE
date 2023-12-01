@@ -23,13 +23,9 @@ import { MdAttachFile } from "react-icons/md";
 import { PORT } from "set";
 import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 const EmpTab1 = (props) => {
-  console.log("asdsad", props);
   const useYN = new Boolean(
     props.empDetail?.useYn === undefined ? true : props.empDetail?.useYn
   );
-
-  console.log("usese", props.empDetail?.useYn);
-  console.log("useyn",useYN);
 
   const fileUploadBtn = () => {
     document.getElementById("fileUpBtn").click();
