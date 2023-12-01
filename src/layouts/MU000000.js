@@ -239,7 +239,12 @@ export default function Dashboard(props) {
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  <Redirect from="*" to="/err/NotFound" />
+                  <RouteRole 
+                    path={window.location.pathname}
+                    component=''
+                    name={'NotFound'}
+                  />
+                  // <Redirect from="*" to="/err/NoAccess" />
                 )}
               </Switch>
 
