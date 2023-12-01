@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 import ErrorPage from "views/system/error";
+import Loading from "common/Loading";
 
 const RouteRole = ({component: Component, ...rest}) => {
+    const [isLoading, setIsLoading] = useState(true);
+
     const [ resp, setResp ] = useState({
         status: 200,
         component: ''
@@ -13,10 +16,12 @@ const RouteRole = ({component: Component, ...rest}) => {
     const loginEmpInfo = useSelector((state) => state.solution.empData);
 
     const CheckRole = async (loginEmpInfo) => {
+        setIsLoading(true);
         const pathArray = rest.path.split('/').filter(path => path !== '');
         const pathNow = pathArray.pop();
 
         if(pathNow === 'home') {
+            setIsLoading(false);
             return false;
         }
         const response = await api.role.CheckRoleSession(pathNow, loginEmpInfo);
@@ -29,10 +34,11 @@ const RouteRole = ({component: Component, ...rest}) => {
             if(response.status !== 200) {
                 setResp({
                     status: response.status,
-                    url: response.status === 403 ? '/err/NoAccess' : '/err/NotWorking'
+                    url: response.status === 403 ? '/err/NoAccess' : '/err/NotFound'
                 })
             }
         }
+        setIsLoading(false);
     }
 
 
@@ -44,7 +50,11 @@ const RouteRole = ({component: Component, ...rest}) => {
     }, [loginEmpInfo])
 
     return (
-            resp.status === 200 ?
+            isLoading ? 
+                <Loading/>
+            :
+            (
+                resp.status === 200 ?
                 (
                     Component ?
                         <Route
@@ -54,13 +64,16 @@ const RouteRole = ({component: Component, ...rest}) => {
                             }}
                         />
                     :
-                    <Route
-                        component={ErrorPage}
-                    />
+                    // <Route
+                    //     component={ErrorPage}
+                    // />
+                    <Redirect to={'/err/NotFound'}/>
                 )
                 
             :
                 <Redirect to={resp.url}/>
+            
+            )
     )
 }
 
