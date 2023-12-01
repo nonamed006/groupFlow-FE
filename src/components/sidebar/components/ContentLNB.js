@@ -30,11 +30,8 @@ function SidebarContentGNB(props) {
   }
   // SIDEBAR
   return (
-    <Flex direction='column' height='100%' pt='25px' px="16px">
+    <Flex direction='column' height='100%' pt='25px' px="16px" ml={'70px'}>
       <Flex h={20}>
-        <Center>
-            <HamburgerIcon w={10}/>
-        </Center>
         <Center flex={1}>
           <Brand/>
         </Center>
@@ -44,6 +41,7 @@ function SidebarContentGNB(props) {
             <Box
               w={'full'}
               textAlign={'center'}
+              pr={'30px'}
             >
               {
                 route.upper ? 
@@ -74,7 +72,7 @@ function SidebarContentGNB(props) {
             </Box>
         }
       <Stack direction='column' mb='auto' mt='8px'>
-        <Box ps='20px' pe={{ md: "16px", "2xl": "1px" }}>
+        <Box pe={{ md: "16px", "2xl": "1px" }}>
             <LinksLNB routes={routes} route={route} LNBroute={LNBroute}/>
         </Box>
       </Stack>
