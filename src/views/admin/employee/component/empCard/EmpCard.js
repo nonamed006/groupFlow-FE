@@ -54,7 +54,7 @@ const EmpCard = (props) => {
             fontWeight="700"
             lineHeight="100%"
           >
-            {props.empList.length}
+            {props.empNum}
           </Text>
           <Text
             color={textColor}
