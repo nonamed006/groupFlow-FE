@@ -113,6 +113,7 @@ const LnbInputGrid = ({
     }
 
     setIsLoading(true);
+
     menuInputData.useYn = menuInputData.useYn ? 1 : 0;
     const responseJson = await api.menu.modifyLnb(menuInputData);
 
@@ -121,8 +122,16 @@ const LnbInputGrid = ({
         isOpen: true,
         status: "success",
         title: responseJson.resultMsg,
+        detail: menuInfo.upperCd !== menuInputData.upperCd ? '상위메뉴 변경으로 새로고침 됩니다.' : '',
         width: "fit-content",
       });
+
+      if(menuInfo.upperCd !== menuInputData.upperCd) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
+
       setMenuInfo(responseJson.voData);
       setIsSave(!isSave);
     } else {
@@ -134,6 +143,7 @@ const LnbInputGrid = ({
       });
     }
     setIsLoading(false);
+
   };
 
   const getCategory = async () => {
