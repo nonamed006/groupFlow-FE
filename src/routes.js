@@ -45,6 +45,10 @@ import { useSelector } from "react-redux";
 import { getCookie } from "common/common";
 
 const componentMap = {
+  MU230001: MU230035,
+  MU230002: MU230035,
+  MU230003: MU230035,
+  MU230004: MU230035,
   MU230005: MU230005,
   MU230006: MU230006,
   MU230007: MU230007,
