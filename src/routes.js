@@ -126,7 +126,7 @@ const setComponent = (items) => {
           src={
             item.file_type === "FIA0001"
               ? item.file_path + "/" + item.modi_nm
-              : `${PORT}/menu/icon-${item.fileCd}`
+              : `${PORT}/menu/icon-${item.file_cd}`
           }
         />
       );
