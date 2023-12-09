@@ -94,7 +94,7 @@ const EmpList = ({tab, realGridHandler}) => { //setCoCd, setEmpCd
 				</GridItem>
 			</Grid> */}
             
-            <Box w={"full"} h={'500px'} overflowY={'scroll'}>
+            <Box w={"full"} h={'500px'}>
                 {
                     isLoading ?
                         <Loading/>

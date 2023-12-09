@@ -91,13 +91,13 @@ const FormInput = ({
           disabled={readOnly}
         >
           {values &&
-            values.map((value) => {
-              return (
-                <option name={name} value={value.value}>
-                  {value.name}
-                </option>
-              );
-            })}
+          values.map((value) => {
+            return (
+              <option name={name} value={value.value}>
+                {value.name}
+              </option>
+            );
+          })}
         </Select>
       ) : type === "radio" ? (
         <RadioGroup name={name} value={defaultValue} key={pk} w={"100%"}>

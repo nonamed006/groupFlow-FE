@@ -29,15 +29,6 @@ layouts/admin/index.js
 // Custom Chakra theme
 export default function Dashboard(props) {
   const [isLoading, setIsLoading] = useState(true);
-  //const [ dpGrpCd, setDpGrpCd ] = useState('');
-  // const routes = useMemo(async () => {
-  //   const menus =  await RoleRoutes();
-  //   if(menus) {
-  //     return menus;
-  //   } else {
-  //     return [];
-  //   }
-  // }, [dpGrpCd]);
   const [routes, setRoutes] = useState([]);
   const loginEmpInfo = useSelector((state) => state.solution.empData);
   const dpGrpCd = getCookie("Emp_Dp_Type");
@@ -76,13 +67,6 @@ export default function Dashboard(props) {
     return null; // 원하는 항목을 찾지 못한 경우
   };
   const { ...rest } = props;
-  // states and functions
-  //const [fixed] = useState(false);
-  //const [toggleSidebar, setToggleSidebar] = useState(false);
-  // functions for changing the states from components
-  // const getRoute = () => {
-  //   return window.location.pathname !== "/admin/full-screen-maps";
-  // };
 
   // 페이지 경로 이름 리턴
   const getLocationPath = (routes, gnb) => {
@@ -245,7 +229,6 @@ export default function Dashboard(props) {
               />
             </Box>
             <Box h={"800px"}>
-              {/* {props.children} */}
               <Switch>
                 {getRoutes(routes)}
                 <RouteRole
@@ -253,15 +236,16 @@ export default function Dashboard(props) {
                   component={HomePage}
                   setAlertInfo={setAlertInfo}
                 />
-                {/* <Redirect from="/MU000000" to="/MU000000/home" /> */}
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  // <Route path='*' component={ErrorPage} />
-                  <Redirect from="*" to="/err/NotFound" />
+                  <RouteRole 
+                    path={window.location.pathname}
+                    component=''
+                    name={'NotFound'}
+                  />
+                  // <Redirect from="*" to="/err/NoAccess" />
                 )}
-                {/* <Redirect from="" to="/err/NotFound" />
-                {/* <Redirect from="/" to="/MU000000/home" /> */}
               </Switch>
 
               {alertInfo.isOpen && (

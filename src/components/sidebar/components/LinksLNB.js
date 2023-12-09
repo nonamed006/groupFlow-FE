@@ -57,7 +57,8 @@ export function SidebarLinks(props) {
             cursor={"pointer"}
             key={index}
             w={"100%"}
-            px={"10px"}
+            pr={"10px"}
+            pl={'5px'}
             onMouseOut={onMouseOut}
             onMouseOver={() => {
               onMouseOver(index);
@@ -68,7 +69,6 @@ export function SidebarLinks(props) {
                 w="100%"
                 alignItems="center"
                 justifyContent="center"
-                pl={"40px"}
               >
                 <Text
                   me="auto"

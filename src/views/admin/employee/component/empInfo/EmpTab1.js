@@ -24,7 +24,7 @@ import { PORT } from "set";
 import EmpIcon from "assets/img/profile/solutionapslfintek2352.png";
 const EmpTab1 = (props) => {
   const useYN = new Boolean(
-    props.empDetail?.useYN === undefined ? true : props.empDetail?.useYN
+    props.empDetail?.useYn === undefined ? true : props.empDetail?.useYn
   );
 
   const fileUploadBtn = () => {
@@ -238,7 +238,7 @@ const EmpTab1 = (props) => {
             <FormInput
               type={"radio"}
               title={"성별"}
-              name="gender"
+              name={"gender"}
               defaultValue={props.empDetail.gender ?? "M"}
               pk={props.empDetail?.empCd}
               onChange={props.handleRadioChange}

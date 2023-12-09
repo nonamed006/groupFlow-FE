@@ -6,6 +6,7 @@ import GnbCard from './component/GnbCard/GnbCard';
 import LnbGrid from './component/LnbGrid/LnbGrid';
 import InfoBox from './component/InfoBox/InfoBox';
 import CommonAlert from 'common/component/CommonAlert';
+import Loading from 'common/Loading';
 
 const Menu = () => {
 	const [ gnbMenuList, setGnbMenuList ] = useState([]);			// GNB 메뉴 목록
@@ -22,8 +23,9 @@ const Menu = () => {
     })
 
 	const [ selectGnbMenuCd, setSelectGnbMenuCd ] = useState('');	// GNB 선택
-	const [ isEditing, setIsEditing ] = useState(false);  // 수정모드
-	const [ isSave, setIsSave ] = useState(false);
+	const [ isEditing, setIsEditing ] = useState(false);			// 수정모드
+	const [ isSave, setIsSave ] = useState(false);					// 저장됐는지 구분
+	const [ isLoading, setIsLoading ] = useState(false);			// 로딩
 
 	const reset = () => {
 		setMenuInfo({
@@ -83,6 +85,7 @@ const Menu = () => {
 						search={search}
 						setAlertInfo={setAlertInfo}
 						isEditingReset={isEditingReset}
+						setIsLoading={setIsLoading}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5}>
@@ -93,6 +96,7 @@ const Menu = () => {
 						selectGnbMenuCd={selectGnbMenuCd}
 						search={search}
 						isSave={isSave}
+						setIsLoading={setIsLoading}
 					/>
                 </GridItem>
 				<GridItem colSpan={3} rowSpan={5} >
@@ -106,6 +110,7 @@ const Menu = () => {
 						isEditingReset={isEditingReset}
 						isSave={isSave}
 						setIsSave={setIsSave}
+						setIsLoading={setIsLoading}
 					/>
                 </GridItem>
 			</Grid>
@@ -115,6 +120,7 @@ const Menu = () => {
 					setAlertInfo={setAlertInfo}
 				/>
 			}
+			{isLoading && <Loading />}
 		</Box>
 	);
 };
