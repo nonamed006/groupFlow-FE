@@ -46,7 +46,7 @@ const EmpCard = (props) => {
             lineHeight="100%"
             marginRight={2}
           >
-            사용자 
+            사용자
           </Text>
           <Text
             color={textNumColor}
@@ -67,8 +67,8 @@ const EmpCard = (props) => {
           <Spacer />
           <Button
             variant="action"
-            borderRadius={'10px'} 
-            fontWeight={'600'}
+            borderRadius={"10px"}
+            fontWeight={"600"}
             onClick={() => {
               props.setEditState("insert");
               props.resetInput();
@@ -104,25 +104,25 @@ const EmpCard = (props) => {
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
                   <Flex lineHeight={"9"}>
                     <Avatar src="" w="30px" h="30px" me="8px" />
-                    <Text color={textColor} fontSize="sm" fontWeight="500" >
+                    <Text color={textColor} fontSize="sm" fontWeight="500">
                       {column.empNm}
                     </Text>
                   </Flex>
                 </Td>
-                <Td fontWeight="500" fontSize={"sm"} textAlign="center" >
-                    <Text color={textColor} fontSize="sm" fontWeight="500">
-                      {column.loginId}
-                    </Text>
+                <Td fontWeight="500" fontSize={"sm"} textAlign="center">
+                  <Text color={textColor} fontSize="sm" fontWeight="500">
+                    {column.loginId}
+                  </Text>
                 </Td>
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="500">
-                      {minTimeDate(column.joinDt)}
-                    </Text>
+                  <Text color={textColor} fontSize="sm" fontWeight="500">
+                    {minTimeDate(column.joinDt)}
+                  </Text>
                 </Td>
                 <Td fontWeight="500" fontSize={"sm"} textAlign="center">
-                    <Text color={textColor} fontSize="sm" fontWeight="500" >
-                      {column.workTypeCd === "EMC0001" ? "재직" : "퇴사" }
-                    </Text>
+                  <Text color={textColor} fontSize="sm" fontWeight="500">
+                    {column.workTypeCd === "EMC0001" ? "재직" : "퇴사"}
+                  </Text>
                 </Td>
               </Tr>
             ))}
