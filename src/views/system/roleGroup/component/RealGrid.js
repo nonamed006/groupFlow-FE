@@ -34,8 +34,6 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     { fieldName: "iconField", name: "iconField" },
   ];
 
-
-
   var treeProvider, treeView;
 
   useEffect(() => {
@@ -46,7 +44,7 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     treeView.setDataSource(treeProvider);
     treeProvider.setFields(fields);
     treeView.setColumns(columns);
-    treeProvider.setRows(org, "menuPath", false, null, 'iconField');
+    treeProvider.setRows(org, "menuPath", false, null, "iconField");
 
     treeView.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
     treeView.displayOptions.rowHeight = 42;
@@ -159,7 +157,14 @@ const RealGrid = ({ org, type, setCheckedMenuCd }) => {
     if (parent > -1) checkSiblingNode(grid, parent, checked);
   }
 
-  return <Box ref={realgridElement} ml={type === "modify" ? 0 : 2} w="100%" h={"550px"} />
+  return (
+    <Box
+      ref={realgridElement}
+      ml={type === "modify" ? 0 : 2}
+      w="100%"
+      h={"550px"}
+    />
+  );
 };
 
 export default RealGrid;
